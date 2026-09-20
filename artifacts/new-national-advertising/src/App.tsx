@@ -76,7 +76,7 @@ const services = [
     category: 'Custom print finishes',
     description: 'Custom screen printing for apparel, promotional products and printed materials.',
     whatIs: 'Screen printing places a distinct layer of ink onto a surface, making it a useful option for apparel, bags, stationery and promotional pieces that benefit from a tactile printed finish.',
-    items: ['Wedding Cards', 'Visiting Cards', 'Letterheads', 'T-Shirts', 'Envelopes', 'Caps', 'Umbrellas', 'Carry Bags', 'ID Ribbons', 'School Bags'],
+    items: ['Wedding Cards', 'Visiting Cards', 'Letterheads', 'T-Shirts', 'Cup Print', 'Envelopes', 'Caps', 'Umbrellas', 'Carry Bags', 'ID Ribbons', 'School Bags'],
     applications: ['Apparel printing', 'Promotional products', 'School and event materials', 'Carry bags', 'Stationery'],
     materials: ['T-shirts', 'Caps', 'Carry bags', 'Umbrellas', 'Paper and stationery', 'School bags'],
     whyChoose: ['Tactile ink texture', 'Works across apparel and promotional materials', 'A practical fit for branded collections'],
@@ -133,7 +133,7 @@ const services = [
     category: 'Fast, detailed printing',
     description: 'High-quality digital printing for business, promotional and everyday printing requirements.',
     whatIs: 'Digital printing is a flexible route for sharp, colorful business and marketing materials. It works well when you need polished printed pieces with a practical turnaround and a range of formats.',
-    items: ['Visiting Cards', 'Brochures', 'Catalogues', 'Pamphlets', 'Posters', 'Annual Reports', 'UV Print', 'Hotel Menus', 'Hospital Files', 'Trophy Stickers'],
+    items: ['Visiting Cards', 'Bill Book', 'Wedding Card', 'Brochures', 'Catalogues', 'Pamphlets', 'Posters', 'Annual Reports', 'UV Print', 'Hotel Menus', 'Hospital Files', 'Trophy Stickers'],
     applications: ['Business cards', 'Marketing handouts', 'Posters and pamphlets', 'Menus and reports', 'Specialty printed pieces'],
     materials: ['Card stocks', 'Brochure paper', 'Poster paper', 'Menu materials', 'UV print surfaces'],
     whyChoose: ['Crisp detail for colorful artwork', 'Flexible for business and promotional formats', 'A practical option for everyday print requirements'],
@@ -308,6 +308,9 @@ function getAssistantReply(question: string, contextService?: ServiceRecord) {
 
   if (offeringMatch) {
     return `${offeringMatch.item} is available under ${offeringMatch.service.title}. I can help you send an enquiry to New National Advertising.`;
+  }
+  if (normalized.includes('all printing')) {
+    return 'New National Advertising offers an all printing solution for practical business, event and everyday print requirements, including visiting cards, bill books, wedding cards, pamphlets, t-shirt printing, cup printing and carry bag printing.';
   }
   if (contextService && /\b(need|require|looking|want|cards|banner|board|print|design)\b/.test(normalized)) {
     return `${contextService.title} is the current service context. I can help you send an enquiry for this requirement.`;
@@ -684,7 +687,7 @@ function Home() {
             <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">New National<br />Advertising</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.</p><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
             <Reveal delay={110} className="grid grid-cols-[1.3fr_1fr_.75fr] gap-2 sm:gap-3">
               <div className="col-span-2 h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/design-materials.jpg" alt="Printed design materials on a studio table" className="h-full w-full object-cover" /></div>
-              <div className="h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/hero-print-studio.jpg" alt="Printing press and colour print materials" className="h-full w-full object-cover" /></div>
+              <div className="relative h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/new-national-advertising-shop.png" alt="Printing solutions displayed at New National Advertising" className="h-full w-full object-cover object-center" /><span className="absolute inset-x-2 bottom-2 rounded-full bg-white/90 px-2 py-1 text-center text-[8px] font-bold text-[#263e57] shadow-sm">Printing solutions displayed at our shop</span></div>
               <div className="col-span-2 h-[100px] overflow-hidden rounded-[9px] sm:h-[120px]"><img src="/signage-installation.jpg" alt="Professional signage installation" className="h-full w-full object-cover object-center" /></div>
               <div className="flex h-[100px] flex-col justify-center rounded-[9px] bg-[#eef3f6] px-4 sm:h-[120px] sm:px-5"><p className="display text-[17px] font-bold leading-[1.05] text-[#273b51]">From ideas<br />to impact</p><span className="mt-3 h-px w-8 bg-[#1669aa]" /></div>
             </Reveal>
