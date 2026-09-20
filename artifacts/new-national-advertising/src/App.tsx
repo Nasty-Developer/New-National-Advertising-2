@@ -6,11 +6,22 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
+import { useGetAdminSession } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
+import AdminPage from '@/pages/admin';
 
 const queryClient = new QueryClient();
 
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
+const googleMapsUrl = 'https://maps.app.goo.gl/fp4fTcaVwx2bojXz7';
+const businessAddressLines = [
+  'Room No. 3, New National Advertising',
+  'Plot No. 47, Line No. K, Road No. 5',
+  'Opposite Mahesh Jewellers, Nearby Ambedkar Garden',
+  'Govandi (W), Govandi West',
+  'Raman Mama Nagar, Shivaji Nagar',
+  'Mumbai, Maharashtra - 400043, India',
+];
 
 const services = [
   {
@@ -200,9 +211,8 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
 
 function Logo({ light = false }: { light?: boolean }) {
   return (
-    <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className={`leading-none ${light ? 'text-white' : 'text-[#122641]'}`}>
-      <span className="block display text-[17px] font-extrabold tracking-[-.07em]">New National</span>
-      <span className={`block mt-0.5 text-[8px] font-bold tracking-[.34em] ${light ? 'text-[#a9c9e2]' : 'text-[#2274ad]'}`}>ADVERTISING</span>
+    <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className={`inline-flex items-center rounded-sm bg-white ${light ? 'shadow-[0_3px_12px_rgba(0,0,0,.12)]' : ''}`}>
+      <img src="/new-national-advertising-logo.jpg" alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
     </a>
   );
 }
@@ -607,7 +617,15 @@ function Home() {
         '@type': 'LocalBusiness',
         name: 'New National Advertising',
         description: 'Printing, advertising, signage and graphic design solutions.',
-        address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressRegion: 'Maharashtra', addressCountry: 'IN' },
+         address: {
+           '@type': 'PostalAddress',
+           streetAddress: 'Room No. 3, New National Advertising, Plot No. 47, Line No. K, Road No. 5, Opposite Mahesh Jewellers, Nearby Ambedkar Garden, Raman Mama Nagar, Shivaji Nagar',
+           addressLocality: 'Govandi West, Mumbai',
+           addressRegion: 'Maharashtra',
+           postalCode: '400043',
+           addressCountry: 'IN',
+         },
+         hasMap: googleMapsUrl,
         telephone: '+919555759677',
         email: 'newnationaladv2022@gmail.com',
         areaServed: 'Mumbai, Maharashtra, India',
@@ -684,7 +702,7 @@ function Home() {
 
         <section id="about" className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.74fr_1.26fr] lg:gap-20">
-            <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">New National<br />Advertising</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.</p><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
+             <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">New National<br />Advertising</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.</p><a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex max-w-[360px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>Room No. 3, New National Advertising, Govandi West, Mumbai - 400043 <span className="text-[#1669aa]">View on Google Maps</span></span></a><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
             <Reveal delay={110} className="grid grid-cols-[1.3fr_1fr_.75fr] gap-2 sm:gap-3">
               <div className="col-span-2 h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/design-materials.jpg" alt="Printed design materials on a studio table" className="h-full w-full object-cover" /></div>
               <div className="relative h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/new-national-advertising-shop.png" alt="Printing solutions displayed at New National Advertising" className="h-full w-full object-cover object-center" /><span className="absolute inset-x-2 bottom-2 rounded-full bg-white/90 px-2 py-1 text-center text-[8px] font-bold text-[#263e57] shadow-sm">Printing solutions displayed at our shop</span></div>
@@ -763,7 +781,7 @@ function Home() {
 
         <section id="contact" className="bg-[#f1f6f8] py-20 lg:py-24">
           <div className="container-nna grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-20">
-            <Reveal><p className="eyebrow">Let's work together</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Get a Quote</h2><p className="mt-5 max-w-[330px] text-[13px] leading-6 text-[#68798a]">Have a printing, signage or design requirement? Get in touch with New National Advertising.</p><div className="mt-8 space-y-4 text-[12px] text-[#405268]"><a href="tel:+919555759677" data-testid="link-contact-primary" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span><strong className="block text-[#223b55]">9555759677</strong><span className="text-[10px] text-[#81909d]">Primary phone</span></span></a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span>7506269783 &nbsp; / &nbsp; 8898805753</span></div><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-contact-email" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Mail size={14} /></span>{'newnationaladv2022@gmail.com'}</a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><MapPin size={14} /></span>Mumbai, Maharashtra, India</div></div><div className="mt-7 flex flex-wrap gap-2"><a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="button-whatsapp" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Chat on WhatsApp <ArrowRight size={12} /></a><a href="tel:+919555759677" data-testid="button-call-now" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="button-email-us" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Mail size={14} className="text-[#1669aa]" />Email Us</a></div></Reveal>
+             <Reveal><p className="eyebrow">Let's work together</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Get a Quote</h2><p className="mt-5 max-w-[330px] text-[13px] leading-6 text-[#68798a]">Have a printing, signage or design requirement? Get in touch with New National Advertising.</p><div className="mt-8 space-y-4 text-[12px] text-[#405268]"><a href="tel:+919555759677" data-testid="link-contact-primary" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span><strong className="block text-[#223b55]">9555759677</strong><span className="text-[10px] text-[#81909d]">Primary phone</span></span></a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span>7506269783 &nbsp; / &nbsp; 8898805753</span></div><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-contact-email" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Mail size={14} /></span>{'newnationaladv2022@gmail.com'}</a><address className="not-italic"><div className="flex items-start gap-3"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><MapPin size={14} /></span><span className="leading-5">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#1669aa] hover:underline" data-testid="link-contact-map">View on Google Maps</a></span></div></address></div><div className="mt-7 flex flex-wrap gap-2"><a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="button-whatsapp" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Chat on WhatsApp <ArrowRight size={12} /></a><a href="tel:+919555759677" data-testid="button-call-now" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="button-email-us" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Mail size={14} className="text-[#1669aa]" />Email Us</a></div></Reveal>
             <Reveal delay={100}><form onSubmit={handleSubmit} className="rounded-[12px] border border-[#dce6eb] bg-white p-5 shadow-[0_10px_30px_rgba(31,61,87,.06)] sm:p-7" aria-label="Request a quote form"><div className="grid gap-4 sm:grid-cols-2"><label className="text-[10px] font-bold text-[#445a70]">Name<input required name="name" placeholder="Your name" data-testid="input-name" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Phone Number<input required name="phone" type="tel" placeholder="Your phone number" data-testid="input-phone" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Email<input required name="email" type="email" placeholder="Your email" data-testid="input-email" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Service<select required name="service" defaultValue="" data-testid="select-service" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none focus:border-[#1669aa]"><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.title}>{service.title}</option>)}<option>Other Services</option></select></label><label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Project Details<textarea required name="details" rows={3} placeholder="Tell us about your requirement..." data-testid="textarea-details" className="mt-1.5 w-full resize-none rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Quantity<input name="quantity" placeholder="e.g. 100" data-testid="input-quantity" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Upload File (Optional)<span className="mt-1.5 flex w-full cursor-pointer items-center rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-[9px] text-[11px] font-normal text-[#8d9aa5]"><input type="file" name="file" data-testid="input-file" className="w-full text-[10px]" /></span></label></div><button type="submit" data-testid="button-submit-quote" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1669aa] py-3 text-[11px] font-bold text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">{submitted ? 'Request received — we will be in touch' : 'Request a Quote'}<ArrowRight size={14} /></button>{submitted && <p role="status" data-testid="status-quote-submitted" className="mt-3 text-center text-[11px] font-semibold text-[#24734d]">Thank you. Please also use WhatsApp for the fastest response.</p>}</form></Reveal>
           </div>
         </section>
@@ -773,7 +791,7 @@ function Home() {
         <div className="container-nna grid gap-10 py-12 md:grid-cols-[1.35fr_1fr_1fr] md:py-14">
           <div><Logo light /><p className="mt-5 max-w-[250px] text-[10px] leading-5 text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
           <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} data-testid={`link-footer-${item.label.toLowerCase().replace(' ', '-')}`} className="hover:text-white">{item.label}</a>)}</nav></div>
-          <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-3 text-[11px] text-[#c1ced8]"><a href="tel:+919555759677" data-testid="link-footer-phone" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-footer-email" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><p>Mumbai, Maharashtra, India</p></div></div>
+           <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-3 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" data-testid="link-footer-phone" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-footer-email" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><address className="not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white" data-testid="link-footer-map">View on Google Maps</a></address></div></div>
         </div>
         <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© New National Advertising. All rights reserved.</span><span>Printing, signage &amp; design solutions in Mumbai.</span></div></div>
       </footer>
@@ -804,6 +822,23 @@ function Products() {
       <FloatingContactActions quoteHref="/#contact" />
     </div>
   );
+}
+
+function AdminRoute() {
+  const { data, isLoading } = useGetAdminSession();
+
+  if (isLoading) {
+    return (
+      <main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] px-5 text-[#14213d]">
+        <div className="rounded-[16px] border border-[#d8e4eb] bg-white px-6 py-5 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)]" data-testid="state-admin-loading">
+          <p className="eyebrow">Private workspace</p>
+          <p className="mt-2 text-[13px] font-semibold text-[#405268]">Checking admin access…</p>
+        </div>
+      </main>
+    );
+  }
+
+  return <AdminPage authenticated={data?.authenticated === true} />;
 }
 
 function upsertMeta(attribute: 'name' | 'property', key: string, content: string) {
@@ -994,8 +1029,8 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 
       <footer className="bg-[#102941] text-white">
         <div className="container-nna flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <div><Logo light /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
-          <div className="flex flex-wrap gap-4 text-[11px] text-[#c1ced8]"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div>
+           <div><Logo light /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
+           <div className="text-[11px] leading-5 text-[#c1ced8]"><div className="flex flex-wrap gap-4"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div><address className="mt-2 not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div>
         </div>
       </footer>
 
@@ -1012,7 +1047,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 function Router() {
   return (
     <RoutedErrorBoundary>
-      <Switch><Route path="/" component={Home} /><Route path="/products" component={Products} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
+      <Switch><Route path="/" component={Home} /><Route path="/products" component={Products} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
     </RoutedErrorBoundary>
   );
 }

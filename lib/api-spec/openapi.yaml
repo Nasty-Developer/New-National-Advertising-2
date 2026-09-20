@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: admin
+    description: Protected administration operations
 paths:
   /healthz:
     get:
@@ -24,7 +26,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /admin/session:
+    get:
+      operationId: getAdminSession
+      tags: [admin]
+      summary: Check the current admin session
+      description: Returns the protected admin session state when the signed admin session cookie is valid.
+      security:
+        - adminSessionCookie: []
+      responses:
+        "200":
+          description: Authenticated admin session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+        "401":
+          description: Authentication required
+        "503":
+          description: Admin authentication is not configured
 components:
+  securitySchemes:
+    adminSessionCookie:
+      type: apiKey
+      in: cookie
+      name: admin_session
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +59,11 @@ components:
           type: string
       required:
         - status
+    AdminSession:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+      required:
+        - authenticated
 
