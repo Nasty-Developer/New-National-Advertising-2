@@ -1,0 +1,96 @@
+Fix the "More Info" navigation issue on the New National Advertising website.
+
+CURRENT PROBLEM:
+In the "Our Services" section, clicking "More Info" on a service card is not opening the service detail page. The button/link appears clickable, but the corresponding service detail route does not open correctly.
+
+IMPORTANT:
+Do NOT redesign the website.
+Do NOT remove or change the current service cards, styling, images, colors, spacing, navbar, or overall UI.
+Only fix the navigation/routing functionality.
+
+REQUIRED SERVICE ROUTES:
+
+1. Sign Boards
+   /services/sign-boards
+
+2. Solvent Flex
+   /services/solvent-flex
+
+3. Offset Printing
+   /services/offset-printing
+
+4. Screen Printing
+   /services/screen-printing
+
+5. Graphics Design
+   /services/graphics-design
+
+6. Banner Printing
+   /services/banner-printing
+
+7. Digital Printing
+   /services/digital-printing
+
+REQUIREMENTS:
+
+1. Every service card in "Our Services" must have a working "More Info →" link/button.
+
+2. Clicking "More Info" must navigate to the correct dedicated service page.
+
+3. Use the existing Wouter routing system already used in the project.
+
+4. Verify that the router contains all required routes, for example:
+
+   /services/:slug
+
+   and that the ServiceDetailPage correctly reads the slug using Wouter.
+
+5. Verify that the service data contains matching slugs:
+   sign-boards
+   solvent-flex
+   offset-printing
+   screen-printing
+   graphics-design
+   banner-printing
+   digital-printing
+
+6. Make sure there is NO mismatch between:
+   - service.slug
+   - href
+   - Wouter route
+   - ServiceDetailPage lookup
+
+7. The entire service card can remain clickable, but the "More Info" CTA must clearly work.
+
+8. Prevent any parent click handler, overlay, absolute-positioned element, pointer-events rule, or JavaScript event from blocking the link.
+
+9. Make sure the links work on:
+   - Desktop
+   - Mobile
+
+10. Browser refresh must also work correctly on a service detail URL.
+
+11. The service detail page must show the correct service based on the URL slug.
+
+12. If an invalid service slug is entered, show the existing NotFound page instead of a blank page or broken UI.
+
+13. Preserve the existing service-detail-page design and content. Do not replace it with a generic page.
+
+14. After fixing the routing, run the project's typecheck/build and fix any errors caused by this change.
+
+FINAL VERIFICATION:
+Test these URLs individually:
+
+/services/sign-boards
+/services/solvent-flex
+/services/offset-printing
+/services/screen-printing
+/services/graphics-design
+/services/banner-printing
+/services/digital-printing
+
+Then test clicking "More Info" from the homepage for every service.
+
+Also verify that the "Products" route /products continues to work.
+
+Do not make unrelated changes.
