@@ -655,7 +655,7 @@ function Home() {
           <div className="container-nna">
             <Reveal className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div><p className="eyebrow">What we do</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[40px]">Our Services</h2></div>
-              <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide complete printing and advertising solutions under one roof.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
+               <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide an all printing solution for practical business and event needs.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
             </Reveal>
              <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {services.map((service, index) => { const Icon = service.icon; return (
