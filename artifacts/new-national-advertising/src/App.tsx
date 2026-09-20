@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -12,31 +12,31 @@ const queryClient = new QueryClient();
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
 
 const services = [
-  { title: 'Solvent Flex', description: 'Flex, vinyl, canvas, sunboard and backlit printing solutions.', items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'], image: '/hero-print-studio.jpg', icon: Printer },
-  { title: 'Offset Printing', description: 'Professional printed materials for businesses, events and everyday needs.', items: ['Brochure & Catalogues', 'Calendar', 'Letterhead', 'Business Card', 'Bill Book', 'Envelope', 'Wedding Card', 'Flyer & Leaflet', 'Pavti Book', 'Menu Card'], image: '/design-materials.jpg', icon: FileText },
-  { title: 'Screen Printing', description: 'Screen printing for apparel, stationery, promotional products and more.', items: ['Wedding Card', 'Visiting Card', 'Letterhead', 'T-Shirt', 'Envelope', 'Cap', 'Umbrella', 'Carry Bag', 'ID Ribbon', 'School Bag'], image: '/selected-work-grid.jpg', icon: PenLine },
-  { title: 'Digital Printing', description: 'Fast, detailed digital printing for personal and business requirements.', items: ['Visiting Card', 'Brochure', 'Catalogue', 'Pamphlet', 'Poster', 'Annual Reports', 'UV Print', 'Hotel Menu', 'Hospital File', 'Trophy Sticker'], image: '/design-materials.jpg', icon: Sparkles },
-  { title: 'Sign Boards', description: 'Professional signage and display solutions that help brands stand out.', items: ['Acrylic Clip-on Board', 'Crystal Letter', 'LED Signage', 'Steel & Brass Letter', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutout'], image: '/signage-installation.jpg', icon: Ruler },
-  { title: 'Graphics Design', description: 'Creative design solutions for branding, marketing and communication.', items: ['Logo Design', 'Social Media Posts', 'Hoarding Banner', 'Menu Card', 'Flyer', 'Product Packaging', 'Magazine Ads', 'Visiting Card', 'Invitation', 'Brochure', 'Calendar'], image: '/design-materials.jpg', icon: Grid2X2 },
+  { title: 'Solvent Flex', description: 'Flex, vinyl, canvas, sunboard and backlit printing solutions.', items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'], image: '/hero-print-studio.jpg', icon: Printer, accent: '#00A8C6', tint: '#F1FBFC' },
+  { title: 'Offset Printing', description: 'Professional printed materials for businesses, events and everyday needs.', items: ['Brochure & Catalogues', 'Calendar', 'Letterhead', 'Business Card', 'Bill Book', 'Envelope', 'Wedding Card', 'Flyer & Leaflet', 'Pavti Book', 'Menu Card'], image: '/design-materials.jpg', icon: FileText, accent: '#1769AA', tint: '#F3F8FC' },
+  { title: 'Screen Printing', description: 'Screen printing for apparel, stationery, promotional products and more.', items: ['Wedding Card', 'Visiting Card', 'Letterhead', 'T-Shirt', 'Envelope', 'Cap', 'Umbrella', 'Carry Bag', 'ID Ribbon', 'School Bag'], image: '/selected-work-grid.jpg', icon: PenLine, accent: '#D9468C', tint: '#FFF5F9' },
+  { title: 'Digital Printing', description: 'Fast, detailed digital printing for personal and business requirements.', items: ['Visiting Card', 'Brochure', 'Catalogue', 'Pamphlet', 'Poster', 'Annual Reports', 'UV Print', 'Hotel Menu', 'Hospital File', 'Trophy Sticker'], image: '/design-materials.jpg', icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
+  { title: 'Sign Boards', description: 'Professional signage and display solutions that help brands stand out.', items: ['Acrylic Clip-on Board', 'Crystal Letter', 'LED Signage', 'Steel & Brass Letter', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutout'], image: '/signage-installation.jpg', icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
+  { title: 'Graphics Design', description: 'Creative design solutions for branding, marketing and communication.', items: ['Logo Design', 'Social Media Posts', 'Hoarding Banner', 'Menu Card', 'Flyer', 'Product Packaging', 'Magazine Ads', 'Visiting Card', 'Invitation', 'Brochure', 'Calendar'], image: '/design-materials.jpg', icon: Grid2X2, accent: '#3BA776', tint: '#F3FBF7' },
 ];
 
 const work = [
-  { title: 'Storefront signage', category: 'Signage', position: 'left center' },
-  { title: 'Printed brochure', category: 'Offset printing', position: 'center' },
-  { title: 'Business cards', category: 'Digital printing', position: 'right center' },
-  { title: 'Menu & collateral', category: 'Graphic design', position: 'bottom left' },
-  { title: 'Apparel printing', category: 'Screen printing', position: 'bottom center' },
-  { title: 'Packaging details', category: 'Selected work', position: 'bottom right' },
+  { title: 'Storefront signage', category: 'Signage', position: 'left center', accent: '#F2C94C' },
+  { title: 'Printed brochure', category: 'Offset printing', position: 'center', accent: '#1769AA' },
+  { title: 'Business cards', category: 'Digital printing', position: 'right center', accent: '#F2994A' },
+  { title: 'Menu & collateral', category: 'Graphic design', position: 'bottom left', accent: '#3BA776' },
+  { title: 'Apparel printing', category: 'Screen printing', position: 'bottom center', accent: '#D9468C' },
+  { title: 'Packaging details', category: 'Selected work', position: 'bottom right', accent: '#00A8C6' },
 ];
 
 const process = [
-  { number: '01', title: 'Discuss', copy: 'Share your requirements.', icon: MessageCircle },
-  { number: '02', title: 'Design', copy: 'We create the design.', icon: PenLine },
-  { number: '03', title: 'Print', copy: 'Professional production.', icon: Printer },
-  { number: '04', title: 'Deliver', copy: 'Get your finished work.', icon: Clock3 },
+  { number: '01', title: 'Discuss', copy: 'Share your requirements.', icon: MessageCircle, accent: '#1769AA' },
+  { number: '02', title: 'Design', copy: 'We create the design.', icon: PenLine, accent: '#D9468C' },
+  { number: '03', title: 'Print', copy: 'Professional production.', icon: Printer, accent: '#D7A918' },
+  { number: '04', title: 'Deliver', copy: 'Get your finished work.', icon: Clock3, accent: '#3BA776' },
 ];
 
-function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -55,7 +55,7 @@ function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; 
     return () => observer.disconnect();
   }, []);
   return (
-    <div ref={elementRef} className={`transition-all duration-700 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div ref={elementRef} className={`transition-all duration-700 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -162,13 +162,14 @@ function Home() {
       </header>
 
       <main>
-        <section id="home" className="relative isolate overflow-hidden border-b border-[#edf1f4] bg-[#f2f7fa] pt-[70px]">
+       <section id="home" className="relative isolate overflow-hidden border-b border-[#edf1f4] bg-[#f7f8fa] pt-[70px]">
           <div className="pointer-events-none absolute -left-28 top-[-130px] -z-10 h-[530px] w-[600px] rounded-full border border-[#dce9f0] bg-white/35" />
           <div className="pointer-events-none absolute right-[-180px] top-[28px] -z-10 h-[470px] w-[650px] rounded-[50%] border border-[#e1edf3] bg-[#eaf3f7]/70" />
           <div className="container-nna grid min-h-[580px] items-center gap-9 py-14 lg:grid-cols-[.89fr_1.11fr] lg:gap-4 lg:py-16">
-            <Reveal className="relative z-10 max-w-[520px]">
-              <p className="eyebrow mb-5">Print · Design · Signage · Advertising</p>
-              <h1 className="display max-w-[530px] text-[clamp(2.7rem,5.7vw,5.4rem)] font-extrabold leading-[.93] text-[#11253e]">New National<br /><span className="text-[#1669aa]">Advertising</span></h1>
+             <Reveal className="relative z-10 max-w-[520px]">
+               <p className="eyebrow mb-5">Print · Design · Signage · Advertising</p>
+               <h1 className="display max-w-[530px] text-[clamp(2.7rem,5.7vw,5.4rem)] font-extrabold leading-[.93] text-[#14213d]">New National<br /><span className="text-[#1769aa]">Advertising</span></h1>
+               <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#81909d]"><span className="h-px w-9 bg-[#00a8c6]" /><span className="h-px w-5 bg-[#d9468c]" /><span className="h-px w-3 bg-[#f2c94c]" />Mumbai print studio</div>
               <p className="mt-6 text-lg font-semibold tracking-[-.02em] text-[#253b53]">Printing, Signage &amp; Design Solutions</p>
               <p className="mt-3 max-w-[430px] text-[13px] leading-6 text-[#657589]">Professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals.</p>
               <div className="mt-7 flex flex-wrap gap-3"><PrimaryButton /><SecondaryButton /></div>
@@ -179,30 +180,33 @@ function Home() {
               </div>
             </Reveal>
             <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto">
-              <div className="relative aspect-[1.24/1] overflow-hidden rounded-[18px] bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
+               <div className="relative aspect-[1.24/1] overflow-hidden rounded-[18px] bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
                 <img src="/hero-print-studio.jpg" alt="Printed brochures, colour swatches and signage materials arranged in a bright studio" className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0f2c4a]/38 via-transparent to-transparent" />
                 <div className="absolute left-5 top-5 rounded-sm bg-white/90 px-3 py-2 backdrop-blur"><p className="text-[9px] font-bold tracking-[.18em] text-[#1669aa]">YOUR IDEAS</p><p className="mt-0.5 text-[12px] font-semibold text-[#152a43]">Our print.</p></div>
+                 <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-white/50 bg-white/82 px-3 py-2 backdrop-blur"><div className="print-registration" aria-label="CMYK registration mark"><span /><span /><span /><span /></div><span className="text-[8px] font-bold tracking-[.16em] text-[#14213d]">CMYK / PRINT</span></div>
                 <div className="absolute bottom-5 right-5 max-w-[130px] border-l-2 border-[#4da0cd] pl-3 text-[11px] font-semibold leading-4 text-white">Print large.<br />Think bigger.</div>
               </div>
-              <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
+               <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
+                 <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
                 <p className="eyebrow text-[8px]">Made in Mumbai</p><p className="mt-1 text-[11px] font-semibold text-[#213951]">From ideas to impact.</p>
+                 <div className="ink-strip mt-2 w-16"><span /><span /><span /><span /></div>
               </div>
             </Reveal>
           </div>
         </section>
 
-        <section id="services" className="bg-white py-20 lg:py-24">
+         <section id="services" className="bg-white py-20 lg:py-24">
           <div className="container-nna">
             <Reveal className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div><p className="eyebrow">What we do</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[40px]">Our Services</h2></div>
               <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide complete printing and advertising solutions under one roof.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
             </Reveal>
             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service, index) => { const Icon = service.icon; return (
-                <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white">
-                  <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={`${service.title} printing materials`} className="h-full w-full object-cover" style={{ objectPosition: index === 4 ? 'center' : 'center' }} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[#1669aa]"><Icon size={15} /></div></div>
-                   <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#c9dae5] text-[#1669aa] transition group-hover:bg-[#1669aa] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><details className="service-details mt-3"><summary className="cursor-pointer text-[10px] font-bold text-[#1669aa]">View full range</summary><p className="mt-2 text-[10px] leading-5 text-[#718092]">{service.items.join(' · ')}</p></details></div>
+               {services.map((service, index) => { const Icon = service.icon; return (
+                 <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
+                   <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={`${service.title} printing materials`} className="h-full w-full object-cover" style={{ objectPosition: index === 4 ? 'center' : 'center' }} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                    <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><details className="service-details mt-3"><summary className="cursor-pointer text-[10px] font-bold">View full range</summary><p className="mt-2 text-[10px] leading-5 text-[#718092]">{service.items.join(' · ')}</p></details></div>
                 </Reveal>
               ); })}
             </div>
@@ -214,8 +218,8 @@ function Home() {
           <div className="container-nna">
             <Reveal><p className="eyebrow">Why choose us</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Quality in Every Print</h2></Reveal>
             <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {[['Quality Printing', 'Clear & vibrant results', CircleCheck], ['Wide Range of Services', 'All your printing needs', Grid2X2], ['Custom Solutions', 'Tailored for your requirements', PenLine], ['Reliable Service', 'Professional service', Clock3]].map(([title, copy, Icon], index) => (
-                <Reveal key={title as string} delay={index * 60} className="flex items-start gap-3 rounded-[8px] border border-[#e0e8ed] bg-white px-4 py-4 shadow-[0_5px_16px_rgba(31,61,87,.035)]"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#edf6fb] text-[#1669aa]"><Icon size={16} /></div><div><h3 className="text-[11px] font-bold text-[#243b54]">{title as string}</h3><p className="mt-1 text-[10px] text-[#84919e]">{copy as string}</p></div></Reveal>
+               {[['Quality Printing', 'Clear & vibrant results', CircleCheck, '#1769AA', '#F1F7FC'], ['Wide Range of Services', 'All your printing needs', Grid2X2, '#00A8C6', '#F0FBFC'], ['Custom Solutions', 'Tailored for your requirements', PenLine, '#3BA776', '#F1FAF5'], ['Reliable Service', 'Professional service', Clock3, '#F2994A', '#FFF7EF']].map(([title, copy, Icon, accent, tint], index) => (
+                 <Reveal key={title as string} delay={index * 60} className="flex items-start gap-3 rounded-[8px] border border-[#e0e8ed] bg-white px-4 py-4 shadow-[0_5px_16px_rgba(31,61,87,.035)]"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md" style={{ backgroundColor: tint as string, color: accent as string }}><Icon size={16} /></div><div><h3 className="text-[11px] font-bold text-[#243b54]">{title as string}</h3><p className="mt-1 text-[10px] text-[#84919e]">{copy as string}</p></div></Reveal>
               ))}
             </div>
           </div>
@@ -233,17 +237,46 @@ function Home() {
           </div>
         </section>
 
-        <section id="work" className="bg-[#f7f9fa] py-20 lg:py-24">
+         <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
           <div className="container-nna">
             <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
             <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
-              {work.map((item, index) => (
-                <Reveal key={item.title} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''} ${index === 3 ? 'md:col-span-1' : ''}`}>
-                  <div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}><img src={index === 0 ? '/signage-installation.jpg' : index === 1 ? '/design-materials.jpg' : index === 2 ? '/hero-print-studio.jpg' : '/selected-work-grid.jpg'} alt={`${item.title} selected work`} className="h-full w-full object-cover" style={{ objectPosition: item.position }} /><div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/75 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em] text-[#c3deee]">{item.category}</p><h3 className="mt-1 text-[13px] font-semibold">{item.title}</h3></div><span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#1669aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div>
+               {work.map((item, index) => (
+                 <Reveal key={item.title} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''} ${index === 3 ? 'md:col-span-1' : ''}`} style={{ '--service-accent': item.accent } as CSSProperties}>
+                   <div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}><img src={index === 0 ? '/signage-installation.jpg' : index === 1 ? '/design-materials.jpg' : index === 2 ? '/hero-print-studio.jpg' : '/selected-work-grid.jpg'} alt={`${item.title} selected work`} className="h-full w-full object-cover" style={{ objectPosition: item.position }} /><div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/75 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em]" style={{ color: item.accent }}>{item.category}</p><h3 className="mt-1 text-[13px] font-semibold">{item.title}</h3></div><span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div>
                 </Reveal>
               ))}
             </div>
             <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — representative printing, signage and design mockups.</p>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 lg:py-20">
+          <div className="container-nna grid items-center gap-8 lg:grid-cols-[.78fr_1.22fr] lg:gap-14">
+            <Reveal>
+              <p className="eyebrow">The print studio</p>
+              <h2 className="display mt-2 max-w-[380px] text-3xl font-extrabold leading-[.98] tracking-[-.05em] text-[#14213d] sm:text-[43px]">COLOR THAT<br /><span className="text-[#1769aa]">BRINGS IDEAS TO LIFE.</span></h2>
+              <p className="mt-4 max-w-[350px] text-[12px] leading-6 text-[#68798a]">From the first proof to the final trim, we keep every color, edge and finish working for your brand.</p>
+              <div className="mt-6 flex items-center gap-3"><div className="ink-strip w-28"><span /><span /><span /><span /></div><span className="text-[9px] font-bold uppercase tracking-[.16em] text-[#7d8c99]">C · M · Y · K</span></div>
+            </Reveal>
+            <Reveal delay={100} className="relative">
+              <div className="print-story-card relative overflow-hidden rounded-[12px] border border-[#e3e8eb] p-5 sm:p-7">
+                <span className="crop-corner crop-corner--tl text-[#00a8c6]" /><span className="crop-corner crop-corner--br text-[#d9468c]" />
+                <div className="relative z-10 grid gap-4 sm:grid-cols-[.78fr_1.22fr]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="swatch-cmyk h-24 rounded-[5px] bg-[#00a8c6] p-2 text-[9px] font-bold text-white">C / 01</div>
+                    <div className="swatch-cmyk mt-4 h-24 rounded-[5px] bg-[#d9468c] p-2 text-[9px] font-bold text-white">M / 02</div>
+                    <div className="swatch-cmyk -mt-2 h-24 rounded-[5px] bg-[#f2c94c] p-2 text-[9px] font-bold text-[#14213d]">Y / 03</div>
+                    <div className="swatch-cmyk mt-2 h-24 rounded-[5px] bg-[#14213d] p-2 text-[9px] font-bold text-white">K / 04</div>
+                  </div>
+                  <div className="relative min-h-[205px] rounded-[6px] bg-[#f7f8fa] p-4">
+                    <div className="absolute right-4 top-4 h-16 w-12 rotate-6 rounded-sm bg-white shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="absolute left-2 top-3 h-2 w-8 bg-[#f2994a]" /><span className="absolute left-2 top-8 h-1.5 w-6 bg-[#00a8c6]" /><span className="absolute left-2 top-11 h-1.5 w-8 bg-[#14213d]" /></div>
+                    <div className="absolute bottom-5 left-5 w-[68%] -rotate-3 rounded-sm bg-white p-4 shadow-[0_6px_15px_rgba(20,33,61,.13)]"><div className="ink-strip w-full"><span /><span /><span /><span /></div><p className="display mt-5 text-[22px] font-extrabold leading-none text-[#14213d]">Ideas<br /><span className="text-[#1769aa]">in print.</span></p><p className="mt-3 text-[8px] font-bold uppercase tracking-[.16em] text-[#8a969f]">paper / proof / finish</p></div>
+                    <div className="absolute bottom-4 right-4 rounded-sm border border-[#dfe6e9] bg-white px-2 py-1 text-[8px] font-bold uppercase tracking-[.14em] text-[#1769aa]">Printed sample</div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -252,22 +285,22 @@ function Home() {
             <Reveal className="text-center"><p className="eyebrow">Our process</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">From Idea to Impact</h2></Reveal>
             <div className="relative mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
               <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-[#dce7ed] lg:block" />
-              {process.map((step, index) => { const Icon = step.icon; return <Reveal key={step.number} delay={index * 70} className="relative flex gap-4 lg:block lg:text-center"><div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#bed6e4] bg-white text-[#1669aa] lg:mx-auto"><Icon size={18} /></div><div className="lg:mt-4"><p className="text-[10px] font-bold tracking-[.15em] text-[#1669aa]">{step.number}</p><h3 className="mt-1 text-[13px] font-bold uppercase text-[#223b55]">{step.title}</h3><p className="mt-1 text-[11px] text-[#8a98a4]">{step.copy}</p></div></Reveal>; })}
+               {process.map((step, index) => { const Icon = step.icon; return <Reveal key={step.number} delay={index * 70} className="relative flex gap-4 lg:block lg:text-center"><div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border bg-white lg:mx-auto" style={{ borderColor: `${step.accent}55`, color: step.accent }}><Icon size={18} /></div><div className="lg:mt-4"><p className="text-[10px] font-bold tracking-[.15em]" style={{ color: step.accent }}>{step.number}</p><h3 className="mt-1 text-[13px] font-bold uppercase text-[#223b55]">{step.title}</h3><p className="mt-1 text-[11px] text-[#8a98a4]">{step.copy}</p></div></Reveal>; })}
             </div>
           </div>
         </section>
 
-        <section className="overflow-hidden bg-[#eaf3f7] py-20 lg:py-24">
+         <section className="overflow-hidden bg-[#f3f7f8] py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <Reveal><p className="eyebrow">Built for your brand</p><h2 className="display mt-3 max-w-[440px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Design that supports your brand.</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">From a first logo to the final printed piece, every detail has a job to do.</p><a href="#contact" data-testid="link-design-enquiry" className="arrow-link mt-6 inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">Start a design conversation <ArrowRight size={14} /></a></Reveal>
-            <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#1669aa]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#162d48]" /><div className="h-7 rounded bg-[#277eaf]" /><div className="h-7 rounded bg-[#dce9ed]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1669aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div></Reveal>
+             <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
           </div>
         </section>
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
-            <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><img src="/signage-installation.jpg" alt="Acrylic and illuminated sign board installation" className="h-[280px] w-full object-cover sm:h-[350px]" /></Reveal>
-            <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">Professional signage designed to be seen clearly, day and night — from first sketch to final installation.</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{['Acrylic', 'LED', 'Crystal Letters', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Standee', 'Sunboard Cutouts'].map((item) => <div key={item} className="flex items-center gap-2"><Check size={13} className="text-[#1669aa]" />{item}</div>)}</div></Reveal>
+             <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/signage-installation.jpg" alt="Acrylic and illuminated sign board installation" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
+             <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">Professional signage designed to be seen clearly, day and night — from first sketch to final installation.</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{['Acrylic', 'LED', 'Crystal Letters', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Standee', 'Sunboard Cutouts'].map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
           </div>
         </section>
 
