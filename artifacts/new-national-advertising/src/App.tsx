@@ -5,7 +5,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
-import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
+import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
@@ -657,10 +657,10 @@ function Home() {
              <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {services.map((service, index) => { const Icon = service.icon; return (
                   <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
-                    <a href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
+                    <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
                       <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
                       <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
-                    </a>
+                    </Link>
                  </Reveal>
                ); })}
              </div>
@@ -979,10 +979,10 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="eyebrow">Continue exploring</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641] sm:text-[40px]">You may also need</h2></div><a href="/#services" className="arrow-link inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">View all services <ArrowRight size={14} /></a></div>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {relatedServices.map((related) => (
-                <a key={related.slug} href={`/services/${related.slug}`} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': related.accent, '--service-tint': related.tint } as CSSProperties}>
+                <Link key={related.slug} href={`/services/${related.slug}`} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': related.accent, '--service-tint': related.tint } as CSSProperties}>
                   <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={related.image} alt={related.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
                   <div className="flex items-center justify-between gap-3 p-5"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{related.title}</h3><ArrowRight size={15} className="text-[var(--service-accent)] transition group-hover:translate-x-1" /></div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
