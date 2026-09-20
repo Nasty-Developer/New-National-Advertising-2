@@ -1,0 +1,1 @@
+- [GitHub import verification](github-import-verification.md) — verify the app artifact exists before configuring preview; template-only workspaces can otherwise appear blank.

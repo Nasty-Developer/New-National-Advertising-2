@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -12,13 +13,139 @@ const queryClient = new QueryClient();
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
 
 const services = [
-  { title: 'Sign Boards', description: 'Professional signage and display solutions that help brands stand out.', items: ['Acrylic Clip-on Board', 'Crystal Letter', 'LED Signage', 'Steel & Brass Letter', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutout'], image: '/signage-installation.jpg', icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
-  { title: 'Solvent Flex', description: 'Flex, vinyl, canvas, sunboard and backlit printing solutions.', items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'], image: '/hero-print-studio.jpg', icon: Printer, accent: '#00A8C6', tint: '#F1FBFC' },
-  { title: 'Offset Printing', description: 'Professional printed materials for businesses, events and everyday needs.', items: ['Brochure & Catalogues', 'Calendar', 'Letterhead', 'Business Card', 'Bill Book', 'Envelope', 'Wedding Card', 'Flyer & Leaflet', 'Pavti Book', 'Menu Card'], image: '/design-materials.jpg', icon: FileText, accent: '#1769AA', tint: '#F3F8FC' },
-  { title: 'Screen Printing', description: 'Screen printing for apparel, stationery, promotional products and more.', items: ['Wedding Card', 'Visiting Card', 'Letterhead', 'T-Shirt', 'Envelope', 'Cap', 'Umbrella', 'Carry Bag', 'ID Ribbon', 'School Bag'], image: '/selected-work-grid.jpg', icon: PenLine, accent: '#D9468C', tint: '#FFF5F9' },
-  { title: 'Graphics Design', description: 'Creative design solutions for branding, marketing and communication.', items: ['Logo Design', 'Social Media Posts', 'Hoarding Banner', 'Menu Card', 'Flyer', 'Product Packaging', 'Magazine Ads', 'Visiting Card', 'Invitation', 'Brochure', 'Calendar'], image: '/design-materials.jpg', icon: Grid2X2, accent: '#3BA776', tint: '#F3FBF7' },
-  { title: 'Banner Printing', description: 'Banner printing and advertising materials.', items: ['Banner Printing', 'Advertising Materials'], image: '/selected-work-grid.jpg', icon: Printer, accent: '#F26B5B', tint: '#FFF5F2' },
-  { title: 'Digital Printing', description: 'Fast, detailed digital printing for personal and business requirements.', items: ['Visiting Card', 'Brochure', 'Catalogue', 'Pamphlet', 'Poster', 'Annual Reports', 'UV Print', 'Hotel Menu', 'Hospital File', 'Trophy Sticker'], image: '/design-materials.jpg', icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
+  {
+    slug: 'sign-boards',
+    title: 'Sign Boards',
+    category: 'Signage solutions',
+    description: 'Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.',
+    whatIs: 'Sign boards give your storefront, office or event a clear visual identity. We help turn your brand into a physical display that is easy to notice in daylight and after dark.',
+    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutouts'],
+    applications: ['Shop Signage', 'Office Signage', 'Brand Displays', 'Promotional Displays', 'Indoor Signage', 'Outdoor Signage', 'Event Displays'],
+    materials: ['Acrylic', 'Crystal letters', 'LED', 'Steel and brass', 'Sunboard'],
+    whyChoose: ['Clearer brand visibility', 'Options for indoor and outdoor use', 'A choice of illuminated and non-illuminated finishes'],
+    image: '/service-sign-boards.jpg',
+    imageAlt: 'Modern storefront with acrylic and illuminated sign boards',
+    icon: Ruler,
+    accent: '#D7A918',
+    tint: '#FFFCF0',
+    seoTitle: 'Sign Board Services in Mumbai | New National Advertising',
+    seoDescription: 'Professional sign board, acrylic, LED, backlit and storefront signage solutions from New National Advertising in Mumbai.',
+    related: ['solvent-flex', 'banner-printing', 'graphics-design'],
+  },
+  {
+    slug: 'solvent-flex',
+    title: 'Solvent Flex',
+    category: 'Large-format printing',
+    description: 'Large-format printing solutions for banners, displays, branding and promotional applications.',
+    whatIs: 'Solvent flex printing is built for bold, visible graphics across banners, vinyl, window graphics and display materials. It is a practical way to carry a campaign from a storefront to a larger outdoor setting.',
+    items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'],
+    applications: ['Advertising Banners', 'Shop Branding', 'Outdoor Advertising', 'Window Graphics', 'Promotional Displays', 'Backlit Displays'],
+    materials: ['Star flex', 'Black back flex', 'One way vision', 'Canvas', 'Gloss vinyl', 'Matt vinyl', 'Sunboard and sunpack'],
+    whyChoose: ['Strong visual impact at larger sizes', 'Flexible options for windows, walls and displays', 'Suitable for colorful promotional artwork'],
+    image: '/service-solvent-flex.jpg',
+    imageAlt: 'Large-format flex banner and rolled vinyl beside a professional printer',
+    icon: Printer,
+    accent: '#00A8C6',
+    tint: '#F1FBFC',
+    seoTitle: 'Flex & Large Format Printing in Mumbai | New National Advertising',
+    seoDescription: 'Large-format solvent flex, vinyl, canvas, sunboard and backlit printing solutions from New National Advertising in Mumbai.',
+    related: ['banner-printing', 'sign-boards', 'digital-printing'],
+  },
+  {
+    slug: 'offset-printing',
+    title: 'Offset Printing',
+    category: 'Commercial printing',
+    description: 'Professional printed materials for businesses, events, stationery and marketing requirements.',
+    whatIs: 'Offset printing is a dependable choice for polished stationery and marketing collateral. It brings consistent color and a considered paper finish to the pieces your business uses every day.',
+    items: ['Brochure & Catalogues', 'Calendars', 'Letterheads', 'Business Cards', 'Bill Books', 'Envelopes', 'Wedding Cards', 'Flyers & Leaflets', 'Pavti Books', 'Menu Cards'],
+    applications: ['Business stationery', 'Marketing collateral', 'Event materials', 'Retail menus', 'Wedding and invitation suites'],
+    materials: ['Paper stocks', 'Brochure paper', 'Card stocks', 'Envelopes', 'Finished and folded pieces'],
+    whyChoose: ['Consistent color across a printed set', 'A professional finish for business materials', 'Suitable for coordinated stationery and collateral'],
+    image: '/service-offset-printing.jpg',
+    imageAlt: 'Stacks of brochures, business cards and letterheads in an offset print studio',
+    icon: FileText,
+    accent: '#1769AA',
+    tint: '#F3F8FC',
+    seoTitle: 'Offset Printing in Mumbai | New National Advertising',
+    seoDescription: 'Offset printing for brochures, catalogues, stationery, business cards, menus and event materials in Mumbai.',
+    related: ['digital-printing', 'graphics-design', 'screen-printing'],
+  },
+  {
+    slug: 'screen-printing',
+    title: 'Screen Printing',
+    category: 'Custom print finishes',
+    description: 'Custom screen printing for apparel, promotional products and printed materials.',
+    whatIs: 'Screen printing places a distinct layer of ink onto a surface, making it a useful option for apparel, bags, stationery and promotional pieces that benefit from a tactile printed finish.',
+    items: ['Wedding Cards', 'Visiting Cards', 'Letterheads', 'T-Shirts', 'Envelopes', 'Caps', 'Umbrellas', 'Carry Bags', 'ID Ribbons', 'School Bags'],
+    applications: ['Apparel printing', 'Promotional products', 'School and event materials', 'Carry bags', 'Stationery'],
+    materials: ['T-shirts', 'Caps', 'Carry bags', 'Umbrellas', 'Paper and stationery', 'School bags'],
+    whyChoose: ['Tactile ink texture', 'Works across apparel and promotional materials', 'A practical fit for branded collections'],
+    image: '/service-screen-printing.jpg',
+    imageAlt: 'Screen-printed apparel, carry bags and promotional materials in a print studio',
+    icon: PenLine,
+    accent: '#D9468C',
+    tint: '#FFF5F9',
+    seoTitle: 'Screen Printing in Mumbai | New National Advertising',
+    seoDescription: 'Custom screen printing for t-shirts, caps, bags, stationery, umbrellas and promotional materials in Mumbai.',
+    related: ['graphics-design', 'offset-printing', 'digital-printing'],
+  },
+  {
+    slug: 'graphics-design',
+    title: 'Graphics Design',
+    category: 'Brand and creative design',
+    description: 'Professional creative design solutions for branding, marketing and communication.',
+    whatIs: 'Graphics design shapes how your business looks across print, signage and digital touchpoints. We help organize your message into practical, ready-to-use visual assets.',
+    items: ['Logo Design', 'Social Media Posts', 'Hoarding Banners', 'Menu Cards', 'Flyers', 'Product Packaging', 'Magazine Ads', 'Visiting Cards', 'Invitations', 'Brochures', 'Calendars'],
+    applications: ['Brand identity', 'Social media communication', 'Retail and menu design', 'Packaging', 'Advertising campaigns'],
+    materials: ['Logo systems', 'Print-ready artwork', 'Packaging layouts', 'Digital social formats', 'Marketing collateral'],
+    whyChoose: ['A consistent visual language across materials', 'Design prepared for real print applications', 'Clearer communication for customers and teams'],
+    image: '/service-graphics-design.jpg',
+    imageAlt: 'Creative design desk with branding layouts, packaging and print materials',
+    icon: Grid2X2,
+    accent: '#3BA776',
+    tint: '#F3FBF7',
+    seoTitle: 'Graphics Design Services in Mumbai | New National Advertising',
+    seoDescription: 'Graphics design for logos, packaging, social posts, menus, brochures, flyers and marketing communication in Mumbai.',
+    related: ['offset-printing', 'digital-printing', 'sign-boards'],
+  },
+  {
+    slug: 'banner-printing',
+    title: 'Banner Printing',
+    category: 'Advertising materials',
+    description: 'Large-format advertising banners for businesses, promotions, events and outdoor visibility.',
+    whatIs: 'Banner printing helps a message stay visible across storefronts, events, promotions and outdoor advertising placements. We produce banner artwork and printed advertising materials around the use case.',
+    items: ['Banner Printing', 'Advertising Materials'],
+    applications: ['Store promotions', 'Event backdrops', 'Outdoor advertising', 'Launch announcements', 'Directional displays'],
+    materials: ['Printed banner material', 'Large-format graphics', 'Display-ready advertising artwork'],
+    whyChoose: ['Clear communication from a distance', 'Flexible for promotions and events', 'Designed around the placement and viewing context'],
+    image: '/service-banner-printing.jpg',
+    imageAlt: 'Large-format advertising banner being printed in a commercial studio',
+    icon: Printer,
+    accent: '#F26B5B',
+    tint: '#FFF5F2',
+    seoTitle: 'Banner Printing in Mumbai | New National Advertising',
+    seoDescription: 'Large-format advertising banner printing for businesses, promotions, events and outdoor visibility in Mumbai.',
+    related: ['solvent-flex', 'sign-boards', 'digital-printing'],
+  },
+  {
+    slug: 'digital-printing',
+    title: 'Digital Printing',
+    category: 'Fast, detailed printing',
+    description: 'High-quality digital printing for business, promotional and everyday printing requirements.',
+    whatIs: 'Digital printing is a flexible route for sharp, colorful business and marketing materials. It works well when you need polished printed pieces with a practical turnaround and a range of formats.',
+    items: ['Visiting Cards', 'Brochures', 'Catalogues', 'Pamphlets', 'Posters', 'Annual Reports', 'UV Print', 'Hotel Menus', 'Hospital Files', 'Trophy Stickers'],
+    applications: ['Business cards', 'Marketing handouts', 'Posters and pamphlets', 'Menus and reports', 'Specialty printed pieces'],
+    materials: ['Card stocks', 'Brochure paper', 'Poster paper', 'Menu materials', 'UV print surfaces'],
+    whyChoose: ['Crisp detail for colorful artwork', 'Flexible for business and promotional formats', 'A practical option for everyday print requirements'],
+    image: '/service-digital-printing.jpg',
+    imageAlt: 'Digital printer producing colorful brochures, posters and marketing materials',
+    icon: Sparkles,
+    accent: '#F2994A',
+    tint: '#FFF8F1',
+    seoTitle: 'Digital Printing in Mumbai | New National Advertising',
+    seoDescription: 'Digital printing for business cards, brochures, posters, menus, reports and promotional materials in Mumbai.',
+    related: ['offset-printing', 'graphics-design', 'banner-printing'],
+  },
 ];
 
 const work = [
@@ -35,6 +162,15 @@ const process = [
   { number: '02', title: 'Design', copy: 'We create the design.', icon: PenLine, accent: '#D9468C' },
   { number: '03', title: 'Print', copy: 'Professional production.', icon: Printer, accent: '#D7A918' },
   { number: '04', title: 'Deliver', copy: 'Get your finished work.', icon: Clock3, accent: '#3BA776' },
+];
+
+const navigationItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Our Work', href: '/#work' },
+  { label: 'About', href: '/#about' },
+  { label: 'Products', href: '/products' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
@@ -64,7 +200,7 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
 
 function Logo({ light = false }: { light?: boolean }) {
   return (
-    <a href="#home" aria-label="New National Advertising home" data-testid="link-logo" className={`leading-none ${light ? 'text-white' : 'text-[#122641]'}`}>
+    <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className={`leading-none ${light ? 'text-white' : 'text-[#122641]'}`}>
       <span className="block display text-[17px] font-extrabold tracking-[-.07em]">New National</span>
       <span className={`block mt-0.5 text-[8px] font-bold tracking-[.34em] ${light ? 'text-[#a9c9e2]' : 'text-[#2274ad]'}`}>ADVERTISING</span>
     </a>
@@ -87,16 +223,69 @@ function SecondaryButton({ href = '#services', children = 'View Services' }: { h
   );
 }
 
-function Home() {
+function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
+      <div className="container-nna flex h-[70px] items-center justify-between">
+        <Logo />
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
+          {navigationItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              data-testid={`link-nav-${item.label.toLowerCase().replace(' ', '-')}`}
+              aria-current={location === item.href || (item.label === 'Home' && location === '/') ? 'page' : undefined}
+              className={`text-[11px] font-medium transition hover:text-[#1669aa] ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#405268]'}`}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div className="hidden items-center gap-5 md:flex">
+          <a href="tel:+919555759677" data-testid="link-header-phone" className="flex items-center gap-2 text-[11px] font-semibold text-[#233952]"><Phone size={13} className="text-[#1669aa]" />9555759677</a>
+          <PrimaryButton href={quoteHref} />
+        </div>
+        <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] md:hidden">
+          {menuOpen ? <X size={23} /> : <Menu size={23} />}
+        </button>
+      </div>
+      {menuOpen && (
+        <div className="border-t border-[#e4ebf0] bg-white px-5 pb-6 pt-4 shadow-lg md:hidden">
+          <nav className="container-nna flex flex-col gap-1" aria-label="Mobile navigation">
+            {navigationItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={closeMenu}
+                data-testid={`link-mobile-${item.label.toLowerCase().replace(' ', '-')}`}
+                aria-current={location === item.href ? 'page' : undefined}
+                className={`border-b border-[#edf1f4] py-3 text-sm font-semibold ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#203954]'}`}
+              >
+                {item.label}
+              </a>
+            ))}
+            <div className="mt-4"><PrimaryButton href={quoteHref} onClick={closeMenu} /></div>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+}
+
+function Home() {
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -116,8 +305,6 @@ function Home() {
     setSubmitted(true);
   };
 
-  const closeMenu = () => setMenuOpen(false);
-
   return (
     <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -132,35 +319,7 @@ function Home() {
         makesOffer: services.map((service) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: service.title, description: service.description } })),
       }) }} />
 
-      <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
-        <div className="container-nna flex h-[70px] items-center justify-between">
-          <Logo />
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
-            {['Home', 'Services', 'Our Work', 'About', 'Contact'].map((item) => (
-              <a key={item} href={`#${item === 'Our Work' ? 'work' : item.toLowerCase()}`} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`} className="text-[11px] font-medium text-[#405268] transition hover:text-[#1669aa]">
-                {item}
-              </a>
-            ))}
-          </nav>
-          <div className="hidden items-center gap-5 md:flex">
-            <a href="tel:+919555759677" data-testid="link-header-phone" className="flex items-center gap-2 text-[11px] font-semibold text-[#233952]"><Phone size={13} className="text-[#1669aa]" />9555759677</a>
-            <PrimaryButton />
-          </div>
-          <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] md:hidden">
-            {menuOpen ? <X size={23} /> : <Menu size={23} />}
-          </button>
-        </div>
-        {menuOpen && (
-          <div className="border-t border-[#e4ebf0] bg-white px-5 pb-6 pt-4 shadow-lg md:hidden">
-            <nav className="container-nna flex flex-col gap-1" aria-label="Mobile navigation">
-              {['Home', 'Services', 'Our Work', 'About', 'Contact'].map((item) => (
-                <a key={item} href={`#${item === 'Our Work' ? 'work' : item.toLowerCase()}`} onClick={closeMenu} data-testid={`link-mobile-${item.toLowerCase().replace(' ', '-')}`} className="border-b border-[#edf1f4] py-3 text-sm font-semibold text-[#203954]">{item}</a>
-              ))}
-              <div className="mt-4"><PrimaryButton onClick={closeMenu} /></div>
-            </nav>
-          </div>
-        )}
-      </header>
+      <SiteHeader />
 
       <main>
        <section id="home" className="relative isolate overflow-hidden border-b border-[#edf1f4] bg-[#f7f8fa] pt-[70px]">
@@ -203,14 +362,16 @@ function Home() {
               <div><p className="eyebrow">What we do</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[40px]">Our Services</h2></div>
               <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide complete printing and advertising solutions under one roof.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
             </Reveal>
-            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-               {services.map((service, index) => { const Icon = service.icon; return (
-                 <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
-                   <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={`${service.title} printing materials`} className="h-full w-full object-cover" style={{ objectPosition: index === 4 ? 'center' : 'center' }} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
-                    <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><details className="service-details mt-3"><summary className="cursor-pointer text-[10px] font-bold">View full range</summary><p className="mt-2 text-[10px] leading-5 text-[#718092]">{service.items.join(' · ')}</p></details></div>
-                </Reveal>
-              ); })}
-            </div>
+             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {services.map((service, index) => { const Icon = service.icon; return (
+                  <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
+                    <a href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
+                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                      <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
+                    </a>
+                 </Reveal>
+               ); })}
+             </div>
             <div className="mt-5 rounded-[10px] border border-[#e2e9ee] bg-[#f8fafb] px-5 py-4 text-center text-[11px] text-[#647487]"><span className="font-bold text-[#263e57]">Other Services</span><span className="mx-2 text-[#b7c4cc]">/</span>Sunboard / Sunpack · PVC Cards · Resume / Bio-Data · Wooden / MS Frames</div>
           </div>
         </section>
@@ -316,7 +477,7 @@ function Home() {
       <footer className="bg-[#102941] pb-24 text-white md:pb-0">
         <div className="container-nna grid gap-10 py-12 md:grid-cols-[1.35fr_1fr_1fr] md:py-14">
           <div><Logo light /><p className="mt-5 max-w-[250px] text-[10px] leading-5 text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
-          <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[11px] text-[#c1ced8]">{['Home', 'Services', 'Our Work', 'About', 'Contact'].map((item) => <a key={item} href={`#${item === 'Our Work' ? 'work' : item.toLowerCase()}`} data-testid={`link-footer-${item.toLowerCase().replace(' ', '-')}`} className="hover:text-white">{item}</a>)}</nav></div>
+          <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} data-testid={`link-footer-${item.label.toLowerCase().replace(' ', '-')}`} className="hover:text-white">{item.label}</a>)}</nav></div>
           <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-3 text-[11px] text-[#c1ced8]"><a href="tel:+919555759677" data-testid="link-footer-phone" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-footer-email" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><p>Mumbai, Maharashtra, India</p></div></div>
         </div>
         <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© New National Advertising. All rights reserved.</span><span>Printing, signage &amp; design solutions in Mumbai.</span></div></div>
@@ -331,10 +492,229 @@ function Home() {
   );
 }
 
+function Products() {
+  return (
+    <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641]">
+      <SiteHeader quoteHref="/#contact" />
+      <main className="flex min-h-[100dvh] items-center pt-[70px]">
+        <section className="container-nna w-full py-20">
+          <div className="mx-auto max-w-[560px] rounded-[12px] border border-[#e2e9ee] bg-white px-6 py-16 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)] sm:px-10">
+            <p className="eyebrow">Products</p>
+            <h1 className="display mt-3 text-4xl font-extrabold tracking-[-.055em] text-[#122641] sm:text-[48px]">Products coming soon</h1>
+            <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing this collection. Check back soon for what’s new from New National Advertising.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function upsertMeta(attribute: 'name' | 'property', key: string, content: string) {
+  let element = document.head.querySelector(`meta[${attribute}="${key}"]`) as HTMLMetaElement | null;
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attribute, key);
+    document.head.appendChild(element);
+  }
+  element.content = content;
+}
+
+function ServiceDetailPage({ params }: { params: { slug?: string } }) {
+  const [submitted, setSubmitted] = useState(false);
+  const service = services.find((item) => item.slug === params.slug);
+
+  useEffect(() => {
+    if (!service) return;
+    const canonicalUrl = `${window.location.origin}/services/${service.slug}`;
+    document.title = service.seoTitle;
+    upsertMeta('name', 'description', service.seoDescription);
+    upsertMeta('property', 'og:title', service.seoTitle);
+    upsertMeta('property', 'og:description', service.seoDescription);
+    upsertMeta('property', 'og:url', canonicalUrl);
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+  }, [service]);
+
+  if (!service) return <NotFound />;
+
+  const relatedServices = service.related
+    .map((slug) => services.find((item) => item.slug === slug))
+    .filter((item): item is typeof services[number] => Boolean(item));
+  const whatsappBookingUrl = `${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(`Hello New National Advertising, I would like to book/enquire about ${service.title}.`)}`;
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const message = [
+      `Hello New National Advertising, I would like to book/enquire about ${service.title}.`,
+      '',
+      `Name: ${formData.get('name') ?? ''}`,
+      `Phone: ${formData.get('phone') ?? ''}`,
+      `Email: ${formData.get('email') ?? ''}`,
+      `Service: ${formData.get('service') ?? service.title}`,
+      `Requirement: ${formData.get('requirement') ?? ''}`,
+      `Quantity: ${formData.get('quantity') || 'Not specified'}`,
+      `Preferred date: ${formData.get('date') || 'Not specified'}`,
+      `Uploaded file: ${(formData.get('file') as File)?.name || 'None'}`,
+    ].join('\n');
+    window.open(`${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641] pb-[58px] md:pb-0">
+      <SiteHeader quoteHref="#service-enquiry" />
+      <main className="pt-[70px]">
+        <section className="border-b border-[#e4ebf0] bg-[#f7f8fa]">
+          <div className="container-nna py-8 sm:py-12">
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[10px] font-semibold text-[#82909d]">
+              <a href="/" className="transition hover:text-[#1669aa]">Home</a><ChevronDown size={11} className="-rotate-90 text-[#b1bec7]" />
+              <a href="/#services" className="transition hover:text-[#1669aa]">Services</a><ChevronDown size={11} className="-rotate-90 text-[#b1bec7]" />
+              <span className="text-[#1669aa]" aria-current="page">{service.title}</span>
+            </nav>
+            <a href="/#services" className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa] transition hover:gap-3"><ArrowRight size={14} className="rotate-180" />Back to Services</a>
+            <div className="mt-8 grid items-center gap-9 lg:grid-cols-[.84fr_1.16fr] lg:gap-14">
+              <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55 }}>
+                <p className="eyebrow">New National Advertising · Services</p>
+                <h1 className="display mt-4 max-w-[520px] text-5xl font-extrabold leading-[.94] tracking-[-.06em] text-[#14213d] sm:text-[clamp(3.2rem,6vw,5.7rem)]">{service.title}</h1>
+                <p className="mt-6 max-w-[480px] text-[15px] leading-7 text-[#5f7183]">{service.description}</p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a href="#service-enquiry" className="button-arrow inline-flex items-center justify-center gap-3 rounded-full bg-[#1669aa] px-5 py-3 text-[11px] font-bold text-white shadow-[0_7px_18px_rgba(22,105,170,.18)] transition hover:-translate-y-0.5 hover:bg-[#125b94]">Book This Service <ArrowRight size={15} /></a>
+                  <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-5 py-3 text-[11px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><MessageCircle size={14} className="text-[#2c9b70]" />Book via WhatsApp</a>
+                </div>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, scale: .98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .7, delay: .08 }} className="relative">
+                <div className="overflow-hidden rounded-[16px] border border-white bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
+                  <img src={service.image} alt={service.imageAlt} className="aspect-[1.35/1] h-full w-full object-cover transition duration-700 hover:scale-[1.025]" />
+                </div>
+                <div className="absolute -bottom-4 left-4 rounded-[9px] border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:left-7">
+                  <p className="eyebrow text-[8px]" style={{ color: service.accent }}>Print / design / finish</p>
+                  <p className="mt-1 text-[11px] font-semibold text-[#213951]">Made for your brief.</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 lg:py-20">
+          <div className="container-nna grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
+            <div>
+              <p className="eyebrow">What is {service.title}?</p>
+              <h2 className="display mt-3 text-3xl font-extrabold leading-[1] tracking-[-.05em] text-[#122641] sm:text-[42px]">A practical way to make your brand visible.</h2>
+            </div>
+            <div className="max-w-[610px]">
+              <p className="text-[14px] leading-7 text-[#68798a]">{service.whatIs}</p>
+              <div className="mt-7 flex items-center gap-3"><div className="ink-strip w-28"><span /><span /><span /><span /></div><span className="text-[9px] font-bold uppercase tracking-[.16em] text-[#7d8c99]">C · M · Y · K</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f2f6f8] py-16 lg:py-20">
+          <div className="container-nna grid gap-8 lg:grid-cols-2 lg:gap-14">
+            <div className="rounded-[12px] border border-[#dfe8ed] bg-white p-6 sm:p-8">
+              <p className="eyebrow">What we offer</p>
+              <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641]">Available options</h2>
+              <div className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+                {service.items.map((item, index) => <div key={item} className="flex items-start gap-2 text-[12px] font-semibold text-[#354b61]"><Check size={14} className="mt-0.5 shrink-0" style={{ color: [service.accent, '#00A8C6', '#D9468C', '#3BA776'][index % 4] }} />{item}</div>)}
+              </div>
+            </div>
+            <div className="rounded-[12px] border border-[#dfe8ed] bg-white p-6 sm:p-8">
+              <p className="eyebrow">Materials and formats</p>
+              <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641]">Choose what fits the job.</h2>
+              <div className="mt-6 space-y-3">
+                {service.materials.map((item, index) => <div key={item} className="flex items-center gap-3 border-b border-[#edf1f3] pb-3 text-[12px] font-semibold text-[#405268]"><span className="flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ backgroundColor: [service.accent, '#1769AA', '#3BA776', '#F2994A'][index % 4] }}>{String(index + 1).padStart(2, '0')}</span>{item}</div>)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 lg:py-20">
+          <div className="container-nna grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-20">
+            <div>
+              <p className="eyebrow">Where it works best</p>
+              <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641] sm:text-[42px]">Built around the way you use it.</h2>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                {service.applications.map((item, index) => <div key={item} className="flex items-center gap-3 rounded-[8px] border border-[#e1e8ed] bg-[#fbfcfd] px-4 py-3 text-[12px] font-semibold text-[#354b61]"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: [service.accent, '#00A8C6', '#D9468C', '#F2994A'][index % 4] }} />{item}</div>)}
+              </div>
+            </div>
+            <div className="rounded-[12px] bg-[#f3f7f8] p-6 sm:p-8">
+              <p className="eyebrow">Why choose this service</p>
+              <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641]">A considered finish.</h2>
+              <div className="mt-6 space-y-4">
+                {service.whyChoose.map((item) => <div key={item} className="flex items-start gap-3 text-[12px] leading-5 text-[#5f7183]"><Lightbulb size={16} className="mt-0.5 shrink-0" style={{ color: service.accent }} />{item}</div>)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="service-enquiry" className="scroll-mt-20 bg-[#f1f6f8] py-16 lg:py-20">
+          <div className="container-nna grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-20">
+            <div>
+              <p className="eyebrow">Let's work together</p>
+              <h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Book this service.</h2>
+              <p className="mt-5 max-w-[350px] text-[13px] leading-6 text-[#68798a]">Share a few details and we’ll understand the requirement before we speak.</p>
+              <div className="mt-7 flex flex-wrap gap-2">
+                <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Book via WhatsApp</a>
+                <a href="tel:+919555759677" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a>
+              </div>
+            </div>
+            <form onSubmit={handleSubmit} className="rounded-[12px] border border-[#dce6eb] bg-white p-5 shadow-[0_10px_30px_rgba(31,61,87,.06)] sm:p-7" aria-label={`${service.title} enquiry form`}>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="text-[10px] font-bold text-[#445a70]">Name<input required name="name" placeholder="Your name" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70]">Phone Number<input required name="phone" type="tel" placeholder="Your phone number" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70]">Email<input required name="email" type="email" placeholder="Your email" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70]">Service<input readOnly name="service" value={service.title} className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#f5f8fa] px-3 py-2.5 text-[12px] font-normal text-[#647487] outline-none" /></label>
+                <label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Requirement<textarea required name="requirement" rows={3} placeholder={`Tell us about your ${service.title.toLowerCase()} requirement...`} className="mt-1.5 w-full resize-none rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70]">Quantity<input name="quantity" placeholder="e.g. 100" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70]">Preferred Date<input name="date" type="date" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label>
+                <label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Upload File (Optional)<span className="mt-1.5 flex w-full cursor-pointer items-center rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-[9px] text-[11px] font-normal text-[#8d9aa5]"><input type="file" name="file" className="w-full text-[10px]" /></span></label>
+              </div>
+              <button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1669aa] py-3 text-[11px] font-bold text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">{submitted ? 'Enquiry prepared — we will be in touch' : 'Send Enquiry'}<ArrowRight size={14} /></button>
+              {submitted && <p role="status" className="mt-3 text-center text-[11px] font-semibold text-[#24734d]">Your enquiry was prepared for WhatsApp. Please send the message to complete the enquiry.</p>}
+            </form>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 lg:py-20">
+          <div className="container-nna">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="eyebrow">Continue exploring</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.05em] text-[#122641] sm:text-[40px]">You may also need</h2></div><a href="/#services" className="arrow-link inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">View all services <ArrowRight size={14} /></a></div>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {relatedServices.map((related) => (
+                <a key={related.slug} href={`/services/${related.slug}`} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': related.accent, '--service-tint': related.tint } as CSSProperties}>
+                  <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={related.image} alt={related.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                  <div className="flex items-center justify-between gap-3 p-5"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{related.title}</h3><ArrowRight size={15} className="text-[var(--service-accent)] transition group-hover:translate-x-1" /></div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-[#102941] text-white">
+        <div className="container-nna flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
+          <div><Logo light /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
+          <div className="flex flex-wrap gap-4 text-[11px] text-[#c1ced8]"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div>
+        </div>
+      </footer>
+
+      <div className="fixed inset-x-0 bottom-0 z-30 grid h-[58px] grid-cols-3 border-t border-[#dbe5ea] bg-white/96 shadow-[0_-4px_20px_rgba(22,47,70,.1)] backdrop-blur md:hidden">
+        <a href="tel:+919555759677" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><Phone size={16} className="text-[#1669aa]" />CALL</a>
+        <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
+        <a href="#service-enquiry" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />BOOK</a>
+      </div>
+    </div>
+  );
+}
+
 function Router() {
   return (
     <RoutedErrorBoundary>
-      <Switch><Route path="/" component={Home} /><Route component={NotFound} /></Switch>
+      <Switch><Route path="/" component={Home} /><Route path="/products" component={Products} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
     </RoutedErrorBoundary>
   );
 }
