@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import NotFound from '@/pages/not-found';
 
@@ -240,14 +240,14 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
     <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
       <div className="container-nna flex h-[70px] items-center justify-between">
         <Logo />
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
           {navigationItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
               data-testid={`link-nav-${item.label.toLowerCase().replace(' ', '-')}`}
               aria-current={location === item.href || (item.label === 'Home' && location === '/') ? 'page' : undefined}
-              className={`text-[11px] font-medium transition hover:text-[#1669aa] ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#405268]'}`}
+              className={`text-[12px] font-semibold tracking-[-.01em] transition hover:text-[#1669aa] ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#405268]'}`}
             >
               {item.label}
             </a>
@@ -281,6 +281,110 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
         </div>
       )}
     </header>
+  );
+}
+
+type AssistantMessage = { role: 'assistant' | 'user'; text: string };
+
+function getAssistantReply(question: string) {
+  const normalized = question.toLowerCase();
+  const matchedService = services.find((service) =>
+    normalized.includes(service.title.toLowerCase()) ||
+    normalized.includes(service.slug.replaceAll('-', ' ')),
+  );
+
+  if (matchedService) {
+    return `${matchedService.title}: ${matchedService.description} Explore the dedicated service page for offerings, applications, materials and a booking form.`;
+  }
+  if (normalized.includes('service') || normalized.includes('printing') || normalized.includes('sign')) {
+    return 'We offer Sign Boards, Solvent Flex, Offset Printing, Screen Printing, Graphics Design, Banner Printing and Digital Printing. Choose View Services to explore the details.';
+  }
+  if (normalized.includes('quote') || normalized.includes('book') || normalized.includes('enquir')) {
+    return 'You can request a quote from the Contact section or book a specific service from its detail page. For a quick enquiry, use the WhatsApp button below.';
+  }
+  if (normalized.includes('contact') || normalized.includes('phone') || normalized.includes('call') || normalized.includes('email')) {
+    return 'Call New National Advertising on +91 9555759677 or email newnationaladv2022@gmail.com. We are based in Mumbai, Maharashtra, India.';
+  }
+  if (normalized.includes('whatsapp')) {
+    return 'You can start a WhatsApp enquiry with New National Advertising using the green button below.';
+  }
+  return 'I can help with services, printing options, sign boards, quotes and contact details. Try asking about a specific service or choose one of the actions below.';
+}
+
+function FloatingContactActions({ quoteHref = '/#contact' }: { quoteHref?: string }) {
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState('');
+  const [messages, setMessages] = useState<AssistantMessage[]>([
+    { role: 'assistant', text: 'Hi, I’m the New National Assistant. How can we help you?' },
+  ]);
+
+  const askAssistant = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const question = draft.trim();
+    if (!question) return;
+    setMessages((current) => [...current, { role: 'user', text: question }, { role: 'assistant', text: getAssistantReply(question) }]);
+    setDraft('');
+  };
+
+  return (
+    <div className="fixed bottom-[76px] right-4 z-[60] flex flex-col items-end gap-3 md:bottom-6 md:right-6">
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: 10, scale: .98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="w-[350px] max-w-[calc(100vw-32px)] overflow-hidden rounded-[16px] border border-[#dce6eb] bg-white shadow-[0_18px_50px_rgba(20,51,78,.18)]"
+          role="dialog"
+          aria-label="New National Assistant"
+        >
+          <div className="bg-[#102941] px-5 py-4 text-white">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="display text-[17px] font-extrabold tracking-[-.03em]">New National Assistant</p>
+                <p className="mt-1 text-[11px] text-[#b8cbd8]">How can we help you?</p>
+              </div>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close assistant" className="rounded-full p-1.5 text-[#c5d5df] transition hover:bg-white/10 hover:text-white"><X size={16} /></button>
+            </div>
+          </div>
+          <div className="max-h-[250px] space-y-3 overflow-y-auto bg-[#f7fafb] px-4 py-4" aria-live="polite">
+            {messages.map((message, index) => (
+              <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <p className={`max-w-[86%] rounded-[10px] px-3 py-2 text-[11px] leading-5 ${message.role === 'user' ? 'bg-[#1669aa] text-white' : 'border border-[#e1e9ee] bg-white text-[#53687a]'}`}>{message.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-[#e4ebef] bg-white px-4 py-3">
+            <div className="mb-3 grid grid-cols-2 gap-2">
+              {[
+                { label: 'View Services', href: '/#services' },
+                { label: 'Get a Quote', href: quoteHref },
+                { label: 'Talk on WhatsApp', href: whatsappUrl },
+                { label: 'Contact Us', href: '/#contact' },
+              ].map((action) => (
+                <a key={action.label} href={action.href} target={action.href.startsWith('https://') ? '_blank' : undefined} rel={action.href.startsWith('https://') ? 'noreferrer' : undefined} onClick={() => setOpen(false)} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">{action.label}</a>
+              ))}
+            </div>
+            <form onSubmit={askAssistant} className="flex items-center gap-2">
+              <input value={draft} onChange={(event) => setDraft(event.target.value)} aria-label="Ask the assistant" placeholder="Ask about a service..." className="min-w-0 flex-1 rounded-full border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2 text-[11px] text-[#203950] outline-none placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" />
+              <button type="submit" aria-label="Send question" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1669aa] text-white transition hover:bg-[#125b94]"><Send size={13} /></button>
+            </form>
+          </div>
+        </motion.div>
+      )}
+      <div className="flex flex-col gap-3">
+        <div className="group relative">
+          <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" data-testid="floating-whatsapp" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2c9b70] text-white shadow-[0_8px_22px_rgba(44,155,112,.28)] transition hover:-translate-y-0.5 hover:bg-[#23845f]">
+            <MessageCircle size={19} />
+          </a>
+          <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#102941] px-3 py-1.5 text-[10px] font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Chat on WhatsApp</span>
+        </div>
+        <div className="group relative">
+          <button type="button" onClick={() => setOpen((current) => !current)} aria-label={open ? 'Close AI chat' : 'Ask AI'} aria-expanded={open} data-testid="floating-ai-chat" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1669aa] text-white shadow-[0_8px_22px_rgba(22,105,170,.28)] transition hover:-translate-y-0.5 hover:bg-[#125b94]">
+            {open ? <X size={19} /> : <Bot size={19} />}
+          </button>
+          <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#102941] px-3 py-1.5 text-[10px] font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Ask AI</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -488,6 +592,7 @@ function Home() {
         <a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="mobile-bar-whatsapp" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
         <a href="#contact" data-testid="mobile-bar-quote" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />QUOTE</a>
       </div>
+      <FloatingContactActions quoteHref="#contact" />
     </div>
   );
 }
@@ -505,6 +610,7 @@ function Products() {
           </div>
         </section>
       </main>
+      <FloatingContactActions quoteHref="/#contact" />
     </div>
   );
 }
@@ -707,6 +813,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
         <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
         <a href="#service-enquiry" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />BOOK</a>
       </div>
+      <FloatingContactActions quoteHref="#service-enquiry" />
     </div>
   );
 }
