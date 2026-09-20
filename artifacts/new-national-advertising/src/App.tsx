@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -284,104 +284,292 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   );
 }
 
+type ServiceRecord = typeof services[number];
 type AssistantMessage = { role: 'assistant' | 'user'; text: string };
+type QuoteStep = 'idle' | 'service' | 'need' | 'quantity' | 'name' | 'phone' | 'ready';
+type QuoteDraft = { service: string; need: string; quantity: string; name: string; phone: string };
 
-function getAssistantReply(question: string) {
+const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', phone: '' };
+
+function getAssistantReply(question: string, contextService?: ServiceRecord) {
   const normalized = question.toLowerCase();
+  const pricingQuestion = /\b(price|pricing|cost|rate|rates|budget|how much|quotation)\b/.test(normalized);
+  if (pricingQuestion) {
+    return 'Please contact New National Advertising for a current quote based on your requirements.';
+  }
+
   const matchedService = services.find((service) =>
     normalized.includes(service.title.toLowerCase()) ||
     normalized.includes(service.slug.replaceAll('-', ' ')),
   );
+  const offeringMatch = services
+    .flatMap((service) => service.items.map((item) => ({ service, item })))
+    .find(({ item }) => normalized.includes(item.toLowerCase()));
 
+  if (offeringMatch) {
+    return `${offeringMatch.item} is available under ${offeringMatch.service.title}. I can help you send an enquiry to New National Advertising.`;
+  }
+  if (contextService && /\b(need|require|looking|want|cards|banner|board|print|design)\b/.test(normalized)) {
+    return `${contextService.title} is the current service context. I can help you send an enquiry for this requirement.`;
+  }
   if (matchedService) {
-    return `${matchedService.title}: ${matchedService.description} Explore the dedicated service page for offerings, applications, materials and a booking form.`;
+    return `${matchedService.title}: ${matchedService.description} Offerings include ${matchedService.items.slice(0, 4).join(', ')} and more.`;
   }
   if (normalized.includes('service') || normalized.includes('printing') || normalized.includes('sign')) {
-    return 'We offer Sign Boards, Solvent Flex, Offset Printing, Screen Printing, Graphics Design, Banner Printing and Digital Printing. Choose View Services to explore the details.';
+    return 'We offer Sign Boards, Solvent Flex, Offset Printing, Screen Printing, Graphics Design, Banner Printing and Digital Printing. Choose Explore Services to see the details.';
   }
   if (normalized.includes('quote') || normalized.includes('book') || normalized.includes('enquir')) {
-    return 'You can request a quote from the Contact section or book a specific service from its detail page. For a quick enquiry, use the WhatsApp button below.';
+    return 'Choose Get a Quote to share your service, requirement, quantity, name and phone number. You can then continue on WhatsApp.';
   }
   if (normalized.includes('contact') || normalized.includes('phone') || normalized.includes('call') || normalized.includes('email')) {
     return 'Call New National Advertising on +91 9555759677 or email newnationaladv2022@gmail.com. We are based in Mumbai, Maharashtra, India.';
   }
   if (normalized.includes('whatsapp')) {
-    return 'You can start a WhatsApp enquiry with New National Advertising using the green button below.';
+    return 'You can continue a specific enquiry on WhatsApp using the green button below.';
   }
-  return 'I can help with services, printing options, sign boards, quotes and contact details. Try asking about a specific service or choose one of the actions below.';
+  return 'I can help with services, printing options, sign boards, quotes and contact details. Try asking about a specific service or choose an action below.';
 }
 
-function FloatingContactActions({ quoteHref = '/#contact' }: { quoteHref?: string }) {
+function createQuoteWhatsAppUrl(quote: QuoteDraft, contextService?: ServiceRecord) {
+  const serviceName = quote.service || contextService?.title || 'your services';
+  const message = [
+    'Hello New National Advertising,',
+    `I am interested in ${serviceName}.`,
+    '',
+    `Requirement: ${quote.need || 'Please advise'}`,
+    `Quantity: ${quote.quantity || 'Not specified'}`,
+    `Name: ${quote.name || 'Not provided'}`,
+    `Phone: ${quote.phone || 'Not provided'}`,
+    '',
+    'Please share the details and quotation.',
+  ].join('\n');
+  return `${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(message)}`;
+}
+
+function FloatingContactActions({ quoteHref = '/#contact', contextService }: { quoteHref?: string; contextService?: ServiceRecord }) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState<AssistantMessage[]>([
-    { role: 'assistant', text: 'Hi, I’m the New National Assistant. How can we help you?' },
+    { role: 'assistant', text: 'Hello 👋\nHow can we help you today?' },
   ]);
+  const [typing, setTyping] = useState(false);
+  const [hintVisible, setHintVisible] = useState(false);
+  const [quoteStep, setQuoteStep] = useState<QuoteStep>('idle');
+  const [quoteDraft, setQuoteDraft] = useState<QuoteDraft>(() => ({ ...emptyQuote, service: contextService?.title ?? '' }));
+  const [quoteInput, setQuoteInput] = useState('');
+  const reduceMotion = useReducedMotion();
+  const typingTimer = useRef<number | undefined>(undefined);
+
+  const dismissHint = () => {
+    setHintVisible(false);
+    try {
+      window.localStorage.setItem('nna-assistant-hint-dismissed', '1');
+    } catch {
+      // Private browsing may block localStorage; the in-session dismissal still works.
+    }
+  };
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem('nna-assistant-hint-dismissed')) return;
+    } catch {
+      // Continue with the timed hint when storage is unavailable.
+    }
+    const timer = window.setTimeout(() => setHintVisible(true), 2200);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => () => {
+    if (typingTimer.current) window.clearTimeout(typingTimer.current);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open]);
+
+  const openAssistant = () => {
+    dismissHint();
+    setOpen(true);
+  };
+
+  const addAssistantReply = (text: string) => {
+    setMessages((current) => [...current, { role: 'assistant', text }]);
+  };
+
+  const askPreset = (label: string, question: string) => {
+    setMessages((current) => [...current, { role: 'user', text: label }, { role: 'assistant', text: getAssistantReply(question, contextService) }]);
+  };
 
   const askAssistant = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const question = draft.trim();
-    if (!question) return;
-    setMessages((current) => [...current, { role: 'user', text: question }, { role: 'assistant', text: getAssistantReply(question) }]);
+    if (!question || typing) return;
+    setMessages((current) => [...current, { role: 'user', text: question }]);
     setDraft('');
+    setTyping(true);
+    typingTimer.current = window.setTimeout(() => {
+      addAssistantReply(getAssistantReply(question, contextService));
+      setTyping(false);
+    }, 420);
   };
+
+  const startQuoteFlow = () => {
+    openAssistant();
+    setQuoteDraft({ ...emptyQuote, service: contextService?.title ?? '' });
+    setQuoteStep('service');
+    addAssistantReply('What service do you need?');
+  };
+
+  const chooseQuoteService = (serviceName: string) => {
+    setQuoteDraft((current) => ({ ...current, service: serviceName }));
+    setQuoteStep('need');
+    setMessages((current) => [...current, { role: 'user', text: serviceName }, { role: 'assistant', text: 'What do you need?' }]);
+  };
+
+  const submitQuoteField = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const value = quoteInput.trim();
+    if (!value) return;
+    const fieldMap: Record<'need' | 'quantity' | 'name' | 'phone', string> = {
+      need: 'need',
+      quantity: 'quantity',
+      name: 'name',
+      phone: 'phone',
+    };
+    const field = fieldMap[quoteStep as keyof typeof fieldMap];
+    if (!field) return;
+    const prompts: Record<typeof field, { next: QuoteStep; prompt: string }> = {
+      need: { next: 'quantity', prompt: 'Approximately how many?' },
+      quantity: { next: 'name', prompt: 'Your name?' },
+      name: { next: 'phone', prompt: 'Your phone number?' },
+      phone: { next: 'ready', prompt: 'Your enquiry is ready. Choose Send Enquiry, Continue on WhatsApp, or Call New National.' },
+    };
+    const next = prompts[field];
+    setQuoteDraft((current) => ({ ...current, [field]: value }));
+    setMessages((current) => [...current, { role: 'user', text: value }, { role: 'assistant', text: next.prompt }]);
+    setQuoteInput('');
+    setQuoteStep(next.next);
+  };
+
+  const sendQuoteToWhatsApp = () => {
+    window.open(createQuoteWhatsAppUrl(quoteDraft, contextService), '_blank', 'noopener,noreferrer');
+  };
+
+  const serviceOptions = contextService
+    ? [contextService.title, ...services.filter((service) => service.slug !== contextService.slug).map((service) => service.title), 'Other']
+    : [...services.map((service) => service.title), 'Other'];
 
   return (
     <div className="fixed bottom-[76px] right-4 z-[60] flex flex-col items-end gap-3 md:bottom-6 md:right-6">
+      {hintVisible && !open && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0 : .22 }}
+          className="w-[260px] rounded-[12px] border border-[#dce6eb] bg-white p-3 shadow-[0_14px_35px_rgba(20,51,78,.14)]"
+          role="status"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-[11px] font-semibold leading-4 text-[#263e57]">Need help choosing a service?</p>
+            <button type="button" onClick={dismissHint} aria-label="Dismiss assistant suggestion" className="rounded-full p-0.5 text-[#93a1ac] transition hover:bg-[#edf4f8] hover:text-[#203950]"><X size={13} /></button>
+          </div>
+          <div className="mt-2 flex gap-2">
+            <button type="button" onClick={openAssistant} className="rounded-full bg-[#1669aa] px-3 py-1.5 text-[10px] font-bold text-white transition hover:bg-[#125b94]">Ask AI</button>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={dismissHint} className="rounded-full border border-[#b8d9ca] px-3 py-1.5 text-[10px] font-bold text-[#24734d] transition hover:bg-[#f0faf4]">WhatsApp</a>
+          </div>
+        </motion.div>
+      )}
       {open && (
         <motion.div
-          initial={{ opacity: 0, y: 10, scale: .98 }}
+          initial={{ opacity: 0, y: 12, scale: .98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          className="w-[350px] max-w-[calc(100vw-32px)] overflow-hidden rounded-[16px] border border-[#dce6eb] bg-white shadow-[0_18px_50px_rgba(20,51,78,.18)]"
+          transition={{ duration: reduceMotion ? 0 : .24 }}
+          className="w-[390px] max-w-[calc(100vw-24px)] overflow-hidden rounded-t-[18px] rounded-b-[16px] border border-[#dce6eb] bg-white shadow-[0_18px_50px_rgba(20,51,78,.18)] md:max-h-[calc(100dvh-96px)]"
           role="dialog"
+          aria-modal="false"
           aria-label="New National Assistant"
         >
           <div className="bg-[#102941] px-5 py-4 text-white">
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="display text-[17px] font-extrabold tracking-[-.03em]">New National Assistant</p>
-                <p className="mt-1 text-[11px] text-[#b8cbd8]">How can we help you?</p>
+              <div className="flex items-start gap-2.5">
+                <span className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[#b9d9ed]"><Bot size={15} /></span>
+                <div>
+                  <p className="display text-[17px] font-extrabold tracking-[-.03em]">New National Assistant</p>
+                  <p className="mt-1 text-[11px] text-[#b8cbd8]">Your guide to printing, signage &amp; design.</p>
+                </div>
               </div>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close assistant" className="rounded-full p-1.5 text-[#c5d5df] transition hover:bg-white/10 hover:text-white"><X size={16} /></button>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close assistant" className="rounded-full p-1.5 text-[#c5d5df] transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"><X size={16} /></button>
             </div>
           </div>
-          <div className="max-h-[250px] space-y-3 overflow-y-auto bg-[#f7fafb] px-4 py-4" aria-live="polite">
+          <div className="max-h-[min(360px,calc(100dvh-360px))] space-y-3 overflow-y-auto bg-[#f7fafb] px-4 py-4 sm:max-h-[360px]" aria-live="polite">
             {messages.map((message, index) => (
-              <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <p className={`max-w-[86%] rounded-[10px] px-3 py-2 text-[11px] leading-5 ${message.role === 'user' ? 'bg-[#1669aa] text-white' : 'border border-[#e1e9ee] bg-white text-[#53687a]'}`}>{message.text}</p>
-              </div>
+              <motion.div key={`${message.role}-${index}`} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <p className={`max-w-[88%] whitespace-pre-line rounded-[10px] px-3 py-2 text-[11px] leading-5 ${message.role === 'user' ? 'bg-[#1669aa] text-white' : 'border border-[#e1e9ee] bg-white text-[#53687a]'}`}>{message.text}</p>
+              </motion.div>
             ))}
+            {typing && <div className="flex justify-start"><div className="flex items-center gap-1 rounded-[10px] border border-[#e1e9ee] bg-white px-3 py-2" aria-label="Assistant is typing"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#8fa7b7]" /><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#8fa7b7] [animation-delay:120ms]" /><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#8fa7b7] [animation-delay:240ms]" /></div></div>}
           </div>
           <div className="border-t border-[#e4ebef] bg-white px-4 py-3">
-            <div className="mb-3 grid grid-cols-2 gap-2">
-              {[
-                { label: 'View Services', href: '/#services' },
-                { label: 'Get a Quote', href: quoteHref },
-                { label: 'Talk on WhatsApp', href: whatsappUrl },
-                { label: 'Contact Us', href: '/#contact' },
-              ].map((action) => (
-                <a key={action.label} href={action.href} target={action.href.startsWith('https://') ? '_blank' : undefined} rel={action.href.startsWith('https://') ? 'noreferrer' : undefined} onClick={() => setOpen(false)} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">{action.label}</a>
-              ))}
-            </div>
+            {quoteStep === 'idle' && (
+              <div className="mb-3 grid grid-cols-2 gap-2">
+                <a href="/#services" onClick={() => setOpen(false)} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🖨️ Explore Services</a>
+                <button type="button" onClick={startQuoteFlow} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">📋 Get a Quote</button>
+                <button type="button" onClick={() => askPreset('Sign Boards', 'Tell me about Sign Boards')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🏪 Sign Boards</button>
+                <button type="button" onClick={() => askPreset('Digital Printing', 'Tell me about Digital Printing')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🖨️ Digital Printing</button>
+                <button type="button" onClick={() => askPreset('Graphics Design', 'Tell me about Graphics Design')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🎨 Graphics Design</button>
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="rounded-full border border-[#b8d9ca] px-2 py-2 text-center text-[10px] font-bold text-[#24734d] transition hover:bg-[#f0faf4]">💬 Talk on WhatsApp</a>
+              </div>
+            )}
+            {quoteStep === 'service' && (
+              <div className="mb-3 grid grid-cols-2 gap-2">
+                {serviceOptions.map((serviceName) => <button key={serviceName} type="button" onClick={() => chooseQuoteService(serviceName)} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">{serviceName}</button>)}
+              </div>
+            )}
+            {quoteStep !== 'idle' && quoteStep !== 'service' && quoteStep !== 'ready' && (
+              <form onSubmit={submitQuoteField} className="mb-3 flex items-center gap-2">
+                <input autoFocus value={quoteInput} onChange={(event) => setQuoteInput(event.target.value)} type={quoteStep === 'phone' ? 'tel' : 'text'} aria-label={`Quote ${quoteStep}`} placeholder={quoteStep === 'need' ? 'e.g. 100 visiting cards' : quoteStep === 'quantity' ? 'e.g. 100' : quoteStep === 'name' ? 'Your name' : 'Your phone number'} className="min-w-0 flex-1 rounded-full border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2 text-[11px] text-[#203950] outline-none placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" />
+                <button type="submit" aria-label="Continue quote flow" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1669aa] text-white transition hover:bg-[#125b94]"><Send size={13} /></button>
+              </form>
+            )}
+            {quoteStep === 'ready' && (
+              <div className="mb-3 grid grid-cols-2 gap-2">
+                <button type="button" onClick={sendQuoteToWhatsApp} className="rounded-full bg-[#1669aa] px-2 py-2 text-[10px] font-bold text-white transition hover:bg-[#125b94]">SEND ENQUIRY</button>
+                <button type="button" onClick={sendQuoteToWhatsApp} className="rounded-full bg-[#2c9b70] px-2 py-2 text-[10px] font-bold text-white transition hover:bg-[#23845f]">Continue on WhatsApp</button>
+                <a href="tel:+919555759677" className="col-span-2 rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb]">Call New National</a>
+              </div>
+            )}
             <form onSubmit={askAssistant} className="flex items-center gap-2">
               <input value={draft} onChange={(event) => setDraft(event.target.value)} aria-label="Ask the assistant" placeholder="Ask about a service..." className="min-w-0 flex-1 rounded-full border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2 text-[11px] text-[#203950] outline-none placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" />
-              <button type="submit" aria-label="Send question" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1669aa] text-white transition hover:bg-[#125b94]"><Send size={13} /></button>
+              <button type="submit" aria-label="Send question" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1669aa] text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2"><Send size={13} /></button>
             </form>
+            <div className="mt-3 flex items-center justify-between gap-2 text-[10px]">
+              {quoteStep === 'idle' && <button type="button" onClick={startQuoteFlow} className="font-bold text-[#1669aa] hover:underline">Get a Quote</button>}
+              {quoteStep !== 'idle' && <button type="button" onClick={startQuoteFlow} className="font-bold text-[#1669aa] hover:underline">Restart quote</button>}
+              <div className="flex items-center gap-3">
+                <a href={quoteStep === 'ready' ? createQuoteWhatsAppUrl(quoteDraft, contextService) : whatsappUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="font-bold text-[#24734d] hover:underline">Continue on WhatsApp</a>
+                <a href="tel:+919555759677" className="font-semibold text-[#5e7182] hover:text-[#1669aa]">Call New National</a>
+              </div>
+            </div>
           </div>
         </motion.div>
       )}
       <div className="flex flex-col gap-3">
         <div className="group relative">
-          <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" data-testid="floating-whatsapp" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2c9b70] text-white shadow-[0_8px_22px_rgba(44,155,112,.28)] transition hover:-translate-y-0.5 hover:bg-[#23845f]">
+          <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" data-testid="floating-whatsapp" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2c9b70] text-white shadow-[0_8px_22px_rgba(44,155,112,.28)] transition hover:-translate-y-0.5 hover:bg-[#23845f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2c9b70] focus-visible:ring-offset-2">
             <MessageCircle size={19} />
           </a>
           <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#102941] px-3 py-1.5 text-[10px] font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Chat on WhatsApp</span>
         </div>
         <div className="group relative">
-          <button type="button" onClick={() => setOpen((current) => !current)} aria-label={open ? 'Close AI chat' : 'Ask AI'} aria-expanded={open} data-testid="floating-ai-chat" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1669aa] text-white shadow-[0_8px_22px_rgba(22,105,170,.28)] transition hover:-translate-y-0.5 hover:bg-[#125b94]">
+          <button type="button" onClick={open ? () => setOpen(false) : openAssistant} aria-label={open ? 'Close New National AI' : 'Ask New National AI'} aria-expanded={open} data-testid="floating-ai-chat" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1669aa] text-white shadow-[0_8px_22px_rgba(22,105,170,.28)] transition hover:-translate-y-0.5 hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">
             {open ? <X size={19} /> : <Bot size={19} />}
           </button>
-          <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#102941] px-3 py-1.5 text-[10px] font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Ask AI</span>
+          <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-[#102941] px-3 py-1.5 text-[10px] font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Ask New National AI</span>
         </div>
       </div>
     </div>
@@ -813,7 +1001,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
         <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
         <a href="#service-enquiry" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />BOOK</a>
       </div>
-      <FloatingContactActions quoteHref="#service-enquiry" />
+      <FloatingContactActions quoteHref="#service-enquiry" contextService={service} />
     </div>
   );
 }
