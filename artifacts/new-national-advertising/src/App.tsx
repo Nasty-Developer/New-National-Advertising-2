@@ -12,12 +12,13 @@ const queryClient = new QueryClient();
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
 
 const services = [
+  { title: 'Sign Boards', description: 'Professional signage and display solutions that help brands stand out.', items: ['Acrylic Clip-on Board', 'Crystal Letter', 'LED Signage', 'Steel & Brass Letter', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutout'], image: '/signage-installation.jpg', icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
   { title: 'Solvent Flex', description: 'Flex, vinyl, canvas, sunboard and backlit printing solutions.', items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'], image: '/hero-print-studio.jpg', icon: Printer, accent: '#00A8C6', tint: '#F1FBFC' },
   { title: 'Offset Printing', description: 'Professional printed materials for businesses, events and everyday needs.', items: ['Brochure & Catalogues', 'Calendar', 'Letterhead', 'Business Card', 'Bill Book', 'Envelope', 'Wedding Card', 'Flyer & Leaflet', 'Pavti Book', 'Menu Card'], image: '/design-materials.jpg', icon: FileText, accent: '#1769AA', tint: '#F3F8FC' },
   { title: 'Screen Printing', description: 'Screen printing for apparel, stationery, promotional products and more.', items: ['Wedding Card', 'Visiting Card', 'Letterhead', 'T-Shirt', 'Envelope', 'Cap', 'Umbrella', 'Carry Bag', 'ID Ribbon', 'School Bag'], image: '/selected-work-grid.jpg', icon: PenLine, accent: '#D9468C', tint: '#FFF5F9' },
-  { title: 'Digital Printing', description: 'Fast, detailed digital printing for personal and business requirements.', items: ['Visiting Card', 'Brochure', 'Catalogue', 'Pamphlet', 'Poster', 'Annual Reports', 'UV Print', 'Hotel Menu', 'Hospital File', 'Trophy Sticker'], image: '/design-materials.jpg', icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
-  { title: 'Sign Boards', description: 'Professional signage and display solutions that help brands stand out.', items: ['Acrylic Clip-on Board', 'Crystal Letter', 'LED Signage', 'Steel & Brass Letter', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutout'], image: '/signage-installation.jpg', icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
   { title: 'Graphics Design', description: 'Creative design solutions for branding, marketing and communication.', items: ['Logo Design', 'Social Media Posts', 'Hoarding Banner', 'Menu Card', 'Flyer', 'Product Packaging', 'Magazine Ads', 'Visiting Card', 'Invitation', 'Brochure', 'Calendar'], image: '/design-materials.jpg', icon: Grid2X2, accent: '#3BA776', tint: '#F3FBF7' },
+  { title: 'Banner Printing', description: 'Banner printing and advertising materials.', items: ['Banner Printing', 'Advertising Materials'], image: '/selected-work-grid.jpg', icon: Printer, accent: '#F26B5B', tint: '#FFF5F2' },
+  { title: 'Digital Printing', description: 'Fast, detailed digital printing for personal and business requirements.', items: ['Visiting Card', 'Brochure', 'Catalogue', 'Pamphlet', 'Poster', 'Annual Reports', 'UV Print', 'Hotel Menu', 'Hospital File', 'Trophy Sticker'], image: '/design-materials.jpg', icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
 ];
 
 const work = [
@@ -210,7 +211,7 @@ function Home() {
                 </Reveal>
               ); })}
             </div>
-            <div className="mt-5 rounded-[10px] border border-[#e2e9ee] bg-[#f8fafb] px-5 py-4 text-center text-[11px] text-[#647487]"><span className="font-bold text-[#263e57]">Other Services</span><span className="mx-2 text-[#b7c4cc]">/</span>Banner Printing · Sunboard / Sunpack · PVC Cards · Resume / Bio-Data · Wooden / MS Frames · Advertising Materials</div>
+            <div className="mt-5 rounded-[10px] border border-[#e2e9ee] bg-[#f8fafb] px-5 py-4 text-center text-[11px] text-[#647487]"><span className="font-bold text-[#263e57]">Other Services</span><span className="mx-2 text-[#b7c4cc]">/</span>Sunboard / Sunpack · PVC Cards · Resume / Bio-Data · Wooden / MS Frames</div>
           </div>
         </section>
 
