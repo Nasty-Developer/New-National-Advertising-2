@@ -222,6 +222,22 @@ const machines = [
       { label: 'Signage Board', href: '/services/sign-boards' },
     ],
   },
+  {
+    name: 'CO₂ Laser Cutting & Engraving Machine',
+    category: 'Laser Cutting & Engraving',
+    description: 'A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.',
+    image: '/machine-co2-laser-cutter.png',
+    imageAlt: 'CO₂ laser cutting and engraving machine',
+    applications: [
+      'Precision Laser Cutting',
+      'Laser Engraving',
+      'Custom Lettering & Shapes',
+      'Signage Components',
+      'Decorative Panels',
+      'Advertising & Display Materials',
+      'Custom Fabrication Work',
+    ],
+  },
 ];
 
 function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
@@ -964,13 +980,19 @@ function Machines() {
                     <h3 className="display mt-2 text-[25px] font-extrabold leading-[1] tracking-[-.06em] text-[#172d49]" data-testid={`heading-machine-${index + 1}`}>{machine.name}</h3>
                     <p className="mt-4 text-[12px] leading-6 text-[#68798a]">{machine.description}</p>
                     <div className="mt-auto border-t border-[#e7eef1] pt-4">
-                      <p className="text-[9px] font-bold uppercase tracking-[.16em] text-[#8999a4]">Related services</p>
+                      <p className="text-[9px] font-bold uppercase tracking-[.16em] text-[#8999a4]">{machine.applications ? 'Applications' : 'Related services'}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {machine.related.map((service) => (
-                          <a key={service.href} href={service.href} className="inline-flex items-center gap-1 rounded-full border border-[#c9dce5] bg-white px-2.5 py-1.5 text-[10px] font-bold text-[#2b5873] transition hover:border-[#1669aa] hover:text-[#1669aa]" data-testid={`link-machine-${index + 1}-${service.label.toLowerCase().replaceAll(' ', '-')}`}>
-                            {service.label}<ArrowUpRight size={11} />
-                          </a>
-                        ))}
+                        {machine.applications
+                          ? machine.applications.map((application) => (
+                              <span key={application} className="inline-flex items-center rounded-full border border-[#c9dce5] bg-white px-2.5 py-1.5 text-[10px] font-bold text-[#2b5873]">
+                                {application}
+                              </span>
+                            ))
+                          : machine.related.map((service) => (
+                              <a key={service.href} href={service.href} className="inline-flex items-center gap-1 rounded-full border border-[#c9dce5] bg-white px-2.5 py-1.5 text-[10px] font-bold text-[#2b5873] transition hover:border-[#1669aa] hover:text-[#1669aa]" data-testid={`link-machine-${index + 1}-${service.label.toLowerCase().replaceAll(' ', '-')}`}>
+                                {service.label}<ArrowUpRight size={11} />
+                              </a>
+                            ))}
                       </div>
                     </div>
                   </div>
