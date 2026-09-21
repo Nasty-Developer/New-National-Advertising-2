@@ -20,6 +20,12 @@ function isFirebaseConfigurationError(error: unknown): boolean {
   );
 }
 
+function firebaseErrorCode(error: unknown): string | undefined {
+  if (!error || typeof error !== "object" || !("code" in error)) return undefined;
+  const code = (error as { code?: unknown }).code;
+  return typeof code === "string" ? code : undefined;
+}
+
 export const requireAdmin: RequestHandler = async (req, res, next): Promise<void> => {
   const token = bearerToken(req.header("authorization"));
   if (!token) {
@@ -31,12 +37,15 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
   try {
     decoded = await firebaseAuth().verifyIdToken(token);
   } catch (error) {
-    req.log.warn({ err: error }, "Rejected Firebase admin token");
+    req.log.warn(
+      { err: error, firebaseCode: firebaseErrorCode(error) },
+      "Rejected Firebase admin token",
+    );
     if (isFirebaseConfigurationError(error)) {
       res.status(503).json({ error: "Admin authentication is not configured" });
       return;
     }
-    res.status(401).json({ error: "Authentication required" });
+    res.status(401).json({ error: "Firebase authentication token was rejected" });
     return;
   }
 
