@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ButtonHTMLAttributes, type FormEvent, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from 'wouter';
+import { signOut as signOutFirebase } from 'firebase/auth';
 import {
   Archive,
   ArrowUpRight,
@@ -31,6 +32,7 @@ import {
 import {
   getGetAdminProductQueryKey,
   getGetAdminProductsQueryKey,
+  getGetAdminSessionQueryKey,
   getGetAdminSummaryQueryKey,
   getGetPublicProductsQueryKey,
   ProductStatus,
@@ -49,6 +51,7 @@ import {
   type UploadRequestContentType,
 } from '@workspace/api-client-react';
 import CmsManager from '@/pages/cms-manager';
+import { firebaseAuth } from '@/lib/firebase-client';
 
 type AdminPage = 'Dashboard' | 'Products' | 'Services' | 'Orders' | 'Website Content' | 'Machines' | 'Settings';
 type AdminProps = { authenticated: boolean };
@@ -331,7 +334,14 @@ export default function AdminPage({ authenticated }: AdminProps) {
   useEffect(() => { if (!authenticated) setLocation('/admin/login'); }, [authenticated, setLocation]);
   if (!authenticated) return <LockedState />;
   const navigate = (page: AdminPage) => { setActivePage(page); setSidebarOpen(false); };
-  const signOut = async () => { if (logout.isPending) return; await logout.mutateAsync(); await queryClient.invalidateQueries({ queryKey: getGetAdminSummaryQueryKey() }); setLocation('/admin/login'); };
+  const signOut = async () => {
+    if (logout.isPending) return;
+    await logout.mutateAsync();
+    if (firebaseAuth) await signOutFirebase(firebaseAuth);
+    queryClient.removeQueries({ queryKey: getGetAdminSessionQueryKey() });
+    await queryClient.invalidateQueries({ queryKey: getGetAdminSummaryQueryKey() });
+    setLocation('/admin/login');
+  };
   return <div className="site-noise min-h-[100dvh] bg-[#f3f6f7] text-[#14213d]" data-testid="admin-shell"><div className="flex min-h-[100dvh]">
     {sidebarOpen && <button type="button" aria-label="Close navigation" onClick={() => setSidebarOpen(false)} className="fixed inset-0 z-30 bg-[#14213d]/25 backdrop-blur-[2px] lg:hidden" data-testid="button-close-navigation-overlay" />}
     <aside className={`fixed inset-y-0 left-0 z-40 flex w-[274px] flex-col border-r border-[#dce7ec] bg-[#fffefa] transition-transform duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'lg:w-[78px]' : ''}`} data-testid="admin-sidebar"><div className={`flex h-[79px] shrink-0 items-center border-b border-[#e8eef1] px-5 ${sidebarCollapsed ? 'lg:justify-center lg:px-0' : 'justify-between'}`}><BrandMark compact={sidebarCollapsed} /><button type="button" onClick={() => setSidebarOpen(false)} aria-label="Close navigation" className="rounded-lg p-2 text-[#79909e] hover:bg-[#edf4f7] lg:hidden" data-testid="button-close-navigation"><X size={17} /></button></div><div className={`px-3 py-6 ${sidebarCollapsed ? 'lg:px-2' : ''}`}><p className={`${sidebarCollapsed ? 'lg:hidden' : ''} px-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#9aa8b0]`}>Workspace</p><nav className="mt-3 space-y-1" aria-label="Admin navigation">{navigation.map(({ label, description, icon: Icon }) => { const selected = activePage === label; return <button type="button" key={label} onClick={() => navigate(label)} title={sidebarCollapsed ? label : undefined} aria-current={selected ? 'page' : undefined} className={`group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] ${sidebarCollapsed ? 'lg:justify-center lg:px-2' : ''} ${selected ? 'bg-[#eaf5f7] text-[#1769aa]' : 'text-[#5d7180] hover:bg-[#f2f7f8] hover:text-[#203954]'}`} data-testid={`nav-admin-${slug(label)}`}><Icon size={17} strokeWidth={selected ? 2.2 : 1.8} />{!sidebarCollapsed && <span className="min-w-0"><span className="block truncate text-[12px] font-bold">{label}</span><span className={`mt-0.5 block truncate text-[10px] ${selected ? 'text-[#5e91a4]' : 'text-[#95a4ac]'}`}>{description}</span></span>}{!sidebarCollapsed && selected && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#00a8c6]" />}</button>; })}</nav></div><div className="mt-auto border-t border-[#e8eef1] p-4">{!sidebarCollapsed ? <div className="rounded-xl bg-[#f2f7f8] p-3" data-testid="status-admin-session"><div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#3ba776]" /><span className="text-[10px] font-bold uppercase tracking-[.12em] text-[#527282]">Authenticated session</span></div><p className="mt-2 text-[10px] leading-4 text-[#7d8e97]">Private workspace access is active.</p></div> : <span className="mx-auto block h-2 w-2 rounded-full bg-[#3ba776]" title="Authenticated session" />}</div><div className="border-t border-[#e8eef1] p-3"><button type="button" onClick={() => void signOut()} disabled={logout.isPending} className={`flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#718792] hover:bg-[#fff0ee] hover:text-[#a3443c] ${sidebarCollapsed ? 'justify-center px-2' : ''}`} data-testid="button-admin-logout"><LogOut size={15} />{!sidebarCollapsed && (logout.isPending ? 'Signing out…' : 'Sign out')}</button></div><button type="button" onClick={() => setSidebarCollapsed((value) => !value)} className="hidden h-12 shrink-0 items-center justify-center gap-2 border-t border-[#e8eef1] text-[10px] font-bold uppercase tracking-[.14em] text-[#81929b] hover:bg-[#f4f8f9] hover:text-[#1769aa] lg:flex" data-testid="button-toggle-sidebar">{sidebarCollapsed ? <ChevronRight size={15} /> : <><ChevronLeft size={15} /> Collapse</>}</button></aside>

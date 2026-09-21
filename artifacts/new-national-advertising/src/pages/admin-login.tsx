@@ -4,7 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from 'wouter';
 import { getGetAdminSessionQueryKey, useGetAdminSession } from '@workspace/api-client-react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseAuth } from '@/lib/firebase-client';
+import { firebaseAuth, waitForFirebaseUser } from '@/lib/firebase-client';
+import { useFirebaseAuth } from '@/lib/use-firebase-auth';
 
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
 
@@ -16,8 +17,13 @@ function getErrorMessage(error: unknown) {
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
+  const auth = useFirebaseAuth();
   const session = useGetAdminSession({
-    query: { queryKey: getGetAdminSessionQueryKey(), retry: false },
+    query: {
+      queryKey: getGetAdminSessionQueryKey(),
+      enabled: auth.status === 'authenticated',
+      retry: false,
+    },
     request: { responseType: 'json', timeoutMs: ADMIN_SESSION_TIMEOUT_MS },
   });
   const [isPending, setIsPending] = useState(false);
@@ -27,8 +33,10 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (session.data?.authenticated) setLocation('/admin');
-  }, [session.data?.authenticated, setLocation]);
+    if (auth.status === 'authenticated' && session.data?.authenticated) {
+      setLocation('/admin');
+    }
+  }, [auth.status, session.data?.authenticated, setLocation]);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,8 +52,16 @@ export default function AdminLogin() {
         setError('Admin sign in is not configured for this environment yet.');
         return;
       }
-      await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
-      await queryClient.invalidateQueries({ queryKey: getGetAdminSessionQueryKey() });
+      const credential = await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
+      const user = await waitForFirebaseUser(credential.user.uid);
+      if (!user) {
+        throw new Error('Firebase sign-in completed, but the authenticated session was not ready. Try again.');
+      }
+      const authorization = await session.refetch();
+      if (authorization.error) throw authorization.error;
+      if (!authorization.data?.authenticated) {
+        throw new Error('The account signed in, but admin authorization could not be confirmed.');
+      }
       setLocation('/admin');
     } catch (loginError) {
       setError(getErrorMessage(loginError));

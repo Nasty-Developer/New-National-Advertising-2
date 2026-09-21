@@ -11,6 +11,7 @@ import NotFound from '@/pages/not-found';
 import AdminPage from '@/pages/admin';
 import AdminLogin from '@/pages/admin-login';
 import { firebaseAuth } from '@/lib/firebase-client';
+import { useFirebaseAuth } from '@/lib/use-firebase-auth';
 
 const queryClient = new QueryClient();
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
@@ -1186,9 +1187,12 @@ function adminSessionErrorStatus(error: unknown) {
 }
 
 function AdminRoute() {
+  const [, setLocation] = useLocation();
+  const auth = useFirebaseAuth();
   const session = useGetAdminSession({
     query: {
       queryKey: getGetAdminSessionQueryKey(),
+      enabled: auth.status === 'authenticated',
       retry: false,
       staleTime: 0,
     },
@@ -1199,21 +1203,38 @@ function AdminRoute() {
   });
   const { data, isLoading, isError, error, refetch } = session;
 
-  if (isLoading) {
+  useEffect(() => {
+    if (auth.status === 'unauthenticated') {
+      setLocation('/admin/login');
+    }
+  }, [auth.status, setLocation]);
+
+  if (auth.status === 'initializing' || (auth.status === 'authenticated' && isLoading)) {
     return (
       <main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] px-5 text-[#14213d]">
         <div className="rounded-[16px] border border-[#d8e4eb] bg-white px-6 py-5 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)]" data-testid="state-admin-loading">
           <p className="eyebrow">Private workspace</p>
-          <p className="mt-2 text-[13px] font-semibold text-[#405268]">Checking admin access…</p>
+          <p className="mt-2 text-[13px] font-semibold text-[#405268]">
+            {auth.status === 'initializing' ? 'Restoring secure session…' : 'Checking admin access…'}
+          </p>
         </div>
       </main>
     );
   }
 
+  if (auth.status === 'unauthenticated') {
+    return null;
+  }
+
   if (isError) {
     const status = adminSessionErrorStatus(error);
     if (status === 401) {
-      return <AdminPage authenticated={false} />;
+      return (
+        <AdminAccessMessage
+          kind="error"
+          detail="Firebase accepted the session, but the admin API rejected its authorization. Sign in again or check the API configuration."
+        />
+      );
     }
     if (status === 403) {
       const email = firebaseAuth?.currentUser?.email;
