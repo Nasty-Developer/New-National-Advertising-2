@@ -1,0 +1,7 @@
+- [Imported workspace typecheck](imported-workspace-typecheck.md) — refresh project-reference declarations before checking imported artifacts.
+- [GitHub import verification](github-import-verification.md) — verify the app artifact exists before configuring preview; template-only workspaces can otherwise appear blank.
+- [Logo background cleanup](logo-background-cleanup.md) — remove only the connected outer background so internal negative space remains intact.
+- [Imported runtime configuration](imported-runtime-config.md) — optional third-party services should not block the public preview at startup.
+- [Admin API routing](admin-api-routing.md) — verify the production admin-session URL returns JSON, not the SPA fallback, when frontend and backend deploy separately.
+- [Firebase auth state restoration](firebase-auth-state-restoration.md) — do not use a one-time initial auth promise as the current user after sign-in or sign-out.
+- [Firebase Admin project alignment](firebase-admin-project-alignment.md) — a bearer-token 401 after successful Firebase sign-in points to server project/config alignment, not missing frontend auth state.

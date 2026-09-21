@@ -1,0 +1,63 @@
+The Firebase Admin private-key problem is FIXED.
+
+Production behavior has changed from:
+
+HTTP 401: Firebase authentication token was rejected
+
+to:
+
+HTTP 403: Admin access required
+
+This is important: Firebase Admin is now successfully verifying the authenticated user's token. The remaining problem is ONLY admin authorization.
+
+STOP changing Firebase credentials/private key/token verification.
+
+Now diagnose the admin authorization logic.
+
+The authenticated Firebase user is:
+saddam@gmail.com
+
+Trace the exact authorization flow after verifyIdToken():
+
+Firebase verifyIdToken()
+→ decoded UID
+→ admin authorization lookup
+→ /api/admin/session
+→ /admin
+
+Find exactly where the user is being rejected.
+
+Check the existing admin authorization implementation and determine whether it expects:
+- Firestore admin: true
+- Firestore role: "admin"
+- an admin users collection/document
+- an email allowlist
+- another existing authorization mechanism
+
+IMPORTANT:
+Use the EXISTING authorization design in the project.
+Do not invent a new authentication system.
+Do not bypass authentication.
+Do not hardcode admin access in frontend code.
+Do not remove authorization checks.
+Do not change Firebase project configuration.
+Do not change FIREBASE_PRIVATE_KEY.
+Do not change Firestore rules unnecessarily.
+
+If the project expects the Firebase user to have an admin record/role, make the admin authorization check work with the existing schema.
+
+If the admin record for the authenticated Firebase UID is missing, clearly report the exact collection/document/field that is expected.
+
+Use the authenticated Firebase UID from verifyIdToken(), not the email alone.
+
+After fixing:
+1. Run typecheck.
+2. Run production build.
+3. Test GET /api/admin/session with an authenticated admin session.
+4. Confirm it returns HTTP 200.
+5. Confirm /admin opens successfully.
+6. Do not modify unrelated CMS features.
+
+The required final result is:
+
+Firebase login → token verified → admin authorization → HTTP 200 → /admin dashboard.
