@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { firebaseAuth, firestore } from "./firebase";
+import { firebaseAuth, firebaseProjectId, firestore } from "./firebase";
 
 export type VerifiedAdmin = {
   uid: string;
@@ -26,6 +26,30 @@ function firebaseErrorCode(error: unknown): string | undefined {
   return typeof code === "string" ? code : undefined;
 }
 
+function firebaseErrorMessage(error: unknown): string | undefined {
+  return error instanceof Error && error.message ? error.message : undefined;
+}
+
+function tokenMetadata(token: string): {
+  audience?: string;
+  issuer?: string;
+  expired?: boolean;
+} {
+  try {
+    const payload = JSON.parse(
+      Buffer.from(token.split(".")[1] ?? "", "base64url").toString("utf8"),
+    ) as { aud?: unknown; iss?: unknown; exp?: unknown };
+    const now = Math.floor(Date.now() / 1000);
+    return {
+      audience: typeof payload.aud === "string" ? payload.aud : undefined,
+      issuer: typeof payload.iss === "string" ? payload.iss : undefined,
+      expired: typeof payload.exp === "number" ? payload.exp <= now : undefined,
+    };
+  } catch {
+    return {};
+  }
+}
+
 export const requireAdmin: RequestHandler = async (req, res, next): Promise<void> => {
   const token = bearerToken(req.header("authorization"));
   if (!token) {
@@ -37,8 +61,23 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
   try {
     decoded = await firebaseAuth().verifyIdToken(token);
   } catch (error) {
+    const metadata = tokenMetadata(token);
     req.log.warn(
-      { err: error, firebaseCode: firebaseErrorCode(error) },
+      {
+        err: error,
+        firebaseCode: firebaseErrorCode(error),
+        firebaseMessage: firebaseErrorMessage(error),
+        serverProjectId: (() => {
+          try {
+            return firebaseProjectId();
+          } catch {
+            return undefined;
+          }
+        })(),
+        tokenAudience: metadata.audience,
+        tokenIssuer: metadata.issuer,
+        tokenExpired: metadata.expired,
+      },
       "Rejected Firebase admin token",
     );
     if (isFirebaseConfigurationError(error)) {
