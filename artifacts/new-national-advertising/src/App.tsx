@@ -4,11 +4,12 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { useGetAdminSession } from '@workspace/api-client-react';
+import { useGetAdminSession, useGetPublicProducts } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import AdminPage from '@/pages/admin';
+import AdminLogin from '@/pages/admin-login';
 
 const queryClient = new QueryClient();
 
@@ -842,21 +843,65 @@ function Home() {
 }
 
 function Products() {
+  const products = useGetPublicProducts();
+
   return (
     <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641]">
       <SiteHeader quoteHref="/#contact" />
-      <main className="flex min-h-[100dvh] items-center pt-[70px]">
-        <section className="container-nna w-full py-20">
-          <div className="mx-auto max-w-[560px] rounded-[12px] border border-[#e2e9ee] bg-white px-6 py-16 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)] sm:px-10">
+      <main className="pt-[70px]">
+        <section className="border-b border-[#e4ebf0] bg-[#f3f7f8]">
+          <div className="container-nna py-16 sm:py-20 lg:py-24">
             <p className="eyebrow">Products</p>
-            <h1 className="display mt-3 text-4xl font-extrabold tracking-[-.055em] text-[#122641] sm:text-[48px]">Products coming soon</h1>
-            <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing this collection. Check back soon for what’s new from New National Advertising.</p>
+            <h1 className="display mt-4 max-w-[720px] text-[clamp(2.8rem,7vw,5.8rem)] font-extrabold leading-[.92] tracking-[-.075em] text-[#14213d]">Made for the work in front of you.</h1>
+            <p className="mt-6 max-w-[610px] text-[15px] leading-7 text-[#607487]">Browse the current New National Advertising catalogue. Every item shown here is published from the studio workspace.</p>
           </div>
+        </section>
+        <section className="container-nna py-14 sm:py-20">
+          {products.isLoading ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
+              {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
+            </div>
+          ) : products.isError ? (
+            <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert" data-testid="state-public-products-error">
+              <p className="eyebrow !text-[#a3443c]">Products</p>
+              <h2 className="display mt-3 text-3xl font-extrabold tracking-[-.06em] text-[#703a36]">Catalogue unavailable</h2>
+              <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#9a625c]">We could not load the current catalogue. Please try again shortly or contact us for help.</p>
+            </div>
+          ) : products.data?.length ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-testid="public-product-grid">
+              {products.data.map((product) => (
+                <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
+                  <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
+                    {product.imagePath ? <img src={product.imagePath.startsWith('/api/') ? product.imagePath : `/api/storage${product.imagePath.startsWith('/') ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
+                  </div>
+                  <div className="p-5">
+                    <p className="eyebrow">{product.category}</p>
+                    <h2 className="display mt-2 text-[22px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{product.name}</h2>
+                    <p className="mt-3 text-[13px] leading-6 text-[#68798a]">{product.shortDescription}</p>
+                    <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#edf1f3] pt-4">
+                      <span className="text-[12px] font-bold text-[#304a60]">{product.price === null || product.price === undefined ? 'Ask for a quote' : `₹${product.price.toLocaleString('en-IN')}`}</span>
+                      <a href="/#contact" className="button-arrow inline-flex items-center gap-2 text-[11px] font-bold text-[#1769aa]">Enquire <ArrowRight size={14} /></a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#e2e9ee] bg-white px-6 py-16 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)] sm:px-10" data-testid="state-public-products-empty">
+              <p className="eyebrow">Products</p>
+              <h2 className="display mt-3 text-4xl font-extrabold tracking-[-.055em] text-[#122641] sm:text-[48px]">Products coming soon</h2>
+              <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing this collection. Check back soon for what’s new from New National Advertising.</p>
+            </div>
+          )}
         </section>
       </main>
       <FloatingContactActions quoteHref="/#contact" />
     </div>
   );
+}
+
+function PackageIllustration() {
+  return <Package size={34} strokeWidth={1.3} />;
 }
 
 function Machines() {
@@ -1203,7 +1248,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 function Router() {
   return (
     <RoutedErrorBoundary>
-      <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
+      <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/admin/login" component={AdminLogin} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
     </RoutedErrorBoundary>
   );
 }

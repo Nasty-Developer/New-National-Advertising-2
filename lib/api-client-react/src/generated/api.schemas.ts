@@ -5,6 +5,12 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+export interface AdminLoginRequest {
+  email: string;
+  /** @minLength 1 */
+  password: string;
+}
+
 export interface HealthStatus {
   status: string;
 }
@@ -12,4 +18,120 @@ export interface HealthStatus {
 export interface AdminSession {
   authenticated: boolean;
 }
+
+export type ProductStatus = typeof ProductStatus[keyof typeof ProductStatus];
+
+
+export const ProductStatus = {
+  draft: 'draft',
+  published: 'published',
+  inactive: 'inactive',
+} as const;
+
+export type StockStatus = typeof StockStatus[keyof typeof StockStatus];
+
+
+export const StockStatus = {
+  in_stock: 'in_stock',
+  low_stock: 'low_stock',
+  out_of_stock: 'out_of_stock',
+} as const;
+
+export interface ProductInput {
+  /**
+     * @minLength 1
+     * @maxLength 160
+     */
+  name: string;
+  /**
+     * @minLength 1
+     * @maxLength 320
+     */
+  shortDescription: string;
+  /** @maxLength 5000 */
+  fullDescription: string;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  imagePath?: string | null;
+  /**
+     * @maxLength 180
+     * @nullable
+     */
+  imageAlt?: string | null;
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  category: string;
+  /**
+     * @minimum 0
+     * @nullable
+     */
+  price?: number | null;
+  status: ProductStatus;
+  stockStatus: StockStatus;
+  /** @minimum 0 */
+  displayOrder?: number;
+}
+
+export type Product = ProductInput & {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface AdminSummary {
+  totalProducts: number;
+  publishedProducts: number;
+  draftProducts: number;
+  inactiveProducts: number;
+  categories: number;
+}
+
+export type UploadRequestContentType = typeof UploadRequestContentType[keyof typeof UploadRequestContentType];
+
+
+export const UploadRequestContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+} as const;
+
+export interface UploadRequest {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /**
+     * @minimum 1
+     * @maximum 10485760
+     */
+  size: number;
+  contentType: UploadRequestContentType;
+}
+
+export interface UploadResponse {
+  uploadURL: string;
+  objectPath: string;
+}
+
+export type GetAdminProductsParams = {
+search?: string;
+category?: string;
+status?: ProductStatus;
+stockStatus?: StockStatus;
+sort?: GetAdminProductsSort;
+};
+
+export type GetAdminProductsSort = typeof GetAdminProductsSort[keyof typeof GetAdminProductsSort];
+
+
+export const GetAdminProductsSort = {
+  updated: 'updated',
+  name: 'name',
+  displayOrder: 'displayOrder',
+} as const;
 

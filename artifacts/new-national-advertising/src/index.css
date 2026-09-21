@@ -139,6 +139,13 @@
 .arrow-link svg, .button-arrow svg { transition: transform .25s ease; }
 .arrow-link:hover svg, .button-arrow:hover svg { transform: translateX(3px); }
 
+.admin-scrollbar::-webkit-scrollbar { width: 7px; height: 7px; }
+.admin-scrollbar::-webkit-scrollbar-thumb { background: #c4d2da; border-radius: 999px; }
+.admin-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.admin-skeleton { background: linear-gradient(90deg, #edf2f4 25%, #f7f9fa 50%, #edf2f4 75%); background-size: 200% 100%; animation: admin-shimmer 1.4s ease-in-out infinite; }
+@keyframes admin-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .admin-skeleton { animation: none; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
