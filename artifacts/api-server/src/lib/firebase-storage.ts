@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { firebaseBucket } from "./firebase";
+import { firebaseBucket, hasFirebaseConfiguration } from "./firebase";
 
 const allowedContentTypes = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
 const maxBytes = 10 * 1024 * 1024;
@@ -36,6 +36,7 @@ export async function createFirebaseReadUrl(objectPath: string | null | undefine
   if (!objectPath) return null;
   if (objectPath.startsWith("http")) return objectPath;
   if (objectPath.startsWith("/") && !/^\/(products|machines|services|projects|requests)\//.test(objectPath)) return objectPath;
+  if (!hasFirebaseConfiguration()) return objectPath;
   const file = firebaseBucket().file(objectPath.replace(/^\/+/, ""));
   const [url] = await file.getSignedUrl({
     version: "v4",
