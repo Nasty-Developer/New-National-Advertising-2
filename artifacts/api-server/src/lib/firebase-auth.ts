@@ -93,6 +93,18 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
     const data = user.data();
     const isAdmin = data?.role === "admin" && data?.active !== false;
     if (!isAdmin) {
+      req.log.warn(
+        {
+          uid: decoded.uid,
+          userDocumentExists: user.exists,
+          role: typeof data?.role === "string" ? data.role : undefined,
+          active: typeof data?.active === "boolean" ? data.active : undefined,
+          expectedDocument: "users/{decoded.uid}",
+          expectedRole: "admin",
+          activeMustNotBeFalse: true,
+        },
+        "Authenticated Firebase user is not authorized as an admin",
+      );
       res.status(403).json({ error: "Admin access required" });
       return;
     }
