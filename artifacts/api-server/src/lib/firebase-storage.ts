@@ -35,6 +35,7 @@ export async function createFirebaseUploadTarget(input: {
 export async function createFirebaseReadUrl(objectPath: string | null | undefined) {
   if (!objectPath) return null;
   if (objectPath.startsWith("http")) return objectPath;
+  if (objectPath.startsWith("/") && !/^\/(products|machines|services|requests)\//.test(objectPath)) return objectPath;
   const file = firebaseBucket().file(objectPath.replace(/^\/+/, ""));
   const [url] = await file.getSignedUrl({
     version: "v4",

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { useGetAdminSession, useGetPublicProducts } from '@workspace/api-client-react';
+import { useGetAdminSession, useGetPublicProducts, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import AdminPage from '@/pages/admin';
 import AdminLogin from '@/pages/admin-login';
@@ -409,6 +409,40 @@ type QuoteDraft = { service: string; need: string; quantity: string; name: strin
 
 const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', phone: '' };
 
+function usePublicServices() {
+  const query = useGetPublicServices();
+  return useMemo<ServiceRecord[]>(() => {
+    if (!query.data?.length) return services;
+    return query.data.map((remote: ApiService) => {
+      const fallback = services.find((item) => item.slug === remote.slug) ?? services[0];
+      return {
+        ...fallback,
+        slug: remote.slug,
+        title: remote.title || fallback.title,
+        category: remote.category || fallback.category,
+        description: remote.shortDescription || remote.description || fallback.description,
+        whatIs: remote.fullDescription || remote.description || fallback.whatIs,
+        items: remote.offerings?.length ? remote.offerings : fallback.items,
+        applications: remote.applications?.length ? remote.applications : fallback.applications,
+        materials: remote.materials?.length ? remote.materials : fallback.materials,
+        whyChoose: remote.whyChoose?.length ? remote.whyChoose : fallback.whyChoose,
+        image: remote.images?.[0] || fallback.image,
+        imageAlt: remote.imageAlt || fallback.imageAlt,
+        related: remote.relatedSlugs?.length ? remote.relatedSlugs : fallback.related,
+      };
+    });
+  }, [query.data]);
+}
+
+function usePublicSettings() {
+  const settings = useGetPublicSettings();
+  const contacts = useGetPublicContactNumbers();
+  return {
+    settings: settings.data,
+    contacts: contacts.data ?? [],
+  };
+}
+
 function getAssistantReply(question: string, contextService?: ServiceRecord) {
   const normalized = question.toLowerCase();
   const pricingQuestion = /\b(price|pricing|cost|rate|rates|budget|how much|quotation)\b/.test(normalized);
@@ -699,6 +733,13 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
 
 function Home() {
   const [submitted, setSubmitted] = useState(false);
+  const publicServices = usePublicServices();
+  const { settings, contacts } = usePublicSettings();
+  const contentQuery = useGetWebsiteContent();
+  const content = contentQuery.data;
+  const primaryPhone = contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677';
+  const whatsappPhone = contacts.find((item) => item.useForWhatsApp)?.phone || primaryPhone;
+  const publicWhatsappUrl = `https://wa.me/${whatsappPhone.replace(/\D/g, '').replace(/^0/, '91')}?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire.`;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -714,7 +755,7 @@ function Home() {
       `Quantity: ${formData.get('quantity') || 'Not specified'}`,
       `Uploaded file: ${(formData.get('file') as File)?.name || 'None'}`,
     ].join('\n');
-    window.open(`${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.open(`${publicWhatsappUrl.split('?')[0]}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
     setSubmitted(true);
   };
 
@@ -723,8 +764,8 @@ function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
-        name: 'New National Advertising',
-        description: 'Printing, advertising, signage and graphic design solutions.',
+        name: settings?.businessName || 'New National Advertising',
+        description: content?.heroDescription || 'Printing, advertising, signage and graphic design solutions.',
          address: {
            '@type': 'PostalAddress',
            streetAddress: 'Room No. 3, New National Advertising, Plot No. 47, Line No. K, Road No. 5, Opposite Mahesh Jewellers, Nearby Ambedkar Garden, Raman Mama Nagar, Shivaji Nagar',
@@ -733,11 +774,11 @@ function Home() {
            postalCode: '400043',
            addressCountry: 'IN',
          },
-         hasMap: googleMapsUrl,
-        telephone: '+919555759677',
-        email: 'newnationaladv2022@gmail.com',
+         hasMap: settings?.googleMapsUrl || googleMapsUrl,
+        telephone: `+91${primaryPhone.replace(/\D/g, '')}`,
+        email: settings?.email || 'newnationaladv2022@gmail.com',
         areaServed: 'Mumbai, Maharashtra, India',
-        makesOffer: services.map((service) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: service.title, description: service.description } })),
+        makesOffer: publicServices.map((service) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: service.title, description: service.description } })),
       }) }} />
 
       <SiteHeader />
@@ -749,10 +790,10 @@ function Home() {
           <div className="container-nna grid min-h-[580px] items-center gap-9 py-14 lg:grid-cols-[.89fr_1.11fr] lg:gap-4 lg:py-16">
              <Reveal className="relative z-10 max-w-[520px]">
                <p className="eyebrow mb-5">Print · Design · Signage · Advertising</p>
-               <h1 className="display max-w-[530px] text-[clamp(2.7rem,5.7vw,5.4rem)] font-extrabold leading-[.93] text-[#14213d]">New National<br /><span className="text-[#1769aa]">Advertising</span></h1>
+               <h1 className="display max-w-[530px] text-[clamp(2.7rem,5.7vw,5.4rem)] font-extrabold leading-[.93] text-[#14213d]">{(content?.heroHeading || 'New National Advertising').split(' ').map((word, index, words) => <span key={`${word}-${index}`} className={index === words.length - 1 ? 'text-[#1769aa]' : undefined}>{word}{index < words.length - 1 ? ' ' : ''}</span>)}</h1>
                <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#81909d]"><span className="h-px w-9 bg-[#00a8c6]" /><span className="h-px w-5 bg-[#d9468c]" /><span className="h-px w-3 bg-[#f2c94c]" />Mumbai print studio</div>
-              <p className="mt-6 text-lg font-semibold tracking-[-.02em] text-[#253b53]">Printing, Signage &amp; Design Solutions</p>
-              <p className="mt-3 max-w-[430px] text-[13px] leading-6 text-[#657589]">Professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals.</p>
+              <p className="mt-6 text-lg font-semibold tracking-[-.02em] text-[#253b53]">{content?.heroCtaText || 'Printing, Signage & Design Solutions'}</p>
+              <p className="mt-3 max-w-[430px] text-[13px] leading-6 text-[#657589]">{content?.heroDescription || 'Professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals.'}</p>
               <div className="mt-7 flex flex-wrap gap-3"><PrimaryButton /><SecondaryButton /></div>
               <div className="mt-11 grid max-w-[480px] grid-cols-3 gap-3 border-t border-[#d7e3ea] pt-5">
                 {[['Wide Range of Services', 'All your printing needs', Grid2X2], ['Quality Printing', 'Clear & vibrant results', CircleCheck], ['Reliable Service', 'Professional service', ShieldCheck]].map(([title, copy, Icon]) => (
@@ -780,7 +821,7 @@ function Home() {
                <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide an all printing solution for practical business and event needs.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
             </Reveal>
              <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {services.map((service, index) => { const Icon = service.icon; return (
+                {publicServices.map((service, index) => { const Icon = service.icon; return (
                   <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
                     <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
                       <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
@@ -806,7 +847,7 @@ function Home() {
 
         <section id="about" className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.74fr_1.26fr] lg:gap-20">
-             <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">New National<br />Advertising</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.</p><a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex max-w-[360px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>Room No. 3, New National Advertising, Govandi West, Mumbai - 400043 <span className="text-[#1669aa]">View on Google Maps</span></span></a><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
+             <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">{content?.aboutTitle || 'New National Advertising'}</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">{content?.aboutBody || 'New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.'}</p><a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex max-w-[360px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
             <Reveal delay={110} className="grid grid-cols-[1.3fr_1fr_.75fr] gap-2 sm:gap-3">
               <div className="col-span-2 h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/design-materials.jpg" alt="Printed design materials on a studio table" className="h-full w-full object-cover" /></div>
               <div className="relative h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/new-national-advertising-shop.png" alt="Printing solutions displayed at New National Advertising" className="h-full w-full object-cover object-center" /><span className="absolute inset-x-2 bottom-2 rounded-full bg-white/90 px-2 py-1 text-center text-[8px] font-bold text-[#263e57] shadow-sm">Printing solutions displayed at our shop</span></div>
@@ -886,7 +927,7 @@ function Home() {
         <section id="contact" className="bg-[#f1f6f8] py-20 lg:py-24">
           <div className="container-nna grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-20">
              <Reveal><p className="eyebrow">Let's work together</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Get a Quote</h2><p className="mt-5 max-w-[330px] text-[13px] leading-6 text-[#68798a]">Have a printing, signage or design requirement? Get in touch with New National Advertising.</p><div className="mt-8 space-y-4 text-[12px] text-[#405268]"><a href="tel:+919555759677" data-testid="link-contact-primary" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span><strong className="block text-[#223b55]">9555759677</strong><span className="text-[10px] text-[#81909d]">Primary phone</span></span></a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span>7506269783 &nbsp; / &nbsp; 8898805753</span></div><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-contact-email" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Mail size={14} /></span>{'newnationaladv2022@gmail.com'}</a><address className="not-italic"><div className="flex items-start gap-3"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><MapPin size={14} /></span><span className="leading-5">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#1669aa] hover:underline" data-testid="link-contact-map">View on Google Maps</a></span></div></address></div><div className="mt-7 flex flex-wrap gap-2"><a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="button-whatsapp" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Chat on WhatsApp <ArrowRight size={12} /></a><a href="tel:+919555759677" data-testid="button-call-now" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="button-email-us" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Mail size={14} className="text-[#1669aa]" />Email Us</a></div></Reveal>
-            <Reveal delay={100}><form onSubmit={handleSubmit} className="rounded-[12px] border border-[#dce6eb] bg-white p-5 shadow-[0_10px_30px_rgba(31,61,87,.06)] sm:p-7" aria-label="Request a quote form"><div className="grid gap-4 sm:grid-cols-2"><label className="text-[10px] font-bold text-[#445a70]">Name<input required name="name" placeholder="Your name" data-testid="input-name" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Phone Number<input required name="phone" type="tel" placeholder="Your phone number" data-testid="input-phone" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Email<input required name="email" type="email" placeholder="Your email" data-testid="input-email" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Service<select required name="service" defaultValue="" data-testid="select-service" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none focus:border-[#1669aa]"><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.title}>{service.title}</option>)}<option>Other Services</option></select></label><label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Project Details<textarea required name="details" rows={3} placeholder="Tell us about your requirement..." data-testid="textarea-details" className="mt-1.5 w-full resize-none rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Quantity<input name="quantity" placeholder="e.g. 100" data-testid="input-quantity" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Upload File (Optional)<span className="mt-1.5 flex w-full cursor-pointer items-center rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-[9px] text-[11px] font-normal text-[#8d9aa5]"><input type="file" name="file" data-testid="input-file" className="w-full text-[10px]" /></span></label></div><button type="submit" data-testid="button-submit-quote" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1669aa] py-3 text-[11px] font-bold text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">{submitted ? 'Request received — we will be in touch' : 'Request a Quote'}<ArrowRight size={14} /></button>{submitted && <p role="status" data-testid="status-quote-submitted" className="mt-3 text-center text-[11px] font-semibold text-[#24734d]">Thank you. Please also use WhatsApp for the fastest response.</p>}</form></Reveal>
+            <Reveal delay={100}><form onSubmit={handleSubmit} className="rounded-[12px] border border-[#dce6eb] bg-white p-5 shadow-[0_10px_30px_rgba(31,61,87,.06)] sm:p-7" aria-label="Request a quote form"><div className="grid gap-4 sm:grid-cols-2"><label className="text-[10px] font-bold text-[#445a70]">Name<input required name="name" placeholder="Your name" data-testid="input-name" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Phone Number<input required name="phone" type="tel" placeholder="Your phone number" data-testid="input-phone" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Email<input required name="email" type="email" placeholder="Your email" data-testid="input-email" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Service<select required name="service" defaultValue="" data-testid="select-service" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none focus:border-[#1669aa]"><option value="" disabled>Select a service</option>{publicServices.map((service) => <option key={service.title}>{service.title}</option>)}<option>Other Services</option></select></label><label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Project Details<textarea required name="details" rows={3} placeholder="Tell us about your requirement..." data-testid="textarea-details" className="mt-1.5 w-full resize-none rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Quantity<input name="quantity" placeholder="e.g. 100" data-testid="input-quantity" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Upload File (Optional)<span className="mt-1.5 flex w-full cursor-pointer items-center rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-[9px] text-[11px] font-normal text-[#8d9aa5]"><input type="file" name="file" data-testid="input-file" className="w-full text-[10px]" /></span></label></div><button type="submit" data-testid="button-submit-quote" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1669aa] py-3 text-[11px] font-bold text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">{submitted ? 'Request received — we will be in touch' : 'Request a Quote'}<ArrowRight size={14} /></button>{submitted && <p role="status" data-testid="status-quote-submitted" className="mt-3 text-center text-[11px] font-semibold text-[#24734d]">Thank you. Please also use WhatsApp for the fastest response.</p>}</form></Reveal>
           </div>
         </section>
       </main>
@@ -1130,7 +1171,8 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
 
 function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const [submitted, setSubmitted] = useState(false);
-  const service = services.find((item) => item.slug === params.slug);
+  const publicServices = usePublicServices();
+  const service = publicServices.find((item) => item.slug === params.slug);
 
   useEffect(() => {
     if (!service) return;
@@ -1152,8 +1194,8 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   if (!service) return <NotFound />;
 
   const relatedServices = service.related
-    .map((slug) => services.find((item) => item.slug === slug))
-    .filter((item): item is typeof services[number] => Boolean(item));
+    .map((slug) => publicServices.find((item) => item.slug === slug))
+    .filter((item): item is ServiceRecord => Boolean(item));
   const whatsappBookingUrl = `${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(`Hello New National Advertising, I would like to book/enquire about ${service.title}.`)}`;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

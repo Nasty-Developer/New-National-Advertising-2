@@ -258,6 +258,378 @@ paths:
           description: Invalid upload request
         "401":
           description: Authentication required
+  /machines:
+    get:
+      operationId: getPublicMachines
+      tags: [machines]
+      summary: List published machines
+      responses:
+        "200":
+          description: Published machines
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Machine"
+  /admin/machines:
+    get:
+      operationId: getAdminMachines
+      tags: [machines]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Machine catalogue
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Machine"
+    post:
+      operationId: createMachine
+      tags: [machines]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineInput"
+      responses:
+        "201":
+          description: Machine created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Machine"
+  /admin/machines/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ProductId"
+    put:
+      operationId: updateMachine
+      tags: [machines]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineInput"
+      responses:
+        "200":
+          description: Machine updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Machine"
+    delete:
+      operationId: deleteMachine
+      tags: [machines]
+      security:
+        - firebaseBearer: []
+      responses:
+        "204":
+          description: Machine deleted
+  /services:
+    get:
+      operationId: getPublicServices
+      tags: [services]
+      summary: List published services
+      responses:
+        "200":
+          description: Published services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+  /admin/services:
+    get:
+      operationId: getAdminServices
+      tags: [services]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Service catalogue
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+    post:
+      operationId: createService
+      tags: [services]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "201":
+          description: Service created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+  /admin/services/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ProductId"
+    put:
+      operationId: updateService
+      tags: [services]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "200":
+          description: Service updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    delete:
+      operationId: deleteService
+      tags: [services]
+      security:
+        - firebaseBearer: []
+      responses:
+        "204":
+          description: Service deleted
+  /website-content:
+    get:
+      operationId: getWebsiteContent
+      tags: [content]
+      responses:
+        "200":
+          description: Public website content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteContent"
+  /admin/website-content:
+    get:
+      operationId: getAdminWebsiteContent
+      tags: [content]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Website content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteContent"
+    put:
+      operationId: updateWebsiteContent
+      tags: [content]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebsiteContentInput"
+      responses:
+        "200":
+          description: Website content updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteContent"
+  /settings:
+    get:
+      operationId: getPublicSettings
+      tags: [settings]
+      responses:
+        "200":
+          description: Public website settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteSettings"
+  /admin/settings:
+    get:
+      operationId: getAdminSettings
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Website settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteSettings"
+    put:
+      operationId: updateSettings
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebsiteSettingsInput"
+      responses:
+        "200":
+          description: Website settings updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebsiteSettings"
+  /contact-numbers:
+    get:
+      operationId: getPublicContactNumbers
+      tags: [settings]
+      responses:
+        "200":
+          description: Public contact numbers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactNumber"
+  /admin/contact-numbers:
+    get:
+      operationId: getAdminContactNumbers
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Contact numbers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactNumber"
+    post:
+      operationId: createContactNumber
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactNumberInput"
+      responses:
+        "201":
+          description: Contact number created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactNumber"
+  /admin/contact-numbers/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ProductId"
+    put:
+      operationId: updateContactNumber
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactNumberInput"
+      responses:
+        "200":
+          description: Contact number updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactNumber"
+    delete:
+      operationId: deleteContactNumber
+      tags: [settings]
+      security:
+        - firebaseBearer: []
+      responses:
+        "204":
+          description: Contact number deleted
+  /admin/requests/quotes:
+    get:
+      operationId: getAdminQuoteRequests
+      tags: [requests]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Recent quote requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuoteRequest"
+  /admin/requests/contacts:
+    get:
+      operationId: getAdminContactRequests
+      tags: [requests]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Recent contact requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactRequest"
+  /admin/requests/{collection}/{id}/status:
+    parameters:
+      - name: collection
+        in: path
+        required: true
+        schema:
+          type: string
+          enum: [quotes, contacts]
+      - $ref: "#/components/parameters/ProductId"
+    patch:
+      operationId: updateRequestStatus
+      tags: [requests]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestStatusInput"
+      responses:
+        "200":
+          description: Request status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  status: { type: string }
+                required: [id, status]
 components:
   parameters:
     ProductId:
@@ -394,4 +766,172 @@ components:
         objectPath:
           type: string
       required: [uploadURL, objectPath]
+    MachineInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1, maxLength: 180 }
+        slug: { type: string, minLength: 1, maxLength: 180 }
+        category: { type: string, maxLength: 180 }
+        shortDescription: { type: string, maxLength: 500 }
+        description: { type: string, maxLength: 5000 }
+        fullDescription: { type: string, maxLength: 10000 }
+        specifications: { type: array, items: { type: string, maxLength: 240 } }
+        features: { type: array, items: { type: string, maxLength: 240 } }
+        applications: { type: array, items: { type: string, maxLength: 180 } }
+        imageUrl: { type: [string, "null"], maxLength: 500 }
+        imageAlt: { type: [string, "null"], maxLength: 180 }
+        images: { type: array, items: { type: string, maxLength: 500 } }
+        relatedServices: { type: array, items: { type: string, maxLength: 180 } }
+        displayOrder: { type: integer, minimum: 0 }
+        published: { type: boolean }
+      required: [name, slug, description]
+    Machine:
+      allOf:
+        - $ref: "#/components/schemas/MachineInput"
+        - type: object
+          properties:
+            id: { type: string }
+            createdAt: { type: string, format: date-time }
+            updatedAt: { type: string, format: date-time }
+          required: [id]
+    ServiceInput:
+      type: object
+      properties:
+        title: { type: string, minLength: 1, maxLength: 180 }
+        slug: { type: string, minLength: 1, maxLength: 180 }
+        category: { type: string, maxLength: 180 }
+        shortDescription: { type: string, maxLength: 500 }
+        description: { type: string, maxLength: 5000 }
+        fullDescription: { type: string, maxLength: 10000 }
+        content: { type: string, maxLength: 10000 }
+        features: { type: array, items: { type: string, maxLength: 240 } }
+        images: { type: array, items: { type: string, maxLength: 500 } }
+        imageAlt: { type: [string, "null"], maxLength: 180 }
+        offerings: { type: array, items: { type: string, maxLength: 180 } }
+        applications: { type: array, items: { type: string, maxLength: 180 } }
+        materials: { type: array, items: { type: string, maxLength: 180 } }
+        whyChoose: { type: array, items: { type: string, maxLength: 240 } }
+        relatedSlugs: { type: array, items: { type: string, maxLength: 180 } }
+        displayOrder: { type: integer, minimum: 0 }
+        status: { type: string, enum: [draft, published, archived] }
+        featured: { type: boolean }
+      required: [title, slug, description]
+    Service:
+      allOf:
+        - $ref: "#/components/schemas/ServiceInput"
+        - type: object
+          properties:
+            id: { type: string }
+            createdAt: { type: string, format: date-time }
+            updatedAt: { type: string, format: date-time }
+          required: [id]
+    WebsiteContentInput:
+      type: object
+      additionalProperties: false
+      properties:
+        heroHeading: { type: string, maxLength: 240 }
+        heroDescription: { type: string, maxLength: 1000 }
+        heroImage: { type: [string, "null"], maxLength: 500 }
+        heroCtaText: { type: string, maxLength: 120 }
+        aboutTitle: { type: string, maxLength: 240 }
+        aboutBody: { type: string, maxLength: 4000 }
+        qualityBody: { type: string, maxLength: 4000 }
+        trustBody: { type: string, maxLength: 4000 }
+        processBody: { type: string, maxLength: 4000 }
+        graphicsDesignBody: { type: string, maxLength: 4000 }
+        signageBody: { type: string, maxLength: 4000 }
+        contactBody: { type: string, maxLength: 4000 }
+        footerBody: { type: string, maxLength: 4000 }
+        metadataTitle: { type: string, maxLength: 240 }
+        metadataDescription: { type: string, maxLength: 320 }
+    WebsiteContent:
+      allOf:
+        - $ref: "#/components/schemas/WebsiteContentInput"
+        - type: object
+          properties:
+            id: { type: string }
+    WebsiteSettingsInput:
+      type: object
+      properties:
+        businessName: { type: string, minLength: 1, maxLength: 180 }
+        email: { type: string, maxLength: 180 }
+        address: { type: string, maxLength: 1000 }
+        whatsappNumbers: { type: array, items: { type: string, maxLength: 40 } }
+        socialLinks:
+          type: array
+          items:
+            type: object
+            properties:
+              label: { type: string }
+              url: { type: string, format: uri }
+            required: [label, url]
+        googleMapsUrl: { type: string, maxLength: 500 }
+        footerInformation: { type: string, maxLength: 2000 }
+        logoPath: { type: [string, "null"], maxLength: 500 }
+        faviconPath: { type: [string, "null"], maxLength: 500 }
+        metadataTitle: { type: string, maxLength: 240 }
+        metadataDescription: { type: string, maxLength: 320 }
+      required: [businessName, email, address, whatsappNumbers, socialLinks, googleMapsUrl, footerInformation, metadataTitle, metadataDescription]
+    WebsiteSettings:
+      allOf:
+        - $ref: "#/components/schemas/WebsiteSettingsInput"
+        - type: object
+          properties:
+            id: { type: string }
+    ContactNumberInput:
+      type: object
+      properties:
+        label: { type: string, minLength: 1, maxLength: 80 }
+        phone: { type: string, minLength: 5, maxLength: 40 }
+        showOnWebsite: { type: boolean }
+        useForCalls: { type: boolean }
+        useForWhatsApp: { type: boolean }
+        isPrimary: { type: boolean }
+        displayOrder: { type: integer, minimum: 0 }
+      required: [label, phone]
+    ContactNumber:
+      allOf:
+        - $ref: "#/components/schemas/ContactNumberInput"
+        - type: object
+          properties:
+            id: { type: string }
+          required: [id]
+    QuoteRequest:
+      type: object
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        name: { type: string }
+        phone: { type: string }
+        email: { type: string }
+        service: { type: string }
+        requirementDetails: { type: string }
+        quantity: { type: string }
+        preferredDate: { type: string }
+        attachmentUrl: { type: [string, "null"] }
+        attachmentName: { type: string }
+        status: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [id, name, phone, service, requirementDetails, status]
+    ContactRequest:
+      type: object
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        name: { type: string }
+        phone: { type: string }
+        email: { type: string }
+        message: { type: string }
+        status: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [id, name, phone, message, status]
+    RequestStatusInput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [new, contacted, quoted, approved, completed, cancelled]
+      required: [status]
 

@@ -381,3 +381,1273 @@ export const RequestProductImageUploadUrlResponse = zod.object({
 })
 
 
+/**
+ * @summary List published machines
+ */
+export const getPublicMachinesResponseOneNameMax = 180;
+
+export const getPublicMachinesResponseOneSlugMax = 180;
+
+export const getPublicMachinesResponseOneCategoryMax = 180;
+
+export const getPublicMachinesResponseOneShortDescriptionMax = 500;
+
+export const getPublicMachinesResponseOneDescriptionMax = 5000;
+
+export const getPublicMachinesResponseOneFullDescriptionMax = 10000;
+
+export const getPublicMachinesResponseOneSpecificationsItemMax = 240;
+
+export const getPublicMachinesResponseOneFeaturesItemMax = 240;
+
+export const getPublicMachinesResponseOneApplicationsItemMax = 180;
+
+export const getPublicMachinesResponseOneImageUrlMax = 500;
+
+export const getPublicMachinesResponseOneImageAltMax = 180;
+
+export const getPublicMachinesResponseOneImagesItemMax = 500;
+
+export const getPublicMachinesResponseOneRelatedServicesItemMax = 180;
+
+export const getPublicMachinesResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetPublicMachinesResponseItem = zod.object({
+  "name": zod.string().min(1).max(getPublicMachinesResponseOneNameMax),
+  "slug": zod.string().min(1).max(getPublicMachinesResponseOneSlugMax),
+  "category": zod.string().max(getPublicMachinesResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(getPublicMachinesResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(getPublicMachinesResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(getPublicMachinesResponseOneFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(getPublicMachinesResponseOneSpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(getPublicMachinesResponseOneFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(getPublicMachinesResponseOneApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(getPublicMachinesResponseOneImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(getPublicMachinesResponseOneImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(getPublicMachinesResponseOneImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(getPublicMachinesResponseOneRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(getPublicMachinesResponseOneDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetPublicMachinesResponse = zod.array(GetPublicMachinesResponseItem)
+
+
+export const getAdminMachinesResponseOneNameMax = 180;
+
+export const getAdminMachinesResponseOneSlugMax = 180;
+
+export const getAdminMachinesResponseOneCategoryMax = 180;
+
+export const getAdminMachinesResponseOneShortDescriptionMax = 500;
+
+export const getAdminMachinesResponseOneDescriptionMax = 5000;
+
+export const getAdminMachinesResponseOneFullDescriptionMax = 10000;
+
+export const getAdminMachinesResponseOneSpecificationsItemMax = 240;
+
+export const getAdminMachinesResponseOneFeaturesItemMax = 240;
+
+export const getAdminMachinesResponseOneApplicationsItemMax = 180;
+
+export const getAdminMachinesResponseOneImageUrlMax = 500;
+
+export const getAdminMachinesResponseOneImageAltMax = 180;
+
+export const getAdminMachinesResponseOneImagesItemMax = 500;
+
+export const getAdminMachinesResponseOneRelatedServicesItemMax = 180;
+
+export const getAdminMachinesResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetAdminMachinesResponseItem = zod.object({
+  "name": zod.string().min(1).max(getAdminMachinesResponseOneNameMax),
+  "slug": zod.string().min(1).max(getAdminMachinesResponseOneSlugMax),
+  "category": zod.string().max(getAdminMachinesResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(getAdminMachinesResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(getAdminMachinesResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(getAdminMachinesResponseOneFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(getAdminMachinesResponseOneSpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(getAdminMachinesResponseOneFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(getAdminMachinesResponseOneApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(getAdminMachinesResponseOneImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(getAdminMachinesResponseOneImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(getAdminMachinesResponseOneImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(getAdminMachinesResponseOneRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(getAdminMachinesResponseOneDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetAdminMachinesResponse = zod.array(GetAdminMachinesResponseItem)
+
+
+export const createMachineBodyNameMax = 180;
+
+export const createMachineBodySlugMax = 180;
+
+export const createMachineBodyCategoryMax = 180;
+
+export const createMachineBodyShortDescriptionMax = 500;
+
+export const createMachineBodyDescriptionMax = 5000;
+
+export const createMachineBodyFullDescriptionMax = 10000;
+
+export const createMachineBodySpecificationsItemMax = 240;
+
+export const createMachineBodyFeaturesItemMax = 240;
+
+export const createMachineBodyApplicationsItemMax = 180;
+
+export const createMachineBodyImageUrlMax = 500;
+
+export const createMachineBodyImageAltMax = 180;
+
+export const createMachineBodyImagesItemMax = 500;
+
+export const createMachineBodyRelatedServicesItemMax = 180;
+
+export const createMachineBodyDisplayOrderMin = 0;
+
+
+
+export const CreateMachineBody = zod.object({
+  "name": zod.string().min(1).max(createMachineBodyNameMax),
+  "slug": zod.string().min(1).max(createMachineBodySlugMax),
+  "category": zod.string().max(createMachineBodyCategoryMax).optional(),
+  "shortDescription": zod.string().max(createMachineBodyShortDescriptionMax).optional(),
+  "description": zod.string().max(createMachineBodyDescriptionMax),
+  "fullDescription": zod.string().max(createMachineBodyFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(createMachineBodySpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(createMachineBodyFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(createMachineBodyApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(createMachineBodyImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(createMachineBodyImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(createMachineBodyImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(createMachineBodyRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(createMachineBodyDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+})
+
+export const createMachineResponseOneNameMax = 180;
+
+export const createMachineResponseOneSlugMax = 180;
+
+export const createMachineResponseOneCategoryMax = 180;
+
+export const createMachineResponseOneShortDescriptionMax = 500;
+
+export const createMachineResponseOneDescriptionMax = 5000;
+
+export const createMachineResponseOneFullDescriptionMax = 10000;
+
+export const createMachineResponseOneSpecificationsItemMax = 240;
+
+export const createMachineResponseOneFeaturesItemMax = 240;
+
+export const createMachineResponseOneApplicationsItemMax = 180;
+
+export const createMachineResponseOneImageUrlMax = 500;
+
+export const createMachineResponseOneImageAltMax = 180;
+
+export const createMachineResponseOneImagesItemMax = 500;
+
+export const createMachineResponseOneRelatedServicesItemMax = 180;
+
+export const createMachineResponseOneDisplayOrderMin = 0;
+
+
+
+export const CreateMachineResponse = zod.object({
+  "name": zod.string().min(1).max(createMachineResponseOneNameMax),
+  "slug": zod.string().min(1).max(createMachineResponseOneSlugMax),
+  "category": zod.string().max(createMachineResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(createMachineResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(createMachineResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(createMachineResponseOneFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(createMachineResponseOneSpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(createMachineResponseOneFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(createMachineResponseOneApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(createMachineResponseOneImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(createMachineResponseOneImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(createMachineResponseOneImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(createMachineResponseOneRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(createMachineResponseOneDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const UpdateMachineParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const updateMachineBodyNameMax = 180;
+
+export const updateMachineBodySlugMax = 180;
+
+export const updateMachineBodyCategoryMax = 180;
+
+export const updateMachineBodyShortDescriptionMax = 500;
+
+export const updateMachineBodyDescriptionMax = 5000;
+
+export const updateMachineBodyFullDescriptionMax = 10000;
+
+export const updateMachineBodySpecificationsItemMax = 240;
+
+export const updateMachineBodyFeaturesItemMax = 240;
+
+export const updateMachineBodyApplicationsItemMax = 180;
+
+export const updateMachineBodyImageUrlMax = 500;
+
+export const updateMachineBodyImageAltMax = 180;
+
+export const updateMachineBodyImagesItemMax = 500;
+
+export const updateMachineBodyRelatedServicesItemMax = 180;
+
+export const updateMachineBodyDisplayOrderMin = 0;
+
+
+
+export const UpdateMachineBody = zod.object({
+  "name": zod.string().min(1).max(updateMachineBodyNameMax),
+  "slug": zod.string().min(1).max(updateMachineBodySlugMax),
+  "category": zod.string().max(updateMachineBodyCategoryMax).optional(),
+  "shortDescription": zod.string().max(updateMachineBodyShortDescriptionMax).optional(),
+  "description": zod.string().max(updateMachineBodyDescriptionMax),
+  "fullDescription": zod.string().max(updateMachineBodyFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(updateMachineBodySpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(updateMachineBodyFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(updateMachineBodyApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(updateMachineBodyImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(updateMachineBodyImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(updateMachineBodyImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(updateMachineBodyRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(updateMachineBodyDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+})
+
+export const updateMachineResponseOneNameMax = 180;
+
+export const updateMachineResponseOneSlugMax = 180;
+
+export const updateMachineResponseOneCategoryMax = 180;
+
+export const updateMachineResponseOneShortDescriptionMax = 500;
+
+export const updateMachineResponseOneDescriptionMax = 5000;
+
+export const updateMachineResponseOneFullDescriptionMax = 10000;
+
+export const updateMachineResponseOneSpecificationsItemMax = 240;
+
+export const updateMachineResponseOneFeaturesItemMax = 240;
+
+export const updateMachineResponseOneApplicationsItemMax = 180;
+
+export const updateMachineResponseOneImageUrlMax = 500;
+
+export const updateMachineResponseOneImageAltMax = 180;
+
+export const updateMachineResponseOneImagesItemMax = 500;
+
+export const updateMachineResponseOneRelatedServicesItemMax = 180;
+
+export const updateMachineResponseOneDisplayOrderMin = 0;
+
+
+
+export const UpdateMachineResponse = zod.object({
+  "name": zod.string().min(1).max(updateMachineResponseOneNameMax),
+  "slug": zod.string().min(1).max(updateMachineResponseOneSlugMax),
+  "category": zod.string().max(updateMachineResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(updateMachineResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(updateMachineResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(updateMachineResponseOneFullDescriptionMax).optional(),
+  "specifications": zod.array(zod.string().max(updateMachineResponseOneSpecificationsItemMax)).optional(),
+  "features": zod.array(zod.string().max(updateMachineResponseOneFeaturesItemMax)).optional(),
+  "applications": zod.array(zod.string().max(updateMachineResponseOneApplicationsItemMax)).optional(),
+  "imageUrl": zod.string().max(updateMachineResponseOneImageUrlMax).nullish(),
+  "imageAlt": zod.string().max(updateMachineResponseOneImageAltMax).nullish(),
+  "images": zod.array(zod.string().max(updateMachineResponseOneImagesItemMax)).optional(),
+  "relatedServices": zod.array(zod.string().max(updateMachineResponseOneRelatedServicesItemMax)).optional(),
+  "displayOrder": zod.number().int().min(updateMachineResponseOneDisplayOrderMin).optional(),
+  "published": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const DeleteMachineParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const DeleteMachineResponse = zod.void()
+
+
+/**
+ * @summary List published services
+ */
+export const getPublicServicesResponseOneTitleMax = 180;
+
+export const getPublicServicesResponseOneSlugMax = 180;
+
+export const getPublicServicesResponseOneCategoryMax = 180;
+
+export const getPublicServicesResponseOneShortDescriptionMax = 500;
+
+export const getPublicServicesResponseOneDescriptionMax = 5000;
+
+export const getPublicServicesResponseOneFullDescriptionMax = 10000;
+
+export const getPublicServicesResponseOneContentMax = 10000;
+
+export const getPublicServicesResponseOneFeaturesItemMax = 240;
+
+export const getPublicServicesResponseOneImagesItemMax = 500;
+
+export const getPublicServicesResponseOneImageAltMax = 180;
+
+export const getPublicServicesResponseOneOfferingsItemMax = 180;
+
+export const getPublicServicesResponseOneApplicationsItemMax = 180;
+
+export const getPublicServicesResponseOneMaterialsItemMax = 180;
+
+export const getPublicServicesResponseOneWhyChooseItemMax = 240;
+
+export const getPublicServicesResponseOneRelatedSlugsItemMax = 180;
+
+export const getPublicServicesResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetPublicServicesResponseItem = zod.object({
+  "title": zod.string().min(1).max(getPublicServicesResponseOneTitleMax),
+  "slug": zod.string().min(1).max(getPublicServicesResponseOneSlugMax),
+  "category": zod.string().max(getPublicServicesResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(getPublicServicesResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(getPublicServicesResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(getPublicServicesResponseOneFullDescriptionMax).optional(),
+  "content": zod.string().max(getPublicServicesResponseOneContentMax).optional(),
+  "features": zod.array(zod.string().max(getPublicServicesResponseOneFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(getPublicServicesResponseOneImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(getPublicServicesResponseOneImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(getPublicServicesResponseOneOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(getPublicServicesResponseOneApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(getPublicServicesResponseOneMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(getPublicServicesResponseOneWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(getPublicServicesResponseOneRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(getPublicServicesResponseOneDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetPublicServicesResponse = zod.array(GetPublicServicesResponseItem)
+
+
+export const getAdminServicesResponseOneTitleMax = 180;
+
+export const getAdminServicesResponseOneSlugMax = 180;
+
+export const getAdminServicesResponseOneCategoryMax = 180;
+
+export const getAdminServicesResponseOneShortDescriptionMax = 500;
+
+export const getAdminServicesResponseOneDescriptionMax = 5000;
+
+export const getAdminServicesResponseOneFullDescriptionMax = 10000;
+
+export const getAdminServicesResponseOneContentMax = 10000;
+
+export const getAdminServicesResponseOneFeaturesItemMax = 240;
+
+export const getAdminServicesResponseOneImagesItemMax = 500;
+
+export const getAdminServicesResponseOneImageAltMax = 180;
+
+export const getAdminServicesResponseOneOfferingsItemMax = 180;
+
+export const getAdminServicesResponseOneApplicationsItemMax = 180;
+
+export const getAdminServicesResponseOneMaterialsItemMax = 180;
+
+export const getAdminServicesResponseOneWhyChooseItemMax = 240;
+
+export const getAdminServicesResponseOneRelatedSlugsItemMax = 180;
+
+export const getAdminServicesResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetAdminServicesResponseItem = zod.object({
+  "title": zod.string().min(1).max(getAdminServicesResponseOneTitleMax),
+  "slug": zod.string().min(1).max(getAdminServicesResponseOneSlugMax),
+  "category": zod.string().max(getAdminServicesResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(getAdminServicesResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(getAdminServicesResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(getAdminServicesResponseOneFullDescriptionMax).optional(),
+  "content": zod.string().max(getAdminServicesResponseOneContentMax).optional(),
+  "features": zod.array(zod.string().max(getAdminServicesResponseOneFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(getAdminServicesResponseOneImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(getAdminServicesResponseOneImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(getAdminServicesResponseOneOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(getAdminServicesResponseOneApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(getAdminServicesResponseOneMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(getAdminServicesResponseOneWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(getAdminServicesResponseOneRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(getAdminServicesResponseOneDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetAdminServicesResponse = zod.array(GetAdminServicesResponseItem)
+
+
+export const createServiceBodyTitleMax = 180;
+
+export const createServiceBodySlugMax = 180;
+
+export const createServiceBodyCategoryMax = 180;
+
+export const createServiceBodyShortDescriptionMax = 500;
+
+export const createServiceBodyDescriptionMax = 5000;
+
+export const createServiceBodyFullDescriptionMax = 10000;
+
+export const createServiceBodyContentMax = 10000;
+
+export const createServiceBodyFeaturesItemMax = 240;
+
+export const createServiceBodyImagesItemMax = 500;
+
+export const createServiceBodyImageAltMax = 180;
+
+export const createServiceBodyOfferingsItemMax = 180;
+
+export const createServiceBodyApplicationsItemMax = 180;
+
+export const createServiceBodyMaterialsItemMax = 180;
+
+export const createServiceBodyWhyChooseItemMax = 240;
+
+export const createServiceBodyRelatedSlugsItemMax = 180;
+
+export const createServiceBodyDisplayOrderMin = 0;
+
+
+
+export const CreateServiceBody = zod.object({
+  "title": zod.string().min(1).max(createServiceBodyTitleMax),
+  "slug": zod.string().min(1).max(createServiceBodySlugMax),
+  "category": zod.string().max(createServiceBodyCategoryMax).optional(),
+  "shortDescription": zod.string().max(createServiceBodyShortDescriptionMax).optional(),
+  "description": zod.string().max(createServiceBodyDescriptionMax),
+  "fullDescription": zod.string().max(createServiceBodyFullDescriptionMax).optional(),
+  "content": zod.string().max(createServiceBodyContentMax).optional(),
+  "features": zod.array(zod.string().max(createServiceBodyFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(createServiceBodyImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(createServiceBodyImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(createServiceBodyOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(createServiceBodyApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(createServiceBodyMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(createServiceBodyWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(createServiceBodyRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(createServiceBodyDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+})
+
+export const createServiceResponseOneTitleMax = 180;
+
+export const createServiceResponseOneSlugMax = 180;
+
+export const createServiceResponseOneCategoryMax = 180;
+
+export const createServiceResponseOneShortDescriptionMax = 500;
+
+export const createServiceResponseOneDescriptionMax = 5000;
+
+export const createServiceResponseOneFullDescriptionMax = 10000;
+
+export const createServiceResponseOneContentMax = 10000;
+
+export const createServiceResponseOneFeaturesItemMax = 240;
+
+export const createServiceResponseOneImagesItemMax = 500;
+
+export const createServiceResponseOneImageAltMax = 180;
+
+export const createServiceResponseOneOfferingsItemMax = 180;
+
+export const createServiceResponseOneApplicationsItemMax = 180;
+
+export const createServiceResponseOneMaterialsItemMax = 180;
+
+export const createServiceResponseOneWhyChooseItemMax = 240;
+
+export const createServiceResponseOneRelatedSlugsItemMax = 180;
+
+export const createServiceResponseOneDisplayOrderMin = 0;
+
+
+
+export const CreateServiceResponse = zod.object({
+  "title": zod.string().min(1).max(createServiceResponseOneTitleMax),
+  "slug": zod.string().min(1).max(createServiceResponseOneSlugMax),
+  "category": zod.string().max(createServiceResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(createServiceResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(createServiceResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(createServiceResponseOneFullDescriptionMax).optional(),
+  "content": zod.string().max(createServiceResponseOneContentMax).optional(),
+  "features": zod.array(zod.string().max(createServiceResponseOneFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(createServiceResponseOneImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(createServiceResponseOneImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(createServiceResponseOneOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(createServiceResponseOneApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(createServiceResponseOneMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(createServiceResponseOneWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(createServiceResponseOneRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(createServiceResponseOneDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const UpdateServiceParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const updateServiceBodyTitleMax = 180;
+
+export const updateServiceBodySlugMax = 180;
+
+export const updateServiceBodyCategoryMax = 180;
+
+export const updateServiceBodyShortDescriptionMax = 500;
+
+export const updateServiceBodyDescriptionMax = 5000;
+
+export const updateServiceBodyFullDescriptionMax = 10000;
+
+export const updateServiceBodyContentMax = 10000;
+
+export const updateServiceBodyFeaturesItemMax = 240;
+
+export const updateServiceBodyImagesItemMax = 500;
+
+export const updateServiceBodyImageAltMax = 180;
+
+export const updateServiceBodyOfferingsItemMax = 180;
+
+export const updateServiceBodyApplicationsItemMax = 180;
+
+export const updateServiceBodyMaterialsItemMax = 180;
+
+export const updateServiceBodyWhyChooseItemMax = 240;
+
+export const updateServiceBodyRelatedSlugsItemMax = 180;
+
+export const updateServiceBodyDisplayOrderMin = 0;
+
+
+
+export const UpdateServiceBody = zod.object({
+  "title": zod.string().min(1).max(updateServiceBodyTitleMax),
+  "slug": zod.string().min(1).max(updateServiceBodySlugMax),
+  "category": zod.string().max(updateServiceBodyCategoryMax).optional(),
+  "shortDescription": zod.string().max(updateServiceBodyShortDescriptionMax).optional(),
+  "description": zod.string().max(updateServiceBodyDescriptionMax),
+  "fullDescription": zod.string().max(updateServiceBodyFullDescriptionMax).optional(),
+  "content": zod.string().max(updateServiceBodyContentMax).optional(),
+  "features": zod.array(zod.string().max(updateServiceBodyFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(updateServiceBodyImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(updateServiceBodyImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(updateServiceBodyOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(updateServiceBodyApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(updateServiceBodyMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(updateServiceBodyWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(updateServiceBodyRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(updateServiceBodyDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+})
+
+export const updateServiceResponseOneTitleMax = 180;
+
+export const updateServiceResponseOneSlugMax = 180;
+
+export const updateServiceResponseOneCategoryMax = 180;
+
+export const updateServiceResponseOneShortDescriptionMax = 500;
+
+export const updateServiceResponseOneDescriptionMax = 5000;
+
+export const updateServiceResponseOneFullDescriptionMax = 10000;
+
+export const updateServiceResponseOneContentMax = 10000;
+
+export const updateServiceResponseOneFeaturesItemMax = 240;
+
+export const updateServiceResponseOneImagesItemMax = 500;
+
+export const updateServiceResponseOneImageAltMax = 180;
+
+export const updateServiceResponseOneOfferingsItemMax = 180;
+
+export const updateServiceResponseOneApplicationsItemMax = 180;
+
+export const updateServiceResponseOneMaterialsItemMax = 180;
+
+export const updateServiceResponseOneWhyChooseItemMax = 240;
+
+export const updateServiceResponseOneRelatedSlugsItemMax = 180;
+
+export const updateServiceResponseOneDisplayOrderMin = 0;
+
+
+
+export const UpdateServiceResponse = zod.object({
+  "title": zod.string().min(1).max(updateServiceResponseOneTitleMax),
+  "slug": zod.string().min(1).max(updateServiceResponseOneSlugMax),
+  "category": zod.string().max(updateServiceResponseOneCategoryMax).optional(),
+  "shortDescription": zod.string().max(updateServiceResponseOneShortDescriptionMax).optional(),
+  "description": zod.string().max(updateServiceResponseOneDescriptionMax),
+  "fullDescription": zod.string().max(updateServiceResponseOneFullDescriptionMax).optional(),
+  "content": zod.string().max(updateServiceResponseOneContentMax).optional(),
+  "features": zod.array(zod.string().max(updateServiceResponseOneFeaturesItemMax)).optional(),
+  "images": zod.array(zod.string().max(updateServiceResponseOneImagesItemMax)).optional(),
+  "imageAlt": zod.string().max(updateServiceResponseOneImageAltMax).nullish(),
+  "offerings": zod.array(zod.string().max(updateServiceResponseOneOfferingsItemMax)).optional(),
+  "applications": zod.array(zod.string().max(updateServiceResponseOneApplicationsItemMax)).optional(),
+  "materials": zod.array(zod.string().max(updateServiceResponseOneMaterialsItemMax)).optional(),
+  "whyChoose": zod.array(zod.string().max(updateServiceResponseOneWhyChooseItemMax)).optional(),
+  "relatedSlugs": zod.array(zod.string().max(updateServiceResponseOneRelatedSlugsItemMax)).optional(),
+  "displayOrder": zod.number().int().min(updateServiceResponseOneDisplayOrderMin).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
+  "featured": zod.boolean().optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const DeleteServiceParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const DeleteServiceResponse = zod.void()
+
+
+export const getWebsiteContentResponseOneHeroHeadingMax = 240;
+
+export const getWebsiteContentResponseOneHeroDescriptionMax = 1000;
+
+export const getWebsiteContentResponseOneHeroImageMax = 500;
+
+export const getWebsiteContentResponseOneHeroCtaTextMax = 120;
+
+export const getWebsiteContentResponseOneAboutTitleMax = 240;
+
+export const getWebsiteContentResponseOneAboutBodyMax = 4000;
+
+export const getWebsiteContentResponseOneQualityBodyMax = 4000;
+
+export const getWebsiteContentResponseOneTrustBodyMax = 4000;
+
+export const getWebsiteContentResponseOneProcessBodyMax = 4000;
+
+export const getWebsiteContentResponseOneGraphicsDesignBodyMax = 4000;
+
+export const getWebsiteContentResponseOneSignageBodyMax = 4000;
+
+export const getWebsiteContentResponseOneContactBodyMax = 4000;
+
+export const getWebsiteContentResponseOneFooterBodyMax = 4000;
+
+export const getWebsiteContentResponseOneMetadataTitleMax = 240;
+
+export const getWebsiteContentResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const GetWebsiteContentResponse = zod.object({
+  "heroHeading": zod.string().max(getWebsiteContentResponseOneHeroHeadingMax).optional(),
+  "heroDescription": zod.string().max(getWebsiteContentResponseOneHeroDescriptionMax).optional(),
+  "heroImage": zod.string().max(getWebsiteContentResponseOneHeroImageMax).nullish(),
+  "heroCtaText": zod.string().max(getWebsiteContentResponseOneHeroCtaTextMax).optional(),
+  "aboutTitle": zod.string().max(getWebsiteContentResponseOneAboutTitleMax).optional(),
+  "aboutBody": zod.string().max(getWebsiteContentResponseOneAboutBodyMax).optional(),
+  "qualityBody": zod.string().max(getWebsiteContentResponseOneQualityBodyMax).optional(),
+  "trustBody": zod.string().max(getWebsiteContentResponseOneTrustBodyMax).optional(),
+  "processBody": zod.string().max(getWebsiteContentResponseOneProcessBodyMax).optional(),
+  "graphicsDesignBody": zod.string().max(getWebsiteContentResponseOneGraphicsDesignBodyMax).optional(),
+  "signageBody": zod.string().max(getWebsiteContentResponseOneSignageBodyMax).optional(),
+  "contactBody": zod.string().max(getWebsiteContentResponseOneContactBodyMax).optional(),
+  "footerBody": zod.string().max(getWebsiteContentResponseOneFooterBodyMax).optional(),
+  "metadataTitle": zod.string().max(getWebsiteContentResponseOneMetadataTitleMax).optional(),
+  "metadataDescription": zod.string().max(getWebsiteContentResponseOneMetadataDescriptionMax).optional()
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const getAdminWebsiteContentResponseOneHeroHeadingMax = 240;
+
+export const getAdminWebsiteContentResponseOneHeroDescriptionMax = 1000;
+
+export const getAdminWebsiteContentResponseOneHeroImageMax = 500;
+
+export const getAdminWebsiteContentResponseOneHeroCtaTextMax = 120;
+
+export const getAdminWebsiteContentResponseOneAboutTitleMax = 240;
+
+export const getAdminWebsiteContentResponseOneAboutBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneQualityBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneTrustBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneProcessBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneGraphicsDesignBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneSignageBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneContactBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneFooterBodyMax = 4000;
+
+export const getAdminWebsiteContentResponseOneMetadataTitleMax = 240;
+
+export const getAdminWebsiteContentResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const GetAdminWebsiteContentResponse = zod.object({
+  "heroHeading": zod.string().max(getAdminWebsiteContentResponseOneHeroHeadingMax).optional(),
+  "heroDescription": zod.string().max(getAdminWebsiteContentResponseOneHeroDescriptionMax).optional(),
+  "heroImage": zod.string().max(getAdminWebsiteContentResponseOneHeroImageMax).nullish(),
+  "heroCtaText": zod.string().max(getAdminWebsiteContentResponseOneHeroCtaTextMax).optional(),
+  "aboutTitle": zod.string().max(getAdminWebsiteContentResponseOneAboutTitleMax).optional(),
+  "aboutBody": zod.string().max(getAdminWebsiteContentResponseOneAboutBodyMax).optional(),
+  "qualityBody": zod.string().max(getAdminWebsiteContentResponseOneQualityBodyMax).optional(),
+  "trustBody": zod.string().max(getAdminWebsiteContentResponseOneTrustBodyMax).optional(),
+  "processBody": zod.string().max(getAdminWebsiteContentResponseOneProcessBodyMax).optional(),
+  "graphicsDesignBody": zod.string().max(getAdminWebsiteContentResponseOneGraphicsDesignBodyMax).optional(),
+  "signageBody": zod.string().max(getAdminWebsiteContentResponseOneSignageBodyMax).optional(),
+  "contactBody": zod.string().max(getAdminWebsiteContentResponseOneContactBodyMax).optional(),
+  "footerBody": zod.string().max(getAdminWebsiteContentResponseOneFooterBodyMax).optional(),
+  "metadataTitle": zod.string().max(getAdminWebsiteContentResponseOneMetadataTitleMax).optional(),
+  "metadataDescription": zod.string().max(getAdminWebsiteContentResponseOneMetadataDescriptionMax).optional()
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const updateWebsiteContentBodyHeroHeadingMax = 240;
+
+export const updateWebsiteContentBodyHeroDescriptionMax = 1000;
+
+export const updateWebsiteContentBodyHeroImageMax = 500;
+
+export const updateWebsiteContentBodyHeroCtaTextMax = 120;
+
+export const updateWebsiteContentBodyAboutTitleMax = 240;
+
+export const updateWebsiteContentBodyAboutBodyMax = 4000;
+
+export const updateWebsiteContentBodyQualityBodyMax = 4000;
+
+export const updateWebsiteContentBodyTrustBodyMax = 4000;
+
+export const updateWebsiteContentBodyProcessBodyMax = 4000;
+
+export const updateWebsiteContentBodyGraphicsDesignBodyMax = 4000;
+
+export const updateWebsiteContentBodySignageBodyMax = 4000;
+
+export const updateWebsiteContentBodyContactBodyMax = 4000;
+
+export const updateWebsiteContentBodyFooterBodyMax = 4000;
+
+export const updateWebsiteContentBodyMetadataTitleMax = 240;
+
+export const updateWebsiteContentBodyMetadataDescriptionMax = 320;
+
+
+
+export const UpdateWebsiteContentBody = zod.object({
+  "heroHeading": zod.string().max(updateWebsiteContentBodyHeroHeadingMax).optional(),
+  "heroDescription": zod.string().max(updateWebsiteContentBodyHeroDescriptionMax).optional(),
+  "heroImage": zod.string().max(updateWebsiteContentBodyHeroImageMax).nullish(),
+  "heroCtaText": zod.string().max(updateWebsiteContentBodyHeroCtaTextMax).optional(),
+  "aboutTitle": zod.string().max(updateWebsiteContentBodyAboutTitleMax).optional(),
+  "aboutBody": zod.string().max(updateWebsiteContentBodyAboutBodyMax).optional(),
+  "qualityBody": zod.string().max(updateWebsiteContentBodyQualityBodyMax).optional(),
+  "trustBody": zod.string().max(updateWebsiteContentBodyTrustBodyMax).optional(),
+  "processBody": zod.string().max(updateWebsiteContentBodyProcessBodyMax).optional(),
+  "graphicsDesignBody": zod.string().max(updateWebsiteContentBodyGraphicsDesignBodyMax).optional(),
+  "signageBody": zod.string().max(updateWebsiteContentBodySignageBodyMax).optional(),
+  "contactBody": zod.string().max(updateWebsiteContentBodyContactBodyMax).optional(),
+  "footerBody": zod.string().max(updateWebsiteContentBodyFooterBodyMax).optional(),
+  "metadataTitle": zod.string().max(updateWebsiteContentBodyMetadataTitleMax).optional(),
+  "metadataDescription": zod.string().max(updateWebsiteContentBodyMetadataDescriptionMax).optional()
+})
+
+export const updateWebsiteContentResponseOneHeroHeadingMax = 240;
+
+export const updateWebsiteContentResponseOneHeroDescriptionMax = 1000;
+
+export const updateWebsiteContentResponseOneHeroImageMax = 500;
+
+export const updateWebsiteContentResponseOneHeroCtaTextMax = 120;
+
+export const updateWebsiteContentResponseOneAboutTitleMax = 240;
+
+export const updateWebsiteContentResponseOneAboutBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneQualityBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneTrustBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneProcessBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneGraphicsDesignBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneSignageBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneContactBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneFooterBodyMax = 4000;
+
+export const updateWebsiteContentResponseOneMetadataTitleMax = 240;
+
+export const updateWebsiteContentResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const UpdateWebsiteContentResponse = zod.object({
+  "heroHeading": zod.string().max(updateWebsiteContentResponseOneHeroHeadingMax).optional(),
+  "heroDescription": zod.string().max(updateWebsiteContentResponseOneHeroDescriptionMax).optional(),
+  "heroImage": zod.string().max(updateWebsiteContentResponseOneHeroImageMax).nullish(),
+  "heroCtaText": zod.string().max(updateWebsiteContentResponseOneHeroCtaTextMax).optional(),
+  "aboutTitle": zod.string().max(updateWebsiteContentResponseOneAboutTitleMax).optional(),
+  "aboutBody": zod.string().max(updateWebsiteContentResponseOneAboutBodyMax).optional(),
+  "qualityBody": zod.string().max(updateWebsiteContentResponseOneQualityBodyMax).optional(),
+  "trustBody": zod.string().max(updateWebsiteContentResponseOneTrustBodyMax).optional(),
+  "processBody": zod.string().max(updateWebsiteContentResponseOneProcessBodyMax).optional(),
+  "graphicsDesignBody": zod.string().max(updateWebsiteContentResponseOneGraphicsDesignBodyMax).optional(),
+  "signageBody": zod.string().max(updateWebsiteContentResponseOneSignageBodyMax).optional(),
+  "contactBody": zod.string().max(updateWebsiteContentResponseOneContactBodyMax).optional(),
+  "footerBody": zod.string().max(updateWebsiteContentResponseOneFooterBodyMax).optional(),
+  "metadataTitle": zod.string().max(updateWebsiteContentResponseOneMetadataTitleMax).optional(),
+  "metadataDescription": zod.string().max(updateWebsiteContentResponseOneMetadataDescriptionMax).optional()
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const getPublicSettingsResponseOneBusinessNameMax = 180;
+
+export const getPublicSettingsResponseOneEmailMax = 180;
+
+export const getPublicSettingsResponseOneAddressMax = 1000;
+
+export const getPublicSettingsResponseOneWhatsappNumbersItemMax = 40;
+
+export const getPublicSettingsResponseOneGoogleMapsUrlMax = 500;
+
+export const getPublicSettingsResponseOneFooterInformationMax = 2000;
+
+export const getPublicSettingsResponseOneLogoPathMax = 500;
+
+export const getPublicSettingsResponseOneFaviconPathMax = 500;
+
+export const getPublicSettingsResponseOneMetadataTitleMax = 240;
+
+export const getPublicSettingsResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const GetPublicSettingsResponse = zod.object({
+  "businessName": zod.string().min(1).max(getPublicSettingsResponseOneBusinessNameMax),
+  "email": zod.string().max(getPublicSettingsResponseOneEmailMax),
+  "address": zod.string().max(getPublicSettingsResponseOneAddressMax),
+  "whatsappNumbers": zod.array(zod.string().max(getPublicSettingsResponseOneWhatsappNumbersItemMax)),
+  "socialLinks": zod.array(zod.object({
+  "label": zod.string(),
+  "url": zod.string().url()
+})),
+  "googleMapsUrl": zod.string().max(getPublicSettingsResponseOneGoogleMapsUrlMax),
+  "footerInformation": zod.string().max(getPublicSettingsResponseOneFooterInformationMax),
+  "logoPath": zod.string().max(getPublicSettingsResponseOneLogoPathMax).nullish(),
+  "faviconPath": zod.string().max(getPublicSettingsResponseOneFaviconPathMax).nullish(),
+  "metadataTitle": zod.string().max(getPublicSettingsResponseOneMetadataTitleMax),
+  "metadataDescription": zod.string().max(getPublicSettingsResponseOneMetadataDescriptionMax)
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const getAdminSettingsResponseOneBusinessNameMax = 180;
+
+export const getAdminSettingsResponseOneEmailMax = 180;
+
+export const getAdminSettingsResponseOneAddressMax = 1000;
+
+export const getAdminSettingsResponseOneWhatsappNumbersItemMax = 40;
+
+export const getAdminSettingsResponseOneGoogleMapsUrlMax = 500;
+
+export const getAdminSettingsResponseOneFooterInformationMax = 2000;
+
+export const getAdminSettingsResponseOneLogoPathMax = 500;
+
+export const getAdminSettingsResponseOneFaviconPathMax = 500;
+
+export const getAdminSettingsResponseOneMetadataTitleMax = 240;
+
+export const getAdminSettingsResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const GetAdminSettingsResponse = zod.object({
+  "businessName": zod.string().min(1).max(getAdminSettingsResponseOneBusinessNameMax),
+  "email": zod.string().max(getAdminSettingsResponseOneEmailMax),
+  "address": zod.string().max(getAdminSettingsResponseOneAddressMax),
+  "whatsappNumbers": zod.array(zod.string().max(getAdminSettingsResponseOneWhatsappNumbersItemMax)),
+  "socialLinks": zod.array(zod.object({
+  "label": zod.string(),
+  "url": zod.string().url()
+})),
+  "googleMapsUrl": zod.string().max(getAdminSettingsResponseOneGoogleMapsUrlMax),
+  "footerInformation": zod.string().max(getAdminSettingsResponseOneFooterInformationMax),
+  "logoPath": zod.string().max(getAdminSettingsResponseOneLogoPathMax).nullish(),
+  "faviconPath": zod.string().max(getAdminSettingsResponseOneFaviconPathMax).nullish(),
+  "metadataTitle": zod.string().max(getAdminSettingsResponseOneMetadataTitleMax),
+  "metadataDescription": zod.string().max(getAdminSettingsResponseOneMetadataDescriptionMax)
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const updateSettingsBodyBusinessNameMax = 180;
+
+export const updateSettingsBodyEmailMax = 180;
+
+export const updateSettingsBodyAddressMax = 1000;
+
+export const updateSettingsBodyWhatsappNumbersItemMax = 40;
+
+export const updateSettingsBodyGoogleMapsUrlMax = 500;
+
+export const updateSettingsBodyFooterInformationMax = 2000;
+
+export const updateSettingsBodyLogoPathMax = 500;
+
+export const updateSettingsBodyFaviconPathMax = 500;
+
+export const updateSettingsBodyMetadataTitleMax = 240;
+
+export const updateSettingsBodyMetadataDescriptionMax = 320;
+
+
+
+export const UpdateSettingsBody = zod.object({
+  "businessName": zod.string().min(1).max(updateSettingsBodyBusinessNameMax),
+  "email": zod.string().max(updateSettingsBodyEmailMax),
+  "address": zod.string().max(updateSettingsBodyAddressMax),
+  "whatsappNumbers": zod.array(zod.string().max(updateSettingsBodyWhatsappNumbersItemMax)),
+  "socialLinks": zod.array(zod.object({
+  "label": zod.string(),
+  "url": zod.string().url()
+})),
+  "googleMapsUrl": zod.string().max(updateSettingsBodyGoogleMapsUrlMax),
+  "footerInformation": zod.string().max(updateSettingsBodyFooterInformationMax),
+  "logoPath": zod.string().max(updateSettingsBodyLogoPathMax).nullish(),
+  "faviconPath": zod.string().max(updateSettingsBodyFaviconPathMax).nullish(),
+  "metadataTitle": zod.string().max(updateSettingsBodyMetadataTitleMax),
+  "metadataDescription": zod.string().max(updateSettingsBodyMetadataDescriptionMax)
+})
+
+export const updateSettingsResponseOneBusinessNameMax = 180;
+
+export const updateSettingsResponseOneEmailMax = 180;
+
+export const updateSettingsResponseOneAddressMax = 1000;
+
+export const updateSettingsResponseOneWhatsappNumbersItemMax = 40;
+
+export const updateSettingsResponseOneGoogleMapsUrlMax = 500;
+
+export const updateSettingsResponseOneFooterInformationMax = 2000;
+
+export const updateSettingsResponseOneLogoPathMax = 500;
+
+export const updateSettingsResponseOneFaviconPathMax = 500;
+
+export const updateSettingsResponseOneMetadataTitleMax = 240;
+
+export const updateSettingsResponseOneMetadataDescriptionMax = 320;
+
+
+
+export const UpdateSettingsResponse = zod.object({
+  "businessName": zod.string().min(1).max(updateSettingsResponseOneBusinessNameMax),
+  "email": zod.string().max(updateSettingsResponseOneEmailMax),
+  "address": zod.string().max(updateSettingsResponseOneAddressMax),
+  "whatsappNumbers": zod.array(zod.string().max(updateSettingsResponseOneWhatsappNumbersItemMax)),
+  "socialLinks": zod.array(zod.object({
+  "label": zod.string(),
+  "url": zod.string().url()
+})),
+  "googleMapsUrl": zod.string().max(updateSettingsResponseOneGoogleMapsUrlMax),
+  "footerInformation": zod.string().max(updateSettingsResponseOneFooterInformationMax),
+  "logoPath": zod.string().max(updateSettingsResponseOneLogoPathMax).nullish(),
+  "faviconPath": zod.string().max(updateSettingsResponseOneFaviconPathMax).nullish(),
+  "metadataTitle": zod.string().max(updateSettingsResponseOneMetadataTitleMax),
+  "metadataDescription": zod.string().max(updateSettingsResponseOneMetadataDescriptionMax)
+}).and(zod.object({
+  "id": zod.string().optional()
+}))
+
+
+export const getPublicContactNumbersResponseOneLabelMax = 80;
+
+export const getPublicContactNumbersResponseOnePhoneMin = 5;
+export const getPublicContactNumbersResponseOnePhoneMax = 40;
+
+export const getPublicContactNumbersResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetPublicContactNumbersResponseItem = zod.object({
+  "label": zod.string().min(1).max(getPublicContactNumbersResponseOneLabelMax),
+  "phone": zod.string().min(getPublicContactNumbersResponseOnePhoneMin).max(getPublicContactNumbersResponseOnePhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(getPublicContactNumbersResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string()
+}))
+export const GetPublicContactNumbersResponse = zod.array(GetPublicContactNumbersResponseItem)
+
+
+export const getAdminContactNumbersResponseOneLabelMax = 80;
+
+export const getAdminContactNumbersResponseOnePhoneMin = 5;
+export const getAdminContactNumbersResponseOnePhoneMax = 40;
+
+export const getAdminContactNumbersResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetAdminContactNumbersResponseItem = zod.object({
+  "label": zod.string().min(1).max(getAdminContactNumbersResponseOneLabelMax),
+  "phone": zod.string().min(getAdminContactNumbersResponseOnePhoneMin).max(getAdminContactNumbersResponseOnePhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(getAdminContactNumbersResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string()
+}))
+export const GetAdminContactNumbersResponse = zod.array(GetAdminContactNumbersResponseItem)
+
+
+export const createContactNumberBodyLabelMax = 80;
+
+export const createContactNumberBodyPhoneMin = 5;
+export const createContactNumberBodyPhoneMax = 40;
+
+export const createContactNumberBodyDisplayOrderMin = 0;
+
+
+
+export const CreateContactNumberBody = zod.object({
+  "label": zod.string().min(1).max(createContactNumberBodyLabelMax),
+  "phone": zod.string().min(createContactNumberBodyPhoneMin).max(createContactNumberBodyPhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(createContactNumberBodyDisplayOrderMin).optional()
+})
+
+export const createContactNumberResponseOneLabelMax = 80;
+
+export const createContactNumberResponseOnePhoneMin = 5;
+export const createContactNumberResponseOnePhoneMax = 40;
+
+export const createContactNumberResponseOneDisplayOrderMin = 0;
+
+
+
+export const CreateContactNumberResponse = zod.object({
+  "label": zod.string().min(1).max(createContactNumberResponseOneLabelMax),
+  "phone": zod.string().min(createContactNumberResponseOnePhoneMin).max(createContactNumberResponseOnePhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(createContactNumberResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string()
+}))
+
+
+
+
+
+export const UpdateContactNumberParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const updateContactNumberBodyLabelMax = 80;
+
+export const updateContactNumberBodyPhoneMin = 5;
+export const updateContactNumberBodyPhoneMax = 40;
+
+export const updateContactNumberBodyDisplayOrderMin = 0;
+
+
+
+export const UpdateContactNumberBody = zod.object({
+  "label": zod.string().min(1).max(updateContactNumberBodyLabelMax),
+  "phone": zod.string().min(updateContactNumberBodyPhoneMin).max(updateContactNumberBodyPhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(updateContactNumberBodyDisplayOrderMin).optional()
+})
+
+export const updateContactNumberResponseOneLabelMax = 80;
+
+export const updateContactNumberResponseOnePhoneMin = 5;
+export const updateContactNumberResponseOnePhoneMax = 40;
+
+export const updateContactNumberResponseOneDisplayOrderMin = 0;
+
+
+
+export const UpdateContactNumberResponse = zod.object({
+  "label": zod.string().min(1).max(updateContactNumberResponseOneLabelMax),
+  "phone": zod.string().min(updateContactNumberResponseOnePhoneMin).max(updateContactNumberResponseOnePhoneMax),
+  "showOnWebsite": zod.boolean().optional(),
+  "useForCalls": zod.boolean().optional(),
+  "useForWhatsApp": zod.boolean().optional(),
+  "isPrimary": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(updateContactNumberResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string()
+}))
+
+
+
+
+
+export const DeleteContactNumberParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const DeleteContactNumberResponse = zod.void()
+
+
+export const GetAdminQuoteRequestsResponseItem = zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "phone": zod.string(),
+  "email": zod.string().optional(),
+  "service": zod.string(),
+  "requirementDetails": zod.string(),
+  "quantity": zod.string().optional(),
+  "preferredDate": zod.string().optional(),
+  "attachmentUrl": zod.string().nullish(),
+  "attachmentName": zod.string().optional(),
+  "status": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+})
+export const GetAdminQuoteRequestsResponse = zod.array(GetAdminQuoteRequestsResponseItem)
+
+
+export const GetAdminContactRequestsResponseItem = zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "phone": zod.string(),
+  "email": zod.string().optional(),
+  "message": zod.string(),
+  "status": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+})
+export const GetAdminContactRequestsResponse = zod.array(GetAdminContactRequestsResponseItem)
+
+
+
+
+
+export const UpdateRequestStatusParams = zod.object({
+  "collection": zod.enum(['quotes', 'contacts']),
+  "id": zod.coerce.string().min(1)
+})
+
+export const UpdateRequestStatusBody = zod.object({
+  "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled'])
+})
+
+export const UpdateRequestStatusResponse = zod.object({
+  "id": zod.string(),
+  "status": zod.string()
+})
+
+

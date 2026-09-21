@@ -5,6 +5,7 @@ import storageRouter from "./storage";
 import productsRouter from "./products";
 import requestsRouter from "./requests";
 import catalogRouter from "./catalog";
+import cmsRouter from "./cms";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(storageRouter);
 router.use(productsRouter);
   router.use(requestsRouter);
   router.use(catalogRouter);
+router.use(cmsRouter);
 
 export default router;

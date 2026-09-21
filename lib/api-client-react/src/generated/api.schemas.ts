@@ -131,6 +131,268 @@ export interface UploadResponse {
   objectPath: string;
 }
 
+export interface MachineInput {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  slug: string;
+  /** @maxLength 180 */
+  category?: string;
+  /** @maxLength 500 */
+  shortDescription?: string;
+  /** @maxLength 5000 */
+  description: string;
+  /** @maxLength 10000 */
+  fullDescription?: string;
+  /** @items.maxLength 240 */
+  specifications?: string[];
+  /** @items.maxLength 240 */
+  features?: string[];
+  /** @items.maxLength 180 */
+  applications?: string[];
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  imageUrl?: string | null;
+  /**
+     * @maxLength 180
+     * @nullable
+     */
+  imageAlt?: string | null;
+  /** @items.maxLength 500 */
+  images?: string[];
+  /** @items.maxLength 180 */
+  relatedServices?: string[];
+  /** @minimum 0 */
+  displayOrder?: number;
+  published?: boolean;
+}
+
+export type Machine = MachineInput & {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ServiceInputStatus = typeof ServiceInputStatus[keyof typeof ServiceInputStatus];
+
+
+export const ServiceInputStatus = {
+  draft: 'draft',
+  published: 'published',
+  archived: 'archived',
+} as const;
+
+export interface ServiceInput {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  title: string;
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  slug: string;
+  /** @maxLength 180 */
+  category?: string;
+  /** @maxLength 500 */
+  shortDescription?: string;
+  /** @maxLength 5000 */
+  description: string;
+  /** @maxLength 10000 */
+  fullDescription?: string;
+  /** @maxLength 10000 */
+  content?: string;
+  /** @items.maxLength 240 */
+  features?: string[];
+  /** @items.maxLength 500 */
+  images?: string[];
+  /**
+     * @maxLength 180
+     * @nullable
+     */
+  imageAlt?: string | null;
+  /** @items.maxLength 180 */
+  offerings?: string[];
+  /** @items.maxLength 180 */
+  applications?: string[];
+  /** @items.maxLength 180 */
+  materials?: string[];
+  /** @items.maxLength 240 */
+  whyChoose?: string[];
+  /** @items.maxLength 180 */
+  relatedSlugs?: string[];
+  /** @minimum 0 */
+  displayOrder?: number;
+  status?: ServiceInputStatus;
+  featured?: boolean;
+}
+
+export type Service = ServiceInput & {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export interface WebsiteContentInput {
+  /** @maxLength 240 */
+  heroHeading?: string;
+  /** @maxLength 1000 */
+  heroDescription?: string;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  heroImage?: string | null;
+  /** @maxLength 120 */
+  heroCtaText?: string;
+  /** @maxLength 240 */
+  aboutTitle?: string;
+  /** @maxLength 4000 */
+  aboutBody?: string;
+  /** @maxLength 4000 */
+  qualityBody?: string;
+  /** @maxLength 4000 */
+  trustBody?: string;
+  /** @maxLength 4000 */
+  processBody?: string;
+  /** @maxLength 4000 */
+  graphicsDesignBody?: string;
+  /** @maxLength 4000 */
+  signageBody?: string;
+  /** @maxLength 4000 */
+  contactBody?: string;
+  /** @maxLength 4000 */
+  footerBody?: string;
+  /** @maxLength 240 */
+  metadataTitle?: string;
+  /** @maxLength 320 */
+  metadataDescription?: string;
+}
+
+export type WebsiteContent = WebsiteContentInput & {
+  id?: string;
+};
+
+export type WebsiteSettingsInputSocialLinksItem = {
+  label: string;
+  url: string;
+};
+
+export interface WebsiteSettingsInput {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  businessName: string;
+  /** @maxLength 180 */
+  email: string;
+  /** @maxLength 1000 */
+  address: string;
+  /** @items.maxLength 40 */
+  whatsappNumbers: string[];
+  socialLinks: WebsiteSettingsInputSocialLinksItem[];
+  /** @maxLength 500 */
+  googleMapsUrl: string;
+  /** @maxLength 2000 */
+  footerInformation: string;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  logoPath?: string | null;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  faviconPath?: string | null;
+  /** @maxLength 240 */
+  metadataTitle: string;
+  /** @maxLength 320 */
+  metadataDescription: string;
+}
+
+export type WebsiteSettings = WebsiteSettingsInput & {
+  id?: string;
+};
+
+export interface ContactNumberInput {
+  /**
+     * @minLength 1
+     * @maxLength 80
+     */
+  label: string;
+  /**
+     * @minLength 5
+     * @maxLength 40
+     */
+  phone: string;
+  showOnWebsite?: boolean;
+  useForCalls?: boolean;
+  useForWhatsApp?: boolean;
+  isPrimary?: boolean;
+  /** @minimum 0 */
+  displayOrder?: number;
+}
+
+export type ContactNumber = ContactNumberInput & {
+  id: string;
+};
+
+export interface QuoteRequest {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  service: string;
+  requirementDetails: string;
+  quantity?: string;
+  preferredDate?: string;
+  /** @nullable */
+  attachmentUrl?: string | null;
+  attachmentName?: string;
+  status: string;
+  createdAt?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+ }
+
+export interface ContactRequest {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  message: string;
+  status: string;
+  createdAt?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+ }
+
+export type RequestStatusInputStatus = typeof RequestStatusInputStatus[keyof typeof RequestStatusInputStatus];
+
+
+export const RequestStatusInputStatus = {
+  new: 'new',
+  contacted: 'contacted',
+  quoted: 'quoted',
+  approved: 'approved',
+  completed: 'completed',
+  cancelled: 'cancelled',
+} as const;
+
+export interface RequestStatusInput {
+  status: RequestStatusInputStatus;
+}
+
 export type GetAdminProductsParams = {
 search?: string;
 category?: string;
@@ -147,4 +409,9 @@ export const GetAdminProductsSort = {
   name: 'name',
   displayOrder: 'displayOrder',
 } as const;
+
+export type UpdateRequestStatus200 = {
+  id: string;
+  status: string;
+};
 

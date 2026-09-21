@@ -5,44 +5,154 @@ import { createFirebaseReadUrl } from "../lib/firebase-storage";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
-const collections = () => ({
-  machines: firestore().collection("machines"),
-  services: firestore().collection("services"),
-});
 
 const machineBody = z.object({
   name: z.string().trim().min(1).max(180),
   slug: z.string().trim().min(1).max(180),
-  category: z.string().trim().max(180).optional().default("Production equipment"),
+  category: z.string().trim().max(180).default("Production equipment"),
+  shortDescription: z.string().trim().max(500).default(""),
   description: z.string().trim().max(5000),
+  fullDescription: z.string().trim().max(10000).default(""),
+  specifications: z.array(z.string().trim().min(1).max(240)).max(40).default([]),
+  features: z.array(z.string().trim().min(1).max(240)).max(40).default([]),
+  applications: z.array(z.string().trim().min(1).max(180)).max(40).default([]),
   imageUrl: z.string().trim().max(500).optional().or(z.literal("")),
-  applications: z.array(z.string().trim().min(1).max(180)).max(30).default([]),
+  imageAlt: z.string().trim().max(180).optional().or(z.literal("")),
+  images: z.array(z.string().trim().max(500)).max(30).default([]),
+  relatedServices: z.array(z.string().trim().max(180)).max(30).default([]),
   displayOrder: z.number().int().min(0).default(0),
   published: z.boolean().default(true),
 });
+
 const serviceBody = z.object({
   title: z.string().trim().min(1).max(180),
   slug: z.string().trim().min(1).max(180),
+  category: z.string().trim().max(180).default("Printing and advertising"),
+  shortDescription: z.string().trim().max(500).default(""),
   description: z.string().trim().max(5000),
+  fullDescription: z.string().trim().max(10000).default(""),
+  content: z.string().trim().max(10000).default(""),
+  features: z.array(z.string().trim().min(1).max(240)).max(40).default([]),
   images: z.array(z.string().trim().max(500)).max(30).default([]),
+  imageAlt: z.string().trim().max(180).optional().or(z.literal("")),
   offerings: z.array(z.string().trim().min(1).max(180)).max(40).default([]),
   applications: z.array(z.string().trim().min(1).max(180)).max(40).default([]),
+  materials: z.array(z.string().trim().min(1).max(180)).max(40).default([]),
+  whyChoose: z.array(z.string().trim().min(1).max(240)).max(40).default([]),
+  relatedSlugs: z.array(z.string().trim().max(180)).max(20).default([]),
   displayOrder: z.number().int().min(0).default(0),
-  status: z.enum(["published", "draft"]).default("published"),
+  status: z.enum(["published", "draft", "archived"]).default("published"),
+  featured: z.boolean().default(false),
 });
 
+const machineSeed = [
+  {
+    id: "epson-surecolor-s80670",
+    name: "Epson SureColor S80670",
+    slug: "epson-surecolor-s80670",
+    category: "Large-Format Printing",
+    shortDescription: "Professional large-format printing for detailed, vibrant advertising output.",
+    description: "A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.",
+    imageUrl: "/machine-epson-surecolor-s80670.png",
+    imageAlt: "Epson SureColor S80670 large-format printer",
+    applications: ["Eco Solvent Flex", "Banner Printing"],
+    relatedServices: ["solvent-flex", "banner-printing"],
+    displayOrder: 0,
+    published: true,
+  },
+  {
+    id: "wide-format-roll-laminator",
+    name: "Wide-Format Roll Laminator",
+    slug: "wide-format-roll-laminator",
+    category: "Finishing Equipment",
+    shortDescription: "Controlled roll laminating for advertising, signage and display graphics.",
+    description: "A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.",
+    imageUrl: "/machine-wide-format-laminator.png",
+    imageAlt: "Wide-format roll laminator",
+    applications: ["Eco Solvent Flex", "Banner Printing", "Signage Board"],
+    relatedServices: ["solvent-flex", "banner-printing", "sign-boards"],
+    displayOrder: 1,
+    published: true,
+  },
+  {
+    id: "large-format-printing-machine",
+    name: "Large-Format Printing Machine",
+    slug: "large-format-printing-machine",
+    category: "Wide-Format Production",
+    shortDescription: "Roll-to-roll production for banners, signage graphics and advertising materials.",
+    description: "A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials.",
+    imageUrl: "/machine-large-format-printer.png",
+    imageAlt: "Large-format roll-to-roll printing machine",
+    applications: ["Eco Solvent Flex", "Banner Printing", "Signage Board"],
+    relatedServices: ["solvent-flex", "banner-printing", "sign-boards"],
+    displayOrder: 2,
+    published: true,
+  },
+  {
+    id: "co2-laser-cutting-engraving-machine",
+    name: "CO₂ Laser Cutting & Engraving Machine",
+    slug: "co2-laser-cutting-engraving-machine",
+    category: "Laser Cutting & Engraving",
+    shortDescription: "Precise cutting, engraving and custom fabrication for display work.",
+    description: "A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.",
+    imageUrl: "/machine-co2-laser-cutter.png",
+    imageAlt: "CO₂ laser cutting and engraving machine",
+    applications: ["Precision Laser Cutting", "Laser Engraving", "Custom Lettering & Shapes", "Signage Components", "Decorative Panels", "Advertising & Display Materials", "Custom Fabrication Work"],
+    relatedServices: ["sign-boards", "graphics-design"],
+    displayOrder: 3,
+    published: true,
+  },
+] as const;
+
+const serviceSeed = [
+  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
+  ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
+  ["solvent-flex", "Eco Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
+  ["offset-printing", "Offset Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
+  ["screen-printing", "Screen Printing", "Custom print finishes", "Custom screen printing for apparel, promotional products and printed materials.", ["Wedding Cards", "Visiting Cards", "Letterheads", "T-Shirts", "Cup Print", "Envelopes", "Caps", "Umbrellas", "Carry Bags", "ID Ribbons", "School Bags"], ["Apparel printing", "Promotional products", "School and event materials", "Carry bags", "Stationery"], "service-screen-printing.jpg"],
+  ["graphics-design", "Graphics Design", "Brand and creative design", "Professional creative design solutions for branding, marketing and communication.", ["Logo Design", "Social Media Posts", "Hoarding Banners", "Menu Cards", "Flyers", "Product Packaging", "Magazine Ads", "Visiting Cards", "Invitations", "Brochures", "Calendars"], ["Brand identity", "Social media communication", "Retail and menu design", "Packaging", "Advertising campaigns"], "service-graphics-design.jpg"],
+  ["digital-printing", "Digital Printing", "Fast, detailed printing", "High-quality digital printing for business, promotional and everyday printing requirements.", ["Visiting Cards", "Bill Book", "Wedding Card", "Brochures", "Catalogues", "Pamphlets", "Posters", "Annual Reports", "UV Print", "Hotel Menus", "Hospital Files", "Trophy Stickers"], ["Business cards", "Marketing handouts", "Posters and pamphlets", "Menus and reports", "Specialty printed pieces"], "service-digital-printing.jpg"],
+] as const;
+
+function collections() {
+  return {
+    machines: firestore().collection("machines"),
+    services: firestore().collection("services"),
+  };
+}
+
+async function ensureSeeded() {
+  const { machines, services } = collections();
+  await Promise.all(machineSeed.map(async (seed) => {
+    const reference = machines.doc(seed.id);
+    if (!(await reference.get()).exists) {
+      const now = new Date();
+      await reference.set({ ...seed, fullDescription: seed.description, specifications: [], features: seed.applications, images: seed.imageUrl ? [seed.imageUrl] : [], createdAt: now, updatedAt: now });
+    }
+  }));
+  await Promise.all(serviceSeed.map(async ([slug, title, category, description, offerings, applications, image]) => {
+    const reference = services.doc(slug);
+    if (!(await reference.get()).exists) {
+      const now = new Date();
+      await reference.set({ title, slug, category, shortDescription: description, description, fullDescription: description, content: description, features: [], images: [`/${image}`], imageAlt: title, offerings, applications, materials: [], whyChoose: [], relatedSlugs: [], displayOrder: serviceSeed.findIndex((item) => item[0] === slug), status: "published", featured: false, createdAt: now, updatedAt: now });
+    }
+  }));
+}
+
 async function publicDocuments(kind: "machines" | "services") {
+  await ensureSeeded();
   const snapshot = await collections()[kind].get();
   return Promise.all(snapshot.docs
-    .filter((doc) => kind === "machines" ? doc.data().published !== false : doc.data().status !== "draft")
+    .filter((doc) => kind === "machines" ? doc.data().published !== false : doc.data().status === "published")
     .sort((a, b) => Number(a.data().displayOrder ?? 0) - Number(b.data().displayOrder ?? 0))
     .map(async (doc) => {
       const data = doc.data();
+      const images = Array.isArray(data.images) ? data.images : data.imageUrl ? [data.imageUrl] : [];
       return {
         id: doc.id,
         ...data,
-        ...(kind === "machines" ? { imageUrl: await createFirebaseReadUrl(data.imageUrl) } : {}),
-        ...(kind === "services" ? { images: await Promise.all((data.images ?? []).map((image: string) => createFirebaseReadUrl(image))) } : {}),
+        imageUrl: kind === "machines" ? await createFirebaseReadUrl(data.imageUrl ?? images[0]) : undefined,
+        images: await Promise.all(images.map((image: string) => createFirebaseReadUrl(image))),
       };
     }));
 }
@@ -56,8 +166,10 @@ router.get("/services", async (_req, res): Promise<void> => {
 });
 
 router.get("/admin/machines", requireAdmin, async (_req, res): Promise<void> => {
-  const snapshot = await collections().machines.orderBy("displayOrder", "asc").get();
-  res.json(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+  await ensureSeeded();
+  const snapshot = await collections().machines.get();
+  const rows = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Array<{ id: string; displayOrder?: number }>;
+  res.json(rows.sort((a, b) => Number(a.displayOrder ?? 0) - Number(b.displayOrder ?? 0)));
 });
 
 router.post("/admin/machines", requireAdmin, async (req, res): Promise<void> => {
@@ -68,7 +180,7 @@ router.post("/admin/machines", requireAdmin, async (req, res): Promise<void> => 
   }
   const now = new Date();
   const reference = collections().machines.doc();
-  await reference.set({ ...parsed.data, createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
+  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, images: parsed.data.images.length ? parsed.data.images : parsed.data.imageUrl ? [parsed.data.imageUrl] : [], createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
   res.status(201).json({ id: reference.id, ...parsed.data, createdAt: now, updatedAt: now });
 });
 
@@ -83,8 +195,9 @@ router.put("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> 
     res.status(404).json({ error: "Machine not found" });
     return;
   }
-  await reference.set({ ...parsed.data, updatedAt: new Date(), updatedBy: currentAdmin(res).uid }, { merge: true });
-  res.json({ id: reference.id, ...parsed.data });
+  const now = new Date();
+  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, images: parsed.data.images.length ? parsed.data.images : parsed.data.imageUrl ? [parsed.data.imageUrl] : [], updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  res.json({ id: reference.id, ...parsed.data, updatedAt: now });
 });
 
 router.delete("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> => {
@@ -93,13 +206,53 @@ router.delete("/admin/machines/:id", requireAdmin, async (req, res): Promise<voi
     res.status(404).json({ error: "Machine not found" });
     return;
   }
-  await reference.set({ published: false, updatedAt: new Date(), updatedBy: currentAdmin(res).uid }, { merge: true });
+  await reference.delete();
   res.sendStatus(204);
 });
 
 router.get("/admin/services", requireAdmin, async (_req, res): Promise<void> => {
-  const snapshot = await collections().services.orderBy("displayOrder", "asc").get();
-  res.json(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+  await ensureSeeded();
+  const snapshot = await collections().services.get();
+  const rows = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Array<{ id: string; displayOrder?: number }>;
+  res.json(rows.sort((a, b) => Number(a.displayOrder ?? 0) - Number(b.displayOrder ?? 0)));
+});
+
+router.post("/admin/services", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = serviceBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid service details", details: parsed.error.flatten() });
+    return;
+  }
+  const now = new Date();
+  const reference = collections().services.doc();
+  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
+  res.status(201).json({ id: reference.id, ...parsed.data, createdAt: now, updatedAt: now });
+});
+
+router.put("/admin/services/:id", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = serviceBody.safeParse(req.body);
+  const reference = collections().services.doc(String(req.params.id));
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid service details", details: parsed.error.flatten() });
+    return;
+  }
+  if (!(await reference.get()).exists) {
+    res.status(404).json({ error: "Service not found" });
+    return;
+  }
+  const now = new Date();
+  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  res.json({ id: reference.id, ...parsed.data, updatedAt: now });
+});
+
+router.delete("/admin/services/:id", requireAdmin, async (req, res): Promise<void> => {
+  const reference = collections().services.doc(String(req.params.id));
+  if (!(await reference.get()).exists) {
+    res.status(404).json({ error: "Service not found" });
+    return;
+  }
+  await reference.delete();
+  res.sendStatus(204);
 });
 
 export default router;
