@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import { useGetAdminSession } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
@@ -179,9 +179,48 @@ const navigationItems = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/#services' },
   { label: 'Our Work', href: '/#work' },
-  { label: 'About', href: '/#about' },
+  { label: 'Machines', href: '/machines' },
   { label: 'Products', href: '/products' },
+  { label: 'About', href: '/#about' },
   { label: 'Contact', href: '/#contact' },
+];
+
+const machines = [
+  {
+    name: 'Epson SureColor S80670',
+    category: 'Large-Format Printing',
+    description: 'A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.',
+    image: '/machine-epson-surecolor-s80670.png',
+    imageAlt: 'Epson SureColor S80670 large-format printer',
+    related: [
+      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Banner Printing', href: '/services/banner-printing' },
+    ],
+  },
+  {
+    name: 'Wide-Format Roll Laminator',
+    category: 'Finishing Equipment',
+    description: 'A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.',
+    image: '/machine-wide-format-laminator.png',
+    imageAlt: 'Wide-format roll laminator',
+    related: [
+      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Banner Printing', href: '/services/banner-printing' },
+      { label: 'Sign Boards', href: '/services/sign-boards' },
+    ],
+  },
+  {
+    name: 'Large-Format Printing Machine',
+    category: 'Wide-Format Production',
+    description: 'A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials.',
+    image: '/machine-large-format-printer.png',
+    imageAlt: 'Large-format roll-to-roll printing machine',
+    related: [
+      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Banner Printing', href: '/services/banner-printing' },
+      { label: 'Sign Boards', href: '/services/sign-boards' },
+    ],
+  },
 ];
 
 function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
@@ -257,7 +296,7 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
               href={item.href}
               data-testid={`link-nav-${item.label.toLowerCase().replace(' ', '-')}`}
               aria-current={location === item.href || (item.label === 'Home' && location === '/') ? 'page' : undefined}
-              className={`text-[12px] font-semibold tracking-[-.01em] transition hover:text-[#1669aa] ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#405268]'}`}
+              className={`text-[12px] font-semibold tracking-[-.01em] transition hover:text-[#1669aa] ${((location === '/products' && item.label === 'Products') || (location === '/machines' && item.label === 'Machines')) ? 'text-[#1669aa]' : 'text-[#405268]'}`}
             >
               {item.label}
             </a>
@@ -281,7 +320,7 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
                 onClick={closeMenu}
                 data-testid={`link-mobile-${item.label.toLowerCase().replace(' ', '-')}`}
                 aria-current={location === item.href ? 'page' : undefined}
-                className={`border-b border-[#edf1f4] py-3 text-sm font-semibold ${location === '/products' && item.label === 'Products' ? 'text-[#1669aa]' : 'text-[#203954]'}`}
+                className={`border-b border-[#edf1f4] py-3 text-sm font-semibold ${((location === '/products' && item.label === 'Products') || (location === '/machines' && item.label === 'Machines')) ? 'text-[#1669aa]' : 'text-[#203954]'}`}
               >
                 {item.label}
               </a>
@@ -820,6 +859,127 @@ function Products() {
   );
 }
 
+function Machines() {
+  useEffect(() => {
+    const title = 'Machines | New National Advertising';
+    const description = 'Explore the printing and finishing equipment used by New National Advertising for large-format printing, signage and advertising production.';
+    const canonicalUrl = `${window.location.origin}/machines`;
+    document.title = title;
+    upsertMeta('name', 'description', description);
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:url', canonicalUrl);
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrl;
+  }, []);
+
+  return (
+    <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641] pb-[58px] md:pb-0">
+      <SiteHeader quoteHref="/#contact" />
+      <main className="pt-[70px]">
+        <section className="relative overflow-hidden border-b border-[#e4ebf0] bg-[#f3f7f8]">
+          <div className="pointer-events-none absolute -left-28 top-[-170px] h-[520px] w-[520px] rounded-full border border-[#d7e8ee] bg-white/45" />
+          <div className="pointer-events-none absolute right-[-180px] top-[-130px] h-[470px] w-[620px] rounded-[50%] border border-[#d9e9ee] bg-[#eaf3f7]/75" />
+          <div className="container-nna relative py-20 sm:py-24 lg:py-28">
+            <Reveal className="max-w-[760px]">
+              <p className="eyebrow">Our Machines</p>
+              <h1 className="display mt-4 max-w-[760px] text-[clamp(2.8rem,7vw,5.8rem)] font-extrabold leading-[.92] tracking-[-.075em] text-[#14213d]" data-testid="heading-machines">
+                Printing Technology Behind Our Work
+              </h1>
+              <p className="mt-6 max-w-[610px] text-[15px] leading-7 text-[#607487]" data-testid="text-machines-intro">
+                Explore the printing and finishing equipment used for producing high-quality large-format graphics, advertising materials and signage.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="machine-grid-heading">
+          <div className="container-nna">
+            <Reveal className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="eyebrow">Production equipment</p>
+                <h2 id="machine-grid-heading" className="display mt-2 text-3xl font-extrabold tracking-[-.055em] text-[#122641] sm:text-[42px]">The equipment we present</h2>
+              </div>
+              <p className="max-w-[330px] text-[12px] leading-5 text-[#718394]">A look at the printing and finishing equipment involved in our large-format workflow.</p>
+            </Reveal>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+              {machines.map((machine, index) => (
+                <Reveal key={machine.name} delay={index * 90} className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
+                  <div className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-[#e4ecef] bg-[#eef3f3] p-3 sm:p-4">
+                    <img src={machine.image} alt={machine.imageAlt} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#1b78ad]">{machine.category}</p>
+                    <h3 className="display mt-2 text-[25px] font-extrabold leading-[1] tracking-[-.06em] text-[#172d49]" data-testid={`heading-machine-${index + 1}`}>{machine.name}</h3>
+                    <p className="mt-4 text-[12px] leading-6 text-[#68798a]">{machine.description}</p>
+                    <div className="mt-auto border-t border-[#e7eef1] pt-4">
+                      <p className="text-[9px] font-bold uppercase tracking-[.16em] text-[#8999a4]">Related services</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {machine.related.map((service) => (
+                          <a key={service.href} href={service.href} className="inline-flex items-center gap-1 rounded-full border border-[#c9dce5] bg-white px-2.5 py-1.5 text-[10px] font-bold text-[#2b5873] transition hover:border-[#1669aa] hover:text-[#1669aa]" data-testid={`link-machine-${index + 1}-${service.label.toLowerCase().replaceAll(' ', '-')}`}>
+                            {service.label}<ArrowUpRight size={11} />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f1f6f8] py-16 sm:py-20 lg:py-24">
+          <div className="container-nna grid items-start gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
+            <Reveal>
+              <p className="eyebrow">Production workflow</p>
+              <h2 className="display mt-3 max-w-[450px] text-4xl font-extrabold leading-[.98] tracking-[-.06em] text-[#122641] sm:text-[50px]">Built for Professional Print Production</h2>
+            </Reveal>
+            <Reveal delay={100} className="max-w-[650px]">
+              <p className="text-[14px] leading-7 text-[#5f7183]">Our printing workflow combines large-format printing and finishing equipment to support a range of advertising, signage and printed-material requirements. The machines shown on this page represent the production equipment presented by New National Advertising.</p>
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                {[
+                  ['01', 'Print', 'Large-format graphics and advertising output.'],
+                  ['02', 'Finish', 'Finishing workflows for printed media.'],
+                  ['03', 'Deliver', 'Materials prepared for your application.'],
+                ].map(([number, title, copy]) => (
+                  <div key={number} className="rounded-[12px] border border-[#d7e5ea] bg-white/75 p-4">
+                    <span className="text-[10px] font-bold tracking-[.18em] text-[#1b78ad]">{number}</span>
+                    <h3 className="display mt-3 text-[18px] font-extrabold tracking-[-.04em] text-[#1c3550]">{title}</h3>
+                    <p className="mt-2 text-[11px] leading-5 text-[#718394]">{copy}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-[#102941] text-white">
+        <div className="container-nna grid gap-8 py-10 sm:grid-cols-[1fr_1fr] sm:items-start sm:py-12 lg:grid-cols-[1fr_1fr_1fr]">
+          <div><Logo /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
+          <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} className="hover:text-white">{item.label}</a>)}</nav></div>
+          <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><address className="not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div></div>
+        </div>
+        <div className="border-t border-white/10"><div className="container-nna py-5 text-[10px] text-[#8da5b7]">© New National Advertising. All rights reserved.</div></div>
+      </footer>
+
+      <div className="fixed inset-x-0 bottom-0 z-30 grid h-[58px] grid-cols-3 border-t border-[#dbe5ea] bg-white/96 shadow-[0_-4px_20px_rgba(22,47,70,.1)] backdrop-blur md:hidden">
+        <a href="tel:+919555759677" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><Phone size={16} className="text-[#1669aa]" />CALL</a>
+        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
+        <a href="/#contact" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />QUOTE</a>
+      </div>
+      <FloatingContactActions quoteHref="/#contact" />
+    </div>
+  );
+}
+
 function AdminRoute() {
   const { data, isLoading } = useGetAdminSession();
 
@@ -1043,7 +1203,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 function Router() {
   return (
     <RoutedErrorBoundary>
-      <Switch><Route path="/" component={Home} /><Route path="/products" component={Products} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
+      <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
     </RoutedErrorBoundary>
   );
 }
