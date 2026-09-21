@@ -10,6 +10,12 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: admin
+    description: Protected administration operations
+  - name: products
+    description: Public product catalogue
+  - name: storage
+    description: Protected image upload helpers
 paths:
   /healthz:
     get:
@@ -24,8 +30,259 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /admin/session:
+    get:
+      operationId: getAdminSession
+      tags: [admin]
+      summary: Check the current admin session
+      description: Returns the protected admin session state when the signed admin session cookie is valid.
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Authenticated admin session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+        "401":
+          description: Authentication required
+        "503":
+          description: Admin authentication is not configured
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      summary: Start an admin session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginRequest"
+      responses:
+        "200":
+          description: Authenticated admin session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSession"
+        "401":
+          description: Invalid credentials
+        "503":
+          description: Admin authentication is not configured
+  /admin/logout:
+    post:
+      operationId: adminLogout
+      tags: [admin]
+      summary: End an admin session
+      responses:
+        "204":
+          description: Session ended
+  /products:
+    get:
+      operationId: getPublicProducts
+      tags: [products]
+      summary: List published products
+      responses:
+        "200":
+          description: Published products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+  /admin/products:
+    get:
+      operationId: getAdminProducts
+      tags: [admin]
+      summary: List products for administration
+      security:
+        - firebaseBearer: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/ProductStatus"
+        - name: stockStatus
+          in: query
+          schema:
+            $ref: "#/components/schemas/StockStatus"
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [updated, name, displayOrder]
+      responses:
+        "200":
+          description: Admin product list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "401":
+          description: Authentication required
+    post:
+      operationId: createProduct
+      tags: [admin]
+      summary: Create a product
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Invalid product
+        "401":
+          description: Authentication required
+  /admin/products/{id}:
+    get:
+      operationId: getAdminProduct
+      tags: [admin]
+      summary: Get one product for administration
+      security:
+        - firebaseBearer: []
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "401":
+          description: Authentication required
+        "404":
+          description: Product not found
+    put:
+      operationId: updateProduct
+      tags: [admin]
+      summary: Update a product
+      security:
+        - firebaseBearer: []
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Invalid product
+        "401":
+          description: Authentication required
+        "404":
+          description: Product not found
+    delete:
+      operationId: deleteProduct
+      tags: [admin]
+      summary: Delete a product
+      security:
+        - firebaseBearer: []
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "204":
+          description: Product deleted
+        "401":
+          description: Authentication required
+        "404":
+          description: Product not found
+  /admin/summary:
+    get:
+      operationId: getAdminSummary
+      tags: [admin]
+      summary: Get real dashboard product totals
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Product summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSummary"
+        "401":
+          description: Authentication required
+  /storage/uploads/request-url:
+    post:
+      operationId: requestProductImageUploadUrl
+      tags: [storage]
+      summary: Request a presigned product image upload URL
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadRequest"
+      responses:
+        "200":
+          description: Presigned upload details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadResponse"
+        "400":
+          description: Invalid upload request
+        "401":
+          description: Authentication required
 components:
+  parameters:
+    ProductId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 1
+  securitySchemes:
+    firebaseBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: FirebaseIDToken
   schemas:
+    AdminLoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+      required: [email, password]
     HealthStatus:
       type: object
       properties:
@@ -33,4 +290,108 @@ components:
           type: string
       required:
         - status
+    AdminSession:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+      required:
+        - authenticated
+    ProductStatus:
+      type: string
+      enum: [draft, published, archived]
+    StockStatus:
+      type: string
+      enum: [in_stock, low_stock, out_of_stock]
+    ProductInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        shortDescription:
+          type: string
+          minLength: 1
+          maxLength: 320
+        fullDescription:
+          type: string
+          maxLength: 5000
+        imagePath:
+          type: [string, "null"]
+          maxLength: 500
+        imageAlt:
+          type: [string, "null"]
+          maxLength: 180
+        category:
+          type: string
+          minLength: 1
+          maxLength: 100
+        price:
+          type: [number, "null"]
+          minimum: 0
+        status:
+          $ref: "#/components/schemas/ProductStatus"
+        stockStatus:
+          $ref: "#/components/schemas/StockStatus"
+        displayOrder:
+          type: integer
+          minimum: 0
+      required: [name, shortDescription, fullDescription, category, status, stockStatus]
+    Product:
+      allOf:
+        - $ref: "#/components/schemas/ProductInput"
+        - type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+          required: [id, createdAt, updatedAt]
+    AdminSummary:
+      type: object
+      properties:
+        totalProducts:
+          type: integer
+        publishedProducts:
+          type: integer
+        draftProducts:
+          type: integer
+        archivedProducts:
+          type: integer
+        categories:
+          type: integer
+      required: [totalProducts, publishedProducts, draftProducts, archivedProducts, categories]
+    UploadRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+        size:
+          type: integer
+          minimum: 1
+          maximum: 10485760
+        contentType:
+          type: string
+          enum: [image/jpeg, image/png, image/webp, application/pdf]
+        folder:
+          type: string
+          enum: [products, machines, services, requests]
+      required: [name, size, contentType]
+    UploadResponse:
+      type: object
+      properties:
+        uploadURL:
+          type: string
+          format: uri
+        objectPath:
+          type: string
+      required: [uploadURL, objectPath]
 
