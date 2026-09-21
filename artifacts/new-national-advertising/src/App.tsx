@@ -209,10 +209,10 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
   );
 }
 
-function Logo({ light = false }: { light?: boolean }) {
+function Logo() {
   return (
-    <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className={`inline-flex items-center rounded-sm bg-white ${light ? 'shadow-[0_3px_12px_rgba(0,0,0,.12)]' : ''}`}>
-      <img src="/new-national-advertising-logo.jpg" alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
+    <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className="inline-flex items-center">
+      <img src="/new-national-advertising-logo.png" alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
     </a>
   );
 }
@@ -789,7 +789,7 @@ function Home() {
 
       <footer className="bg-[#102941] pb-24 text-white md:pb-0">
         <div className="container-nna grid gap-10 py-12 md:grid-cols-[1.35fr_1fr_1fr] md:py-14">
-          <div><Logo light /><p className="mt-5 max-w-[250px] text-[10px] leading-5 text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
+           <div><Logo /><p className="mt-5 max-w-[250px] text-[10px] leading-5 text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
           <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} data-testid={`link-footer-${item.label.toLowerCase().replace(' ', '-')}`} className="hover:text-white">{item.label}</a>)}</nav></div>
            <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-3 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" data-testid="link-footer-phone" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-footer-email" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><address className="not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white" data-testid="link-footer-map">View on Google Maps</a></address></div></div>
         </div>
@@ -1029,7 +1029,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 
       <footer className="bg-[#102941] text-white">
         <div className="container-nna flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
-           <div><Logo light /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
+           <div><Logo /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
            <div className="text-[11px] leading-5 text-[#c1ced8]"><div className="flex flex-wrap gap-4"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div><address className="mt-2 not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div>
         </div>
       </footer>

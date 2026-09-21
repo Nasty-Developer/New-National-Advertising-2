@@ -1,1 +1,2 @@
 - [GitHub import verification](github-import-verification.md) — verify the app artifact exists before configuring preview; template-only workspaces can otherwise appear blank.
+- [Logo background cleanup](logo-background-cleanup.md) — remove only the connected outer background so internal negative space remains intact.

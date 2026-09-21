@@ -71,7 +71,7 @@ const workspaceSections: Record<Exclude<AdminPage, 'Dashboard'>, { eyebrow: stri
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <div className={`flex items-center ${compact ? 'justify-center' : 'gap-3'}`} data-testid="brand-admin">
-      <img src="/new-national-advertising-logo.jpg" alt="New National Advertising" className={`rounded-sm bg-white object-contain ${compact ? 'h-9 w-14' : 'h-12 w-[112px]'}`} />
+      <img src="/new-national-advertising-logo.png" alt="New National Advertising" className={`object-contain ${compact ? 'h-9 w-14' : 'h-12 w-[112px]'}`} />
     </div>
   );
 }
