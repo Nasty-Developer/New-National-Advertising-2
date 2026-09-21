@@ -20,6 +20,8 @@ export * from './machineInput';
 export * from './product';
 export * from './productInput';
 export * from './productStatus';
+export * from './project';
+export * from './projectInput';
 export * from './quoteRequest';
 export * from './requestStatusInput';
 export * from './requestStatusInputStatus';

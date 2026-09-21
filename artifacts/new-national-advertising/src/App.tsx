@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { getGetAdminSessionQueryKey, useGetAdminSession, useGetPublicProducts, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, useGetAdminSession, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import AdminPage from '@/pages/admin';
 import AdminLogin from '@/pages/admin-login';
@@ -161,15 +161,6 @@ const services = [
     seoDescription: 'Digital printing for business cards, brochures, posters, menus, reports and promotional materials in Mumbai.',
     related: ['offset-printing', 'graphics-design', 'banner-printing'],
   },
-];
-
-const work = [
-  { title: 'Storefront signage', category: 'Signage', position: 'left center', accent: '#F2C94C' },
-  { title: 'Printed brochure', category: 'Offset printing', position: 'center', accent: '#1769AA' },
-  { title: 'Business cards', category: 'Digital printing', position: 'right center', accent: '#F2994A' },
-  { title: 'Menu & collateral', category: 'Graphic design', position: 'bottom left', accent: '#3BA776' },
-  { title: 'Apparel printing', category: 'Screen printing', position: 'bottom center', accent: '#D9468C' },
-  { title: 'Packaging details', category: 'Selected work', position: 'bottom right', accent: '#00A8C6' },
 ];
 
 const process = [
@@ -738,6 +729,7 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
 function Home() {
   const [submitted, setSubmitted] = useState(false);
   const publicServices = usePublicServices();
+  const publicProjects = useGetPublicProjects();
   const { settings, contacts } = usePublicSettings();
   const contentQuery = useGetWebsiteContent();
   const content = contentQuery.data;
@@ -864,14 +856,8 @@ function Home() {
          <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
           <div className="container-nna">
             <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
-            <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
-               {work.map((item, index) => (
-                 <Reveal key={item.title} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''} ${index === 3 ? 'md:col-span-1' : ''}`} style={{ '--service-accent': item.accent } as CSSProperties}>
-                   <div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}><img src={index === 0 ? '/signage-installation.jpg' : index === 1 ? '/design-materials.jpg' : index === 2 ? '/hero-print-studio.jpg' : '/selected-work-grid.jpg'} alt={`${item.title} selected work`} className="h-full w-full object-cover" style={{ objectPosition: item.position }} /><div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/75 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em]" style={{ color: item.accent }}>{item.category}</p><h3 className="mt-1 text-[13px] font-semibold">{item.title}</h3></div><span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div>
-                </Reveal>
-              ))}
-            </div>
-            <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — representative printing, signage and design mockups.</p>
+            {publicProjects.isLoading ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{[1, 2, 3, 4, 5, 6].map((item) => <div key={item} className="admin-skeleton h-[170px] rounded-[8px] border border-[#e1e7eb] md:h-[190px]" />)}</div> : publicProjects.isError ? <div className="mt-8 rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert"><p className="eyebrow !text-[#a3443c]">Selected work</p><h3 className="display mt-3 text-2xl font-extrabold tracking-[-.055em] text-[#703a36]">Work unavailable</h3><p className="mx-auto mt-3 max-w-[360px] text-[12px] leading-5 text-[#9a625c]">We could not load the latest project work right now.</p></div> : publicProjects.data?.length ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{publicProjects.data.map((project, index) => { const image = project.imagePath?.startsWith('/') ? `/api/storage${project.imagePath}` : project.imagePath; return <Reveal key={project.id} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''}`}><div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}>{image ? <img src={image} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /> : <div className="flex h-full items-center justify-center bg-[#eaf2f4] text-[#7ea5b2]"><Package size={30} strokeWidth={1.2} /></div>}<div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/80 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em] text-[#f2c94c]">{project.featured ? 'Featured project' : 'Selected work'}</p><h3 className="mt-1 text-[13px] font-semibold">{project.name}</h3><p className="mt-1 line-clamp-2 text-[10px] leading-4 text-white/75">{project.shortDescription}</p></div><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div></Reveal>; })}</div> : <div className="mx-auto mt-8 max-w-[560px] rounded-[14px] border border-dashed border-[#b9d0d9] bg-white px-6 py-14 text-center shadow-[0_12px_34px_rgba(24,52,82,.05)]"><p className="eyebrow">Selected work</p><h3 className="display mt-3 text-3xl font-extrabold tracking-[-.055em] text-[#122641]">Projects coming soon</h3><p className="mx-auto mt-3 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing recent work for this space. Check back soon for new project stories.</p></div>}
+            {publicProjects.data?.length ? <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — recent printing, signage, and design projects.</p> : null}
           </div>
         </section>
 

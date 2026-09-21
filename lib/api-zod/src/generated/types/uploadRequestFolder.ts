@@ -13,5 +13,6 @@ export const UploadRequestFolder = {
   products: 'products',
   machines: 'machines',
   services: 'services',
+  projects: 'projects',
   requests: 'requests',
 } as const;

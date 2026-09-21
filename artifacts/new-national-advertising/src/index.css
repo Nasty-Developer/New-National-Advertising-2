@@ -140,6 +140,7 @@
 .arrow-link:hover svg, .button-arrow:hover svg { transform: translateX(3px); }
 
 .admin-scrollbar::-webkit-scrollbar { width: 7px; height: 7px; }
+.admin-label { display: block; margin-bottom: .5rem; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: #667d8b; }
 .admin-scrollbar::-webkit-scrollbar-thumb { background: #c4d2da; border-radius: 999px; }
 .admin-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .admin-skeleton { background: linear-gradient(90deg, #edf2f4 25%, #f7f9fa 50%, #edf2f4 75%); background-size: 200% 100%; animation: admin-shimmer 1.4s ease-in-out infinite; }

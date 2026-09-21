@@ -89,6 +89,10 @@ export interface AdminSummary {
   draftProducts: number;
   archivedProducts: number;
   categories: number;
+  totalMachines?: number;
+  totalServices?: number;
+  totalProjects?: number;
+  totalRequests?: number;
 }
 
 export type UploadRequestContentType = typeof UploadRequestContentType[keyof typeof UploadRequestContentType];
@@ -108,6 +112,7 @@ export const UploadRequestFolder = {
   products: 'products',
   machines: 'machines',
   services: 'services',
+  projects: 'projects',
   requests: 'requests',
 } as const;
 
@@ -237,6 +242,40 @@ export interface ServiceInput {
 }
 
 export type Service = ServiceInput & {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export interface ProjectInput {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /** @maxLength 500 */
+  shortDescription: string;
+  /** @maxLength 10000 */
+  fullDescription: string;
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  imagePath?: string | null;
+  /**
+     * @maxItems 30
+     * @items.maxLength 500
+     */
+  additionalImages?: string[];
+  /** @maxLength 500 */
+  videoUrl?: string;
+  published?: boolean;
+  featured?: boolean;
+  /** @minimum 0 */
+  displayOrder?: number;
+}
+
+export type Project = ProjectInput & {
   id: string;
   createdAt?: string;
   updatedAt?: string;

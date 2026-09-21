@@ -355,8 +355,234 @@ export const GetAdminSummaryResponse = zod.object({
   "publishedProducts": zod.number().int(),
   "draftProducts": zod.number().int(),
   "archivedProducts": zod.number().int(),
-  "categories": zod.number().int()
+  "categories": zod.number().int(),
+  "totalMachines": zod.number().int().optional(),
+  "totalServices": zod.number().int().optional(),
+  "totalProjects": zod.number().int().optional(),
+  "totalRequests": zod.number().int().optional()
 })
+
+
+/**
+ * @summary List published projects
+ */
+export const getPublicProjectsResponseOneNameMax = 180;
+
+export const getPublicProjectsResponseOneShortDescriptionMax = 500;
+
+export const getPublicProjectsResponseOneFullDescriptionMax = 10000;
+
+export const getPublicProjectsResponseOneImagePathMax = 500;
+
+export const getPublicProjectsResponseOneAdditionalImagesItemMax = 500;
+
+export const getPublicProjectsResponseOneAdditionalImagesMax = 30;
+
+export const getPublicProjectsResponseOneVideoUrlMax = 500;
+
+export const getPublicProjectsResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetPublicProjectsResponseItem = zod.object({
+  "name": zod.string().min(1).max(getPublicProjectsResponseOneNameMax),
+  "shortDescription": zod.string().max(getPublicProjectsResponseOneShortDescriptionMax),
+  "fullDescription": zod.string().max(getPublicProjectsResponseOneFullDescriptionMax),
+  "imagePath": zod.string().max(getPublicProjectsResponseOneImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(getPublicProjectsResponseOneAdditionalImagesItemMax)).max(getPublicProjectsResponseOneAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(getPublicProjectsResponseOneVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(getPublicProjectsResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetPublicProjectsResponse = zod.array(GetPublicProjectsResponseItem)
+
+
+export const getAdminProjectsResponseOneNameMax = 180;
+
+export const getAdminProjectsResponseOneShortDescriptionMax = 500;
+
+export const getAdminProjectsResponseOneFullDescriptionMax = 10000;
+
+export const getAdminProjectsResponseOneImagePathMax = 500;
+
+export const getAdminProjectsResponseOneAdditionalImagesItemMax = 500;
+
+export const getAdminProjectsResponseOneAdditionalImagesMax = 30;
+
+export const getAdminProjectsResponseOneVideoUrlMax = 500;
+
+export const getAdminProjectsResponseOneDisplayOrderMin = 0;
+
+
+
+export const GetAdminProjectsResponseItem = zod.object({
+  "name": zod.string().min(1).max(getAdminProjectsResponseOneNameMax),
+  "shortDescription": zod.string().max(getAdminProjectsResponseOneShortDescriptionMax),
+  "fullDescription": zod.string().max(getAdminProjectsResponseOneFullDescriptionMax),
+  "imagePath": zod.string().max(getAdminProjectsResponseOneImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(getAdminProjectsResponseOneAdditionalImagesItemMax)).max(getAdminProjectsResponseOneAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(getAdminProjectsResponseOneVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(getAdminProjectsResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+export const GetAdminProjectsResponse = zod.array(GetAdminProjectsResponseItem)
+
+
+export const createProjectBodyNameMax = 180;
+
+export const createProjectBodyShortDescriptionMax = 500;
+
+export const createProjectBodyFullDescriptionMax = 10000;
+
+export const createProjectBodyImagePathMax = 500;
+
+export const createProjectBodyAdditionalImagesItemMax = 500;
+
+export const createProjectBodyAdditionalImagesMax = 30;
+
+export const createProjectBodyVideoUrlMax = 500;
+
+export const createProjectBodyDisplayOrderMin = 0;
+
+
+
+export const CreateProjectBody = zod.object({
+  "name": zod.string().min(1).max(createProjectBodyNameMax),
+  "shortDescription": zod.string().max(createProjectBodyShortDescriptionMax),
+  "fullDescription": zod.string().max(createProjectBodyFullDescriptionMax),
+  "imagePath": zod.string().max(createProjectBodyImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(createProjectBodyAdditionalImagesItemMax)).max(createProjectBodyAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(createProjectBodyVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(createProjectBodyDisplayOrderMin).optional()
+})
+
+export const createProjectResponseOneNameMax = 180;
+
+export const createProjectResponseOneShortDescriptionMax = 500;
+
+export const createProjectResponseOneFullDescriptionMax = 10000;
+
+export const createProjectResponseOneImagePathMax = 500;
+
+export const createProjectResponseOneAdditionalImagesItemMax = 500;
+
+export const createProjectResponseOneAdditionalImagesMax = 30;
+
+export const createProjectResponseOneVideoUrlMax = 500;
+
+export const createProjectResponseOneDisplayOrderMin = 0;
+
+
+
+export const CreateProjectResponse = zod.object({
+  "name": zod.string().min(1).max(createProjectResponseOneNameMax),
+  "shortDescription": zod.string().max(createProjectResponseOneShortDescriptionMax),
+  "fullDescription": zod.string().max(createProjectResponseOneFullDescriptionMax),
+  "imagePath": zod.string().max(createProjectResponseOneImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(createProjectResponseOneAdditionalImagesItemMax)).max(createProjectResponseOneAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(createProjectResponseOneVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(createProjectResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const UpdateProjectParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const updateProjectBodyNameMax = 180;
+
+export const updateProjectBodyShortDescriptionMax = 500;
+
+export const updateProjectBodyFullDescriptionMax = 10000;
+
+export const updateProjectBodyImagePathMax = 500;
+
+export const updateProjectBodyAdditionalImagesItemMax = 500;
+
+export const updateProjectBodyAdditionalImagesMax = 30;
+
+export const updateProjectBodyVideoUrlMax = 500;
+
+export const updateProjectBodyDisplayOrderMin = 0;
+
+
+
+export const UpdateProjectBody = zod.object({
+  "name": zod.string().min(1).max(updateProjectBodyNameMax),
+  "shortDescription": zod.string().max(updateProjectBodyShortDescriptionMax),
+  "fullDescription": zod.string().max(updateProjectBodyFullDescriptionMax),
+  "imagePath": zod.string().max(updateProjectBodyImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(updateProjectBodyAdditionalImagesItemMax)).max(updateProjectBodyAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(updateProjectBodyVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(updateProjectBodyDisplayOrderMin).optional()
+})
+
+export const updateProjectResponseOneNameMax = 180;
+
+export const updateProjectResponseOneShortDescriptionMax = 500;
+
+export const updateProjectResponseOneFullDescriptionMax = 10000;
+
+export const updateProjectResponseOneImagePathMax = 500;
+
+export const updateProjectResponseOneAdditionalImagesItemMax = 500;
+
+export const updateProjectResponseOneAdditionalImagesMax = 30;
+
+export const updateProjectResponseOneVideoUrlMax = 500;
+
+export const updateProjectResponseOneDisplayOrderMin = 0;
+
+
+
+export const UpdateProjectResponse = zod.object({
+  "name": zod.string().min(1).max(updateProjectResponseOneNameMax),
+  "shortDescription": zod.string().max(updateProjectResponseOneShortDescriptionMax),
+  "fullDescription": zod.string().max(updateProjectResponseOneFullDescriptionMax),
+  "imagePath": zod.string().max(updateProjectResponseOneImagePathMax).nullish(),
+  "additionalImages": zod.array(zod.string().max(updateProjectResponseOneAdditionalImagesItemMax)).max(updateProjectResponseOneAdditionalImagesMax).optional(),
+  "videoUrl": zod.string().max(updateProjectResponseOneVideoUrlMax).optional(),
+  "published": zod.boolean().optional(),
+  "featured": zod.boolean().optional(),
+  "displayOrder": zod.number().int().min(updateProjectResponseOneDisplayOrderMin).optional()
+}).and(zod.object({
+  "id": zod.string(),
+  "createdAt": zod.coerce.date().optional(),
+  "updatedAt": zod.coerce.date().optional()
+}))
+
+
+
+
+
+export const DeleteProjectParams = zod.object({
+  "id": zod.coerce.string().min(1)
+})
+
+export const DeleteProjectResponse = zod.void()
 
 
 /**
@@ -372,7 +598,7 @@ export const RequestProductImageUploadUrlBody = zod.object({
   "name": zod.string().min(1).max(requestProductImageUploadUrlBodyNameMax),
   "size": zod.number().int().min(1).max(requestProductImageUploadUrlBodySizeMax),
   "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
-  "folder": zod.enum(['products', 'machines', 'services', 'requests']).optional()
+  "folder": zod.enum(['products', 'machines', 'services', 'projects', 'requests']).optional()
 })
 
 export const RequestProductImageUploadUrlResponse = zod.object({

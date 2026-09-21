@@ -191,12 +191,23 @@ router.delete("/admin/products/:id", requireAdmin, async (req, res): Promise<voi
 router.get("/admin/summary", requireAdmin, async (_req, res): Promise<void> => {
   const rows = await allProducts();
   const categories = new Set(rows.map(({ value }) => value.category));
+  const [machines, services, projectsSnapshot, quoteRequests, contactRequests] = await Promise.all([
+    firestore().collection("machines").get(),
+    firestore().collection("services").get(),
+    firestore().collection("projects").get(),
+    firestore().collection("quoteRequests").get(),
+    firestore().collection("contactRequests").get(),
+  ]);
   res.json(GetAdminSummaryResponse.parse({
     totalProducts: rows.length,
     publishedProducts: rows.filter(({ value }) => value.status === "published").length,
     draftProducts: rows.filter(({ value }) => value.status === "draft").length,
     archivedProducts: rows.filter(({ value }) => value.status === "archived").length,
     categories: categories.size,
+    totalMachines: machines.size,
+    totalServices: services.size,
+    totalProjects: projectsSnapshot.docs.filter((doc) => doc.data().deleted !== true).length,
+    totalRequests: quoteRequests.size + contactRequests.size,
   }));
 });
 

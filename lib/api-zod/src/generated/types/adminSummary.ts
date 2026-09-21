@@ -12,4 +12,8 @@ export interface AdminSummary {
   draftProducts: number;
   archivedProducts: number;
   categories: number;
+  totalMachines?: number;
+  totalServices?: number;
+  totalProjects?: number;
+  totalRequests?: number;
 }

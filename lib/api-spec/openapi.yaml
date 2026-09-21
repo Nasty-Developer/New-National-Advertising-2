@@ -234,6 +234,82 @@ paths:
                 $ref: "#/components/schemas/AdminSummary"
         "401":
           description: Authentication required
+  /projects:
+    get:
+      operationId: getPublicProjects
+      tags: [projects]
+      summary: List published projects
+      responses:
+        "200":
+          description: Published projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+  /admin/projects:
+    get:
+      operationId: getAdminProjects
+      tags: [projects]
+      security:
+        - firebaseBearer: []
+      responses:
+        "200":
+          description: Project catalogue
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+    post:
+      operationId: createProject
+      tags: [projects]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "201":
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+  /admin/projects/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ProductId"
+    put:
+      operationId: updateProject
+      tags: [projects]
+      security:
+        - firebaseBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "200":
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      security:
+        - firebaseBearer: []
+      responses:
+        "204":
+          description: Project removed from the catalogue
   /storage/uploads/request-url:
     post:
       operationId: requestProductImageUploadUrl
@@ -738,6 +814,14 @@ components:
           type: integer
         categories:
           type: integer
+        totalMachines:
+          type: integer
+        totalServices:
+          type: integer
+        totalProjects:
+          type: integer
+        totalRequests:
+          type: integer
       required: [totalProducts, publishedProducts, draftProducts, archivedProducts, categories]
     UploadRequest:
       type: object
@@ -755,7 +839,7 @@ components:
           enum: [image/jpeg, image/png, image/webp, application/pdf]
         folder:
           type: string
-          enum: [products, machines, services, requests]
+          enum: [products, machines, services, projects, requests]
       required: [name, size, contentType]
     UploadResponse:
       type: object
@@ -819,6 +903,28 @@ components:
     Service:
       allOf:
         - $ref: "#/components/schemas/ServiceInput"
+        - type: object
+          properties:
+            id: { type: string }
+            createdAt: { type: string, format: date-time }
+            updatedAt: { type: string, format: date-time }
+          required: [id]
+    ProjectInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1, maxLength: 180 }
+        shortDescription: { type: string, maxLength: 500 }
+        fullDescription: { type: string, maxLength: 10000 }
+        imagePath: { type: [string, "null"], maxLength: 500 }
+        additionalImages: { type: array, items: { type: string, maxLength: 500 }, maxItems: 30 }
+        videoUrl: { type: string, maxLength: 500 }
+        published: { type: boolean }
+        featured: { type: boolean }
+        displayOrder: { type: integer, minimum: 0 }
+      required: [name, shortDescription, fullDescription]
+    Project:
+      allOf:
+        - $ref: "#/components/schemas/ProjectInput"
         - type: object
           properties:
             id: { type: string }
