@@ -336,10 +336,16 @@ export default function AdminPage({ authenticated }: AdminProps) {
   const navigate = (page: AdminPage) => { setActivePage(page); setSidebarOpen(false); };
   const signOut = async () => {
     if (logout.isPending) return;
-    await logout.mutateAsync();
-    if (firebaseAuth) await signOutFirebase(firebaseAuth);
+    try {
+      await logout.mutateAsync();
+    } finally {
+      if (firebaseAuth) await signOutFirebase(firebaseAuth);
+    }
     queryClient.removeQueries({ queryKey: getGetAdminSessionQueryKey() });
     await queryClient.invalidateQueries({ queryKey: getGetAdminSummaryQueryKey() });
+    if (import.meta.env.DEV) {
+      console.debug('[admin-auth] Firebase sign-out completed; navigating to /admin/login');
+    }
     setLocation('/admin/login');
   };
   return <div className="site-noise min-h-[100dvh] bg-[#f3f6f7] text-[#14213d]" data-testid="admin-shell"><div className="flex min-h-[100dvh]">

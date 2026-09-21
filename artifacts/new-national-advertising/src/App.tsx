@@ -1209,6 +1209,16 @@ function AdminRoute() {
     }
   }, [auth.status, setLocation]);
 
+  useEffect(() => {
+    if (!import.meta.env.DEV || auth.status !== 'authenticated' || isLoading) return;
+    console.debug('[admin-auth] Admin authorization result', {
+      uid: auth.user?.uid ?? null,
+      email: auth.user?.email ?? null,
+      authenticated: data?.authenticated === true,
+      status: isError ? adminSessionErrorStatus(error) ?? 'unknown' : 200,
+    });
+  }, [auth.status, auth.user, data?.authenticated, error, isError, isLoading]);
+
   if (auth.status === 'initializing' || (auth.status === 'authenticated' && isLoading)) {
     return (
       <main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] px-5 text-[#14213d]">

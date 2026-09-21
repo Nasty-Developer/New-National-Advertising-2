@@ -4,7 +4,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from 'wouter';
 import { getGetAdminSessionQueryKey, useGetAdminSession } from '@workspace/api-client-react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseAuth, waitForFirebaseUser } from '@/lib/firebase-client';
+import {
+  ensureFirebaseAuthPersistence,
+  firebaseAuth,
+  waitForFirebaseUser,
+} from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
 
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
@@ -52,7 +56,14 @@ export default function AdminLogin() {
         setError('Admin sign in is not configured for this environment yet.');
         return;
       }
+      await ensureFirebaseAuthPersistence();
       const credential = await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
+      if (import.meta.env.DEV) {
+        console.debug('[admin-auth] Firebase sign-in succeeded', {
+          uid: credential.user.uid,
+          email: credential.user.email ?? null,
+        });
+      }
       const user = await waitForFirebaseUser(credential.user.uid);
       if (!user) {
         throw new Error('Firebase sign-in completed, but the authenticated session was not ready. Try again.');
@@ -61,6 +72,12 @@ export default function AdminLogin() {
       if (authorization.error) throw authorization.error;
       if (!authorization.data?.authenticated) {
         throw new Error('The account signed in, but admin authorization could not be confirmed.');
+      }
+      if (import.meta.env.DEV) {
+        console.debug('[admin-auth] Admin authorization succeeded; navigating to /admin', {
+          uid: user.uid,
+          authenticated: authorization.data.authenticated,
+        });
       }
       setLocation('/admin');
     } catch (loginError) {

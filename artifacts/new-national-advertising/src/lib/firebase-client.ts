@@ -1,5 +1,12 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, type Auth, type User } from "firebase/auth";
+import {
+  browserLocalPersistence,
+  getAuth,
+  onAuthStateChanged,
+  setPersistence,
+  type Auth,
+  type User,
+} from "firebase/auth";
 
 const authDomain = import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
 const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID || authDomain?.split(".")[0];
@@ -49,6 +56,13 @@ if (firebaseAuth) {
       status: user ? "authenticated" : "unauthenticated",
       user,
     };
+    if (import.meta.env.DEV) {
+      console.debug("[admin-auth] Firebase auth state changed", {
+        status: authSnapshot.status,
+        uid: user?.uid ?? null,
+        email: user?.email ?? null,
+      });
+    }
     resolveReady(user);
     authSubscribers.forEach((subscriber) => subscriber());
   });
@@ -63,6 +77,12 @@ export function subscribeToFirebaseAuth(subscriber: () => void) {
 
 export function getFirebaseAuthSnapshot() {
   return authSnapshot;
+}
+
+export function ensureFirebaseAuthPersistence() {
+  return firebaseAuth
+    ? setPersistence(firebaseAuth, browserLocalPersistence)
+    : Promise.reject(new Error("Firebase Authentication is not configured."));
 }
 
 const FIREBASE_AUTH_READY_TIMEOUT_MS = 10_000;
