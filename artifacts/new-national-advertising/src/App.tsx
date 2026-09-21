@@ -653,12 +653,8 @@ function Home() {
               </div>
             </Reveal>
             <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto">
-               <div className="relative aspect-[1.24/1] overflow-hidden rounded-[18px] bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                <img src="/hero-print-studio.jpg" alt="Printed brochures, colour swatches and signage materials arranged in a bright studio" className="h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#0f2c4a]/38 via-transparent to-transparent" />
-                <div className="absolute left-5 top-5 rounded-sm bg-white/90 px-3 py-2 backdrop-blur"><p className="text-[9px] font-bold tracking-[.18em] text-[#1669aa]">YOUR IDEAS</p><p className="mt-0.5 text-[12px] font-semibold text-[#152a43]">Our print.</p></div>
-                 <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-white/50 bg-white/82 px-3 py-2 backdrop-blur"><div className="print-registration" aria-label="CMYK registration mark"><span /><span /><span /><span /></div><span className="text-[8px] font-bold tracking-[.16em] text-[#14213d]">CMYK / PRINT</span></div>
-                <div className="absolute bottom-5 right-5 max-w-[130px] border-l-2 border-[#4da0cd] pl-3 text-[11px] font-semibold leading-4 text-white">Print large.<br />Think bigger.</div>
+                <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
+                 <img src="/hero-new-national-advertising.png" alt="New National Advertising storefront, printing services and sign board display" className="h-full w-full object-contain" />
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
