@@ -5,10 +5,10 @@ import { createFirebaseReadUrl } from "../lib/firebase-storage";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
-const collections = {
+const collections = () => ({
   machines: firestore().collection("machines"),
   services: firestore().collection("services"),
-};
+});
 
 const machineBody = z.object({
   name: z.string().trim().min(1).max(180),
@@ -32,7 +32,7 @@ const serviceBody = z.object({
 });
 
 async function publicDocuments(kind: "machines" | "services") {
-  const snapshot = await collections[kind].get();
+  const snapshot = await collections()[kind].get();
   return Promise.all(snapshot.docs
     .filter((doc) => kind === "machines" ? doc.data().published !== false : doc.data().status !== "draft")
     .sort((a, b) => Number(a.data().displayOrder ?? 0) - Number(b.data().displayOrder ?? 0))
@@ -56,7 +56,7 @@ router.get("/services", async (_req, res): Promise<void> => {
 });
 
 router.get("/admin/machines", requireAdmin, async (_req, res): Promise<void> => {
-  const snapshot = await collections.machines.orderBy("displayOrder", "asc").get();
+  const snapshot = await collections().machines.orderBy("displayOrder", "asc").get();
   res.json(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 });
 
@@ -67,14 +67,14 @@ router.post("/admin/machines", requireAdmin, async (req, res): Promise<void> => 
     return;
   }
   const now = new Date();
-  const reference = collections.machines.doc();
+  const reference = collections().machines.doc();
   await reference.set({ ...parsed.data, createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
   res.status(201).json({ id: reference.id, ...parsed.data, createdAt: now, updatedAt: now });
 });
 
 router.put("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> => {
   const parsed = machineBody.safeParse(req.body);
-  const reference = collections.machines.doc(String(req.params.id));
+  const reference = collections().machines.doc(String(req.params.id));
   if (!parsed.success) {
     res.status(400).json({ error: "Invalid machine details", details: parsed.error.flatten() });
     return;
@@ -88,7 +88,7 @@ router.put("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> 
 });
 
 router.delete("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> => {
-  const reference = collections.machines.doc(String(req.params.id));
+  const reference = collections().machines.doc(String(req.params.id));
   if (!(await reference.get()).exists) {
     res.status(404).json({ error: "Machine not found" });
     return;
@@ -98,7 +98,7 @@ router.delete("/admin/machines/:id", requireAdmin, async (req, res): Promise<voi
 });
 
 router.get("/admin/services", requireAdmin, async (_req, res): Promise<void> => {
-  const snapshot = await collections.services.orderBy("displayOrder", "asc").get();
+  const snapshot = await collections().services.orderBy("displayOrder", "asc").get();
   res.json(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 });
 

@@ -35,6 +35,10 @@ export default function AdminLogin() {
     }
     try {
       setIsPending(true);
+      if (!firebaseAuth) {
+        setError('Admin sign in is not configured for this environment yet.');
+        return;
+      }
       await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
       await queryClient.invalidateQueries({ queryKey: getGetAdminSessionQueryKey() });
       setLocation('/admin');
