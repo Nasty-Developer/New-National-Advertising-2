@@ -2,3 +2,4 @@
 - [GitHub import verification](github-import-verification.md) — verify the app artifact exists before configuring preview; template-only workspaces can otherwise appear blank.
 - [Logo background cleanup](logo-background-cleanup.md) — remove only the connected outer background so internal negative space remains intact.
 - [Imported runtime configuration](imported-runtime-config.md) — optional third-party services should not block the public preview at startup.
+- [Admin API routing](admin-api-routing.md) — verify the production admin-session URL returns JSON, not the SPA fallback, when frontend and backend deploy separately.

@@ -6,12 +6,14 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { useGetAdminSession, useGetPublicProducts, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, useGetAdminSession, useGetPublicProducts, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import AdminPage from '@/pages/admin';
 import AdminLogin from '@/pages/admin-login';
+import { firebaseAuth } from '@/lib/firebase-client';
 
 const queryClient = new QueryClient();
+const ADMIN_SESSION_TIMEOUT_MS = 10_000;
 
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
 const googleMapsUrl = 'https://maps.app.goo.gl/fp4fTcaVwx2bojXz7';
@@ -1143,8 +1145,59 @@ function Machines() {
   );
 }
 
+function AdminAccessMessage({
+  kind,
+  detail,
+  onRetry,
+}: {
+  kind: 'unauthorized' | 'error';
+  detail: string;
+  onRetry?: () => void;
+}) {
+  const isUnauthorized = kind === 'unauthorized';
+  return (
+    <main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] px-5 text-[#14213d]">
+      <div className="w-full max-w-[460px] rounded-[16px] border border-[#d8e4eb] bg-white px-6 py-7 text-center shadow-[0_12px_34px_rgba(24,52,82,.06)]" data-testid={`state-admin-${kind}`}>
+        <ShieldCheck className={`mx-auto ${isUnauthorized ? 'text-[#d45b52]' : 'text-[#1769aa]'}`} size={28} />
+        <p className="eyebrow mt-5">Private workspace</p>
+        <h1 className="display mt-2 text-2xl font-extrabold tracking-[-.07em]">
+          {isUnauthorized ? 'Admin access required' : 'Admin access could not be checked'}
+        </h1>
+        <p className="mt-3 text-[13px] leading-5 text-[#687b87]">{detail}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {onRetry && (
+            <button type="button" onClick={onRetry} className="rounded-xl bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white transition hover:bg-[#125b94]" data-testid="button-retry-admin-session">
+              Try again
+            </button>
+          )}
+          <Link href="/admin/login" className="rounded-xl border border-[#b7cdd8] bg-[#fffefa] px-4 py-2.5 text-[11px] font-bold text-[#294861] transition hover:border-[#1769aa] hover:bg-[#f4fafb]" data-testid="link-admin-login">
+            Return to sign in
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function adminSessionErrorStatus(error: unknown) {
+  return typeof error === 'object' && error !== null && 'status' in error && typeof error.status === 'number'
+    ? error.status
+    : undefined;
+}
+
 function AdminRoute() {
-  const { data, isLoading } = useGetAdminSession();
+  const session = useGetAdminSession({
+    query: {
+      queryKey: getGetAdminSessionQueryKey(),
+      retry: false,
+      staleTime: 0,
+    },
+    request: {
+      responseType: 'json',
+      timeoutMs: ADMIN_SESSION_TIMEOUT_MS,
+    },
+  });
+  const { data, isLoading, isError, error, refetch } = session;
 
   if (isLoading) {
     return (
@@ -1154,6 +1207,29 @@ function AdminRoute() {
           <p className="mt-2 text-[13px] font-semibold text-[#405268]">Checking admin access…</p>
         </div>
       </main>
+    );
+  }
+
+  if (isError) {
+    const status = adminSessionErrorStatus(error);
+    if (status === 401) {
+      return <AdminPage authenticated={false} />;
+    }
+    if (status === 403) {
+      const email = firebaseAuth?.currentUser?.email;
+      return (
+        <AdminAccessMessage
+          kind="unauthorized"
+          detail={email ? `${email} is authenticated, but this account is not authorized as an administrator.` : 'This authenticated account is not authorized as an administrator.'}
+        />
+      );
+    }
+    return (
+      <AdminAccessMessage
+        kind="error"
+        detail="The admin authorization service did not respond successfully. Check the Firebase/API configuration, then try again."
+        onRetry={() => void refetch()}
+      />
     );
   }
 

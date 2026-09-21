@@ -13,6 +13,13 @@ function bearerToken(header: string | undefined): string | null {
   return token || null;
 }
 
+function isFirebaseConfigurationError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    error.message.includes("required for Firebase-backed production features")
+  );
+}
+
 export const requireAdmin: RequestHandler = async (req, res, next): Promise<void> => {
   const token = bearerToken(req.header("authorization"));
   if (!token) {
@@ -20,8 +27,20 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
     return;
   }
 
+  let decoded: Awaited<ReturnType<ReturnType<typeof firebaseAuth>["verifyIdToken"]>>;
   try {
-    const decoded = await firebaseAuth().verifyIdToken(token);
+    decoded = await firebaseAuth().verifyIdToken(token);
+  } catch (error) {
+    req.log.warn({ err: error }, "Rejected Firebase admin token");
+    if (isFirebaseConfigurationError(error)) {
+      res.status(503).json({ error: "Admin authentication is not configured" });
+      return;
+    }
+    res.status(401).json({ error: "Authentication required" });
+    return;
+  }
+
+  try {
     const user = await firestore().collection("users").doc(decoded.uid).get();
     const data = user.data();
     const isAdmin = data?.role === "admin" && data?.active !== false;
@@ -37,8 +56,8 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
     } satisfies VerifiedAdmin;
     next();
   } catch (error) {
-    req.log.warn({ err: error }, "Rejected Firebase admin token");
-    res.status(401).json({ error: "Authentication required" });
+    req.log.error({ err: error, uid: decoded.uid }, "Admin authorization lookup failed");
+    res.status(503).json({ error: "Admin authorization is temporarily unavailable" });
   }
 };
 

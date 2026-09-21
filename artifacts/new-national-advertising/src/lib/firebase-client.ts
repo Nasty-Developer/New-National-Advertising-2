@@ -39,7 +39,14 @@ if (firebaseAuth) {
   resolveReady(null);
 }
 
+const FIREBASE_AUTH_READY_TIMEOUT_MS = 10_000;
+
 export async function getFirebaseIdToken() {
-  await firebaseAuthReady;
+  await Promise.race([
+    firebaseAuthReady,
+    new Promise<null>((resolve) => {
+      window.setTimeout(() => resolve(null), FIREBASE_AUTH_READY_TIMEOUT_MS);
+    }),
+  ]);
   return readyUser?.getIdToken() ?? null;
 }

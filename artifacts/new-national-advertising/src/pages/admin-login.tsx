@@ -6,6 +6,8 @@ import { getGetAdminSessionQueryKey, useGetAdminSession } from '@workspace/api-c
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '@/lib/firebase-client';
 
+const ADMIN_SESSION_TIMEOUT_MS = 10_000;
+
 function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) return error.message;
   return 'The email or password could not be verified. Check your details and try again.';
@@ -14,7 +16,10 @@ function getErrorMessage(error: unknown) {
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
-  const session = useGetAdminSession();
+  const session = useGetAdminSession({
+    query: { queryKey: getGetAdminSessionQueryKey(), retry: false },
+    request: { responseType: 'json', timeoutMs: ADMIN_SESSION_TIMEOUT_MS },
+  });
   const [isPending, setIsPending] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
