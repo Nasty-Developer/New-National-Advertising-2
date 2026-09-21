@@ -2,7 +2,9 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, Eye, EyeOff, LockKeyhole, ShieldCheck } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from 'wouter';
-import { getGetAdminSessionQueryKey, useAdminLogin, useGetAdminSession } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, useGetAdminSession } from '@workspace/api-client-react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '@/lib/firebase-client';
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) return error.message;
@@ -13,7 +15,7 @@ export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
   const session = useGetAdminSession();
-  const login = useAdminLogin();
+  const [isPending, setIsPending] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,18 +27,21 @@ export default function AdminLogin() {
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (login.isPending) return;
+    if (isPending) return;
     setError('');
     if (!email.trim() || !password) {
       setError('Enter both your email and password to continue.');
       return;
     }
     try {
-      await login.mutateAsync({ data: { email: email.trim(), password } });
+      setIsPending(true);
+      await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
       await queryClient.invalidateQueries({ queryKey: getGetAdminSessionQueryKey() });
       setLocation('/admin');
     } catch (loginError) {
       setError(getErrorMessage(loginError));
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -78,8 +83,8 @@ export default function AdminLogin() {
               </span>
             </label>
             {error && <div role="alert" className="rounded-xl border border-[#efc8c4] bg-[#fff3f1] px-4 py-3 text-[12px] leading-5 text-[#a4453d]" data-testid="alert-admin-login-error">{error}</div>}
-            <button type="submit" disabled={login.isPending} className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#1769aa] text-[12px] font-bold text-white shadow-[0_8px_18px_rgba(23,105,170,.17)] transition hover:-translate-y-0.5 hover:bg-[#125b94] disabled:cursor-wait disabled:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-2" data-testid="button-admin-login">
-              {login.isPending ? 'Verifying access…' : 'Enter workspace'} <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+            <button type="submit" disabled={isPending} className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#1769aa] text-[12px] font-bold text-white shadow-[0_8px_18px_rgba(23,105,170,.17)] transition hover:-translate-y-0.5 hover:bg-[#125b94] disabled:cursor-wait disabled:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-2" data-testid="button-admin-login">
+              {isPending ? 'Verifying access…' : 'Enter workspace'} <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
             </button>
           </form>
           <div className="mt-8 flex items-start gap-2 border-t border-[#e7edef] pt-5 text-[10px] leading-4 text-[#8a9aa3]"><ShieldCheck size={14} className="mt-0.5 shrink-0 text-[#3ba776]" /> Your session is secured with an HttpOnly cookie and is only used for this private workspace.</div>

@@ -12,5 +12,5 @@ export type ProductStatus = typeof ProductStatus[keyof typeof ProductStatus];
 export const ProductStatus = {
   draft: 'draft',
   published: 'published',
-  inactive: 'inactive',
+  archived: 'archived',
 } as const;

@@ -1,4 +1,3 @@
-import { and, asc, count, countDistinct, desc, eq, ilike, or } from "drizzle-orm";
 import { Router, type IRouter } from "express";
 import {
   CreateProductBody,
@@ -14,10 +13,52 @@ import {
   UpdateProductParams,
   UpdateProductResponse,
 } from "@workspace/api-zod";
-import { db, productsTable } from "@workspace/db";
-import { requireAdmin } from "./admin";
+import type { DocumentData } from "firebase-admin/firestore";
+import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
+import { createFirebaseReadUrl } from "../lib/firebase-storage";
+import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
+const products = () => firestore().collection("products");
+
+function toDate(value: unknown): Date {
+  if (value && typeof value === "object" && "toDate" in value && typeof value.toDate === "function") {
+    return value.toDate();
+  }
+  if (value instanceof Date) return value;
+  if (typeof value === "string" || typeof value === "number") return new Date(value);
+  return new Date();
+}
+
+async function productResponse(id: string, data: DocumentData) {
+  return {
+    id,
+    name: String(data.name ?? ""),
+    shortDescription: String(data.shortDescription ?? ""),
+    fullDescription: String(data.fullDescription ?? data.description ?? ""),
+    imagePath: await createFirebaseReadUrl(data.imagePath ?? data.imageUrl),
+    imageAlt: data.imageAlt ?? null,
+    category: String(data.category ?? ""),
+    price: data.price === undefined || data.price === null ? null : Number(data.price),
+    status: data.status ?? "draft",
+    stockStatus: data.stockStatus ?? "in_stock",
+    displayOrder: Number(data.displayOrder ?? 0),
+    createdAt: toDate(data.createdAt),
+    updatedAt: toDate(data.updatedAt),
+  };
+}
+
+async function allProducts() {
+  const snapshot = await products().get();
+  return Promise.all(snapshot.docs.map(async (doc) => ({
+    doc,
+    value: await productResponse(doc.id, doc.data()),
+  })));
+}
+
+function slugify(value: string) {
+  return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
 
 function productValues(data: {
   name: string;
@@ -27,13 +68,16 @@ function productValues(data: {
   imageAlt?: string | null;
   category: string;
   price?: number | null;
-  status: "draft" | "published" | "inactive";
+  status: "draft" | "published" | "archived";
   stockStatus: "in_stock" | "low_stock" | "out_of_stock";
   displayOrder?: number;
-}) {
+}, uid: string) {
+  const now = new Date();
   return {
     name: data.name.trim(),
+    slug: slugify(data.name),
     shortDescription: data.shortDescription.trim(),
+    description: data.fullDescription.trim(),
     fullDescription: data.fullDescription.trim(),
     imagePath: data.imagePath ?? null,
     imageAlt: data.imageAlt?.trim() || null,
@@ -42,16 +86,19 @@ function productValues(data: {
     status: data.status,
     stockStatus: data.stockStatus,
     displayOrder: data.displayOrder ?? 0,
+    featured: false,
+    createdAt: now,
+    updatedAt: now,
+    createdBy: uid,
+    updatedBy: uid,
   };
 }
 
 router.get("/products", async (_req, res): Promise<void> => {
-  const products = await db
-    .select()
-    .from(productsTable)
-    .where(eq(productsTable.status, "published"))
-    .orderBy(asc(productsTable.displayOrder), desc(productsTable.updatedAt));
-  res.json(GetPublicProductsResponse.parse(products));
+  const rows = (await allProducts())
+    .filter(({ doc }) => doc.data().status === "published")
+    .sort((a, b) => Number(a.value.displayOrder) - Number(b.value.displayOrder) || b.value.updatedAt.getTime() - a.value.updatedAt.getTime());
+  res.json(GetPublicProductsResponse.parse(rows.map(({ value }) => value)));
 });
 
 router.get("/admin/products", requireAdmin, async (req, res): Promise<void> => {
@@ -60,28 +107,21 @@ router.get("/admin/products", requireAdmin, async (req, res): Promise<void> => {
     res.status(400).json({ error: "Invalid product filters" });
     return;
   }
-
-  const conditions = [];
-  if (parsed.data.search) {
-    const query = `%${parsed.data.search}%`;
-    conditions.push(or(ilike(productsTable.name, query), ilike(productsTable.category, query)));
+  const query = parsed.data;
+  let rows = await allProducts();
+  if (query.search) {
+    const term = query.search.toLowerCase();
+    rows = rows.filter(({ value }) => [value.name, value.category, value.shortDescription, value.fullDescription].some((item) => item.toLowerCase().includes(term)));
   }
-  if (parsed.data.category) conditions.push(eq(productsTable.category, parsed.data.category));
-  if (parsed.data.status) conditions.push(eq(productsTable.status, parsed.data.status));
-  if (parsed.data.stockStatus) conditions.push(eq(productsTable.stockStatus, parsed.data.stockStatus));
-
-  const orderBy = parsed.data.sort === "name"
-    ? asc(productsTable.name)
-    : parsed.data.sort === "displayOrder"
-      ? asc(productsTable.displayOrder)
-      : desc(productsTable.updatedAt);
-
-  const products = await db
-    .select()
-    .from(productsTable)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(orderBy, asc(productsTable.id));
-  res.json(GetAdminProductsResponse.parse(products));
+  if (query.category) rows = rows.filter(({ value }) => value.category === query.category);
+  if (query.status) rows = rows.filter(({ value }) => value.status === query.status);
+  if (query.stockStatus) rows = rows.filter(({ value }) => value.stockStatus === query.stockStatus);
+  rows.sort((a, b) => query.sort === "name"
+    ? a.value.name.localeCompare(b.value.name)
+    : query.sort === "displayOrder"
+      ? Number(a.value.displayOrder) - Number(b.value.displayOrder)
+      : b.value.updatedAt.getTime() - a.value.updatedAt.getTime());
+  res.json(GetAdminProductsResponse.parse(rows.map(({ value }) => value)));
 });
 
 router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => {
@@ -90,8 +130,10 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
     res.status(400).json({ error: "Invalid product details", details: parsed.error.flatten() });
     return;
   }
-  const [product] = await db.insert(productsTable).values(productValues(parsed.data)).returning();
-  res.status(201).json(CreateProductResponse.parse(product));
+  const admin = currentAdmin(res);
+  const reference = products().doc();
+  await reference.set(productValues(parsed.data, admin.uid));
+  res.status(201).json(CreateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 
 router.get("/admin/products/:id", requireAdmin, async (req, res): Promise<void> => {
@@ -100,12 +142,12 @@ router.get("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     res.status(400).json({ error: "Invalid product id" });
     return;
   }
-  const [product] = await db.select().from(productsTable).where(eq(productsTable.id, params.data.id));
-  if (!product) {
+  const snapshot = await products().doc(params.data.id).get();
+  if (!snapshot.exists) {
     res.status(404).json({ error: "Product not found" });
     return;
   }
-  res.json(GetAdminProductResponse.parse(product));
+  res.json(GetAdminProductResponse.parse(await productResponse(snapshot.id, snapshot.data()!)));
 });
 
 router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> => {
@@ -115,16 +157,19 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     res.status(400).json({ error: "Invalid product details" });
     return;
   }
-  const [product] = await db
-    .update(productsTable)
-    .set({ ...productValues(parsed.data), updatedAt: new Date() })
-    .where(eq(productsTable.id, params.data.id))
-    .returning();
-  if (!product) {
+  const reference = products().doc(params.data.id);
+  const snapshot = await reference.get();
+  if (!snapshot.exists) {
     res.status(404).json({ error: "Product not found" });
     return;
   }
-  res.json(UpdateProductResponse.parse(product));
+  const admin = currentAdmin(res);
+  await reference.set({
+    ...productValues(parsed.data, admin.uid),
+    createdAt: snapshot.data()?.createdAt ?? new Date(),
+    createdBy: snapshot.data()?.createdBy ?? admin.uid,
+  }, { merge: true });
+  res.json(UpdateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 
 router.delete("/admin/products/:id", requireAdmin, async (req, res): Promise<void> => {
@@ -133,27 +178,25 @@ router.delete("/admin/products/:id", requireAdmin, async (req, res): Promise<voi
     res.status(400).json({ error: "Invalid product id" });
     return;
   }
-  const [deleted] = await db.delete(productsTable).where(eq(productsTable.id, params.data.id)).returning();
-  if (!deleted) {
+  const reference = products().doc(params.data.id);
+  const snapshot = await reference.get();
+  if (!snapshot.exists) {
     res.status(404).json({ error: "Product not found" });
     return;
   }
+  await reference.set({ status: "archived", updatedAt: new Date(), updatedBy: currentAdmin(res).uid }, { merge: true });
   res.sendStatus(204);
 });
 
 router.get("/admin/summary", requireAdmin, async (_req, res): Promise<void> => {
-  const [totals] = await db.select({ total: count() }).from(productsTable);
-  const [published] = await db.select({ total: count() }).from(productsTable).where(eq(productsTable.status, "published"));
-  const [draft] = await db.select({ total: count() }).from(productsTable).where(eq(productsTable.status, "draft"));
-  const [inactive] = await db.select({ total: count() }).from(productsTable).where(eq(productsTable.status, "inactive"));
-  const [categories] = await db.select({ total: countDistinct(productsTable.category) }).from(productsTable);
-
+  const rows = await allProducts();
+  const categories = new Set(rows.map(({ value }) => value.category));
   res.json(GetAdminSummaryResponse.parse({
-    totalProducts: Number(totals?.total ?? 0),
-    publishedProducts: Number(published?.total ?? 0),
-    draftProducts: Number(draft?.total ?? 0),
-    inactiveProducts: Number(inactive?.total ?? 0),
-    categories: Number(categories?.total ?? 0),
+    totalProducts: rows.length,
+    publishedProducts: rows.filter(({ value }) => value.status === "published").length,
+    draftProducts: rows.filter(({ value }) => value.status === "draft").length,
+    archivedProducts: rows.filter(({ value }) => value.status === "archived").length,
+    categories: categories.size,
   }));
 });
 

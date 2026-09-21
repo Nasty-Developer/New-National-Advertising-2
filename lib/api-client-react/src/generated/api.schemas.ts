@@ -25,7 +25,7 @@ export type ProductStatus = typeof ProductStatus[keyof typeof ProductStatus];
 export const ProductStatus = {
   draft: 'draft',
   published: 'published',
-  inactive: 'inactive',
+  archived: 'archived',
 } as const;
 
 export type StockStatus = typeof StockStatus[keyof typeof StockStatus];
@@ -77,7 +77,8 @@ export interface ProductInput {
 }
 
 export type Product = ProductInput & {
-  id: number;
+  /** @minLength 1 */
+  id: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -86,7 +87,7 @@ export interface AdminSummary {
   totalProducts: number;
   publishedProducts: number;
   draftProducts: number;
-  inactiveProducts: number;
+  archivedProducts: number;
   categories: number;
 }
 
@@ -97,6 +98,17 @@ export const UploadRequestContentType = {
   'image/jpeg': 'image/jpeg',
   'image/png': 'image/png',
   'image/webp': 'image/webp',
+  'application/pdf': 'application/pdf',
+} as const;
+
+export type UploadRequestFolder = typeof UploadRequestFolder[keyof typeof UploadRequestFolder];
+
+
+export const UploadRequestFolder = {
+  products: 'products',
+  machines: 'machines',
+  services: 'services',
+  requests: 'requests',
 } as const;
 
 export interface UploadRequest {
@@ -111,6 +123,7 @@ export interface UploadRequest {
      */
   size: number;
   contentType: UploadRequestContentType;
+  folder?: UploadRequestFolder;
 }
 
 export interface UploadResponse {

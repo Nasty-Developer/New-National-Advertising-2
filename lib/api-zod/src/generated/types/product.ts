@@ -8,7 +8,8 @@
 import type { ProductInput } from './productInput';
 
 export type Product = ProductInput & {
-  id: number;
+  /** @minLength 1 */
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 };

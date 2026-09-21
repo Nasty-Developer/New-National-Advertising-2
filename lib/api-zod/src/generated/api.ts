@@ -69,6 +69,7 @@ export const getPublicProductsResponseOneDisplayOrderMin = 0;
 
 
 
+
 export const GetPublicProductsResponseItem = zod.object({
   "name": zod.string().min(1).max(getPublicProductsResponseOneNameMax),
   "shortDescription": zod.string().min(1).max(getPublicProductsResponseOneShortDescriptionMax),
@@ -77,11 +78,11 @@ export const GetPublicProductsResponseItem = zod.object({
   "imageAlt": zod.string().max(getPublicProductsResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getPublicProductsResponseOneCategoryMax),
   "price": zod.number().min(getPublicProductsResponseOnePriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getPublicProductsResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "id": zod.number().int(),
+  "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
 }))
@@ -94,7 +95,7 @@ export const GetPublicProductsResponse = zod.array(GetPublicProductsResponseItem
 export const GetAdminProductsQueryParams = zod.object({
   "search": zod.coerce.string().optional(),
   "category": zod.coerce.string().optional(),
-  "status": zod.enum(['draft', 'published', 'inactive']).optional(),
+  "status": zod.enum(['draft', 'published', 'archived']).optional(),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']).optional(),
   "sort": zod.enum(['updated', 'name', 'displayOrder']).optional()
 })
@@ -117,6 +118,7 @@ export const getAdminProductsResponseOneDisplayOrderMin = 0;
 
 
 
+
 export const GetAdminProductsResponseItem = zod.object({
   "name": zod.string().min(1).max(getAdminProductsResponseOneNameMax),
   "shortDescription": zod.string().min(1).max(getAdminProductsResponseOneShortDescriptionMax),
@@ -125,11 +127,11 @@ export const GetAdminProductsResponseItem = zod.object({
   "imageAlt": zod.string().max(getAdminProductsResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getAdminProductsResponseOneCategoryMax),
   "price": zod.number().min(getAdminProductsResponseOnePriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getAdminProductsResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "id": zod.number().int(),
+  "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
 }))
@@ -165,7 +167,7 @@ export const CreateProductBody = zod.object({
   "imageAlt": zod.string().max(createProductBodyImageAltMax).nullish(),
   "category": zod.string().min(1).max(createProductBodyCategoryMax),
   "price": zod.number().min(createProductBodyPriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(createProductBodyDisplayOrderMin).optional()
 })
@@ -188,6 +190,7 @@ export const createProductResponseOneDisplayOrderMin = 0;
 
 
 
+
 export const CreateProductResponse = zod.object({
   "name": zod.string().min(1).max(createProductResponseOneNameMax),
   "shortDescription": zod.string().min(1).max(createProductResponseOneShortDescriptionMax),
@@ -196,11 +199,11 @@ export const CreateProductResponse = zod.object({
   "imageAlt": zod.string().max(createProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(createProductResponseOneCategoryMax),
   "price": zod.number().min(createProductResponseOnePriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(createProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "id": zod.number().int(),
+  "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
 }))
@@ -209,8 +212,11 @@ export const CreateProductResponse = zod.object({
 /**
  * @summary Get one product for administration
  */
+
+
+
 export const GetAdminProductParams = zod.object({
-  "id": zod.coerce.number().int()
+  "id": zod.coerce.string().min(1)
 })
 
 export const getAdminProductResponseOneNameMax = 160;
@@ -231,6 +237,7 @@ export const getAdminProductResponseOneDisplayOrderMin = 0;
 
 
 
+
 export const GetAdminProductResponse = zod.object({
   "name": zod.string().min(1).max(getAdminProductResponseOneNameMax),
   "shortDescription": zod.string().min(1).max(getAdminProductResponseOneShortDescriptionMax),
@@ -239,11 +246,11 @@ export const GetAdminProductResponse = zod.object({
   "imageAlt": zod.string().max(getAdminProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getAdminProductResponseOneCategoryMax),
   "price": zod.number().min(getAdminProductResponseOnePriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getAdminProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "id": zod.number().int(),
+  "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
 }))
@@ -252,8 +259,11 @@ export const GetAdminProductResponse = zod.object({
 /**
  * @summary Update a product
  */
+
+
+
 export const UpdateProductParams = zod.object({
-  "id": zod.coerce.number().int()
+  "id": zod.coerce.string().min(1)
 })
 
 export const updateProductBodyNameMax = 160;
@@ -282,7 +292,7 @@ export const UpdateProductBody = zod.object({
   "imageAlt": zod.string().max(updateProductBodyImageAltMax).nullish(),
   "category": zod.string().min(1).max(updateProductBodyCategoryMax),
   "price": zod.number().min(updateProductBodyPriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(updateProductBodyDisplayOrderMin).optional()
 })
@@ -305,6 +315,7 @@ export const updateProductResponseOneDisplayOrderMin = 0;
 
 
 
+
 export const UpdateProductResponse = zod.object({
   "name": zod.string().min(1).max(updateProductResponseOneNameMax),
   "shortDescription": zod.string().min(1).max(updateProductResponseOneShortDescriptionMax),
@@ -313,11 +324,11 @@ export const UpdateProductResponse = zod.object({
   "imageAlt": zod.string().max(updateProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(updateProductResponseOneCategoryMax),
   "price": zod.number().min(updateProductResponseOnePriceMin).nullish(),
-  "status": zod.enum(['draft', 'published', 'inactive']),
+  "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(updateProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "id": zod.number().int(),
+  "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
 }))
@@ -326,8 +337,11 @@ export const UpdateProductResponse = zod.object({
 /**
  * @summary Delete a product
  */
+
+
+
 export const DeleteProductParams = zod.object({
-  "id": zod.coerce.number().int()
+  "id": zod.coerce.string().min(1)
 })
 
 export const DeleteProductResponse = zod.void()
@@ -340,7 +354,7 @@ export const GetAdminSummaryResponse = zod.object({
   "totalProducts": zod.number().int(),
   "publishedProducts": zod.number().int(),
   "draftProducts": zod.number().int(),
-  "inactiveProducts": zod.number().int(),
+  "archivedProducts": zod.number().int(),
   "categories": zod.number().int()
 })
 
@@ -357,7 +371,8 @@ export const requestProductImageUploadUrlBodySizeMax = 10485760;
 export const RequestProductImageUploadUrlBody = zod.object({
   "name": zod.string().min(1).max(requestProductImageUploadUrlBodyNameMax),
   "size": zod.number().int().min(1).max(requestProductImageUploadUrlBodySizeMax),
-  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp'])
+  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
+  "folder": zod.enum(['products', 'machines', 'services', 'requests']).optional()
 })
 
 export const RequestProductImageUploadUrlResponse = zod.object({

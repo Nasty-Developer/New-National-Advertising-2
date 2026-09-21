@@ -240,6 +240,58 @@ const machines = [
   },
 ];
 
+type MachineRecord = {
+  name: string;
+  category: string;
+  description: string;
+  imageUrl: string;
+  applications?: string[];
+  related?: Array<{ label: string; href: string }>;
+  imageAlt?: string;
+};
+
+const apiBaseUrl = import.meta.env.VITE_API_URL || '';
+
+function usePublicMachines() {
+  const [data, setData] = useState<MachineRecord[]>(machines.map((machine) => ({
+    name: machine.name,
+    category: machine.category,
+    description: machine.description,
+    imageUrl: machine.image,
+    imageAlt: machine.imageAlt,
+    applications: machine.applications,
+    related: machine.related,
+  })));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${apiBaseUrl}/api/machines`)
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Unable to load machines');
+        return response.json() as Promise<Array<MachineRecord & { imageUrl?: string; image?: string }>>;
+      })
+      .then((records) => {
+        if (!active || !records.length) return;
+        setData(records.map((machine) => ({
+          ...machine,
+          imageUrl: machine.imageUrl || machine.image || '',
+          imageAlt: machine.imageAlt || machine.name,
+        })));
+      })
+      .catch(() => {
+        // Keep the current public machine information visible while Firebase is empty
+        // or the API is temporarily unavailable.
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => { active = false; };
+  }, []);
+
+  return { data, loading };
+}
+
 function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -921,6 +973,7 @@ function PackageIllustration() {
 }
 
 function Machines() {
+  const publicMachines = usePublicMachines();
   useEffect(() => {
     const title = 'Machines | New National Advertising';
     const description = 'Explore the printing and finishing equipment used by New National Advertising for large-format printing, signage and advertising production.';
@@ -970,10 +1023,11 @@ function Machines() {
             </Reveal>
 
             <div className="mt-10 grid gap-5 lg:grid-cols-3">
-              {machines.map((machine, index) => (
+              {publicMachines.loading && <div className="rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] p-8 text-[12px] text-[#718394]">Loading equipment…</div>}
+              {!publicMachines.loading && publicMachines.data.map((machine, index) => (
                 <Reveal key={machine.name} delay={index * 90} className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
                   <div className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-[#e4ecef] bg-[#eef3f3] p-3 sm:p-4">
-                    <img src={machine.image} alt={machine.imageAlt} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
+                    <img src={machine.imageUrl} alt={machine.imageAlt || machine.name} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
                   </div>
                   <div className="flex flex-1 flex-col p-5 sm:p-6">
                     <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#1b78ad]">{machine.category}</p>
@@ -988,7 +1042,7 @@ function Machines() {
                                 {application}
                               </span>
                             ))
-                          : machine.related.map((service) => (
+                          : (machine.related ?? []).map((service) => (
                               <a key={service.href} href={service.href} className="inline-flex items-center gap-1 rounded-full border border-[#c9dce5] bg-white px-2.5 py-1.5 text-[10px] font-bold text-[#2b5873] transition hover:border-[#1669aa] hover:text-[#1669aa]" data-testid={`link-machine-${index + 1}-${service.label.toLowerCase().replaceAll(' ', '-')}`}>
                                 {service.label}<ArrowUpRight size={11} />
                               </a>

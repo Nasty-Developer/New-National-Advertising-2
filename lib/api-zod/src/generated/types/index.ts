@@ -18,4 +18,5 @@ export * from './productStatus';
 export * from './stockStatus';
 export * from './uploadRequest';
 export * from './uploadRequestContentType';
+export * from './uploadRequestFolder';
 export * from './uploadResponse';

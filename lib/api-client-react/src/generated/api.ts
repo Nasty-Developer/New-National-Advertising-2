@@ -625,7 +625,7 @@ export const useCreateProduct = <TError = ErrorType<void>,
       return useMutation(getCreateProductMutationOptions(options));
     }
 
-export const getGetAdminProductUrl = (id: number,) => {
+export const getGetAdminProductUrl = (id: string,) => {
 
 
 
@@ -636,7 +636,7 @@ export const getGetAdminProductUrl = (id: number,) => {
 /**
  * @summary Get one product for administration
  */
-export const getAdminProduct = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<Product> => {
+export const getAdminProduct = async (id: string, options?: Parameters<typeof customFetch>[1]): Promise<Product> => {
 
   return customFetch<Product>(getGetAdminProductUrl(id),
   {
@@ -651,14 +651,14 @@ export const getAdminProduct = async (id: number, options?: Parameters<typeof cu
 
 
 
-export const getGetAdminProductQueryKey = (id: number,) => {
+export const getGetAdminProductQueryKey = (id: string,) => {
     return [
     `/api/admin/products/${id}`
     ] as const;
     }
 
 
-export const getGetAdminProductQueryOptions = <TData = Awaited<ReturnType<typeof getAdminProduct>>, TError = ErrorType<void>>(id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAdminProduct>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+export const getGetAdminProductQueryOptions = <TData = Awaited<ReturnType<typeof getAdminProduct>>, TError = ErrorType<void>>(id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAdminProduct>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -685,7 +685,7 @@ export type GetAdminProductQueryError = ErrorType<void>
  */
 
 export function useGetAdminProduct<TData = Awaited<ReturnType<typeof getAdminProduct>>, TError = ErrorType<void>>(
- id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAdminProduct>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+ id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAdminProduct>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
@@ -702,7 +702,7 @@ export function useGetAdminProduct<TData = Awaited<ReturnType<typeof getAdminPro
 
 
 
-export const getUpdateProductUrl = (id: number,) => {
+export const getUpdateProductUrl = (id: string,) => {
 
 
 
@@ -713,7 +713,7 @@ export const getUpdateProductUrl = (id: number,) => {
 /**
  * @summary Update a product
  */
-export const updateProduct = async (id: number,
+export const updateProduct = async (id: string,
     productInput: ProductInput, options?: Parameters<typeof customFetch>[1]): Promise<Product> => {
 
     const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
@@ -775,7 +775,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type UpdateProductMutationResult = NonNullable<Awaited<ReturnType<typeof updateProduct>>>
     export type UpdateProductMutationBody = BodyType<ProductInput>
     export type UpdateProductMutationError = ErrorType<void>
-    export type UpdateProductMutationVariables = {id: number;data: BodyType<ProductInput>}
+    export type UpdateProductMutationVariables = {id: string;data: BodyType<ProductInput>}
 
     /**
  * @summary Update a product
@@ -791,7 +791,7 @@ export const useUpdateProduct = <TError = ErrorType<void>,
       return useMutation(getUpdateProductMutationOptions(options));
     }
 
-export const getDeleteProductUrl = (id: number,) => {
+export const getDeleteProductUrl = (id: string,) => {
 
 
 
@@ -802,7 +802,7 @@ export const getDeleteProductUrl = (id: number,) => {
 /**
  * @summary Delete a product
  */
-export const deleteProduct = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
+export const deleteProduct = async (id: string, options?: Parameters<typeof customFetch>[1]): Promise<void> => {
 
   return customFetch<void>(getDeleteProductUrl(id),
   {
@@ -849,7 +849,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type DeleteProductMutationResult = NonNullable<Awaited<ReturnType<typeof deleteProduct>>>
 
     export type DeleteProductMutationError = ErrorType<void>
-    export type DeleteProductMutationVariables = {id: number}
+    export type DeleteProductMutationVariables = {id: string}
 
     /**
  * @summary Delete a product

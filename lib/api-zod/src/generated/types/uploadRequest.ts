@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { UploadRequestContentType } from './uploadRequestContentType';
+import type { UploadRequestFolder } from './uploadRequestFolder';
 
 export interface UploadRequest {
   /**
@@ -19,4 +20,5 @@ export interface UploadRequest {
      */
   size: number;
   contentType: UploadRequestContentType;
+  folder?: UploadRequestFolder;
 }

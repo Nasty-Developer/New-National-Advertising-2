@@ -10,6 +10,6 @@ export interface AdminSummary {
   totalProducts: number;
   publishedProducts: number;
   draftProducts: number;
-  inactiveProducts: number;
+  archivedProducts: number;
   categories: number;
 }
