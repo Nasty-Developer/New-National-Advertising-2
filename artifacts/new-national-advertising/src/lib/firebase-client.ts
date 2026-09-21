@@ -100,7 +100,11 @@ export async function getFirebaseIdToken() {
 
 export async function waitForFirebaseUser(expectedUid?: string) {
   const currentUser = firebaseAuth?.currentUser ?? readyUser;
-  if (currentUser && (!expectedUid || currentUser.uid === expectedUid)) {
+  if (
+    authSnapshot.status === "authenticated" &&
+    currentUser &&
+    (!expectedUid || currentUser.uid === expectedUid)
+  ) {
     return currentUser;
   }
   if (!firebaseAuth) return null;
@@ -115,13 +119,25 @@ export async function waitForFirebaseUser(expectedUid?: string) {
     };
     const check = () => {
       const user = firebaseAuth.currentUser ?? readyUser;
-      if (user && (!expectedUid || user.uid === expectedUid)) finish(user);
+      if (
+        authSnapshot.status === "authenticated" &&
+        user &&
+        (!expectedUid || user.uid === expectedUid)
+      ) {
+        finish(user);
+      }
     };
 
     unsubscribe = subscribeToFirebaseAuth(check);
     timeoutId = window.setTimeout(() => {
       const user = firebaseAuth.currentUser ?? readyUser;
-      finish(user && (!expectedUid || user.uid === expectedUid) ? user : null);
+      finish(
+        authSnapshot.status === "authenticated" &&
+          user &&
+          (!expectedUid || user.uid === expectedUid)
+          ? user
+          : null,
+      );
     }, FIREBASE_AUTH_READY_TIMEOUT_MS);
     check();
   });
