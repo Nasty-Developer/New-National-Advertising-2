@@ -26,29 +26,48 @@ const businessAddressLines = [
 const services = [
   {
     slug: 'sign-boards',
-    title: 'Sign Boards',
+    title: 'Signage Board',
     category: 'Signage solutions',
     description: 'Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.',
-    whatIs: 'Sign boards give your storefront, office or event a clear visual identity. We help turn your brand into a physical display that is easy to notice in daylight and after dark.',
-    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Iron Standee', 'Roll-up Standee', 'Sunboard Cutouts'],
+    whatIs: 'A Signage Board gives your storefront, office or event a clear visual identity. We help turn your brand into a physical display that is easy to notice in daylight and after dark.',
+    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Signage', 'Kitchen', 'Badge', 'Paper Bed', 'Sandwich'],
     applications: ['Shop Signage', 'Office Signage', 'Brand Displays', 'Promotional Displays', 'Indoor Signage', 'Outdoor Signage', 'Event Displays'],
-    materials: ['Acrylic', 'Crystal letters', 'LED', 'Steel and brass', 'Sunboard'],
+    materials: ['Acrylic', 'Crystal letters', 'LED', 'Steel and brass'],
     whyChoose: ['Clearer brand visibility', 'Options for indoor and outdoor use', 'A choice of illuminated and non-illuminated finishes'],
     image: '/service-sign-boards.jpg',
-    imageAlt: 'Modern storefront with acrylic and illuminated sign boards',
+    imageAlt: 'Modern storefront with acrylic and illuminated signage',
     icon: Ruler,
     accent: '#D7A918',
     tint: '#FFFCF0',
-    seoTitle: 'Sign Board Services in Mumbai | New National Advertising',
-    seoDescription: 'Professional sign board, acrylic, LED, backlit and storefront signage solutions from New National Advertising in Mumbai.',
+    seoTitle: 'Signage Board Services in Mumbai | New National Advertising',
+    seoDescription: 'Professional signage board, acrylic, LED, backlit and storefront signage solutions from New National Advertising in Mumbai.',
     related: ['solvent-flex', 'banner-printing', 'graphics-design'],
   },
   {
+    slug: 'banner-printing',
+    title: 'Banner Printing',
+    category: 'Advertising materials',
+    description: 'Large-format advertising banners for businesses, promotions, events and outdoor visibility.',
+    whatIs: 'Banner printing helps a message stay visible across storefronts, events, promotions and outdoor advertising placements. We produce banner artwork and printed advertising materials around the use case.',
+    items: ['Banner Printing', 'Advertising Materials'],
+    applications: ['Store promotions', 'Event backdrops', 'Outdoor advertising', 'Launch announcements', 'Directional displays'],
+    materials: ['Printed banner material', 'Large-format graphics', 'Display-ready advertising artwork'],
+    whyChoose: ['Clear communication from a distance', 'Flexible for promotions and events', 'Designed around the placement and viewing context'],
+    image: '/service-banner-printing.jpg',
+    imageAlt: 'Large-format advertising banner being printed in a commercial studio',
+    icon: Printer,
+    accent: '#F26B5B',
+    tint: '#FFF5F2',
+    seoTitle: 'Banner Printing in Mumbai | New National Advertising',
+    seoDescription: 'Large-format advertising banner printing for businesses, promotions, events and outdoor visibility in Mumbai.',
+    related: ['solvent-flex', 'sign-boards', 'digital-printing'],
+  },
+  {
     slug: 'solvent-flex',
-    title: 'Solvent Flex',
+    title: 'Eco Solvent Flex',
     category: 'Large-format printing',
     description: 'Large-format printing solutions for banners, displays, branding and promotional applications.',
-    whatIs: 'Solvent flex printing is built for bold, visible graphics across banners, vinyl, window graphics and display materials. It is a practical way to carry a campaign from a storefront to a larger outdoor setting.',
+    whatIs: 'Eco solvent flex printing is built for bold, visible graphics across banners, vinyl, window graphics and display materials. It is a practical way to carry a campaign from a storefront to a larger outdoor setting.',
     items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'],
     applications: ['Advertising Banners', 'Shop Branding', 'Outdoor Advertising', 'Window Graphics', 'Promotional Displays', 'Backlit Displays'],
     materials: ['Star flex', 'Black back flex', 'One way vision', 'Canvas', 'Gloss vinyl', 'Matt vinyl', 'Sunboard and sunpack'],
@@ -58,8 +77,8 @@ const services = [
     icon: Printer,
     accent: '#00A8C6',
     tint: '#F1FBFC',
-    seoTitle: 'Flex & Large Format Printing in Mumbai | New National Advertising',
-    seoDescription: 'Large-format solvent flex, vinyl, canvas, sunboard and backlit printing solutions from New National Advertising in Mumbai.',
+    seoTitle: 'Eco Solvent Flex & Large Format Printing in Mumbai | New National Advertising',
+    seoDescription: 'Large-format eco solvent flex, vinyl, canvas, sunboard and backlit printing solutions from New National Advertising in Mumbai.',
     related: ['banner-printing', 'sign-boards', 'digital-printing'],
   },
   {
@@ -120,25 +139,6 @@ const services = [
     related: ['offset-printing', 'digital-printing', 'sign-boards'],
   },
   {
-    slug: 'banner-printing',
-    title: 'Banner Printing',
-    category: 'Advertising materials',
-    description: 'Large-format advertising banners for businesses, promotions, events and outdoor visibility.',
-    whatIs: 'Banner printing helps a message stay visible across storefronts, events, promotions and outdoor advertising placements. We produce banner artwork and printed advertising materials around the use case.',
-    items: ['Banner Printing', 'Advertising Materials'],
-    applications: ['Store promotions', 'Event backdrops', 'Outdoor advertising', 'Launch announcements', 'Directional displays'],
-    materials: ['Printed banner material', 'Large-format graphics', 'Display-ready advertising artwork'],
-    whyChoose: ['Clear communication from a distance', 'Flexible for promotions and events', 'Designed around the placement and viewing context'],
-    image: '/service-banner-printing.jpg',
-    imageAlt: 'Large-format advertising banner being printed in a commercial studio',
-    icon: Printer,
-    accent: '#F26B5B',
-    tint: '#FFF5F2',
-    seoTitle: 'Banner Printing in Mumbai | New National Advertising',
-    seoDescription: 'Large-format advertising banner printing for businesses, promotions, events and outdoor visibility in Mumbai.',
-    related: ['solvent-flex', 'sign-boards', 'digital-printing'],
-  },
-  {
     slug: 'digital-printing',
     title: 'Digital Printing',
     category: 'Fast, detailed printing',
@@ -193,7 +193,7 @@ const machines = [
     image: '/machine-epson-surecolor-s80670.png',
     imageAlt: 'Epson SureColor S80670 large-format printer',
     related: [
-      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Eco Solvent Flex', href: '/services/solvent-flex' },
       { label: 'Banner Printing', href: '/services/banner-printing' },
     ],
   },
@@ -204,9 +204,9 @@ const machines = [
     image: '/machine-wide-format-laminator.png',
     imageAlt: 'Wide-format roll laminator',
     related: [
-      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Eco Solvent Flex', href: '/services/solvent-flex' },
       { label: 'Banner Printing', href: '/services/banner-printing' },
-      { label: 'Sign Boards', href: '/services/sign-boards' },
+      { label: 'Signage Board', href: '/services/sign-boards' },
     ],
   },
   {
@@ -216,9 +216,9 @@ const machines = [
     image: '/machine-large-format-printer.png',
     imageAlt: 'Large-format roll-to-roll printing machine',
     related: [
-      { label: 'Solvent Flex', href: '/services/solvent-flex' },
+      { label: 'Eco Solvent Flex', href: '/services/solvent-flex' },
       { label: 'Banner Printing', href: '/services/banner-printing' },
-      { label: 'Sign Boards', href: '/services/sign-boards' },
+      { label: 'Signage Board', href: '/services/sign-boards' },
     ],
   },
 ];
@@ -368,7 +368,7 @@ function getAssistantReply(question: string, contextService?: ServiceRecord) {
     return `${matchedService.title}: ${matchedService.description} Offerings include ${matchedService.items.slice(0, 4).join(', ')} and more.`;
   }
   if (normalized.includes('service') || normalized.includes('printing') || normalized.includes('sign')) {
-    return 'We offer Sign Boards, Solvent Flex, Offset Printing, Screen Printing, Graphics Design, Banner Printing and Digital Printing. Choose Explore Services to see the details.';
+    return 'We offer Signage Board, Banner Printing, Eco Solvent Flex, Offset Printing, Screen Printing, Graphics Design and Digital Printing. Choose Explore Services to see the details.';
   }
   if (normalized.includes('quote') || normalized.includes('book') || normalized.includes('enquir')) {
     return 'Choose Get a Quote to share your service, requirement, quantity, name and phone number. You can then continue on WhatsApp.';
@@ -379,7 +379,7 @@ function getAssistantReply(question: string, contextService?: ServiceRecord) {
   if (normalized.includes('whatsapp')) {
     return 'You can continue a specific enquiry on WhatsApp using the green button below.';
   }
-  return 'I can help with services, printing options, sign boards, quotes and contact details. Try asking about a specific service or choose an action below.';
+  return 'I can help with services, printing options, signage, quotes and contact details. Try asking about a specific service or choose an action below.';
 }
 
 function createQuoteWhatsAppUrl(quote: QuoteDraft, contextService?: ServiceRecord) {
@@ -571,7 +571,7 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
               <div className="mb-3 grid grid-cols-2 gap-2">
                 <a href="/#services" onClick={() => setOpen(false)} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🖨️ Explore Services</a>
                 <button type="button" onClick={startQuoteFlow} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">📋 Get a Quote</button>
-                <button type="button" onClick={() => askPreset('Sign Boards', 'Tell me about Sign Boards')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🏪 Sign Boards</button>
+                <button type="button" onClick={() => askPreset('Signage Board', 'Tell me about Signage Board')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🏪 Signage Board</button>
                 <button type="button" onClick={() => askPreset('Digital Printing', 'Tell me about Digital Printing')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🖨️ Digital Printing</button>
                 <button type="button" onClick={() => askPreset('Graphics Design', 'Tell me about Graphics Design')} className="rounded-full border border-[#d8e4ea] px-2 py-2 text-center text-[10px] font-bold text-[#31516a] transition hover:border-[#1669aa] hover:bg-[#f3f8fb] hover:text-[#1669aa]">🎨 Graphics Design</button>
                 <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="rounded-full border border-[#b8d9ca] px-2 py-2 text-center text-[10px] font-bold text-[#24734d] transition hover:bg-[#f0faf4]">💬 Talk on WhatsApp</a>
@@ -693,7 +693,7 @@ function Home() {
             </Reveal>
             <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                 <img src="/hero-new-national-advertising.png" alt="New National Advertising storefront, printing services and sign board display" className="h-full w-full object-contain" />
+                 <img src="/hero-new-national-advertising.png" alt="New National Advertising storefront, printing services and signage display" className="h-full w-full object-contain" />
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
@@ -809,8 +809,8 @@ function Home() {
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
-             <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/signage-installation.jpg" alt="Acrylic and illuminated sign board installation" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
-             <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">Professional signage designed to be seen clearly, day and night — from first sketch to final installation.</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{['Acrylic', 'LED', 'Crystal Letters', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Standee', 'Sunboard Cutouts'].map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
+             <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/signage-installation.jpg" alt="Acrylic and illuminated signage installation" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
+             <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">Professional signage designed to be seen clearly, day and night — from first sketch to final installation.</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{['Acrylic', 'LED', 'Crystal Letters', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Standee', 'Sandwich'].map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
           </div>
         </section>
 
