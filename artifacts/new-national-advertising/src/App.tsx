@@ -412,8 +412,9 @@ const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', 
 function usePublicServices() {
   const query = useGetPublicServices();
   return useMemo<ServiceRecord[]>(() => {
-    if (!query.data?.length) return services;
-    return query.data.map((remote: ApiService) => {
+    const remoteServices = Array.isArray(query.data) ? query.data : [];
+    if (!remoteServices.length) return services;
+    return remoteServices.map((remote: ApiService) => {
       const fallback = services.find((item) => item.slug === remote.slug) ?? services[0];
       return {
         ...fallback,
@@ -439,7 +440,7 @@ function usePublicSettings() {
   const contacts = useGetPublicContactNumbers();
   return {
     settings: settings.data,
-    contacts: contacts.data ?? [],
+    contacts: Array.isArray(contacts.data) ? contacts.data : [],
   };
 }
 
