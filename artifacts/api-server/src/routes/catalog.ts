@@ -19,6 +19,14 @@ const approvedServiceSlugs = new Set([
   "graphics-design",
   "digital-printing",
 ]);
+const publicServiceSlugs = new Set([
+  "sign-boards",
+  "solvent-flex",
+  "offset-printing",
+  "screen-printing",
+  "graphics-design",
+  "digital-printing",
+]);
 const removedCatalogNames = new Set(["signage", "solvent flex"]);
 const approvedServiceTitles = new Map([
   ["sign-boards", "Sign Boards"],
@@ -175,18 +183,20 @@ const serviceSeed = [
 ] as const;
 
 const providedServiceImageSeeds = [
-  ["solvent-flex", "service-images/solvent-flex.png", "file_000000005d0c81f59b4affa369e5ab8a_1790080751299.png"],
-  ["digital-printing", "service-images/digital-printing.png", "file_000000001f4081f593ead5688281e49b_1790080763993.png"],
-  ["offset-printing", "service-images/offset-printing.png", "file_00000000bec481f5ad95083f9227f996_1790080774508.png"],
-  ["sign-boards", "service-images/sign-boards.png", "file_00000000e468820ba6a74d0c6e975121_1790080795485.png"],
-  ["screen-printing", "service-images/screen-printing.png", "file_000000001c0881f5b3a4184e23a7d362_1790080824527.png"],
-  ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790080786560.png"],
+  ["solvent-flex", "service-images/solvent-flex.png", "file_000000005d0c81f59b4affa369e5ab8a_1790081802481.png"],
+  ["digital-printing", "service-images/digital-printing.png", "file_000000001f4081f593ead5688281e49b_1790081813324.png"],
+  ["offset-printing", "service-images/offset-printing.png", "file_00000000bec481f5ad95083f9227f996_1790081830489.png"],
+  ["sign-boards", "service-images/sign-boards.png", "file_00000000e468820ba6a74d0c6e975121_1790081862129.png"],
+  ["screen-printing", "service-images/screen-printing.png", "file_000000001c0881f5b3a4184e23a7d362_1790081878225.png"],
+  ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790081846306.png"],
 ] as const;
 
 async function readProvidedServiceImage(filename: string) {
   const candidates = [
     resolve(process.cwd(), "assets/service-images", filename),
     resolve(process.cwd(), "artifacts/api-server/assets/service-images", filename),
+    resolve(process.cwd(), "attached_assets", filename),
+    resolve(process.cwd(), "../attached_assets", filename),
     resolve(process.cwd(), "../../attached_assets", filename),
   ];
   for (const candidate of candidates) {
@@ -212,16 +222,13 @@ async function syncProvidedServiceImages() {
       if (!bytes) throw new Error(`Provided service image is missing: ${sourceFilename}`);
       const storagePath = `services/${localPath}`;
       const file = firebaseBucket().file(storagePath);
-      const [exists] = await file.exists();
-      if (!exists) {
-        await file.save(bytes, {
-          resumable: false,
-          metadata: {
-            contentType: "image/png",
-            cacheControl: "public,max-age=31536000",
-          },
-        });
-      }
+      await file.save(bytes, {
+        resumable: false,
+        metadata: {
+          contentType: "image/png",
+          cacheControl: "public,max-age=31536000",
+        },
+      });
       imagePath = `/${storagePath}`;
     }
 
@@ -361,7 +368,9 @@ async function publicDocuments(kind: "machines" | "services") {
   await ensureSeeded();
   const snapshot = await collections()[kind].get();
   return Promise.all(snapshot.docs
-    .filter((doc) => kind === "machines" ? doc.data().published !== false : doc.data().status === "published")
+    .filter((doc) => kind === "machines"
+      ? doc.data().published !== false
+      : doc.data().status === "published" && publicServiceSlugs.has(String(doc.data().slug ?? doc.id)))
     .sort((a, b) => Number(a.data().displayOrder ?? 0) - Number(b.data().displayOrder ?? 0))
     .map(async (doc) => {
       const data = doc.data();
@@ -433,7 +442,9 @@ router.delete("/admin/machines/:id", requireAdmin, async (req, res): Promise<voi
 router.get("/admin/services", requireAdmin, async (_req, res): Promise<void> => {
   await ensureSeeded();
   const snapshot = await collections().services.get();
-  const rows = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Array<{ id: string; displayOrder?: number }>;
+  const rows = snapshot.docs
+    .filter((doc) => publicServiceSlugs.has(String(doc.data().slug ?? doc.id)))
+    .map((doc) => ({ id: doc.id, ...doc.data() })) as Array<{ id: string; displayOrder?: number }>;
   res.json(rows.sort((a, b) => Number(a.displayOrder ?? 0) - Number(b.displayOrder ?? 0)));
 });
 

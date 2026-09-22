@@ -29,7 +29,6 @@ const businessAddressLines = [
 
 const approvedServiceSlugs = new Set([
   'sign-boards',
-  'banner-printing',
   'solvent-flex',
   'offset-printing',
   'screen-printing',
@@ -259,7 +258,11 @@ const apiBaseUrl = import.meta.env.VITE_API_URL || '';
 
 function publicImageUrl(path?: string | null) {
   if (!path) return '';
-  if (path.startsWith('http') || path.startsWith('/new-') || path.startsWith('/machine') || path.startsWith('/service') || path.startsWith('/favicon')) return path;
+  if (path.startsWith('http')) return path;
+  if (path.startsWith('/service-images/') || path.startsWith('/services/')) {
+    return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
+  }
+  if (path.startsWith('/new-') || path.startsWith('/machine') || path.startsWith('/service-') || path.startsWith('/favicon')) return path;
   return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
 }
 
