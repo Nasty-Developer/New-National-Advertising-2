@@ -63,6 +63,8 @@ export const getPublicProductsResponseOneImageAltMax = 180;
 
 export const getPublicProductsResponseOneCategoryMax = 100;
 
+export const getPublicProductsResponseOneServiceSlugMax = 180;
+
 export const getPublicProductsResponseOnePriceMin = 0;
 
 export const getPublicProductsResponseOneDisplayOrderMin = 0;
@@ -77,6 +79,7 @@ export const GetPublicProductsResponseItem = zod.object({
   "imagePath": zod.string().max(getPublicProductsResponseOneImagePathMax).nullish(),
   "imageAlt": zod.string().max(getPublicProductsResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getPublicProductsResponseOneCategoryMax),
+  "serviceSlug": zod.string().max(getPublicProductsResponseOneServiceSlugMax).nullish(),
   "price": zod.number().min(getPublicProductsResponseOnePriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -112,6 +115,8 @@ export const getAdminProductsResponseOneImageAltMax = 180;
 
 export const getAdminProductsResponseOneCategoryMax = 100;
 
+export const getAdminProductsResponseOneServiceSlugMax = 180;
+
 export const getAdminProductsResponseOnePriceMin = 0;
 
 export const getAdminProductsResponseOneDisplayOrderMin = 0;
@@ -126,6 +131,7 @@ export const GetAdminProductsResponseItem = zod.object({
   "imagePath": zod.string().max(getAdminProductsResponseOneImagePathMax).nullish(),
   "imageAlt": zod.string().max(getAdminProductsResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getAdminProductsResponseOneCategoryMax),
+  "serviceSlug": zod.string().max(getAdminProductsResponseOneServiceSlugMax).nullish(),
   "price": zod.number().min(getAdminProductsResponseOnePriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -153,6 +159,8 @@ export const createProductBodyImageAltMax = 180;
 
 export const createProductBodyCategoryMax = 100;
 
+export const createProductBodyServiceSlugMax = 180;
+
 export const createProductBodyPriceMin = 0;
 
 export const createProductBodyDisplayOrderMin = 0;
@@ -166,6 +174,7 @@ export const CreateProductBody = zod.object({
   "imagePath": zod.string().max(createProductBodyImagePathMax).nullish(),
   "imageAlt": zod.string().max(createProductBodyImageAltMax).nullish(),
   "category": zod.string().min(1).max(createProductBodyCategoryMax),
+  "serviceSlug": zod.string().max(createProductBodyServiceSlugMax).nullish(),
   "price": zod.number().min(createProductBodyPriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -184,6 +193,8 @@ export const createProductResponseOneImageAltMax = 180;
 
 export const createProductResponseOneCategoryMax = 100;
 
+export const createProductResponseOneServiceSlugMax = 180;
+
 export const createProductResponseOnePriceMin = 0;
 
 export const createProductResponseOneDisplayOrderMin = 0;
@@ -198,6 +209,7 @@ export const CreateProductResponse = zod.object({
   "imagePath": zod.string().max(createProductResponseOneImagePathMax).nullish(),
   "imageAlt": zod.string().max(createProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(createProductResponseOneCategoryMax),
+  "serviceSlug": zod.string().max(createProductResponseOneServiceSlugMax).nullish(),
   "price": zod.number().min(createProductResponseOnePriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -231,6 +243,8 @@ export const getAdminProductResponseOneImageAltMax = 180;
 
 export const getAdminProductResponseOneCategoryMax = 100;
 
+export const getAdminProductResponseOneServiceSlugMax = 180;
+
 export const getAdminProductResponseOnePriceMin = 0;
 
 export const getAdminProductResponseOneDisplayOrderMin = 0;
@@ -245,6 +259,7 @@ export const GetAdminProductResponse = zod.object({
   "imagePath": zod.string().max(getAdminProductResponseOneImagePathMax).nullish(),
   "imageAlt": zod.string().max(getAdminProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(getAdminProductResponseOneCategoryMax),
+  "serviceSlug": zod.string().max(getAdminProductResponseOneServiceSlugMax).nullish(),
   "price": zod.number().min(getAdminProductResponseOnePriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -278,6 +293,8 @@ export const updateProductBodyImageAltMax = 180;
 
 export const updateProductBodyCategoryMax = 100;
 
+export const updateProductBodyServiceSlugMax = 180;
+
 export const updateProductBodyPriceMin = 0;
 
 export const updateProductBodyDisplayOrderMin = 0;
@@ -291,6 +308,7 @@ export const UpdateProductBody = zod.object({
   "imagePath": zod.string().max(updateProductBodyImagePathMax).nullish(),
   "imageAlt": zod.string().max(updateProductBodyImageAltMax).nullish(),
   "category": zod.string().min(1).max(updateProductBodyCategoryMax),
+  "serviceSlug": zod.string().max(updateProductBodyServiceSlugMax).nullish(),
   "price": zod.number().min(updateProductBodyPriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
@@ -309,6 +327,8 @@ export const updateProductResponseOneImageAltMax = 180;
 
 export const updateProductResponseOneCategoryMax = 100;
 
+export const updateProductResponseOneServiceSlugMax = 180;
+
 export const updateProductResponseOnePriceMin = 0;
 
 export const updateProductResponseOneDisplayOrderMin = 0;
@@ -323,6 +343,7 @@ export const UpdateProductResponse = zod.object({
   "imagePath": zod.string().max(updateProductResponseOneImagePathMax).nullish(),
   "imageAlt": zod.string().max(updateProductResponseOneImageAltMax).nullish(),
   "category": zod.string().min(1).max(updateProductResponseOneCategoryMax),
+  "serviceSlug": zod.string().max(updateProductResponseOneServiceSlugMax).nullish(),
   "price": zod.number().min(updateProductResponseOnePriceMin).nullish(),
   "status": zod.enum(['draft', 'published', 'archived']),
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),

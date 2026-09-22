@@ -246,16 +246,14 @@ type MachineRecord = {
 
 const apiBaseUrl = import.meta.env.VITE_API_URL || '';
 
+function publicImageUrl(path?: string | null) {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('/new-') || path.startsWith('/machine') || path.startsWith('/service') || path.startsWith('/favicon')) return path;
+  return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
+}
+
 function usePublicMachines() {
-  const [data, setData] = useState<MachineRecord[]>(machines.map((machine) => ({
-    name: machine.name,
-    category: machine.category,
-    description: machine.description,
-    imageUrl: machine.image,
-    imageAlt: machine.imageAlt,
-    applications: machine.applications,
-    related: machine.related,
-  })));
+  const [data, setData] = useState<MachineRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -266,7 +264,7 @@ function usePublicMachines() {
         return response.json() as Promise<Array<MachineRecord & { imageUrl?: string; image?: string }>>;
       })
       .then((records) => {
-        if (!active || !records.length) return;
+        if (!active) return;
         setData(records.map((machine) => ({
           ...machine,
           imageUrl: machine.imageUrl || machine.image || '',
@@ -274,8 +272,7 @@ function usePublicMachines() {
         })));
       })
       .catch(() => {
-        // Keep the current public machine information visible while Firebase is empty
-        // or the API is temporarily unavailable.
+        if (active) setData([]);
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -311,10 +308,10 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
   );
 }
 
-function Logo() {
+function Logo({ src }: { src?: string | null } = {}) {
   return (
     <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className="inline-flex items-center">
-      <img src="/new-national-advertising-logo.png" alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
+      <img src={publicImageUrl(src) || '/new-national-advertising-logo.png'} alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
     </a>
   );
 }
@@ -336,6 +333,7 @@ function SecondaryButton({ href = '#services', children = 'View Services' }: { h
 }
 
 function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
+  const { settings, contacts } = usePublicSettings();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [location] = useLocation();
@@ -351,7 +349,7 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   return (
     <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
       <div className="container-nna flex h-[70px] items-center justify-between">
-        <Logo />
+           <Logo src={settings?.logoPath} />
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
           {navigationItems.map((item) => (
             <a
@@ -366,7 +364,7 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
           ))}
         </nav>
         <div className="hidden items-center gap-5 md:flex">
-          <a href="tel:+919555759677" data-testid="link-header-phone" className="flex items-center gap-2 text-[11px] font-semibold text-[#233952]"><Phone size={13} className="text-[#1669aa]" />9555759677</a>
+           <a href={`tel:+${(contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677').replace(/\D/g, '')}`} data-testid="link-header-phone" className="flex items-center gap-2 text-[11px] font-semibold text-[#233952]"><Phone size={13} className="text-[#1669aa]" />{contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677'}</a>
           <PrimaryButton href={quoteHref} />
         </div>
         <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] md:hidden">
@@ -396,7 +394,26 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   );
 }
 
-type ServiceRecord = typeof services[number];
+type ServiceRecord = {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  whatIs: string;
+  items: string[];
+  applications: string[];
+  materials: string[];
+  whyChoose: string[];
+  image: string;
+  imageAlt: string;
+  icon: typeof Ruler;
+  accent: string;
+  tint: string;
+  seoTitle: string;
+  seoDescription: string;
+  related: string[];
+};
 type AssistantMessage = { role: 'assistant' | 'user'; text: string };
 type QuoteStep = 'idle' | 'service' | 'need' | 'quantity' | 'name' | 'phone' | 'ready';
 type QuoteDraft = { service: string; need: string; quantity: string; name: string; phone: string };
@@ -407,23 +424,40 @@ function usePublicServices() {
   const query = useGetPublicServices();
   return useMemo<ServiceRecord[]>(() => {
     const remoteServices = Array.isArray(query.data) ? query.data : [];
-    if (!remoteServices.length) return services;
     return remoteServices.map((remote: ApiService) => {
-      const fallback = services.find((item) => item.slug === remote.slug) ?? services[0];
+      const visual = {
+        icon: Grid2X2,
+        accent: '#1769AA',
+        tint: '#F3F8FC',
+        ...({
+          'sign-boards': { icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
+          'banner-printing': { icon: Printer, accent: '#F26B5B', tint: '#FFF5F2' },
+          'solvent-flex': { icon: Printer, accent: '#00A8C6', tint: '#F1FBFC' },
+          'offset-printing': { icon: FileText, accent: '#1769AA', tint: '#F3F8FC' },
+          'screen-printing': { icon: PenLine, accent: '#D9468C', tint: '#FFF5F9' },
+          'graphics-design': { icon: Grid2X2, accent: '#3BA776', tint: '#F3FBF7' },
+          'digital-printing': { icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
+        } as Record<string, { icon: typeof Ruler; accent: string; tint: string }>)[remote.slug],
+      };
       return {
-        ...fallback,
+        id: remote.id,
         slug: remote.slug,
-        title: remote.title || fallback.title,
-        category: remote.category || fallback.category,
-        description: remote.shortDescription || remote.description || fallback.description,
-        whatIs: remote.fullDescription || remote.description || fallback.whatIs,
-        items: remote.offerings?.length ? remote.offerings : fallback.items,
-        applications: remote.applications?.length ? remote.applications : fallback.applications,
-        materials: remote.materials?.length ? remote.materials : fallback.materials,
-        whyChoose: remote.whyChoose?.length ? remote.whyChoose : fallback.whyChoose,
-        image: remote.images?.[0] || fallback.image,
-        imageAlt: remote.imageAlt || fallback.imageAlt,
-        related: remote.relatedSlugs?.length ? remote.relatedSlugs : fallback.related,
+        title: remote.title,
+        category: remote.category || '',
+        description: remote.shortDescription || remote.description,
+        whatIs: remote.fullDescription || remote.description,
+        items: remote.offerings ?? [],
+        applications: remote.applications ?? [],
+        materials: remote.materials ?? [],
+        whyChoose: remote.whyChoose ?? [],
+        image: remote.images?.[0] || '',
+        imageAlt: remote.imageAlt || remote.title,
+        icon: visual.icon,
+        accent: visual.accent,
+        tint: visual.tint,
+        seoTitle: `${remote.title} | New National Advertising`,
+        seoDescription: remote.shortDescription || remote.description,
+        related: remote.relatedSlugs ?? [],
       };
     });
   }, [query.data]);
@@ -438,18 +472,37 @@ function usePublicSettings() {
   };
 }
 
-function getAssistantReply(question: string, contextService?: ServiceRecord) {
+function SiteFooter({ compact = false }: { compact?: boolean } = {}) {
+  const { settings, contacts } = usePublicSettings();
+  const primaryPhone = contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677';
+  const phoneNumbers = contacts.filter((item) => item.useForCalls).map((item) => item.phone);
+  const email = settings?.email || 'newnationaladv2022@gmail.com';
+  const address = settings?.address || businessAddressLines.join(', ');
+  const mapsUrl = settings?.googleMapsUrl || googleMapsUrl;
+  return (
+    <footer className={`bg-[#102941] text-white ${compact ? '' : 'pb-24 md:pb-0'}`}>
+      <div className={`container-nna grid gap-8 py-10 sm:items-start sm:py-12 ${compact ? 'sm:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1fr_1fr]' : 'md:grid-cols-[1.35fr_1fr_1fr]'}`}>
+        <div><Logo src={settings?.logoPath} /><p className="mt-3 max-w-[280px] text-[10px] leading-5 tracking-[.16em] text-[#a8bbca]">{settings?.footerInformation || settings?.businessName || 'PRINT · DESIGN · SIGNAGE · ADVERTISING'}</p></div>
+        <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} className="hover:text-white">{item.label}</a>)}</nav></div>
+        <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]">{phoneNumbers.length ? phoneNumbers.map((phone) => <a key={phone} href={`tel:+${phone.replace(/\D/g, '')}`} className="block hover:text-white">{phone}{phone === primaryPhone ? ' · Primary' : ''}</a>) : <a href={`tel:+${primaryPhone.replace(/\D/g, '')}`} className="block hover:text-white">{primaryPhone}</a>}<a href={`mailto:${email}`} className="block break-all hover:text-white">{email}</a><address className="not-italic">{address.split(', ').map((line) => <span key={line} className="block">{line}</span>)}<a href={mapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div></div>
+      </div>
+      <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© {settings?.businessName || 'New National Advertising'}. All rights reserved.</span><span>{settings?.footerInformation || 'Printing, signage & design solutions in Mumbai.'}</span></div></div>
+    </footer>
+  );
+}
+
+function getAssistantReply(question: string, contextService?: ServiceRecord, availableServices: ServiceRecord[] = []) {
   const normalized = question.toLowerCase();
   const pricingQuestion = /\b(price|pricing|cost|rate|rates|budget|how much|quotation)\b/.test(normalized);
   if (pricingQuestion) {
     return 'Please contact New National Advertising for a current quote based on your requirements.';
   }
 
-  const matchedService = services.find((service) =>
+  const matchedService = availableServices.find((service) =>
     normalized.includes(service.title.toLowerCase()) ||
     normalized.includes(service.slug.replaceAll('-', ' ')),
   );
-  const offeringMatch = services
+  const offeringMatch = availableServices
     .flatMap((service) => service.items.map((item) => ({ service, item })))
     .find(({ item }) => normalized.includes(item.toLowerCase()));
 
@@ -496,7 +549,7 @@ function createQuoteWhatsAppUrl(quote: QuoteDraft, contextService?: ServiceRecor
   return `${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(message)}`;
 }
 
-function FloatingContactActions({ quoteHref = '/#contact', contextService }: { quoteHref?: string; contextService?: ServiceRecord }) {
+function FloatingContactActions({ quoteHref = '#contact', contextService, services: availableServices = [] }: { quoteHref?: string; contextService?: ServiceRecord; services?: ServiceRecord[] }) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [messages, setMessages] = useState<AssistantMessage[]>([
@@ -552,7 +605,7 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
   };
 
   const askPreset = (label: string, question: string) => {
-    setMessages((current) => [...current, { role: 'user', text: label }, { role: 'assistant', text: getAssistantReply(question, contextService) }]);
+    setMessages((current) => [...current, { role: 'user', text: label }, { role: 'assistant', text: getAssistantReply(question, contextService, availableServices) }]);
   };
 
   const askAssistant = (event: FormEvent<HTMLFormElement>) => {
@@ -563,7 +616,7 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
     setDraft('');
     setTyping(true);
     typingTimer.current = window.setTimeout(() => {
-      addAssistantReply(getAssistantReply(question, contextService));
+      addAssistantReply(getAssistantReply(question, contextService, availableServices));
       setTyping(false);
     }, 420);
   };
@@ -611,8 +664,8 @@ function FloatingContactActions({ quoteHref = '/#contact', contextService }: { q
   };
 
   const serviceOptions = contextService
-    ? [contextService.title, ...services.filter((service) => service.slug !== contextService.slug).map((service) => service.title), 'Other']
-    : [...services.map((service) => service.title), 'Other'];
+    ? [contextService.title, ...availableServices.filter((service) => service.slug !== contextService.slug).map((service) => service.title), 'Other']
+    : [...availableServices.map((service) => service.title), 'Other'];
 
   return (
     <div className="fixed bottom-[76px] right-4 z-[60] flex flex-col items-end gap-3 md:bottom-6 md:right-6">
@@ -733,6 +786,7 @@ function Home() {
   const { settings, contacts } = usePublicSettings();
   const contentQuery = useGetWebsiteContent();
   const content = contentQuery.data;
+  const signageService = publicServices.find((service) => service.slug === 'sign-boards');
   const primaryPhone = contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677';
   const whatsappPhone = contacts.find((item) => item.useForWhatsApp)?.phone || primaryPhone;
   const publicWhatsappUrl = `https://wa.me/${whatsappPhone.replace(/\D/g, '').replace(/^0/, '91')}?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire.`;
@@ -799,7 +853,7 @@ function Home() {
             </Reveal>
             <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                 <img src="/hero-new-national-advertising.png" alt="New National Advertising storefront, printing services and signage display" className="h-full w-full object-contain" />
+                  <img src={publicImageUrl(content?.heroImage) || '/hero-new-national-advertising.png'} alt="New National Advertising storefront, printing services and signage display" className="h-full w-full object-contain" />
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
@@ -834,7 +888,7 @@ function Home() {
           <div className="container-nna">
             <Reveal><p className="eyebrow">Why choose us</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Quality in Every Print</h2></Reveal>
             <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-               {[['Quality Printing', 'Clear & vibrant results', CircleCheck, '#1769AA', '#F1F7FC'], ['Wide Range of Services', 'All your printing needs', Grid2X2, '#00A8C6', '#F0FBFC'], ['Custom Solutions', 'Tailored for your requirements', PenLine, '#3BA776', '#F1FAF5'], ['Reliable Service', 'Professional service', Clock3, '#F2994A', '#FFF7EF']].map(([title, copy, Icon, accent, tint], index) => (
+               {[['Quality Printing', content?.qualityBody || 'Clear & vibrant results', CircleCheck, '#1769AA', '#F1F7FC'], ['Wide Range of Services', content?.trustBody || 'All your printing needs', Grid2X2, '#00A8C6', '#F0FBFC'], ['Custom Solutions', content?.graphicsDesignBody || 'Tailored for your requirements', PenLine, '#3BA776', '#F1FAF5'], ['Reliable Service', content?.processBody || 'Professional service', Clock3, '#F2994A', '#FFF7EF']].map(([title, copy, Icon, accent, tint], index) => (
                  <Reveal key={title as string} delay={index * 60} className="flex items-start gap-3 rounded-[8px] border border-[#e0e8ed] bg-white px-4 py-4 shadow-[0_5px_16px_rgba(31,61,87,.035)]"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md" style={{ backgroundColor: tint as string, color: accent as string }}><Icon size={16} /></div><div><h3 className="text-[11px] font-bold text-[#243b54]">{title as string}</h3><p className="mt-1 text-[10px] text-[#84919e]">{copy as string}</p></div></Reveal>
               ))}
             </div>
@@ -892,7 +946,7 @@ function Home() {
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna">
-            <Reveal className="text-center"><p className="eyebrow">Our process</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">From Idea to Impact</h2></Reveal>
+            <Reveal className="text-center"><p className="eyebrow">Our process</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">From Idea to Impact</h2><p className="mx-auto mt-4 max-w-[620px] text-[13px] leading-6 text-[#68798a]">{content?.processBody || 'Share your requirement, review the direction, approve production and receive the finished work.'}</p></Reveal>
             <div className="relative mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
               <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-[#dce7ed] lg:block" />
                {process.map((step, index) => { const Icon = step.icon; return <Reveal key={step.number} delay={index * 70} className="relative flex gap-4 lg:block lg:text-center"><div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border bg-white lg:mx-auto" style={{ borderColor: `${step.accent}55`, color: step.accent }}><Icon size={18} /></div><div className="lg:mt-4"><p className="text-[10px] font-bold tracking-[.15em]" style={{ color: step.accent }}>{step.number}</p><h3 className="mt-1 text-[13px] font-bold uppercase text-[#223b55]">{step.title}</h3><p className="mt-1 text-[11px] text-[#8a98a4]">{step.copy}</p></div></Reveal>; })}
@@ -910,7 +964,7 @@ function Home() {
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
              <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/signage-installation.jpg" alt="Acrylic and illuminated signage installation" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
-             <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">Professional signage designed to be seen clearly, day and night — from first sketch to final installation.</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{['Acrylic', 'LED', 'Crystal Letters', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Standee', 'Sandwich'].map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
+             <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">{content?.signageBody || signageService?.description || 'Professional signage designed to be seen clearly, day and night.'}</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{(signageService?.items ?? []).slice(0, 8).map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
           </div>
         </section>
 
@@ -922,21 +976,14 @@ function Home() {
         </section>
       </main>
 
-      <footer className="bg-[#102941] pb-24 text-white md:pb-0">
-        <div className="container-nna grid gap-10 py-12 md:grid-cols-[1.35fr_1fr_1fr] md:py-14">
-           <div><Logo /><p className="mt-5 max-w-[250px] text-[10px] leading-5 text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
-          <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} data-testid={`link-footer-${item.label.toLowerCase().replace(' ', '-')}`} className="hover:text-white">{item.label}</a>)}</nav></div>
-           <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-3 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" data-testid="link-footer-phone" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-footer-email" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><address className="not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white" data-testid="link-footer-map">View on Google Maps</a></address></div></div>
-        </div>
-        <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© New National Advertising. All rights reserved.</span><span>Printing, signage &amp; design solutions in Mumbai.</span></div></div>
-      </footer>
+       <SiteFooter />
 
       <div className="fixed inset-x-0 bottom-0 z-30 grid h-[58px] grid-cols-3 border-t border-[#dbe5ea] bg-white/96 shadow-[0_-4px_20px_rgba(22,47,70,.1)] backdrop-blur md:hidden">
         <a href="tel:+919555759677" data-testid="mobile-bar-call" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><Phone size={16} className="text-[#1669aa]" />CALL</a>
         <a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="mobile-bar-whatsapp" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
         <a href="#contact" data-testid="mobile-bar-quote" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />QUOTE</a>
       </div>
-      <FloatingContactActions quoteHref="#contact" />
+       <FloatingContactActions quoteHref="#contact" services={publicServices} />
     </div>
   );
 }
@@ -1266,6 +1313,7 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
 function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const [submitted, setSubmitted] = useState(false);
   const publicServices = usePublicServices();
+  const publicProducts = useGetPublicProducts();
   const service = publicServices.find((item) => item.slug === params.slug);
 
   useEffect(() => {
@@ -1290,6 +1338,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const relatedServices = service.related
     .map((slug) => publicServices.find((item) => item.slug === slug))
     .filter((item): item is ServiceRecord => Boolean(item));
+  const serviceProducts = publicProducts.data?.filter((product) => product.serviceSlug === service.slug) ?? [];
   const whatsappBookingUrl = `${whatsappUrl.split('?')[0]}?text=${encodeURIComponent(`Hello New National Advertising, I would like to book/enquire about ${service.title}.`)}`;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -1367,6 +1416,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
               <div className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                 {service.items.map((item, index) => <div key={item} className="flex items-start gap-2 text-[12px] font-semibold text-[#354b61]"><Check size={14} className="mt-0.5 shrink-0" style={{ color: [service.accent, '#00A8C6', '#D9468C', '#3BA776'][index % 4] }} />{item}</div>)}
               </div>
+               {serviceProducts.length > 0 && <div className="mt-8 border-t border-[#edf1f3] pt-6"><p className="eyebrow">Published service products</p><div className="mt-4 grid gap-3 sm:grid-cols-2">{serviceProducts.map((product) => <article key={product.id} className="overflow-hidden rounded-[10px] border border-[#e1e8ed] bg-[#fbfcfd]">{product.imagePath && <img src={publicImageUrl(product.imagePath)} alt={product.imageAlt || product.name} className="h-28 w-full object-cover" />}<div className="p-3"><h3 className="text-[12px] font-bold text-[#304a60]">{product.name}</h3>{product.shortDescription && <p className="mt-1 text-[10px] leading-4 text-[#718394]">{product.shortDescription}</p>}</div></article>)}</div></div>}
             </div>
             <div className="rounded-[12px] border border-[#dfe8ed] bg-white p-6 sm:p-8">
               <p className="eyebrow">Materials and formats</p>
@@ -1452,7 +1502,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
         <a href={whatsappBookingUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1 border-r border-[#e2e9ed] text-[9px] font-bold tracking-[.08em] text-[#26425c]"><MessageCircle size={16} className="text-[#2c9b70]" />WHATSAPP</a>
         <a href="#service-enquiry" className="flex flex-col items-center justify-center gap-1 text-[9px] font-bold tracking-[.08em] text-[#26425c]"><FileText size={16} className="text-[#1669aa]" />BOOK</a>
       </div>
-      <FloatingContactActions quoteHref="#service-enquiry" contextService={service} />
+       <FloatingContactActions quoteHref="#service-enquiry" contextService={service} services={publicServices} />
     </div>
   );
 }
@@ -1470,8 +1520,24 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 
+function AppShell() {
+  const { settings } = usePublicSettings();
+  const content = useGetWebsiteContent();
+  useEffect(() => {
+    const favicon = publicImageUrl(settings?.faviconPath) || '/favicon.svg';
+    document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]').forEach((node) => {
+      (node as HTMLLinkElement).href = favicon;
+    });
+    const title = content.data?.metadataTitle || settings?.metadataTitle;
+    const description = content.data?.metadataDescription || settings?.metadataDescription;
+    if (title) document.title = title;
+    if (description) upsertMeta('name', 'description', description);
+  }, [content.data?.metadataDescription, content.data?.metadataTitle, settings?.faviconPath, settings?.metadataDescription, settings?.metadataTitle]);
+  return <TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider>;
+}
+
 function App() {
-  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}><AppShell /></QueryClientProvider>;
 }
 
 export default App;

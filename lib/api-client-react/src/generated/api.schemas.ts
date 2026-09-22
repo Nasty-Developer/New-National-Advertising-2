@@ -66,6 +66,11 @@ export interface ProductInput {
      */
   category: string;
   /**
+     * @maxLength 180
+     * @nullable
+     */
+  serviceSlug?: string | null;
+  /**
      * @minimum 0
      * @nullable
      */

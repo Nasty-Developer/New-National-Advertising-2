@@ -39,6 +39,7 @@ async function productResponse(id: string, data: DocumentData) {
     imagePath: await createFirebaseReadUrl(data.imagePath ?? data.imageUrl),
     imageAlt: data.imageAlt ?? null,
     category: String(data.category ?? ""),
+    serviceSlug: data.serviceSlug ?? null,
     price: data.price === undefined || data.price === null ? null : Number(data.price),
     status: data.status ?? "draft",
     stockStatus: data.stockStatus ?? "in_stock",
@@ -67,6 +68,7 @@ function productValues(data: {
   imagePath?: string | null;
   imageAlt?: string | null;
   category: string;
+  serviceSlug?: string | null;
   price?: number | null;
   status: "draft" | "published" | "archived";
   stockStatus: "in_stock" | "low_stock" | "out_of_stock";
@@ -82,6 +84,7 @@ function productValues(data: {
     imagePath: data.imagePath ?? null,
     imageAlt: data.imageAlt?.trim() || null,
     category: data.category.trim(),
+    serviceSlug: data.serviceSlug?.trim() || null,
     price: data.price ?? null,
     status: data.status,
     stockStatus: data.stockStatus,

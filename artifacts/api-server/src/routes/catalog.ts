@@ -137,6 +137,35 @@ async function ensureSeeded() {
       await reference.set({ title, slug, category, shortDescription: description, description, fullDescription: description, content: description, features: [], images: [`/${image}`], imageAlt: title, offerings, applications, materials: [], whyChoose: [], relatedSlugs: [], displayOrder: serviceSeed.findIndex((item) => item[0] === slug), status: "published", featured: false, createdAt: now, updatedAt: now });
     }
   }));
+  const products = firestore().collection("products");
+  await Promise.all(serviceSeed.map(async ([slug, title, , description, offerings]) => {
+    const existing = await products.where("serviceSlug", "==", slug).get();
+    if (!existing.empty) return;
+    const serviceSnapshot = await services.doc(slug).get();
+    const currentOfferings = Array.isArray(serviceSnapshot.data()?.offerings)
+      ? serviceSnapshot.data()?.offerings as string[]
+      : offerings;
+    const now = new Date();
+    await Promise.all(currentOfferings.map((name, displayOrder) => products.add({
+      name,
+      serviceSlug: slug,
+      shortDescription: `${name} from ${title}.`,
+      description,
+      fullDescription: description,
+      imagePath: null,
+      imageAlt: name,
+      category: title,
+      price: null,
+      status: "published",
+      stockStatus: "in_stock",
+      displayOrder,
+      featured: false,
+      createdAt: now,
+      updatedAt: now,
+      createdBy: "catalog-seed",
+      updatedBy: "catalog-seed",
+    })));
+  }));
 }
 
 async function publicDocuments(kind: "machines" | "services") {
@@ -158,10 +187,12 @@ async function publicDocuments(kind: "machines" | "services") {
 }
 
 router.get("/machines", async (_req, res): Promise<void> => {
+  res.setHeader("Cache-Control", "no-store");
   res.json(await publicDocuments("machines"));
 });
 
 router.get("/services", async (_req, res): Promise<void> => {
+  res.setHeader("Cache-Control", "no-store");
   res.json(await publicDocuments("services"));
 });
 
