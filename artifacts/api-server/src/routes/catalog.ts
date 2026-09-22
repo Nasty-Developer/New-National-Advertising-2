@@ -1,4 +1,6 @@
 import { Router, type IRouter } from "express";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { z } from "zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
@@ -18,6 +20,14 @@ const approvedServiceSlugs = new Set([
   "digital-printing",
 ]);
 const removedCatalogNames = new Set(["signage", "solvent flex"]);
+const approvedServiceTitles = new Map([
+  ["sign-boards", "Sign Boards"],
+  ["solvent-flex", "Solvent Flex"],
+  ["offset-printing", "Offset Printing"],
+  ["screen-printing", "Screen Printing"],
+  ["graphics-design", "Graphics Design"],
+  ["digital-printing", "Digital Printing"],
+]);
 
 function isRemovedCatalogName(value: unknown) {
   return typeof value === "string" && removedCatalogNames.has(value.trim().toLowerCase());
@@ -155,14 +165,77 @@ const machineSeed = [
 ] as const;
 
 const serviceSeed = [
-  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
+  ["sign-boards", "Sign Boards", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
   ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
-  ["solvent-flex", "Eco Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
+  ["solvent-flex", "Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
   ["offset-printing", "Offset Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
   ["screen-printing", "Screen Printing", "Custom print finishes", "Custom screen printing for apparel, promotional products and printed materials.", ["Wedding Cards", "Visiting Cards", "Letterheads", "T-Shirts", "Cup Print", "Envelopes", "Caps", "Umbrellas", "Carry Bags", "ID Ribbons", "School Bags"], ["Apparel printing", "Promotional products", "School and event materials", "Carry bags", "Stationery"], "service-screen-printing.jpg"],
   ["graphics-design", "Graphics Design", "Brand and creative design", "Professional creative design solutions for branding, marketing and communication.", ["Logo Design", "Social Media Posts", "Hoarding Banners", "Menu Cards", "Flyers", "Product Packaging", "Magazine Ads", "Visiting Cards", "Invitations", "Brochures", "Calendars"], ["Brand identity", "Social media communication", "Retail and menu design", "Packaging", "Advertising campaigns"], "service-graphics-design.jpg"],
   ["digital-printing", "Digital Printing", "Fast, detailed printing", "High-quality digital printing for business, promotional and everyday printing requirements.", ["Visiting Cards", "Bill Book", "Wedding Card", "Brochures", "Catalogues", "Pamphlets", "Posters", "Annual Reports", "UV Print", "Hotel Menus", "Hospital Files", "Trophy Stickers"], ["Business cards", "Marketing handouts", "Posters and pamphlets", "Menus and reports", "Specialty printed pieces"], "service-digital-printing.jpg"],
 ] as const;
+
+const providedServiceImageSeeds = [
+  ["solvent-flex", "service-images/solvent-flex.png", "file_000000005d0c81f59b4affa369e5ab8a_1790080751299.png"],
+  ["digital-printing", "service-images/digital-printing.png", "file_000000001f4081f593ead5688281e49b_1790080763993.png"],
+  ["offset-printing", "service-images/offset-printing.png", "file_00000000bec481f5ad95083f9227f996_1790080774508.png"],
+  ["sign-boards", "service-images/sign-boards.png", "file_00000000e468820ba6a74d0c6e975121_1790080795485.png"],
+  ["screen-printing", "service-images/screen-printing.png", "file_000000001c0881f5b3a4184e23a7d362_1790080824527.png"],
+  ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790080786560.png"],
+] as const;
+
+async function readProvidedServiceImage(filename: string) {
+  const candidates = [
+    resolve(process.cwd(), "assets/service-images", filename),
+    resolve(process.cwd(), "artifacts/api-server/assets/service-images", filename),
+    resolve(process.cwd(), "../../attached_assets", filename),
+  ];
+  for (const candidate of candidates) {
+    try {
+      return await readFile(candidate);
+    } catch {
+      // Try the next workspace location.
+    }
+  }
+  return null;
+}
+
+async function syncProvidedServiceImages() {
+  const services = firestore().collection("services");
+  await Promise.all(providedServiceImageSeeds.map(async ([slug, localPath, sourceFilename]) => {
+    const reference = services.doc(slug);
+    const current = await reference.get();
+    if (!current.exists) return;
+
+    let imagePath = `/${localPath}`;
+    if (hasFirebaseConfiguration()) {
+      const bytes = await readProvidedServiceImage(sourceFilename);
+      if (!bytes) throw new Error(`Provided service image is missing: ${sourceFilename}`);
+      const storagePath = `services/${localPath}`;
+      const file = firebaseBucket().file(storagePath);
+      const [exists] = await file.exists();
+      if (!exists) {
+        await file.save(bytes, {
+          resumable: false,
+          metadata: {
+            contentType: "image/png",
+            cacheControl: "public,max-age=31536000",
+          },
+        });
+      }
+      imagePath = `/${storagePath}`;
+    }
+
+    const data = current.data();
+    const updates: DocumentData = {};
+    const title = approvedServiceTitles.get(slug);
+    if (title && data.title !== title) updates.title = title;
+    if (JSON.stringify(data.images ?? []) !== JSON.stringify([imagePath])) updates.images = [imagePath];
+    if (Object.keys(updates).length > 0) {
+      updates.updatedAt = new Date();
+      await reference.set(updates, { merge: true });
+    }
+  }));
+}
 
 function collections() {
   return {
@@ -225,7 +298,8 @@ async function cleanupCatalog() {
         const cleaned = cleanCatalogList(data[field]);
         if (Array.isArray(data[field]) && JSON.stringify(cleaned) !== JSON.stringify(data[field])) updates[field] = cleaned;
       }
-      if (String(data.slug ?? doc.id) === "solvent-flex" && data.title === "Solvent Flex") updates.title = "Eco Solvent Flex";
+      const title = approvedServiceTitles.get(String(data.slug ?? doc.id));
+      if (title && data.title !== title) updates.title = title;
       if (Object.keys(updates).length > 0) {
         updates.updatedAt = new Date();
         await firestore().collection("services").doc(doc.id).set(updates, { merge: true });
@@ -251,6 +325,7 @@ async function ensureSeeded() {
       await reference.set({ title, slug, category, shortDescription: description, description, fullDescription: description, content: description, features: [], images: [`/${image}`], imageAlt: title, offerings, applications, materials: [], whyChoose: [], relatedSlugs: [], displayOrder: serviceSeed.findIndex((item) => item[0] === slug), status: "published", featured: false, createdAt: now, updatedAt: now });
     }
   }));
+  await syncProvidedServiceImages();
   const products = firestore().collection("products");
   await Promise.all(serviceSeed.map(async ([slug, title, , description, offerings]) => {
     const existing = await products.where("serviceSlug", "==", slug).get();
