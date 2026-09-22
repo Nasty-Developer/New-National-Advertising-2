@@ -1,0 +1,68 @@
+import { cert, getApps, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
+import { localFirestore } from "./local-data";
+import type { LocalFirestore } from "./local-data";
+
+function normalizeEnvironmentValue(value: string): string {
+  const trimmed = value.trim();
+  if (
+    trimmed.length >= 2 &&
+    ((trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'")))
+  ) {
+    return trimmed.slice(1, -1).trim();
+  }
+  return trimmed;
+}
+
+function required(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`${name} is required for Firebase-backed production features.`);
+  return normalizeEnvironmentValue(value);
+}
+
+export function hasFirebaseConfiguration(): boolean {
+  return Boolean(
+    process.env.FIREBASE_PROJECT_ID &&
+      process.env.FIREBASE_CLIENT_EMAIL &&
+      process.env.FIREBASE_PRIVATE_KEY &&
+      process.env.FIREBASE_STORAGE_BUCKET,
+  );
+}
+
+export function firebaseProjectId(): string {
+  return required("FIREBASE_PROJECT_ID");
+}
+
+function getFirebaseApp() {
+  if (!hasFirebaseConfiguration()) {
+    throw new Error("Firebase configuration is not available.");
+  }
+  const existing = getApps()[0];
+  if (existing) return existing;
+
+  return initializeApp({
+    credential: cert({
+      projectId: firebaseProjectId(),
+      clientEmail: required("FIREBASE_CLIENT_EMAIL"),
+      privateKey: required("FIREBASE_PRIVATE_KEY").replace(/\\n/g, "\n"),
+    }),
+    storageBucket: required("FIREBASE_STORAGE_BUCKET"),
+  });
+}
+
+export function firebaseAuth() {
+  return getAuth(getFirebaseApp());
+}
+
+export function firestore(): LocalFirestore {
+  return hasFirebaseConfiguration()
+    ? (getFirestore(getFirebaseApp()) as unknown as LocalFirestore)
+    : localFirestore;
+}
+
+export function firebaseBucket() {
+  return getStorage(getFirebaseApp()).bucket();
+}
