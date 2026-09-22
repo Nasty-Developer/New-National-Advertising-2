@@ -76,10 +76,31 @@ class LocalQuery {
     private readonly sortField?: string,
     private readonly sortDirection: "asc" | "desc" = "asc",
     private readonly resultLimit?: number,
+    private readonly filter?: {
+      field: string;
+      operator: "==";
+      value: unknown;
+    },
   ) {}
 
+  where(field: string, operator: "==", value: unknown) {
+    return new LocalQuery(
+      this.collectionName,
+      this.sortField,
+      this.sortDirection,
+      this.resultLimit,
+      { field, operator, value },
+    );
+  }
+
   orderBy(field: string, direction: "asc" | "desc" = "asc") {
-    return new LocalQuery(this.collectionName, field, direction, this.resultLimit);
+    return new LocalQuery(
+      this.collectionName,
+      field,
+      direction,
+      this.resultLimit,
+      this.filter,
+    );
   }
 
   limit(count: number) {
@@ -88,11 +109,19 @@ class LocalQuery {
       this.sortField,
       this.sortDirection,
       count,
+      this.filter,
     );
   }
 
   async get(): Promise<LocalQuerySnapshot> {
     let entries = Object.entries(collectionRecords(this.collectionName));
+
+    if (this.filter) {
+      entries = entries.filter(([, value]) => {
+        if (this.filter?.operator !== "==") return false;
+        return value[this.filter.field] === this.filter.value;
+      });
+    }
 
     if (this.sortField) {
       entries.sort(([leftId, left], [rightId, right]) => {
@@ -146,6 +175,12 @@ class LocalCollectionReference extends LocalQuery {
 
   doc(id = randomUUID().replaceAll("-", "")) {
     return new LocalDocumentReference(this.collectionName, id);
+  }
+
+  async add(value: LocalRecord) {
+    const reference = this.doc();
+    await reference.set(value);
+    return reference;
   }
 }
 

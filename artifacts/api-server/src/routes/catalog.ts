@@ -1,10 +1,60 @@
 import { Router, type IRouter } from "express";
 import { z } from "zod";
+import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
 import { createFirebaseReadUrl } from "../lib/firebase-storage";
+import { firebaseBucket, hasFirebaseConfiguration } from "../lib/firebase";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
+
+const approvedServiceSlugs = new Set([
+  "sign-boards",
+  "banner-printing",
+  "solvent-flex",
+  "offset-printing",
+  "screen-printing",
+  "graphics-design",
+  "digital-printing",
+]);
+const removedCatalogNames = new Set(["signage", "solvent flex"]);
+
+function isRemovedCatalogName(value: unknown) {
+  return typeof value === "string" && removedCatalogNames.has(value.trim().toLowerCase());
+}
+
+function cleanCatalogList(value: unknown) {
+  if (!Array.isArray(value)) return value;
+  return value.filter((item) => !isRemovedCatalogName(item));
+}
+
+function collectStrings(value: unknown, output: Set<string>) {
+  if (typeof value === "string") {
+    output.add(value);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStrings(item, output));
+    return;
+  }
+  if (value && typeof value === "object") {
+    Object.values(value).forEach((item) => collectStrings(item, output));
+  }
+}
+
+async function deleteUnreferencedStorageImage(path: unknown, records: Array<{ data: DocumentData; id: string }>) {
+  if (typeof path !== "string" || !path || path.startsWith("http") || !hasFirebaseConfiguration()) return;
+  const normalizedPath = path.replace(/^\/+/, "");
+  if (!/^(products|machines|services|projects|requests)\//.test(normalizedPath)) return;
+  const references = new Set<string>();
+  records.forEach(({ data }) => collectStrings(data, references));
+  if (references.has(path) || references.has(`/${normalizedPath}`)) return;
+  try {
+    await firebaseBucket().file(normalizedPath).delete({ ignoreNotFound: true });
+  } catch {
+    // Catalog cleanup must not prevent the API from serving the remaining records.
+  }
+}
 
 const machineBody = z.object({
   name: z.string().trim().min(1).max(180),
@@ -105,7 +155,7 @@ const machineSeed = [
 ] as const;
 
 const serviceSeed = [
-  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
+  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
   ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
   ["solvent-flex", "Eco Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
   ["offset-printing", "Offset Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
@@ -121,7 +171,71 @@ function collections() {
   };
 }
 
+let catalogCleanupPromise: Promise<void> | undefined;
+
+async function cleanupCatalog() {
+  const [serviceSnapshot, productSnapshot, machineSnapshot, projectSnapshot, settingsSnapshot, contentSnapshot] = await Promise.all([
+    firestore().collection("services").get(),
+    firestore().collection("products").get(),
+    firestore().collection("machines").get(),
+    firestore().collection("projects").get(),
+    firestore().collection("websiteSettings").get(),
+    firestore().collection("websiteContent").get(),
+  ]);
+
+  const servicesToDelete = serviceSnapshot.docs.filter((doc) => {
+    const data = doc.data();
+    const slug = String(data.slug ?? doc.id);
+    return !approvedServiceSlugs.has(slug);
+  });
+  const serviceIdsToDelete = new Set(servicesToDelete.map((doc) => doc.id));
+  const productsToDelete = productSnapshot.docs.filter((doc) => {
+    const data = doc.data();
+    return isRemovedCatalogName(data.name) || serviceIdsToDelete.has(String(data.serviceSlug ?? ""));
+  });
+  const productIdsToDelete = new Set(productsToDelete.map((doc) => doc.id));
+
+  const remainingRecords = [
+    ...serviceSnapshot.docs.filter((doc) => !serviceIdsToDelete.has(doc.id)).map((doc) => ({ id: doc.id, data: doc.data() })),
+    ...productSnapshot.docs.filter((doc) => !productIdsToDelete.has(doc.id)).map((doc) => ({ id: doc.id, data: doc.data() })),
+    ...machineSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
+    ...projectSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
+    ...settingsSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
+    ...contentSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
+  ];
+
+  await Promise.all(servicesToDelete.map(async (doc) => {
+    const data = doc.data();
+    for (const image of Array.isArray(data.images) ? data.images : []) {
+      await deleteUnreferencedStorageImage(image, remainingRecords);
+    }
+    await firestore().collection("services").doc(doc.id).delete();
+  }));
+  await Promise.all(productsToDelete.map(async (doc) => {
+    await deleteUnreferencedStorageImage(doc.data().imagePath ?? doc.data().imageUrl, remainingRecords);
+    await firestore().collection("products").doc(doc.id).delete();
+  }));
+
+  await Promise.all(serviceSnapshot.docs
+    .filter((doc) => !serviceIdsToDelete.has(doc.id))
+    .map(async (doc) => {
+      const data = doc.data();
+      const updates: DocumentData = {};
+      for (const field of ["features", "offerings", "applications", "materials", "whyChoose", "relatedSlugs"]) {
+        const cleaned = cleanCatalogList(data[field]);
+        if (Array.isArray(data[field]) && JSON.stringify(cleaned) !== JSON.stringify(data[field])) updates[field] = cleaned;
+      }
+      if (String(data.slug ?? doc.id) === "solvent-flex" && data.title === "Solvent Flex") updates.title = "Eco Solvent Flex";
+      if (Object.keys(updates).length > 0) {
+        updates.updatedAt = new Date();
+        await firestore().collection("services").doc(doc.id).set(updates, { merge: true });
+      }
+    }));
+}
+
 async function ensureSeeded() {
+  catalogCleanupPromise ??= cleanupCatalog();
+  await catalogCleanupPromise;
   const { machines, services } = collections();
   await Promise.all(machineSeed.map(async (seed) => {
     const reference = machines.doc(seed.id);

@@ -27,6 +27,17 @@ const businessAddressLines = [
   'Mumbai, Maharashtra - 400043, India',
 ];
 
+const approvedServiceSlugs = new Set([
+  'sign-boards',
+  'banner-printing',
+  'solvent-flex',
+  'offset-printing',
+  'screen-printing',
+  'graphics-design',
+  'digital-printing',
+]);
+const removedServiceItemNames = new Set(['signage', 'solvent flex']);
+
 const services = [
   {
     slug: 'sign-boards',
@@ -34,7 +45,7 @@ const services = [
     category: 'Signage solutions',
     description: 'Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.',
     whatIs: 'A Signage Board gives your storefront, office or event a clear visual identity. We help turn your brand into a physical display that is easy to notice in daylight and after dark.',
-    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Signage', 'Kitchen', 'Badge', 'Paper Bed', 'Sandwich'],
+    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Kitchen', 'Badge', 'Paper Bed', 'Sandwich'],
     applications: ['Shop Signage', 'Office Signage', 'Brand Displays', 'Promotional Displays', 'Indoor Signage', 'Outdoor Signage', 'Event Displays'],
     materials: ['Acrylic', 'Crystal letters', 'LED', 'Steel and brass'],
     whyChoose: ['Clearer brand visibility', 'Options for indoor and outdoor use', 'A choice of illuminated and non-illuminated finishes'],
@@ -423,13 +434,12 @@ const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', 
 function usePublicServices() {
   const query = useGetPublicServices();
   return useMemo<ServiceRecord[]>(() => {
-    const remoteServices = Array.isArray(query.data) ? query.data : [];
+    const remoteServices = (Array.isArray(query.data) ? query.data : [])
+      .filter((remote: ApiService) => approvedServiceSlugs.has(remote.slug))
+      .filter((remote: ApiService) => !removedServiceItemNames.has(remote.title.trim().toLowerCase()));
     return remoteServices.map((remote: ApiService) => {
-      const visual = {
-        icon: Grid2X2,
-        accent: '#1769AA',
-        tint: '#F3F8FC',
-        ...({
+      const visual =
+        ({
           'sign-boards': { icon: Ruler, accent: '#D7A918', tint: '#FFFCF0' },
           'banner-printing': { icon: Printer, accent: '#F26B5B', tint: '#FFF5F2' },
           'solvent-flex': { icon: Printer, accent: '#00A8C6', tint: '#F1FBFC' },
@@ -437,8 +447,11 @@ function usePublicServices() {
           'screen-printing': { icon: PenLine, accent: '#D9468C', tint: '#FFF5F9' },
           'graphics-design': { icon: Grid2X2, accent: '#3BA776', tint: '#F3FBF7' },
           'digital-printing': { icon: Sparkles, accent: '#F2994A', tint: '#FFF8F1' },
-        } as Record<string, { icon: typeof Ruler; accent: string; tint: string }>)[remote.slug],
-      };
+        } as Record<string, { icon: typeof Ruler; accent: string; tint: string }>)[remote.slug] ?? {
+          icon: Grid2X2,
+          accent: '#1769AA',
+          tint: '#F3F8FC',
+        };
       return {
         id: remote.id,
         slug: remote.slug,
@@ -446,10 +459,10 @@ function usePublicServices() {
         category: remote.category || '',
         description: remote.shortDescription || remote.description,
         whatIs: remote.fullDescription || remote.description,
-        items: remote.offerings ?? [],
-        applications: remote.applications ?? [],
-        materials: remote.materials ?? [],
-        whyChoose: remote.whyChoose ?? [],
+        items: (remote.offerings ?? []).filter((item) => !removedServiceItemNames.has(item.trim().toLowerCase())),
+        applications: (remote.applications ?? []).filter((item) => !removedServiceItemNames.has(item.trim().toLowerCase())),
+        materials: (remote.materials ?? []).filter((item) => !removedServiceItemNames.has(item.trim().toLowerCase())),
+        whyChoose: (remote.whyChoose ?? []).filter((item) => !removedServiceItemNames.has(item.trim().toLowerCase())),
         image: remote.images?.[0] || '',
         imageAlt: remote.imageAlt || remote.title,
         icon: visual.icon,

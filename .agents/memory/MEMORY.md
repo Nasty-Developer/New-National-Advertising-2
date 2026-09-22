@@ -5,3 +5,4 @@
 - [Admin API routing](admin-api-routing.md) — verify the production admin-session URL returns JSON, not the SPA fallback, when frontend and backend deploy separately.
 - [Firebase auth state restoration](firebase-auth-state-restoration.md) — do not use a one-time initial auth promise as the current user after sign-in or sign-out.
 - [Firebase Admin project alignment](firebase-admin-project-alignment.md) — a bearer-token 401 after successful Firebase sign-in points to server project/config alignment, not missing frontend auth state.
+- [Imported local Firestore compatibility](imported-local-firestore.md) — keep local fallback query and write methods aligned with Firebase-backed route behavior.
