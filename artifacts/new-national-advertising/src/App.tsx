@@ -853,10 +853,16 @@ function Home() {
        <section id="home" className="relative isolate overflow-hidden border-b border-[#edf1f4] bg-[#f7f8fa] pt-[70px]">
           <div className="pointer-events-none absolute -left-28 top-[-130px] -z-10 h-[530px] w-[600px] rounded-full border border-[#dce9f0] bg-white/35" />
           <div className="pointer-events-none absolute right-[-180px] top-[28px] -z-10 h-[470px] w-[650px] rounded-[50%] border border-[#e1edf3] bg-[#eaf3f7]/70" />
-          <div className="container-nna grid min-h-[580px] items-center gap-9 py-14 lg:grid-cols-[.89fr_1.11fr] lg:gap-4 lg:py-16">
+           <div className="container-nna grid min-h-[580px] items-center gap-9 py-14 lg:grid-cols-[.89fr_1.11fr] lg:items-start lg:gap-4 lg:py-16">
              <Reveal className="relative z-10 max-w-[520px]">
                <p className="eyebrow mb-5">Print · Design · Signage · Advertising</p>
-               <h1 className="display max-w-[530px] text-[clamp(2.7rem,5.7vw,5.4rem)] font-extrabold leading-[.93] text-[#14213d]">{(content?.heroHeading || 'New National Advertising').split(' ').map((word, index, words) => <span key={`${word}-${index}`} className={index === words.length - 1 ? 'text-[#1769aa]' : undefined}>{word}{index < words.length - 1 ? ' ' : ''}</span>)}</h1>
+                <h1 className="max-w-[530px]">
+                  <img
+                    src="/new-national-advertising-logo.png"
+                    alt="New National Advertising"
+                    className="block h-auto w-full max-w-[390px] object-contain object-left sm:max-w-[500px]"
+                  />
+                </h1>
                <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#81909d]"><span className="h-px w-9 bg-[#00a8c6]" /><span className="h-px w-5 bg-[#d9468c]" /><span className="h-px w-3 bg-[#f2c94c]" />Mumbai print studio</div>
               <p className="mt-6 text-lg font-semibold tracking-[-.02em] text-[#253b53]">{content?.heroCtaText || 'Printing, Signage & Design Solutions'}</p>
               <p className="mt-3 max-w-[430px] text-[13px] leading-6 text-[#657589]">{content?.heroDescription || 'Professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals.'}</p>
@@ -867,7 +873,7 @@ function Home() {
                 ))}
               </div>
             </Reveal>
-            <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto">
+             <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto lg:mt-10">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
                   <img src={publicImageUrl(content?.heroImage) || '/hero-new-national-advertising.png'} alt="New National Advertising storefront, printing services and signage display" className="h-full w-full object-contain" />
               </div>
