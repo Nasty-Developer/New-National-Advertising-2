@@ -29,7 +29,7 @@ const publicServiceSlugs = new Set([
 ]);
 const removedCatalogNames = new Set(["signage", "solvent flex"]);
 const approvedServiceTitles = new Map([
-  ["sign-boards", "Sign Boards"],
+  ["sign-boards", "Signage Board"],
   ["solvent-flex", "Solvent Flex"],
   ["offset-printing", "Offset Printing"],
   ["screen-printing", "Screen Printing"],
@@ -173,7 +173,7 @@ const machineSeed = [
 ] as const;
 
 const serviceSeed = [
-  ["sign-boards", "Sign Boards", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
+  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
   ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
   ["solvent-flex", "Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
   ["offset-printing", "Offset Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
