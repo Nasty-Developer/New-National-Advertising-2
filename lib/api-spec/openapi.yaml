@@ -314,18 +314,18 @@ paths:
     post:
       operationId: requestProductImageUploadUrl
       tags: [storage]
-      summary: Request a presigned product image upload URL
+      summary: Upload an image or attachment through the server
       security:
         - firebaseBearer: []
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/UploadRequest"
       responses:
         "200":
-          description: Presigned upload details
+          description: Cloudinary upload details
           content:
             application/json:
               schema:
@@ -829,21 +829,13 @@ components:
     UploadRequest:
       type: object
       properties:
-        name:
+        file:
           type: string
-          minLength: 1
-          maxLength: 180
-        size:
-          type: integer
-          minimum: 1
-          maximum: 10485760
-        contentType:
-          type: string
-          enum: [image/jpeg, image/png, image/webp, application/pdf]
+          format: binary
         folder:
           type: string
           enum: [products, machines, services, projects, requests]
-      required: [name, size, contentType]
+      required: [file]
     UploadResponse:
       type: object
       properties:
@@ -852,7 +844,12 @@ components:
           format: uri
         objectPath:
           type: string
-      required: [uploadURL, objectPath]
+        secureUrl:
+          type: string
+          format: uri
+        publicId:
+          type: string
+      required: [uploadURL, objectPath, secureUrl, publicId]
     MachineInput:
       type: object
       properties:

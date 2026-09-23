@@ -1348,30 +1348,21 @@ export const getRequestProductImageUploadUrlUrl = () => {
 }
 
 /**
- * @summary Request a presigned product image upload URL
+ * @summary Upload an image or attachment through the server
  */
 export const requestProductImageUploadUrl = async (uploadRequest: UploadRequest, options?: Parameters<typeof customFetch>[1]): Promise<UploadResponse> => {
+    const formData = new FormData();
+formData.append(`file`, uploadRequest.file);
+if(uploadRequest.folder !== undefined) {
+ formData.append(`folder`, uploadRequest.folder);
+ }
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Symbol.iterator in h) {
-      return Object.fromEntries(
-        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
-      );
-    }
-    const headers: Record<string, string | readonly string[]> = {};
-    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
-      if (value !== undefined) headers[name] = value;
-    }
-    return headers;
-  };
-return customFetch<UploadResponse>(getRequestProductImageUploadUrlUrl(),
+  return customFetch<UploadResponse>(getRequestProductImageUploadUrlUrl(),
   {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(uploadRequest)
+    method: 'POST'
+    ,
+    body: formData
   }
 );}
 
@@ -1414,7 +1405,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type RequestProductImageUploadUrlMutationVariables = {data: BodyType<UploadRequest>}
 
     /**
- * @summary Request a presigned product image upload URL
+ * @summary Upload an image or attachment through the server
  */
 export const useRequestProductImageUploadUrl = <TError = ErrorType<void>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestProductImageUploadUrl>>, TError,RequestProductImageUploadUrlMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}

@@ -100,16 +100,6 @@ export interface AdminSummary {
   totalRequests?: number;
 }
 
-export type UploadRequestContentType = typeof UploadRequestContentType[keyof typeof UploadRequestContentType];
-
-
-export const UploadRequestContentType = {
-  'image/jpeg': 'image/jpeg',
-  'image/png': 'image/png',
-  'image/webp': 'image/webp',
-  'application/pdf': 'application/pdf',
-} as const;
-
 export type UploadRequestFolder = typeof UploadRequestFolder[keyof typeof UploadRequestFolder];
 
 
@@ -122,23 +112,15 @@ export const UploadRequestFolder = {
 } as const;
 
 export interface UploadRequest {
-  /**
-     * @minLength 1
-     * @maxLength 180
-     */
-  name: string;
-  /**
-     * @minimum 1
-     * @maximum 10485760
-     */
-  size: number;
-  contentType: UploadRequestContentType;
+  file: Blob;
   folder?: UploadRequestFolder;
 }
 
 export interface UploadResponse {
   uploadURL: string;
   objectPath: string;
+  secureUrl: string;
+  publicId: string;
 }
 
 export interface MachineInput {

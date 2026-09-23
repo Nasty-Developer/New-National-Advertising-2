@@ -9,4 +9,6 @@
 export interface UploadResponse {
   uploadURL: string;
   objectPath: string;
+  secureUrl: string;
+  publicId: string;
 }

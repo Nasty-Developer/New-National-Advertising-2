@@ -31,7 +31,6 @@ export * from './serviceInputStatus';
 export * from './stockStatus';
 export * from './updateRequestStatus200';
 export * from './uploadRequest';
-export * from './uploadRequestContentType';
 export * from './uploadRequestFolder';
 export * from './uploadResponse';
 export * from './websiteContent';

@@ -607,24 +607,18 @@ export const DeleteProjectResponse = zod.void()
 
 
 /**
- * @summary Request a presigned product image upload URL
+ * @summary Upload an image or attachment through the server
  */
-export const requestProductImageUploadUrlBodyNameMax = 180;
-
-export const requestProductImageUploadUrlBodySizeMax = 10485760;
-
-
-
 export const RequestProductImageUploadUrlBody = zod.object({
-  "name": zod.string().min(1).max(requestProductImageUploadUrlBodyNameMax),
-  "size": zod.number().int().min(1).max(requestProductImageUploadUrlBodySizeMax),
-  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
+  "file": zod.instanceof(Blob),
   "folder": zod.enum(['products', 'machines', 'services', 'projects', 'requests']).optional()
 })
 
 export const RequestProductImageUploadUrlResponse = zod.object({
   "uploadURL": zod.string().url(),
-  "objectPath": zod.string()
+  "objectPath": zod.string(),
+  "secureUrl": zod.string().url(),
+  "publicId": zod.string()
 })
 
 

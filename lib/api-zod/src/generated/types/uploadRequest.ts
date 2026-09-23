@@ -5,20 +5,9 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { UploadRequestContentType } from './uploadRequestContentType';
 import type { UploadRequestFolder } from './uploadRequestFolder';
 
 export interface UploadRequest {
-  /**
-     * @minLength 1
-     * @maxLength 180
-     */
-  name: string;
-  /**
-     * @minimum 1
-     * @maximum 10485760
-     */
-  size: number;
-  contentType: UploadRequestContentType;
+  file: Blob;
   folder?: UploadRequestFolder;
 }
