@@ -30,11 +30,15 @@ export function hasFirebaseConfiguration(): boolean {
 }
 
 export function hasFirebaseAuthConfiguration(): boolean {
-  return Boolean(
-    process.env.FIREBASE_PROJECT_ID &&
-      process.env.FIREBASE_CLIENT_EMAIL &&
-      process.env.FIREBASE_PRIVATE_KEY,
-  );
+  return missingFirebaseAuthConfiguration().length === 0;
+}
+
+export function missingFirebaseAuthConfiguration(): string[] {
+  return [
+    "FIREBASE_PROJECT_ID",
+    "FIREBASE_CLIENT_EMAIL",
+    "FIREBASE_PRIVATE_KEY",
+  ].filter((name) => !process.env[name]);
 }
 
 export function firebaseProjectId(): string {

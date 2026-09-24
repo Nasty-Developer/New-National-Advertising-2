@@ -4,6 +4,7 @@ import {
   firebaseProjectId,
   firestore,
   hasFirebaseAuthConfiguration,
+  missingFirebaseAuthConfiguration,
 } from "./firebase";
 
 export type VerifiedAdmin = {
@@ -64,6 +65,10 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
   }
 
   if (!hasFirebaseAuthConfiguration()) {
+    req.log.error(
+      { missingFirebaseConfiguration: missingFirebaseAuthConfiguration() },
+      "Firebase Admin authentication configuration is incomplete",
+    );
     res.status(503).json({ error: "Admin authentication is not configured" });
     return;
   }
