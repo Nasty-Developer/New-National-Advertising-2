@@ -1,5 +1,10 @@
 import type { RequestHandler } from "express";
-import { firebaseAuth, firebaseProjectId, firestore } from "./firebase";
+import {
+  firebaseAuth,
+  firebaseProjectId,
+  firestore,
+  hasFirebaseAuthConfiguration,
+} from "./firebase";
 
 export type VerifiedAdmin = {
   uid: string;
@@ -16,7 +21,8 @@ function bearerToken(header: string | undefined): string | null {
 function isFirebaseConfigurationError(error: unknown): boolean {
   return (
     error instanceof Error &&
-    error.message.includes("required for Firebase-backed production features")
+    (error.message.includes("required for Firebase-backed production features") ||
+      error.message.includes("Firebase Auth configuration is not available"))
   );
 }
 
@@ -54,6 +60,11 @@ export const requireAdmin: RequestHandler = async (req, res, next): Promise<void
   const token = bearerToken(req.header("authorization"));
   if (!token) {
     res.status(401).json({ error: "Authentication required" });
+    return;
+  }
+
+  if (!hasFirebaseAuthConfiguration()) {
+    res.status(503).json({ error: "Admin authentication is not configured" });
     return;
   }
 

@@ -25,10 +25,15 @@ function required(name: string): string {
 
 export function hasFirebaseConfiguration(): boolean {
   return Boolean(
+    hasFirebaseAuthConfiguration() && process.env.FIREBASE_STORAGE_BUCKET,
+  );
+}
+
+export function hasFirebaseAuthConfiguration(): boolean {
+  return Boolean(
     process.env.FIREBASE_PROJECT_ID &&
       process.env.FIREBASE_CLIENT_EMAIL &&
-      process.env.FIREBASE_PRIVATE_KEY &&
-      process.env.FIREBASE_STORAGE_BUCKET,
+      process.env.FIREBASE_PRIVATE_KEY,
   );
 }
 
@@ -37,20 +42,24 @@ export function firebaseProjectId(): string {
 }
 
 function getFirebaseApp() {
-  if (!hasFirebaseConfiguration()) {
-    throw new Error("Firebase configuration is not available.");
+  if (!hasFirebaseAuthConfiguration()) {
+    throw new Error("Firebase Auth configuration is not available.");
   }
   const existing = getApps()[0];
   if (existing) return existing;
 
-  return initializeApp({
+  const options = {
     credential: cert({
       projectId: firebaseProjectId(),
       clientEmail: required("FIREBASE_CLIENT_EMAIL"),
       privateKey: required("FIREBASE_PRIVATE_KEY").replace(/\\n/g, "\n"),
     }),
-    storageBucket: required("FIREBASE_STORAGE_BUCKET"),
-  });
+    ...(process.env.FIREBASE_STORAGE_BUCKET
+      ? { storageBucket: normalizeEnvironmentValue(process.env.FIREBASE_STORAGE_BUCKET) }
+      : {}),
+  };
+
+  return initializeApp(options);
 }
 
 export function firebaseAuth() {
@@ -58,11 +67,11 @@ export function firebaseAuth() {
 }
 
 export function firestore(): LocalFirestore {
-  return hasFirebaseConfiguration()
+  return hasFirebaseAuthConfiguration()
     ? (getFirestore(getFirebaseApp()) as unknown as LocalFirestore)
     : localFirestore;
 }
 
 export function firebaseBucket() {
-  return getStorage(getFirebaseApp()).bucket();
+  return getStorage(getFirebaseApp()).bucket(required("FIREBASE_STORAGE_BUCKET"));
 }
