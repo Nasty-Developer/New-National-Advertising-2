@@ -1351,6 +1351,7 @@ export const getRequestProductImageUploadUrlUrl = () => {
  * @summary Upload an image or attachment through the server
  */
 export const requestProductImageUploadUrl = async (uploadRequest: UploadRequest, options?: Parameters<typeof customFetch>[1]): Promise<UploadResponse> => {
+<<<<<<< HEAD
     const formData = new FormData();
 formData.append(`file`, uploadRequest.file);
 if(uploadRequest.folder !== undefined) {
@@ -1363,6 +1364,29 @@ if(uploadRequest.folder !== undefined) {
     method: 'POST'
     ,
     body: formData
+=======
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<UploadResponse>(getRequestProductImageUploadUrlUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(uploadRequest)
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
   }
 );}
 

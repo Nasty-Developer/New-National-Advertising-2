@@ -5,9 +5,27 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+<<<<<<< HEAD
 import type { UploadRequestFolder } from './uploadRequestFolder';
 
 export interface UploadRequest {
   file: Blob;
+=======
+import type { UploadRequestContentType } from './uploadRequestContentType';
+import type { UploadRequestFolder } from './uploadRequestFolder';
+
+export interface UploadRequest {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /**
+     * @minimum 1
+     * @maximum 10485760
+     */
+  size: number;
+  contentType: UploadRequestContentType;
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
   folder?: UploadRequestFolder;
 }

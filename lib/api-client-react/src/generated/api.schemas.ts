@@ -100,6 +100,19 @@ export interface AdminSummary {
   totalRequests?: number;
 }
 
+<<<<<<< HEAD
+=======
+export type UploadRequestContentType = typeof UploadRequestContentType[keyof typeof UploadRequestContentType];
+
+
+export const UploadRequestContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+  'application/pdf': 'application/pdf',
+} as const;
+
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 export type UploadRequestFolder = typeof UploadRequestFolder[keyof typeof UploadRequestFolder];
 
 
@@ -112,15 +125,32 @@ export const UploadRequestFolder = {
 } as const;
 
 export interface UploadRequest {
+<<<<<<< HEAD
   file: Blob;
+=======
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /**
+     * @minimum 1
+     * @maximum 10485760
+     */
+  size: number;
+  contentType: UploadRequestContentType;
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
   folder?: UploadRequestFolder;
 }
 
 export interface UploadResponse {
   uploadURL: string;
   objectPath: string;
+<<<<<<< HEAD
   secureUrl: string;
   publicId: string;
+=======
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 }
 
 export interface MachineInput {
