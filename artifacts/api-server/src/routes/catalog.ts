@@ -170,6 +170,20 @@ const machineSeed = [
     displayOrder: 3,
     published: true,
   },
+  {
+    id: "konica-minolta-bizhub-c6000",
+    name: "Konica Minolta bizhub C6000",
+    slug: "konica-minolta-bizhub-c6000",
+    category: "Digital Printing Machine",
+    shortDescription: "Professional digital production printing for crisp, consistent commercial output.",
+    description: "The Konica Minolta bizhub C6000 is a professional digital printing machine designed for reliable, high-quality production of business cards, brochures, catalogues, flyers and other commercial print materials.",
+    imageUrl: "/machine-konica-minolta-bizhub-c6000.png",
+    imageAlt: "Konica Minolta bizhub C6000 digital printing machine",
+    applications: ["Digital Printing", "Business Cards", "Brochures & Catalogues", "Flyers & Marketing Materials"],
+    relatedServices: ["digital-printing", "offset-printing"],
+    displayOrder: 4,
+    published: true,
+  },
 ] as const;
 
 const serviceSeed = [
