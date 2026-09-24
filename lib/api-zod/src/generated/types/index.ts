@@ -31,10 +31,7 @@ export * from './serviceInputStatus';
 export * from './stockStatus';
 export * from './updateRequestStatus200';
 export * from './uploadRequest';
-<<<<<<< HEAD
-=======
 export * from './uploadRequestContentType';
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 export * from './uploadRequestFolder';
 export * from './uploadResponse';
 export * from './websiteContent';

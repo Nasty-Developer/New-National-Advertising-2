@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { Router, type IRouter } from "express";
 import {
   RequestProductImageUploadUrlBody,
@@ -10,7 +8,6 @@ import { createFirebaseUploadTarget } from "../lib/firebase-storage";
 
 const router: IRouter = Router();
 
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 router.post(
   "/storage/uploads/request-url",
   requireAdmin,
@@ -26,21 +23,11 @@ router.post(
     }
 
     try {
-<<<<<<< HEAD
-      const file = parsed.data.file;
-
-      const target = await createFirebaseUploadTarget({
-        folder: parsed.data.folder ?? "products",
-        name: "upload",
-        size: file.size,
-        contentType: file.type,
-=======
       const target = await createFirebaseUploadTarget({
         folder: parsed.data.folder ?? "products",
         name: parsed.data.name,
         size: parsed.data.size,
         contentType: parsed.data.contentType,
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
       });
 
       res.json(RequestProductImageUploadUrlResponse.parse(target));
@@ -59,8 +46,5 @@ router.post(
     }
   },
 );
-<<<<<<< HEAD
-=======
 
 export default router;
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)

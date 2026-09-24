@@ -320,20 +320,12 @@ paths:
       requestBody:
         required: true
         content:
-<<<<<<< HEAD
-          multipart/form-data:
-=======
           application/json:
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
             schema:
               $ref: "#/components/schemas/UploadRequest"
       responses:
         "200":
-<<<<<<< HEAD
-          description: Cloudinary upload details
-=======
           description: Signed Firebase Storage upload details
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
           content:
             application/json:
               schema:
@@ -837,15 +829,6 @@ components:
     UploadRequest:
       type: object
       properties:
-<<<<<<< HEAD
-        file:
-          type: string
-          format: binary
-        folder:
-          type: string
-          enum: [products, machines, services, projects, requests]
-      required: [file]
-=======
         name:
           type: string
           minLength: 1
@@ -861,7 +844,6 @@ components:
           type: string
           enum: [products, machines, services, projects, requests]
       required: [name, size, contentType]
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
     UploadResponse:
       type: object
       properties:
@@ -870,16 +852,7 @@ components:
           format: uri
         objectPath:
           type: string
-<<<<<<< HEAD
-        secureUrl:
-          type: string
-          format: uri
-        publicId:
-          type: string
-      required: [uploadURL, objectPath, secureUrl, publicId]
-=======
       required: [uploadURL, objectPath]
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
     MachineInput:
       type: object
       properties:

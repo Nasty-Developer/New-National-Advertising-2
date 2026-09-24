@@ -9,9 +9,4 @@
 export interface UploadResponse {
   uploadURL: string;
   objectPath: string;
-<<<<<<< HEAD
-  secureUrl: string;
-  publicId: string;
-=======
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 }

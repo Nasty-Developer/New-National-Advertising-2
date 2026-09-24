@@ -609,10 +609,6 @@ export const DeleteProjectResponse = zod.void()
 /**
  * @summary Upload an image or attachment through the server
  */
-<<<<<<< HEAD
-export const RequestProductImageUploadUrlBody = zod.object({
-  "file": zod.instanceof(Blob),
-=======
 export const requestProductImageUploadUrlBodyNameMax = 180;
 
 export const requestProductImageUploadUrlBodySizeMax = 10485760;
@@ -623,19 +619,12 @@ export const RequestProductImageUploadUrlBody = zod.object({
   "name": zod.string().min(1).max(requestProductImageUploadUrlBodyNameMax),
   "size": zod.number().int().min(1).max(requestProductImageUploadUrlBodySizeMax),
   "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
   "folder": zod.enum(['products', 'machines', 'services', 'projects', 'requests']).optional()
 })
 
 export const RequestProductImageUploadUrlResponse = zod.object({
   "uploadURL": zod.string().url(),
-<<<<<<< HEAD
-  "objectPath": zod.string(),
-  "secureUrl": zod.string().url(),
-  "publicId": zod.string()
-=======
   "objectPath": zod.string()
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 })
 
 

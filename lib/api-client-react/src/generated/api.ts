@@ -1351,20 +1351,6 @@ export const getRequestProductImageUploadUrlUrl = () => {
  * @summary Upload an image or attachment through the server
  */
 export const requestProductImageUploadUrl = async (uploadRequest: UploadRequest, options?: Parameters<typeof customFetch>[1]): Promise<UploadResponse> => {
-<<<<<<< HEAD
-    const formData = new FormData();
-formData.append(`file`, uploadRequest.file);
-if(uploadRequest.folder !== undefined) {
- formData.append(`folder`, uploadRequest.folder);
- }
-
-  return customFetch<UploadResponse>(getRequestProductImageUploadUrlUrl(),
-  {
-    ...options,
-    method: 'POST'
-    ,
-    body: formData
-=======
 
     const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
     if (!h) return {};
@@ -1386,7 +1372,6 @@ return customFetch<UploadResponse>(getRequestProductImageUploadUrlUrl(),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(uploadRequest)
->>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
   }
 );}
 
