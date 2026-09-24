@@ -1,0 +1,312 @@
+I want to make the following updates to the existing New National Advertising website.
+
+IMPORTANT:
+Do NOT rebuild the website from scratch.
+Do NOT break or remove any existing functionality, routes, links, service pages, Products page, More Info buttons, WhatsApp links, Call links, quote forms, or responsive behavior.
+
+Work carefully on top of the existing project.
+
+==================================================
+1. OFFICIAL NEW NATIONAL ADVERTISING LOGO
+==================================================
+
+I will attach the ORIGINAL New National Advertising logo image to this message.
+
+Use the attached image as the exact visual reference.
+
+Create/use the website logo so it matches the supplied logo EXACTLY.
+
+The logo contains:
+- "New National" in dark blue
+- "Advertising" in orange
+- The original blue/orange graphic mark above
+- The original typography and visual proportions
+
+IMPORTANT:
+Do NOT redesign the logo.
+Do NOT modernize it.
+Do NOT change the font style.
+Do NOT change the colors.
+Do NOT change the symbol.
+Do NOT add gradients.
+Do NOT simplify the logo.
+Do NOT create a different interpretation.
+
+The objective is to reproduce/use the SAME logo supplied in the attached image.
+
+Use a proper optimized asset in the website's public/static assets.
+
+Make sure the logo works correctly in:
+- Desktop navbar
+- Mobile navbar
+- Footer
+- Any existing branding locations
+
+Preserve aspect ratio and do not stretch the logo.
+
+Use the real supplied logo instead of recreating it with ordinary text if possible.
+
+==================================================
+2. OFFICIAL BUSINESS ADDRESS
+==================================================
+
+Use the location from this Google Maps link:
+
+https://maps.app.goo.gl/fp4fTcaVwx2bojXz7
+
+The location resolves to:
+
+Room No. 3,
+New National Advertising,
+Plot No. 47,
+Line No. K,
+Road No. 5,
+Opposite Mahesh Jewellers,
+Nearby Ambedkar Garden,
+Govandi (W),
+Govandi West,
+Raman Mama Nagar,
+Shivaji Nagar,
+Mumbai,
+Maharashtra - 400043,
+India
+
+Use this as the business address wherever the website displays the physical business location.
+
+IMPORTANT:
+Do not invent a different address.
+
+Add the address naturally to:
+- Contact section
+- Footer
+- About/business information where appropriate
+- Contact/location information
+- LocalBusiness structured data if it is already being used
+
+Also keep the Google Maps location link available through a clear action such as:
+
+"View on Google Maps"
+
+The link should point to the supplied Google Maps location.
+
+Do not replace the address with a generic "Mumbai, Maharashtra" wherever the full business address is appropriate.
+
+==================================================
+3. DO NOT BREAK EXISTING WEBSITE FUNCTIONALITY
+==================================================
+
+Before making changes, inspect the existing application structure.
+
+Preserve all currently working routes and functionality.
+
+These routes must continue working:
+
+/
+ 
+/products
+
+/services/sign-boards
+/services/solvent-flex
+/services/offset-printing
+/services/screen-printing
+/services/graphics-design
+/services/banner-printing
+/services/digital-printing
+
+Every existing "More Info →" button must continue opening the correct service detail page.
+
+Do not rename existing service slugs.
+
+Do not remove the Products page.
+
+Do not replace the existing router.
+
+Do not break:
+- Navbar
+- Mobile menu
+- Service detail pages
+- Products page
+- Quote form
+- WhatsApp
+- Call buttons
+- AI Assistant
+- Floating contact buttons
+- Mobile contact bar
+- Related service links
+- Back-to-services links
+
+==================================================
+4. AFTER LOGO + ADDRESS WORK, START ADMIN PANEL FOUNDATION
+==================================================
+
+After the logo and address updates are completed and verified, begin creating the FOUNDATION of the Admin Panel.
+
+Do NOT attempt to build every future admin feature yet.
+
+For this stage, create a clean, secure and scalable Admin Panel architecture that we can expand later.
+
+Create the initial admin route:
+
+/admin
+
+If authentication already exists in the project, integrate with the existing authentication system rather than creating a conflicting authentication system.
+
+If authentication is not yet implemented for the admin area, create the structure so authentication can be added securely.
+
+The Admin Panel should have a professional dashboard-style UI consistent with New National Advertising.
+
+Initial navigation can include placeholders/sections for:
+
+- Dashboard
+- Products
+- Services
+- Orders
+- Website Content
+- Settings
+
+These sections are the FOUNDATION only.
+
+Do not invent functionality or data for sections that we have not specified yet.
+
+==================================================
+5. PRODUCT MANAGEMENT FOUNDATION
+==================================================
+
+The first real admin feature we will expand later is Products.
+
+Create the architecture so an administrator can eventually manage:
+
+- Product name
+- Product description
+- Product image
+- Product category
+- Product price
+- Product status
+- Stock information
+
+For now, create the clean foundation/components/data structure required for this.
+
+Do NOT populate the public Products page with fake products.
+
+Do NOT invent product names, prices or stock.
+
+We will provide the actual product information later through the Admin Panel.
+
+==================================================
+6. FUTURE ADMIN PANEL
+==================================================
+
+Do not hard-code assumptions about the final Admin Panel.
+
+We will progressively add more features later, including whatever business-management functionality we decide is necessary.
+
+Therefore:
+
+- Keep the architecture modular.
+- Use reusable components.
+- Keep admin data structures organized.
+- Avoid duplicated code.
+- Keep public website and admin functionality separated.
+- Make future expansion easy.
+
+==================================================
+7. SECURITY
+==================================================
+
+The Admin Panel must NOT expose sensitive credentials or secrets in frontend code.
+
+Do not place:
+- API secrets
+- private keys
+- database credentials
+- authentication secrets
+
+inside client-side React code.
+
+Use environment variables/backend configuration where appropriate.
+
+Protect /admin from unauthorized access.
+
+Do not weaken the security of the existing website.
+
+==================================================
+8. DESIGN
+==================================================
+
+Keep the existing New National Advertising design language:
+
+- clean
+- premium
+- minimal
+- professional
+- white/light-grey UI
+- dark navy typography
+- blue primary accent
+- subtle orange/CMYK-inspired accents
+- clean cards
+- moderate rounded corners
+- subtle shadows
+- good whitespace
+
+The Admin Panel should feel like a professional business management dashboard, not a completely different website.
+
+==================================================
+9. IMPLEMENTATION ORDER
+==================================================
+
+Follow this exact order:
+
+STEP 1
+Inspect the current project and existing routes/components.
+
+STEP 2
+Add the attached official New National Advertising logo as the real website logo.
+
+STEP 3
+Update branding locations without breaking responsive layouts.
+
+STEP 4
+Add the verified full business address from the supplied Google Maps location.
+
+STEP 5
+Add/retain a "View on Google Maps" action using the supplied location link.
+
+STEP 6
+Verify all existing website routes and functionality.
+
+STEP 7
+Start the Admin Panel foundation at /admin.
+
+STEP 8
+Create the initial Admin Dashboard structure and navigation.
+
+STEP 9
+Create the initial Products management architecture without fake product data.
+
+STEP 10
+Run TypeScript/typecheck and production build.
+
+STEP 11
+Fix any errors caused by the implementation.
+
+==================================================
+FINAL REQUIREMENT
+==================================================
+
+This is an incremental update to an already-working website.
+
+Do NOT rewrite the application.
+
+Do NOT remove existing work.
+
+Do NOT break existing links.
+
+Do NOT change existing service URLs.
+
+Do NOT create fake business information.
+
+Use the attached logo exactly as supplied.
+
+Use the verified Google Maps business address.
+
+Then begin the Admin Panel foundation so we can progressively add the actual business-management features later.

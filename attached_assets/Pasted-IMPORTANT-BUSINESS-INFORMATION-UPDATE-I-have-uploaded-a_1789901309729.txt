@@ -1,0 +1,195 @@
+IMPORTANT BUSINESS INFORMATION UPDATE:
+
+I have uploaded a REAL photograph of the New National Advertising shop.
+
+Please inspect and use the uploaded photograph as a source of factual business information.
+
+Do NOT invent or assume information that cannot be clearly supported by the photograph.
+
+The shop's physical display board visibly shows the following printing services/products:
+
+1. Visiting Card
+2. Bill Book
+3. Wedding Card
+4. Pamphlet
+5. T-Shirt Print
+6. Cup Print
+7. Carry Bag Print
+8. "All Printing Solution"
+
+The photograph also visibly shows physical examples/samples of:
+- Bill books
+- Wedding cards
+- Pamphlets
+- T-shirt printing
+- Printed cups/mugs
+- Printed carry bags
+
+==================================================
+UPDATE THE WEBSITE'S SERVICE INFORMATION
+==================================================
+
+Add these newly confirmed offerings to the existing service data where they naturally belong.
+
+IMPORTANT:
+Do NOT remove any existing services.
+
+Do NOT replace the existing service structure.
+
+Only ADD the newly confirmed offerings.
+
+Suggested mapping:
+
+DIGITAL PRINTING:
+- Visiting Card
+- Bill Book
+- Wedding Card
+- Pamphlet
+
+SCREEN PRINTING:
+- T-Shirt Print
+- Carry Bag Print
+- Cup Print
+
+If a particular item already exists in the service data, do not duplicate it.
+
+Keep the existing service names/slugs exactly as they are.
+
+==================================================
+IMPORTANT: "ALL PRINTING SOLUTION"
+==================================================
+
+The phrase "All Printing Solution" is visibly present on the shop display.
+
+This can be used as a supporting business phrase in appropriate places, such as a short description or service section.
+
+Do NOT turn it into an unsupported claim such as:
+- "We can print absolutely anything"
+- "Every printing service available"
+- "Unlimited printing solutions"
+
+Keep the wording professional and faithful to the actual photograph.
+
+==================================================
+USE THE REAL PHOTO
+==================================================
+
+Use the uploaded photograph as an authentic New National Advertising business image.
+
+A suitable caption can be:
+
+"Printing samples displayed at New National Advertising"
+
+or:
+
+"Printing solutions displayed at our shop"
+
+Do not describe it as a stock image.
+
+Do not generate fake details from the photograph.
+
+==================================================
+IMPORTANT ROUTING SAFETY
+==================================================
+
+While making these updates, DO NOT BREAK ANY EXISTING FUNCTIONALITY.
+
+Preserve all existing routes:
+
+/
+/products
+/services/sign-boards
+/services/solvent-flex
+/services/offset-printing
+/services/screen-printing
+/services/graphics-design
+/services/banner-printing
+/services/digital-printing
+
+Every existing "More Info →" link must continue opening the correct service page.
+
+Do not rename service slugs.
+
+Do not replace the existing Wouter router.
+
+Do not remove the Products page.
+
+Do not remove the existing service-detail-page system.
+
+==================================================
+PRESERVE EXISTING BUSINESS INFORMATION
+==================================================
+
+Keep the existing confirmed business details:
+
+Business:
+New National Advertising
+
+Phone:
+9555759677
+
+Additional phones:
+7506269783
+8898805753
+
+Email:
+newnationaladv2022@gmail.com
+
+Location:
+Mumbai, Maharashtra, India
+
+Do not invent:
+- years of experience
+- awards
+- certifications
+- number of customers
+- machinery
+- production capacity
+- delivery guarantees
+- pricing
+- fake testimonials
+- fake clients
+
+==================================================
+UI REQUIREMENT
+==================================================
+
+The newly confirmed services should appear naturally in the relevant service pages and/or service offerings.
+
+Keep the current design:
+
+- clean
+- minimal
+- professional
+- premium
+- soft white/light-grey backgrounds
+- navy/charcoal typography
+- professional blue
+- subtle CMYK-inspired accents
+- clean cards
+- good whitespace
+
+Do not redesign the entire website.
+
+Do not make the new information visually overwhelming.
+
+==================================================
+FINAL CHECK
+==================================================
+
+After making the changes:
+
+1. Check the homepage.
+2. Check Our Services.
+3. Check every More Info button.
+4. Check all 7 service-detail pages.
+5. Check /products.
+6. Check mobile navigation.
+7. Check WhatsApp.
+8. Check Call.
+9. Check the AI Assistant's service knowledge so it can mention the newly confirmed offerings.
+10. Make sure no duplicate service items were created.
+11. Run TypeScript/typecheck.
+12. Run the production build.
+
+The goal is to make the website reflect the REAL services visibly advertised at the New National Advertising shop while preserving every existing working feature and link.

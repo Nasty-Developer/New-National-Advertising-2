@@ -1,0 +1,309 @@
+Please update the service names, order, and service options in the existing New National Advertising website.
+
+IMPORTANT:
+Do NOT redesign the service section.
+Do NOT break any existing service-detail routes, More Info links, navbar links, Products page, or other functionality.
+
+==================================================
+FINAL SERVICE ORDER
+==================================================
+
+The "Our Services" section MUST use this exact order:
+
+1. Signage Board
+2. Banner Printing
+3. Eco Solvent Flex
+4. Offset Printing
+5. Screen Printing
+6. Graphics Design
+7. Digital Printing
+
+Do not use the old order.
+
+==================================================
+1. RENAME SIGN BOARDS
+==================================================
+
+Rename:
+
+"Sign Boards"
+
+to:
+
+"Signage Board"
+
+Update the visible service title everywhere it appears.
+
+IMPORTANT:
+Keep the existing route/slug stable if possible:
+
+/services/sign-boards
+
+Do NOT unnecessarily rename the URL slug, because existing links may already point to it.
+
+Only change the display name from "Sign Boards" to "Signage Board".
+
+==================================================
+2. SIGNAGE BOARD OPTIONS
+==================================================
+
+Under "Signage Board", REMOVE these options:
+
+- Iron Standee
+- Sunboard
+- Roll-up Standee
+
+Then ADD these options:
+
+- Signage
+- Kitchen
+- Badge
+- Paper Bed
+- Sandwich
+
+Make sure there are no duplicate entries.
+
+Keep the other existing valid Signage Board offerings unless specifically removed above.
+
+The Signage Board service should therefore contain the relevant existing options plus the newly requested options, but NOT:
+- Iron Standee
+- Sunboard
+- Roll-up Standee
+
+==================================================
+3. BANNER PRINTING
+==================================================
+
+Move:
+
+"Banner Printing"
+
+to position #2.
+
+The final order must have Banner Printing immediately after Signage Board.
+
+Keep its existing description and offerings unless there is an existing data inconsistency.
+
+==================================================
+4. RENAME SOLVENT FLEX
+==================================================
+
+Rename:
+
+"Solvent Flex"
+
+to:
+
+"Eco Solvent Flex"
+
+Update the visible title everywhere it appears.
+
+IMPORTANT:
+Do NOT unnecessarily change the existing route.
+
+Keep:
+
+/services/solvent-flex
+
+so existing links continue working.
+
+Only change the display/service name to:
+
+Eco Solvent Flex
+
+==================================================
+5. ECO SOLVENT FLEX POSITION
+==================================================
+
+Eco Solvent Flex must be service number #3.
+
+Final first three:
+
+1. Signage Board
+2. Banner Printing
+3. Eco Solvent Flex
+
+==================================================
+6. OFFSET PRINTING
+==================================================
+
+Offset Printing must be service number #4.
+
+Keep its existing offerings and description.
+
+Final position:
+
+4. Offset Printing
+
+==================================================
+7. SCREEN PRINTING
+==================================================
+
+Screen Printing must be service number #5.
+
+Keep its existing service information unless required by the ordering update.
+
+Final position:
+
+5. Screen Printing
+
+==================================================
+8. GRAPHICS DESIGN
+==================================================
+
+Graphics Design must be service number #6.
+
+Keep its existing offerings and description.
+
+Final position:
+
+6. Graphics Design
+
+==================================================
+9. DIGITAL PRINTING
+==================================================
+
+Digital Printing must be the LAST service.
+
+Final position:
+
+7. Digital Printing
+
+Keep its existing offerings and description.
+
+==================================================
+FINAL SERVICE ORDER
+==================================================
+
+The website must ultimately display exactly:
+
+1. Signage Board
+2. Banner Printing
+3. Eco Solvent Flex
+4. Offset Printing
+5. Screen Printing
+6. Graphics Design
+7. Digital Printing
+
+==================================================
+10. UPDATE ALL RELATED DATA
+==================================================
+
+Do not only change the homepage card order.
+
+Update the underlying structured service data so the same names/order are reflected consistently across:
+
+- Homepage Our Services
+- Service detail pages
+- Related Services
+- AI Assistant service knowledge
+- Any service dropdowns
+- Quote forms
+- Breadcrumbs
+- Service headings
+- Service metadata
+- Any service lists
+
+Do not create duplicate service entries.
+
+==================================================
+11. ROUTING SAFETY
+==================================================
+
+Preserve the existing routes:
+
+/services/sign-boards
+/services/banner-printing
+/services/solvent-flex
+/services/offset-printing
+/services/screen-printing
+/services/graphics-design
+/services/digital-printing
+
+Do NOT rename these URL slugs just because the visible service names changed.
+
+For example:
+
+Display name:
+Signage Board
+
+URL:
+ /services/sign-boards
+
+Display name:
+Eco Solvent Flex
+
+URL:
+ /services/solvent-flex
+
+This is intentional and helps preserve existing links.
+
+==================================================
+12. MORE INFO BUTTONS
+==================================================
+
+Verify that every service's:
+
+"More Info →"
+
+button still opens the correct service detail page after the ordering/name changes.
+
+Test all 7 services individually.
+
+==================================================
+13. DO NOT BREAK EXISTING WORK
+==================================================
+
+Do not modify unrelated parts of the website.
+
+Preserve:
+- Navbar
+- Products
+- Machines page
+- About
+- Contact
+- Hero
+- WhatsApp
+- Call buttons
+- Quote system
+- AI Assistant
+- Admin Panel
+- Existing logo
+- Existing business address
+- Mobile navigation
+
+Only make the service data, naming, ordering, and specified option changes.
+
+==================================================
+14. FINAL VERIFICATION
+==================================================
+
+After making the changes, verify the exact final order:
+
+1. Signage Board
+2. Banner Printing
+3. Eco Solvent Flex
+4. Offset Printing
+5. Screen Printing
+6. Graphics Design
+7. Digital Printing
+
+Verify Signage Board no longer contains:
+
+- Iron Standee
+- Sunboard
+- Roll-up Standee
+
+Verify Signage Board now contains:
+
+- Signage
+- Kitchen
+- Badge
+- Paper Bed
+- Sandwich
+
+Verify "Solvent Flex" is displayed as "Eco Solvent Flex".
+
+Run TypeScript/typecheck and production build.
+
+Fix only issues related to these changes.
