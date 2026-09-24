@@ -916,6 +916,14 @@ function Home() {
           </div>
         </section>
 
+        <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
+          <div className="container-nna">
+            <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
+            {publicProjects.isLoading ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{[1, 2, 3, 4, 5, 6].map((item) => <div key={item} className="admin-skeleton h-[170px] rounded-[8px] border border-[#e1e7eb] md:h-[190px]" />)}</div> : publicProjects.isError ? <div className="mt-8 rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert"><p className="eyebrow !text-[#a3443c]">Selected work</p><h3 className="display mt-3 text-2xl font-extrabold tracking-[-.055em] text-[#703a36]">Work unavailable</h3><p className="mx-auto mt-3 max-w-[360px] text-[12px] leading-5 text-[#9a625c]">We could not load the latest project work right now.</p></div> : publicProjects.data?.length ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{publicProjects.data.map((project, index) => { const image = project.imagePath?.startsWith('/') ? `/api/storage${project.imagePath}` : project.imagePath; return <Reveal key={project.id} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''}`}><div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}>{image ? <img src={image} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /> : <div className="flex h-full items-center justify-center bg-[#eaf2f4] text-[#7ea5b2]"><Package size={30} strokeWidth={1.2} /></div>}<div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/80 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em] text-[#f2c94c]">{project.featured ? 'Featured project' : 'Selected work'}</p><h3 className="mt-1 text-[13px] font-semibold">{project.name}</h3><p className="mt-1 line-clamp-2 text-[10px] leading-4 text-white/75">{project.shortDescription}</p></div><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div></Reveal>; })}</div> : <div className="mx-auto mt-8 max-w-[560px] rounded-[14px] border border-dashed border-[#b9d0d9] bg-white px-6 py-14 text-center shadow-[0_12px_34px_rgba(24,52,82,.05)]"><p className="eyebrow">Selected work</p><h3 className="display mt-3 text-3xl font-extrabold tracking-[-.055em] text-[#122641]">Projects coming soon</h3><p className="mx-auto mt-3 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing recent work for this space. Check back soon for new project stories.</p></div>}
+            {publicProjects.data?.length ? <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — recent printing, signage, and design projects.</p> : null}
+          </div>
+        </section>
+
          <section id="about" className="relative overflow-hidden bg-white py-20 lg:py-24">
            <div className="pointer-events-none absolute right-[-8rem] top-[-9rem] h-80 w-80 rounded-full border border-[#d9edf1] bg-[#f4fafb]" />
            <div className="container-nna">
@@ -960,13 +968,37 @@ function Home() {
            </div>
          </section>
 
-         <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
-          <div className="container-nna">
-            <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
-            {publicProjects.isLoading ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{[1, 2, 3, 4, 5, 6].map((item) => <div key={item} className="admin-skeleton h-[170px] rounded-[8px] border border-[#e1e7eb] md:h-[190px]" />)}</div> : publicProjects.isError ? <div className="mt-8 rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert"><p className="eyebrow !text-[#a3443c]">Selected work</p><h3 className="display mt-3 text-2xl font-extrabold tracking-[-.055em] text-[#703a36]">Work unavailable</h3><p className="mx-auto mt-3 max-w-[360px] text-[12px] leading-5 text-[#9a625c]">We could not load the latest project work right now.</p></div> : publicProjects.data?.length ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{publicProjects.data.map((project, index) => { const image = project.imagePath?.startsWith('/') ? `/api/storage${project.imagePath}` : project.imagePath; return <Reveal key={project.id} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''}`}><div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}>{image ? <img src={image} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /> : <div className="flex h-full items-center justify-center bg-[#eaf2f4] text-[#7ea5b2]"><Package size={30} strokeWidth={1.2} /></div>}<div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/80 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em] text-[#f2c94c]">{project.featured ? 'Featured project' : 'Selected work'}</p><h3 className="mt-1 text-[13px] font-semibold">{project.name}</h3><p className="mt-1 line-clamp-2 text-[10px] leading-4 text-white/75">{project.shortDescription}</p></div><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div></Reveal>; })}</div> : <div className="mx-auto mt-8 max-w-[560px] rounded-[14px] border border-dashed border-[#b9d0d9] bg-white px-6 py-14 text-center shadow-[0_12px_34px_rgba(24,52,82,.05)]"><p className="eyebrow">Selected work</p><h3 className="display mt-3 text-3xl font-extrabold tracking-[-.055em] text-[#122641]">Projects coming soon</h3><p className="mx-auto mt-3 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing recent work for this space. Check back soon for new project stories.</p></div>}
-            {publicProjects.data?.length ? <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — recent printing, signage, and design projects.</p> : null}
-          </div>
-        </section>
+         <section className="bg-white py-20 lg:py-24">
+           <div className="container-nna">
+             <div className="grid items-end gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
+               <Reveal>
+                 <p className="eyebrow">Our branch & workplace</p>
+                 <h2 className="display mt-3 max-w-[480px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Our Branch &amp; Workplace</h2>
+                 <p className="mt-5 max-w-[400px] text-[13px] leading-6 text-[#68798a]">Real images from New National Advertising, showing the people and spaces behind our printing and advertising work.</p>
+               </Reveal>
+               <Reveal delay={90} className="flex items-center gap-3 lg:justify-end">
+                 <div className="ink-strip w-24"><span /><span /><span /><span /></div>
+                 <span className="text-[9px] font-bold uppercase tracking-[.18em] text-[#7d8c99]">Real spaces · real work</span>
+               </Reveal>
+             </div>
+             <div className="mt-10 grid gap-5 lg:grid-cols-[1.22fr_.78fr] lg:items-stretch">
+               <Reveal className="group relative min-h-[420px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] sm:min-h-[540px]">
+                 <img src="/branch-workplace-office.png" alt="New National Advertising workplace and office" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white sm:p-7 sm:pt-24">
+                   <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our workplace</p>
+                   <p className="mt-2 max-w-[360px] text-[12px] leading-5 text-white/85">The creative and production environment behind New National Advertising.</p>
+                 </div>
+               </Reveal>
+               <Reveal delay={100} className="group relative min-h-[340px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] lg:min-h-0">
+                 <img src="/branch-workplace-flex-printing.png" alt="New National Advertising flex printing branch" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white">
+                   <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our branch</p>
+                   <p className="mt-2 text-[12px] leading-5 text-white/85">A real view from New National Advertising.</p>
+                 </div>
+               </Reveal>
+             </div>
+           </div>
+         </section>
 
         <section className="bg-white py-16 lg:py-20">
           <div className="container-nna grid items-center gap-8 lg:grid-cols-[.78fr_1.22fr] lg:gap-14">
