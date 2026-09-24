@@ -1,0 +1,429 @@
+Create a NEW dedicated page called:
+
+MACHINES
+
+Route:
+ /machines
+
+I am attaching 3 machine images with this prompt.
+
+IMPORTANT:
+Use the EXACT 3 images I am attaching.
+Do NOT generate replacement images.
+Do NOT use stock images.
+Do NOT recreate or modify the machines.
+
+The attached images are the machine visuals that should appear on the new Machines page.
+
+==================================================
+1. MACHINE PAGE PURPOSE
+==================================================
+
+Create a professional "Our Machines" / "Machines" page for New National Advertising.
+
+The purpose of this page is to visually show the printing and production equipment used for large-format printing and finishing work.
+
+The page should feel:
+- Professional
+- Premium
+- Clean
+- Technical
+- Trustworthy
+- Modern
+- Consistent with the existing New National Advertising website
+
+Do not make it look like an industrial machinery catalogue.
+
+Use the existing website design system:
+- White/light grey background
+- Navy/dark typography
+- Blue primary accent
+- Subtle orange/yellow accents
+- Clean cards
+- Moderate rounded corners
+- Soft shadows
+- Good whitespace
+
+==================================================
+2. MACHINE IMAGE 1
+==================================================
+
+Use the FIRST attached image.
+
+The image clearly shows an:
+
+Epson SureColor S80670
+
+This is a large-format Epson SureColor printer.
+
+Use the visible model information from the machine itself.
+
+TITLE:
+
+Epson SureColor S80670
+
+DESCRIPTION:
+
+"A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics."
+
+Do NOT invent exact print speeds, resolutions, ink specifications, media widths, production capacity, or technical specifications unless they are already provided elsewhere in the project.
+
+Keep the description focused on what can safely be represented from the machine and its visible use.
+
+==================================================
+3. MACHINE IMAGE 2
+==================================================
+
+Use the SECOND attached image.
+
+This machine is a large-format roll-to-roll finishing/lamination machine with multiple rollers and a wide working area.
+
+Since there is no clearly readable manufacturer/model information in the supplied image, DO NOT invent a brand or model.
+
+TITLE:
+
+Wide-Format Roll Laminator
+
+DESCRIPTION:
+
+"A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications."
+
+Do NOT claim:
+- exact temperature
+- exact width
+- exact speed
+- automatic features
+- specific lamination technology
+- manufacturer
+- model number
+
+unless verified elsewhere.
+
+==================================================
+4. MACHINE IMAGE 3
+==================================================
+
+Use the THIRD attached image.
+
+The image shows a large-format roll-to-roll printing machine producing a wide printed sheet/banner.
+
+There is visible branding on the machine, but do not invent a precise model number if it cannot be clearly established.
+
+TITLE:
+
+Large-Format Printing Machine
+
+DESCRIPTION:
+
+"A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials."
+
+Again, do NOT invent:
+- model number
+- print speed
+- resolution
+- ink technology
+- maximum width
+- production capacity
+
+unless the information is actually verified.
+
+==================================================
+5. PAGE STRUCTURE
+==================================================
+
+Create the page with this structure:
+
+HERO:
+
+Small eyebrow:
+OUR MACHINES
+
+Main heading:
+"Printing Technology Behind Our Work"
+
+Supporting text:
+
+"Explore the printing and finishing equipment used for producing high-quality large-format graphics, advertising materials and signage."
+
+Keep the copy professional and factual.
+
+Do NOT claim that these machines represent every piece of equipment owned by New National Advertising.
+
+==================================================
+
+MACHINE GRID:
+
+Create 3 premium machine cards.
+
+Each card should contain:
+
+- Large machine image
+- Machine name
+- Short category label
+- Professional description
+- Optional small "View Machine" interaction if useful
+
+Example:
+
+[Epson machine image]
+
+Epson SureColor S80670
+Large-Format Printing
+
+Professional description...
+
+--------------------------------
+
+[Laminator image]
+
+Wide-Format Roll Laminator
+Finishing Equipment
+
+Professional description...
+
+--------------------------------
+
+[Large-format printer image]
+
+Large-Format Printing Machine
+Wide-Format Production
+
+Professional description...
+
+==================================================
+6. IMAGE PRESENTATION
+==================================================
+
+This is important.
+
+Do NOT crop the machines aggressively.
+
+The machines should be clearly visible.
+
+Use:
+- Large image area
+- object-fit: contain where appropriate
+- clean neutral background
+- rounded corners
+- subtle border
+- subtle shadow
+
+The complete machine should remain visually understandable.
+
+Do not stretch or distort the images.
+
+On desktop:
+Use a spacious 3-card grid or a premium 2+1 layout depending on available width.
+
+On mobile:
+Stack the cards vertically.
+
+Images must remain responsive from approximately 320px mobile width through large desktop screens.
+
+==================================================
+7. MACHINE DETAILS
+==================================================
+
+Below the main machine cards, add a subtle section:
+
+"Built for Professional Print Production"
+
+Use concise factual copy explaining that the page showcases equipment involved in printing and finishing workflows.
+
+Suggested copy:
+
+"Our printing workflow combines large-format printing and finishing equipment to support a range of advertising, signage and printed-material requirements. The machines shown on this page represent the production equipment presented by New National Advertising."
+
+Do not make unsupported claims about production capacity or capabilities.
+
+==================================================
+8. CONNECT MACHINES TO SERVICES
+==================================================
+
+Where appropriate, show related services under each machine.
+
+For example:
+
+Epson SureColor S80670
+Related:
+- Solvent Flex
+- Banner Printing
+- Large-Format Advertising
+
+Wide-Format Roll Laminator
+Related:
+- Solvent Flex
+- Banner Printing
+- Sign Boards
+
+Large-Format Printing Machine
+Related:
+- Solvent Flex
+- Banner Printing
+- Sign Boards
+
+Use the existing service routes.
+
+For example:
+
+/services/solvent-flex
+/services/banner-printing
+/services/sign-boards
+
+Do NOT create duplicate service pages.
+
+==================================================
+9. NAVBAR
+==================================================
+
+Add:
+
+Machines
+
+to the existing navbar.
+
+Recommended order:
+
+Home
+Services
+Our Work
+Machines
+Products
+About
+Contact
+Get a Quote
+
+Keep the existing navbar styling.
+
+Do not remove any existing navigation item.
+
+Make Machines responsive on mobile navigation as well.
+
+==================================================
+10. ROUTING
+==================================================
+
+Add:
+
+/machines
+
+Make sure the page works with direct navigation and browser refresh.
+
+Do NOT break any existing routes.
+
+These must continue working:
+
+/
+/products
+
+/services/sign-boards
+/services/solvent-flex
+/services/offset-printing
+/services/screen-printing
+/services/graphics-design
+/services/banner-printing
+/services/digital-printing
+
+==================================================
+11. DO NOT BREAK EXISTING WEBSITE
+==================================================
+
+This is critical.
+
+Do NOT rewrite the entire application.
+
+Do NOT replace App.tsx unnecessarily.
+
+Do NOT remove existing functionality.
+
+Preserve:
+- Homepage
+- Hero
+- Services
+- More Info buttons
+- Service detail pages
+- Products
+- About
+- Contact
+- Quote form
+- WhatsApp
+- Call buttons
+- AI Assistant
+- Admin Panel foundation
+- Existing logo
+- Existing business address
+- Mobile navigation
+
+Only add the new Machines page and the required navigation link.
+
+==================================================
+12. IMAGE ASSETS
+==================================================
+
+Store the 3 attached machine images properly in the project's public/static assets.
+
+Use clean filenames such as:
+
+machine-epson-surecolor-s80670.jpg
+machine-wide-format-laminator.jpg
+machine-large-format-printer.jpg
+
+Use the actual attached images.
+
+Do not use temporary upload paths that could disappear.
+
+Optimize the images for website performance while keeping them visually sharp.
+
+Add meaningful alt text.
+
+Examples:
+
+"Epson SureColor S80670 large-format printer"
+
+"Wide-format roll laminator"
+
+"Large-format roll-to-roll printing machine"
+
+==================================================
+13. SEO
+==================================================
+
+Add appropriate page metadata:
+
+Title:
+Machines | New National Advertising
+
+Description:
+"Explore the printing and finishing equipment used by New National Advertising for large-format printing, signage and advertising production."
+
+Do not add fake technical specifications to SEO content.
+
+==================================================
+14. FINAL TESTING
+==================================================
+
+After implementation:
+
+1. Open /machines
+2. Verify all 3 images load correctly.
+3. Verify all machine descriptions are visible.
+4. Verify desktop layout.
+5. Verify mobile layout.
+6. Verify navbar Machines link.
+7. Verify direct /machines URL works.
+8. Refresh /machines and make sure it does not 404.
+9. Test all existing service links.
+10. Test Products.
+11. Test WhatsApp.
+12. Test Get a Quote.
+13. Test mobile navigation.
+14. Run TypeScript/typecheck.
+15. Run production build.
+
+IMPORTANT:
+
+Do not generate any new machine images.
+
+Use ONLY the 3 machine images I am attaching.
+
+The goal is to create a polished, professional Machines page that showcases these actual supplied machine images and gives visitors a clear understanding of the equipment without inventing unsupported technical specifications.

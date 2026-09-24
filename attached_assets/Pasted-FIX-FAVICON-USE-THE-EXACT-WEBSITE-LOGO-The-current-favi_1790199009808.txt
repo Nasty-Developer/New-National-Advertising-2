@@ -1,0 +1,59 @@
+FIX FAVICON — USE THE EXACT WEBSITE LOGO
+
+The current favicon appears as a plain/white icon and does NOT match the actual New National Advertising website branding.
+
+I want the favicon to use the EXACT SAME LOGO/BRAND MARK already used in the website header.
+
+IMPORTANT:
+- Do NOT create a new logo.
+- Do NOT redesign the logo.
+- Do NOT replace it with "NN", a generic icon, or a random symbol.
+- Do NOT use a white placeholder favicon.
+- Find the existing official New National Advertising logo asset already used by the website.
+- Use that exact logo as the source for the favicon.
+- Preserve the original logo colors, proportions, and recognizable design.
+- Remove unnecessary empty/white background around the logo if the source asset contains one.
+- Keep the logo centered and properly scaled so it remains recognizable at small favicon sizes.
+- If the existing logo is horizontal, create a favicon version from the actual logo without changing its design. Crop/fit it intelligently so the real branding remains visible.
+- Do not add any text that is not already part of the original logo.
+
+Generate/update these favicon assets:
+- /public/favicon.svg
+- /public/favicon-16x16.png
+- /public/favicon-32x32.png
+- /public/favicon.ico
+- /public/apple-touch-icon.png
+
+Update the document <head> to use the new favicon assets correctly:
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+IMPORTANT PRODUCTION REQUIREMENT:
+The favicon must work on:
+- https://newnationaladvertising.com
+- www.newnationaladvertising.com
+- Render preview
+
+Verify that the production HTML references the correct favicon files and that the files actually exist in the final build output.
+
+Do not modify:
+- Firebase authentication
+- Admin authentication
+- DNS
+- Render configuration
+- API/backend
+- CMS functionality
+- existing website logo/header
+
+Only fix the favicon and its production references.
+
+After implementation:
+1. Run the production build.
+2. Verify the favicon files exist in the build output.
+3. Verify the generated HTML references them.
+4. Make sure there is no old white/default favicon reference remaining.
+5. Commit the change.
