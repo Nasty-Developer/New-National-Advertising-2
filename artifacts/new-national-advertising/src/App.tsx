@@ -902,7 +902,6 @@ function Home() {
                  </Reveal>
                ); })}
              </div>
-            <div className="mt-5 rounded-[10px] border border-[#e2e9ee] bg-[#f8fafb] px-5 py-4 text-center text-[11px] text-[#647487]"><span className="font-bold text-[#263e57]">Other Services</span><span className="mx-2 text-[#b7c4cc]">/</span>Sunboard / Sunpack · PVC Cards · Resume / Bio-Data · Wooden / MS Frames</div>
           </div>
         </section>
 
