@@ -902,10 +902,6 @@ function Home() {
                  </Reveal>
                ); })}
              </div>
-
-
-            <div className="mt-5 rounded-[10px] border border-[#e2e9ee] bg-[#f8fafb] px-5 py-4 text-center text-[11px] text-[#647487]"><span className="font-bold text-[#263e57]">Other Services</span><span className="mx-2 text-[#b7c4cc]">/</span>Sunboard / Sunpack · PVC Cards · Resume / Bio-Data · Wooden / MS Frames</div>
- 85d1be53a84a952e91e218b5871080a435b04895
           </div>
         </section>
 
@@ -920,7 +916,6 @@ function Home() {
           </div>
         </section>
 
-
         <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
           <div className="container-nna">
             <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
@@ -929,8 +924,6 @@ function Home() {
           </div>
         </section>
 
-
- 85d1be53a84a952e91e218b5871080a435b04895
          <section id="about" className="relative overflow-hidden bg-white py-20 lg:py-24">
            <div className="pointer-events-none absolute right-[-8rem] top-[-9rem] h-80 w-80 rounded-full border border-[#d9edf1] bg-[#f4fafb]" />
            <div className="container-nna">
@@ -947,30 +940,18 @@ function Home() {
                </Reveal>
                <Reveal delay={110}>
                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
-
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
                         <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" className="block aspect-[4/5] w-full object-cover object-top" />
-
-                   <div className="pt-5 sm:pt-10">
-                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                       <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" className="aspect-[4/5] w-full object-cover object-top" />
- 85d1be53a84a952e91e218b5871080a435b04895
                      </div>
                      <div className="mt-3 border-l-2 border-[#1769aa] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
                        <h3 className="display mt-1 text-[17px] font-extrabold text-[#1d344b]">Taukeer Ahmed</h3>
                      </div>
                    </div>
-
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
                         <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" className="block aspect-[4/5] w-full object-cover object-top" />
-
-                   <div>
-                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                       <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" className="aspect-[4/5] w-full object-cover object-top" />
- 85d1be53a84a952e91e218b5871080a435b04895
                      </div>
                      <div className="mt-3 border-l-2 border-[#d9468c] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
@@ -986,7 +967,6 @@ function Home() {
              </div>
            </div>
          </section>
-
 
          <section className="bg-white py-20 lg:py-24">
            <div className="container-nna">
@@ -1019,15 +999,6 @@ function Home() {
              </div>
            </div>
          </section>
-
-         <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
-          <div className="container-nna">
-            <Reveal className="flex items-end justify-between gap-4"><div><p className="eyebrow">Our work</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Selected Work</h2></div><p className="hidden text-[11px] text-[#7b8998] sm:block">A glimpse of what we create.</p></Reveal>
-            {publicProjects.isLoading ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{[1, 2, 3, 4, 5, 6].map((item) => <div key={item} className="admin-skeleton h-[170px] rounded-[8px] border border-[#e1e7eb] md:h-[190px]" />)}</div> : publicProjects.isError ? <div className="mt-8 rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert"><p className="eyebrow !text-[#a3443c]">Selected work</p><h3 className="display mt-3 text-2xl font-extrabold tracking-[-.055em] text-[#703a36]">Work unavailable</h3><p className="mx-auto mt-3 max-w-[360px] text-[12px] leading-5 text-[#9a625c]">We could not load the latest project work right now.</p></div> : publicProjects.data?.length ? <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">{publicProjects.data.map((project, index) => { const image = project.imagePath?.startsWith('/') ? `/api/storage${project.imagePath}` : project.imagePath; return <Reveal key={project.id} delay={index * 45} className={`work-card group relative overflow-hidden rounded-[8px] border border-[#e1e7eb] bg-[#dae5eb] ${index === 0 ? 'md:row-span-2' : ''}`}><div className={`relative ${index === 0 ? 'h-[250px] md:h-full' : 'h-[170px] md:h-[190px]'}`}>{image ? <img src={image} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /> : <div className="flex h-full items-center justify-center bg-[#eaf2f4] text-[#7ea5b2]"><Package size={30} strokeWidth={1.2} /></div>}<div className="absolute inset-0 bg-gradient-to-t from-[#0d2238]/80 via-transparent to-transparent opacity-80" /><div className="absolute inset-x-0 bottom-0 p-4 text-white"><div className="flex items-end justify-between gap-2"><div><p className="text-[9px] font-medium uppercase tracking-[.14em] text-[#f2c94c]">{project.featured ? 'Featured project' : 'Selected work'}</p><h3 className="mt-1 text-[13px] font-semibold">{project.name}</h3><p className="mt-1 line-clamp-2 text-[10px] leading-4 text-white/75">{project.shortDescription}</p></div><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/90 text-[#1769aa] transition group-hover:translate-x-1"><ArrowRight size={13} /></span></div></div></div></Reveal>; })}</div> : <div className="mx-auto mt-8 max-w-[560px] rounded-[14px] border border-dashed border-[#b9d0d9] bg-white px-6 py-14 text-center shadow-[0_12px_34px_rgba(24,52,82,.05)]"><p className="eyebrow">Selected work</p><h3 className="display mt-3 text-3xl font-extrabold tracking-[-.055em] text-[#122641]">Projects coming soon</h3><p className="mx-auto mt-3 max-w-[360px] text-[13px] leading-6 text-[#68798a]">We’re preparing recent work for this space. Check back soon for new project stories.</p></div>}
-            {publicProjects.data?.length ? <p className="mt-4 text-[10px] text-[#8b98a4]">Selected Work — recent printing, signage, and design projects.</p> : null}
-          </div>
-        </section>
- 85d1be53a84a952e91e218b5871080a435b04895
 
         <section className="bg-white py-16 lg:py-20">
           <div className="container-nna grid items-center gap-8 lg:grid-cols-[.78fr_1.22fr] lg:gap-14">
@@ -1071,21 +1042,13 @@ function Home() {
          <section className="overflow-hidden bg-[#f3f7f8] py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <Reveal><p className="eyebrow">Built for your brand</p><h2 className="display mt-3 max-w-[440px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Design that supports your brand.</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">From a first logo to the final printed piece, every detail has a job to do.</p><a href="#contact" data-testid="link-design-enquiry" className="arrow-link mt-6 inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">Start a design conversation <ArrowRight size={14} /></a></Reveal>
-
-             <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-brand-materials.png" alt="Graphic design and brand materials" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
-
              <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
- 85d1be53a84a952e91e218b5871080a435b04895
           </div>
         </section>
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
-
              <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/services-main-signage.webp" alt="New National Advertising storefront signage" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
-
-             <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/signage-installation.jpg" alt="Acrylic and illuminated signage installation" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
- 85d1be53a84a952e91e218b5871080a435b04895
              <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">{content?.signageBody || signageService?.description || 'Professional signage designed to be seen clearly, day and night.'}</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{(signageService?.items ?? []).slice(0, 8).map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
           </div>
         </section>
