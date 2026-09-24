@@ -917,17 +917,49 @@ function Home() {
           </div>
         </section>
 
-        <section id="about" className="bg-white py-20 lg:py-24">
-          <div className="container-nna grid items-center gap-10 lg:grid-cols-[.74fr_1.26fr] lg:gap-20">
-             <Reveal><p className="eyebrow">About us</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">{content?.aboutTitle || 'New National Advertising'}</h2><p className="mt-5 max-w-[360px] text-[13px] leading-6 text-[#68798a]">{content?.aboutBody || 'New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.'}</p><a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex max-w-[360px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a><a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-2 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a></Reveal>
-            <Reveal delay={110} className="grid grid-cols-[1.3fr_1fr_.75fr] gap-2 sm:gap-3">
-              <div className="col-span-2 h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/design-materials.jpg" alt="Printed design materials on a studio table" className="h-full w-full object-cover" /></div>
-              <div className="relative h-[190px] overflow-hidden rounded-[9px] sm:h-[250px]"><img src="/new-national-advertising-shop.png" alt="Printing solutions displayed at New National Advertising" className="h-full w-full object-cover object-center" /><span className="absolute inset-x-2 bottom-2 rounded-full bg-white/90 px-2 py-1 text-center text-[8px] font-bold text-[#263e57] shadow-sm">Printing solutions displayed at our shop</span></div>
-              <div className="col-span-2 h-[100px] overflow-hidden rounded-[9px] sm:h-[120px]"><img src="/signage-installation.jpg" alt="Professional signage installation" className="h-full w-full object-cover object-center" /></div>
-              <div className="flex h-[100px] flex-col justify-center rounded-[9px] bg-[#eef3f6] px-4 sm:h-[120px] sm:px-5"><p className="display text-[17px] font-bold leading-[1.05] text-[#273b51]">From ideas<br />to impact</p><span className="mt-3 h-px w-8 bg-[#1669aa]" /></div>
-            </Reveal>
-          </div>
-        </section>
+         <section id="about" className="relative overflow-hidden bg-white py-20 lg:py-24">
+           <div className="pointer-events-none absolute right-[-8rem] top-[-9rem] h-80 w-80 rounded-full border border-[#d9edf1] bg-[#f4fafb]" />
+           <div className="container-nna">
+             <div className="grid items-center gap-12 lg:grid-cols-[.88fr_1.12fr] lg:gap-16">
+               <Reveal>
+                 <p className="eyebrow">About us</p>
+                 <h2 className="display mt-3 max-w-[520px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">{content?.aboutTitle || 'About New National Advertising'}</h2>
+                 <p className="mt-5 max-w-[500px] text-[13px] leading-6 text-[#68798a]">{content?.aboutBody || 'New National Advertising provides professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals. We specialize in high-quality printing and customized advertising solutions for every project.'}</p>
+                 <div className="mt-6 flex max-w-[520px] flex-wrap gap-2">
+                   {['Printing', 'Digital Printing', 'Solvent Flex Printing', 'Offset Printing', 'Sign Boards & Signage', 'Screen Printing', 'Graphics Design', 'Branding Solutions'].map((item) => <span key={item} className="rounded-full border border-[#d9e7ec] bg-[#f8fbfc] px-3 py-2 text-[10px] font-bold text-[#3c5a70]">{item}</span>)}
+                 </div>
+                 <a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a>
+                 <a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a>
+               </Reveal>
+               <Reveal delay={110}>
+                 <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                   <div className="pt-5 sm:pt-10">
+                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
+                       <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" className="aspect-[4/5] w-full object-cover object-top" />
+                     </div>
+                     <div className="mt-3 border-l-2 border-[#1769aa] pl-3">
+                       <p className="eyebrow !text-[8px]">New National Advertising</p>
+                       <h3 className="display mt-1 text-[17px] font-extrabold text-[#1d344b]">Taukeer Ahmed</h3>
+                     </div>
+                   </div>
+                   <div>
+                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
+                       <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" className="aspect-[4/5] w-full object-cover object-top" />
+                     </div>
+                     <div className="mt-3 border-l-2 border-[#d9468c] pl-3">
+                       <p className="eyebrow !text-[8px]">New National Advertising</p>
+                       <h3 className="display mt-1 text-[17px] font-extrabold text-[#1d344b]">Aurangzeb Khan</h3>
+                     </div>
+                   </div>
+                   <div className="col-span-2 mt-1 flex items-center gap-3 rounded-[12px] border border-[#e1eaee] bg-[#f7fafb] px-4 py-3">
+                     <div className="ink-strip w-16 shrink-0"><span /><span /><span /><span /></div>
+                     <p className="text-[11px] leading-5 text-[#68798a]">Professional people, reliable production and creative solutions for every brand we help bring to life.</p>
+                   </div>
+                 </div>
+               </Reveal>
+             </div>
+           </div>
+         </section>
 
          <section id="work" className="bg-[#f7f8fa] py-20 lg:py-24">
           <div className="container-nna">
