@@ -191,6 +191,8 @@ const providedServiceImageSeeds = [
   ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790081846306.png"],
 ] as const;
 
+let providedServiceImageStorageUnavailable = false;
+
 async function readProvidedServiceImage(filename: string) {
   const candidates = [
     resolve(process.cwd(), "assets/service-images", filename),
@@ -217,19 +219,23 @@ async function syncProvidedServiceImages() {
     if (!current.exists) return;
 
     let imagePath = `/${localPath}`;
-    if (hasFirebaseConfiguration()) {
+    if (hasFirebaseConfiguration() && !providedServiceImageStorageUnavailable) {
       const bytes = await readProvidedServiceImage(sourceFilename);
       if (!bytes) throw new Error(`Provided service image is missing: ${sourceFilename}`);
       const storagePath = `services/${localPath}`;
-      const file = firebaseBucket().file(storagePath);
-      await file.save(bytes, {
-        resumable: false,
-        metadata: {
-          contentType: "image/png",
-          cacheControl: "public,max-age=31536000",
-        },
-      });
-      imagePath = `/${storagePath}`;
+      try {
+        const file = firebaseBucket().file(storagePath);
+        await file.save(bytes, {
+          resumable: false,
+          metadata: {
+            contentType: "image/png",
+            cacheControl: "public,max-age=31536000",
+          },
+        });
+        imagePath = `/${storagePath}`;
+      } catch {
+        providedServiceImageStorageUnavailable = true;
+      }
     }
 
     const data = current.data();

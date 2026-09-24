@@ -37,11 +37,15 @@ export async function createFirebaseReadUrl(objectPath: string | null | undefine
   if (objectPath.startsWith("http")) return objectPath;
   if (objectPath.startsWith("/") && !/^\/(products|machines|services|projects|requests)\//.test(objectPath)) return objectPath;
   if (!hasFirebaseConfiguration()) return objectPath;
-  const file = firebaseBucket().file(objectPath.replace(/^\/+/, ""));
-  const [url] = await file.getSignedUrl({
-    version: "v4",
-    action: "read",
-    expires: Date.now() + 60 * 60 * 1000,
-  });
-  return url;
+  try {
+    const file = firebaseBucket().file(objectPath.replace(/^\/+/, ""));
+    const [url] = await file.getSignedUrl({
+      version: "v4",
+      action: "read",
+      expires: Date.now() + 60 * 60 * 1000,
+    });
+    return url;
+  } catch {
+    return objectPath;
+  }
 }
