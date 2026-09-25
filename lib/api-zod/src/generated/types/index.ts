@@ -19,8 +19,11 @@ export * from './machine';
 export * from './machineInput';
 export * from './product';
 <<<<<<< HEAD
+<<<<<<< HEAD
 export * from './productCategory';
 export * from './productCategoryImageInput';
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
 export * from './productInput';

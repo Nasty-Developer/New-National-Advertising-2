@@ -94,6 +94,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/Product"
 <<<<<<< HEAD
+<<<<<<< HEAD
   /product-categories:
     get:
       operationId: getProductCategories
@@ -142,6 +143,8 @@ paths:
           description: Authentication required
         "404":
           description: Product category not found
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
   /admin/products:
@@ -900,6 +903,7 @@ components:
               format: date-time
           required: [id, createdAt, updatedAt]
 <<<<<<< HEAD
+<<<<<<< HEAD
     ProductCategoryImageInput:
       type: object
       properties:
@@ -934,6 +938,8 @@ components:
           type: string
           format: date-time
       required: [categoryId, categoryName, categoryImagePath, categoryImageUrl, categoryImageAlt, active, displayOrder, createdAt, updatedAt]
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
     AdminSummary:
@@ -975,7 +981,11 @@ components:
         folder:
           type: string
 <<<<<<< HEAD
+<<<<<<< HEAD
           enum: [products, category-images, machines, services, projects, requests]
+=======
+          enum: [products, machines, services, projects, requests]
+>>>>>>> origin/main
 =======
           enum: [products, machines, services, projects, requests]
 >>>>>>> origin/main

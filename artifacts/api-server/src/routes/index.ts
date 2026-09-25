@@ -8,7 +8,10 @@ import catalogRouter from "./catalog";
 import cmsRouter from "./cms";
 import projectsRouter from "./projects";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import productCategoriesRouter from "./product-categories";
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
 
@@ -19,7 +22,10 @@ router.use(adminRouter);
 router.use(storageRouter);
 router.use(productsRouter);
 <<<<<<< HEAD
+<<<<<<< HEAD
 router.use(productCategoriesRouter);
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
 router.use(requestsRouter);

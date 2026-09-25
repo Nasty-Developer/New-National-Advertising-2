@@ -1079,9 +1079,15 @@ function Products() {
   const [search, setSearch] = useState("");
   const allProducts = useGetPublicProducts();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const selectedProducts = useMemo(
     () => (allProducts.data ?? []).filter((product) => product.category === selectedCategory),
     [allProducts.data, selectedCategory],
+=======
+  const selectedProducts = useGetPublicProducts(
+    selectedCategory ? { category: selectedCategory } : undefined,
+    { query: { enabled: Boolean(selectedCategory) } },
+>>>>>>> origin/main
 =======
   const selectedProducts = useGetPublicProducts(
     selectedCategory ? { category: selectedCategory } : undefined,
@@ -1098,7 +1104,11 @@ function Products() {
   const filteredProducts = useMemo(() => {
     const term = search.trim().toLowerCase();
 <<<<<<< HEAD
+<<<<<<< HEAD
     return selectedProducts.filter((product) =>
+=======
+    return (selectedProducts.data ?? []).filter((product) =>
+>>>>>>> origin/main
 =======
     return (selectedProducts.data ?? []).filter((product) =>
 >>>>>>> origin/main
@@ -1109,7 +1119,11 @@ function Products() {
         .includes(term),
     );
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [search, selectedProducts]);
+=======
+  }, [search, selectedProducts.data]);
+>>>>>>> origin/main
 =======
   }, [search, selectedProducts.data]);
 >>>>>>> origin/main
@@ -1171,17 +1185,23 @@ function Products() {
               </div>
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
           ) : allProducts.isLoading ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
               {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
             </div>
           ) : allProducts.isError ? (
 =======
+=======
+>>>>>>> origin/main
           ) : selectedProducts.isLoading ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
               {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
             </div>
           ) : selectedProducts.isError ? (
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
             <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert" data-testid="state-public-products-error">
               <p className="eyebrow !text-[#a3443c]">Products</p>
@@ -1189,7 +1209,11 @@ function Products() {
               <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#9a625c]">We could not load this category. Please try again shortly or contact us for help.</p>
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
           ) : selectedProducts.length ? (
+=======
+          ) : (
+>>>>>>> origin/main
 =======
           ) : (
 >>>>>>> origin/main

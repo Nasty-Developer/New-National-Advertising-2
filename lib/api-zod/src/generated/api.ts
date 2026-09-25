@@ -97,6 +97,7 @@ export const GetPublicProductsResponse = zod.array(GetPublicProductsResponseItem
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @summary List the public product categories and their images
  */
 export const GetProductCategoriesResponseItem = zod.object({
@@ -149,6 +150,8 @@ export const UpdateAdminProductCategoryResponse = zod.object({
 
 
 /**
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
  * @summary List products for administration
@@ -690,7 +693,11 @@ export const RequestProductImageUploadUrlBody = zod.object({
   "size": zod.number().int().min(1).max(requestProductImageUploadUrlBodySizeMax),
   "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']),
 <<<<<<< HEAD
+<<<<<<< HEAD
   "folder": zod.enum(['products', 'category-images', 'machines', 'services', 'projects', 'requests']).optional()
+=======
+  "folder": zod.enum(['products', 'machines', 'services', 'projects', 'requests']).optional()
+>>>>>>> origin/main
 =======
   "folder": zod.enum(['products', 'machines', 'services', 'projects', 'requests']).optional()
 >>>>>>> origin/main

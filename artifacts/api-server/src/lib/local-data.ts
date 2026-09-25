@@ -155,6 +155,7 @@ class LocalDocumentReference {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   async create(value: LocalRecord) {
     const records = collectionRecords(this.collectionName);
     if (records[this.id] !== undefined) {
@@ -166,6 +167,8 @@ class LocalDocumentReference {
     saveDatabase();
   }
 
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
   async set(value: LocalRecord, options?: SetOptions) {

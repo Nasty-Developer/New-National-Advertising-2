@@ -2,7 +2,11 @@ kind = "web"
 previewPath = "/"
 title = "New National Advertising"
 <<<<<<< HEAD
+<<<<<<< HEAD
 description = "Company website and admin content-management tools for New National Advertising, covering printing and signage services, equipment, projects, and quote requests."
+=======
+description = "The company website and admin content-management tools for New National Advertising, including printing and signage services, equipment, project portfolio, and quote requests."
+>>>>>>> origin/main
 =======
 description = "The company website and admin content-management tools for New National Advertising, including printing and signage services, equipment, project portfolio, and quote requests."
 >>>>>>> origin/main
