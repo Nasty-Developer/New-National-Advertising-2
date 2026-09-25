@@ -1,5 +1,9 @@
 import { randomUUID } from "node:crypto";
+<<<<<<< HEAD
 import { firebaseBucket, firestore, hasFirebaseConfiguration } from "./firebase";
+=======
+import { firebaseBucket, hasFirebaseConfiguration } from "./firebase";
+>>>>>>> origin/main
 
 const allowedContentTypes = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
 const maxBytes = 10 * 1024 * 1024;
@@ -48,6 +52,7 @@ export async function createFirebaseReadUrl(objectPath: string | null | undefine
   } catch {
     return objectPath;
   }
+<<<<<<< HEAD
 }
 
 export function normalizeFirebaseProductImagePath(value: unknown): string | null {
@@ -165,4 +170,6 @@ export async function deleteFirebaseProductImageIfUnreferenced(
       error instanceof Error ? error.message : "unknown storage error",
     );
   }
+=======
+>>>>>>> origin/main
 }

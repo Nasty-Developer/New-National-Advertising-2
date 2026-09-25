@@ -334,6 +334,7 @@ paths:
           description: Invalid upload request
         "401":
           description: Authentication required
+<<<<<<< HEAD
   /requests/quote-attachment-upload-url:
     post:
       operationId: requestQuoteAttachmentUploadUrl
@@ -374,6 +375,8 @@ paths:
                 $ref: "#/components/schemas/QuoteRequestCreated"
         "400":
           description: Invalid quote request
+=======
+>>>>>>> origin/main
   /machines:
     get:
       operationId: getPublicMachines
@@ -834,10 +837,6 @@ components:
         - $ref: "#/components/schemas/ProductInput"
         - type: object
           properties:
-            imageUrl:
-              type: [string, "null"]
-              format: uri
-              maxLength: 500
             id:
               type: string
               minLength: 1
@@ -1067,6 +1066,7 @@ components:
         createdAt: { type: string, format: date-time }
         updatedAt: { type: string, format: date-time }
       required: [id, name, phone, service, requirementDetails, status]
+<<<<<<< HEAD
     QuoteRequestInput:
       type: object
       properties:
@@ -1095,6 +1095,8 @@ components:
           type: string
           enum: [image/jpeg, image/png, image/webp, application/pdf]
       required: [name, size, contentType]
+=======
+>>>>>>> origin/main
     ContactRequest:
       type: object
       additionalProperties: true
@@ -1113,6 +1115,10 @@ components:
       properties:
         status:
           type: string
+<<<<<<< HEAD
+          enum: [new, contacted, quoted, approved, completed, cancelled, rejected]
+=======
           enum: [new, contacted, quoted, approved, completed, cancelled]
+>>>>>>> origin/main
       required: [status]
 

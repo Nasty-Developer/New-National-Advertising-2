@@ -69,8 +69,6 @@ export const getPublicProductsResponseOnePriceMin = 0;
 
 export const getPublicProductsResponseOneDisplayOrderMin = 0;
 
-export const getPublicProductsResponseTwoImageUrlMax = 500;
-
 
 
 
@@ -87,7 +85,6 @@ export const GetPublicProductsResponseItem = zod.object({
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getPublicProductsResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "imageUrl": zod.string().url().max(getPublicProductsResponseTwoImageUrlMax).nullish(),
   "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
@@ -124,8 +121,6 @@ export const getAdminProductsResponseOnePriceMin = 0;
 
 export const getAdminProductsResponseOneDisplayOrderMin = 0;
 
-export const getAdminProductsResponseTwoImageUrlMax = 500;
-
 
 
 
@@ -142,7 +137,6 @@ export const GetAdminProductsResponseItem = zod.object({
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getAdminProductsResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "imageUrl": zod.string().url().max(getAdminProductsResponseTwoImageUrlMax).nullish(),
   "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
@@ -205,8 +199,6 @@ export const createProductResponseOnePriceMin = 0;
 
 export const createProductResponseOneDisplayOrderMin = 0;
 
-export const createProductResponseTwoImageUrlMax = 500;
-
 
 
 
@@ -223,7 +215,6 @@ export const CreateProductResponse = zod.object({
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(createProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "imageUrl": zod.string().url().max(createProductResponseTwoImageUrlMax).nullish(),
   "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
@@ -258,8 +249,6 @@ export const getAdminProductResponseOnePriceMin = 0;
 
 export const getAdminProductResponseOneDisplayOrderMin = 0;
 
-export const getAdminProductResponseTwoImageUrlMax = 500;
-
 
 
 
@@ -276,7 +265,6 @@ export const GetAdminProductResponse = zod.object({
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(getAdminProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "imageUrl": zod.string().url().max(getAdminProductResponseTwoImageUrlMax).nullish(),
   "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
@@ -345,8 +333,6 @@ export const updateProductResponseOnePriceMin = 0;
 
 export const updateProductResponseOneDisplayOrderMin = 0;
 
-export const updateProductResponseTwoImageUrlMax = 500;
-
 
 
 
@@ -363,7 +349,6 @@ export const UpdateProductResponse = zod.object({
   "stockStatus": zod.enum(['in_stock', 'low_stock', 'out_of_stock']),
   "displayOrder": zod.number().int().min(updateProductResponseOneDisplayOrderMin).optional()
 }).and(zod.object({
-  "imageUrl": zod.string().url().max(updateProductResponseTwoImageUrlMax).nullish(),
   "id": zod.string().min(1),
   "createdAt": zod.coerce.date(),
   "updatedAt": zod.coerce.date()
@@ -644,6 +629,7 @@ export const RequestProductImageUploadUrlResponse = zod.object({
 
 
 /**
+<<<<<<< HEAD
  * @summary Prepare a quote request attachment upload
  */
 export const requestQuoteAttachmentUploadUrlBodyNameMax = 180;
@@ -706,6 +692,8 @@ export const CreateQuoteRequestResponse = zod.object({
 
 
 /**
+=======
+>>>>>>> origin/main
  * @summary List published machines
  */
 export const getPublicMachinesResponseOneNameMax = 180;
@@ -1966,7 +1954,11 @@ export const UpdateRequestStatusParams = zod.object({
 })
 
 export const UpdateRequestStatusBody = zod.object({
+<<<<<<< HEAD
+  "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled', 'rejected'])
+=======
   "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled'])
+>>>>>>> origin/main
 })
 
 export const UpdateRequestStatusResponse = zod.object({

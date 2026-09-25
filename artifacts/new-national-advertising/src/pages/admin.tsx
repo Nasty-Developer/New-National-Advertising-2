@@ -556,7 +556,11 @@ function ProductForm({
         stockStatus: product.stockStatus,
         displayOrder: String(product.displayOrder ?? 0),
       });
+<<<<<<< HEAD
       setPreview(imageUrl(product.imageUrl ?? product.imagePath));
+=======
+      setPreview(imageUrl(product.imagePath));
+>>>>>>> origin/main
     }
   }, [productQuery.data, isEditing]);
 
@@ -919,6 +923,7 @@ function ProductForm({
                       data-testid="input-product-image"
                     />
                   </label>
+<<<<<<< HEAD
                   {(form.imagePath || preview) && (
                     <button
                       type="button"
@@ -938,6 +943,8 @@ function ProductForm({
                       Remove image
                     </button>
                   )}
+=======
+>>>>>>> origin/main
                 </div>
                 <Field label="Image alt text" hint="Recommended">
                   <input
@@ -1403,15 +1410,24 @@ function ProductRow({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+<<<<<<< HEAD
   const productImage = product.imageUrl ?? product.imagePath;
+=======
+>>>>>>> origin/main
   return (
     <tr data-testid={`row-product-${product.id}`}>
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
           <div className="h-11 w-14 shrink-0 overflow-hidden rounded-lg bg-[#eaf2f4]">
+<<<<<<< HEAD
             {productImage ? (
               <img
                 src={imageUrl(productImage)}
+=======
+            {product.imagePath ? (
+              <img
+                src={imageUrl(product.imagePath)}
+>>>>>>> origin/main
                 alt={product.imageAlt || product.name}
                 className="h-full w-full object-cover"
               />
@@ -1483,14 +1499,23 @@ function ProductCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+<<<<<<< HEAD
   const productImage = product.imageUrl ?? product.imagePath;
+=======
+>>>>>>> origin/main
   return (
     <article className="p-4" data-testid={`card-product-${product.id}`}>
       <div className="flex gap-3">
         <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-[#eaf2f4]">
+<<<<<<< HEAD
           {productImage ? (
             <img
               src={imageUrl(productImage)}
+=======
+          {product.imagePath ? (
+            <img
+              src={imageUrl(product.imagePath)}
+>>>>>>> origin/main
               alt={product.imageAlt || product.name}
               className="h-full w-full object-cover"
             />

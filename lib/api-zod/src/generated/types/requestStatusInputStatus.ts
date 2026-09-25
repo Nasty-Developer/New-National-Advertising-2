@@ -16,4 +16,8 @@ export const RequestStatusInputStatus = {
   approved: 'approved',
   completed: 'completed',
   cancelled: 'cancelled',
+<<<<<<< HEAD
+  rejected: 'rejected',
+=======
+>>>>>>> origin/main
 } as const;

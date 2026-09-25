@@ -15,11 +15,15 @@ import {
 } from "@workspace/api-zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
+<<<<<<< HEAD
 import {
   createFirebaseDownloadUrl,
   deleteFirebaseProductImageIfUnreferenced,
   normalizeFirebaseProductImagePath,
 } from "../lib/firebase-storage";
+=======
+import { createFirebaseReadUrl } from "../lib/firebase-storage";
+>>>>>>> origin/main
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
@@ -35,6 +39,7 @@ function toDate(value: unknown): Date {
 }
 
 async function productResponse(id: string, data: DocumentData) {
+<<<<<<< HEAD
   const storedImagePath = data.imagePath ?? data.imageUrl ?? null;
   const imagePath =
     normalizeFirebaseProductImagePath(storedImagePath) ?? storedImagePath;
@@ -47,15 +52,21 @@ async function productResponse(id: string, data: DocumentData) {
     (!normalizeFirebaseProductImagePath(storedImageUrl) ||
       /[?&]token=/.test(storedImageUrl));
 
+=======
+>>>>>>> origin/main
   return {
     id,
     name: String(data.name ?? ""),
     shortDescription: String(data.shortDescription ?? ""),
     fullDescription: String(data.fullDescription ?? data.description ?? ""),
+<<<<<<< HEAD
     imagePath,
     imageUrl: storedUrlIsStable
       ? storedImageUrl
       : await createFirebaseDownloadUrl(imagePath ?? storedImagePath),
+=======
+    imagePath: await createFirebaseReadUrl(data.imagePath ?? data.imageUrl),
+>>>>>>> origin/main
     imageAlt: data.imageAlt ?? null,
     category: String(data.category ?? ""),
     serviceSlug: data.serviceSlug ?? null,
@@ -80,7 +91,11 @@ function slugify(value: string) {
   return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+<<<<<<< HEAD
 async function productValues(data: {
+=======
+function productValues(data: {
+>>>>>>> origin/main
   name: string;
   shortDescription: string;
   fullDescription: string;
@@ -94,17 +109,24 @@ async function productValues(data: {
   displayOrder?: number;
 }, uid: string) {
   const now = new Date();
+<<<<<<< HEAD
   const imagePath = data.imagePath
     ? normalizeFirebaseProductImagePath(data.imagePath) ?? data.imagePath.trim()
     : null;
+=======
+>>>>>>> origin/main
   return {
     name: data.name.trim(),
     slug: slugify(data.name),
     shortDescription: data.shortDescription.trim(),
     description: data.fullDescription.trim(),
     fullDescription: data.fullDescription.trim(),
+<<<<<<< HEAD
     imagePath,
     imageUrl: await createFirebaseDownloadUrl(imagePath),
+=======
+    imagePath: data.imagePath ?? null,
+>>>>>>> origin/main
     imageAlt: data.imageAlt?.trim() || null,
     category: data.category.trim(),
     serviceSlug: data.serviceSlug?.trim() || null,
@@ -158,7 +180,11 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
   }
   const admin = currentAdmin(res);
   const reference = products().doc();
+<<<<<<< HEAD
   await reference.set(await productValues(parsed.data, admin.uid));
+=======
+  await reference.set(productValues(parsed.data, admin.uid));
+>>>>>>> origin/main
   res.status(201).json(CreateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 
@@ -190,6 +216,7 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const admin = currentAdmin(res);
+<<<<<<< HEAD
   const previousImagePath = snapshot.data()?.imagePath ?? snapshot.data()?.imageUrl;
   const values = await productValues(parsed.data, admin.uid);
   await reference.set({
@@ -204,6 +231,13 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
   ) {
     await deleteFirebaseProductImageIfUnreferenced(previousImagePath);
   }
+=======
+  await reference.set({
+    ...productValues(parsed.data, admin.uid),
+    createdAt: snapshot.data()?.createdAt ?? new Date(),
+    createdBy: snapshot.data()?.createdBy ?? admin.uid,
+  }, { merge: true });
+>>>>>>> origin/main
   res.json(UpdateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 
