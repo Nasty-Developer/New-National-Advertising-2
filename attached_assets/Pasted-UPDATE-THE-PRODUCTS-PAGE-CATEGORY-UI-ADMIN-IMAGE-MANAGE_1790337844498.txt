@@ -1,0 +1,361 @@
+UPDATE THE PRODUCTS PAGE CATEGORY UI + ADMIN IMAGE MANAGEMENT
+
+Keep the 12 category images/cards, but make the category section more interactive, premium, and fully connected to the Admin Panel.
+
+IMPORTANT:
+DO NOT generate AI images.
+I will manually upload the images from the Admin Panel.
+
+There must be TWO separate image-upload systems:
+
+1. CATEGORY IMAGE
+2. PRODUCT IMAGE
+
+Both must work properly in production using Firebase Storage + Firestore.
+
+==================================================
+PUBLIC PRODUCTS PAGE
+==================================================
+
+At the top of the Products page, show the 12 categories as beautiful visual category cards.
+
+Each category card should contain:
+- Category image
+- Exact category name
+- Clean premium styling
+- Subtle hover effect
+- Clear indication that it is clickable
+- Dropdown/expand arrow
+
+The category image must come from the category image uploaded through the Admin Panel.
+
+DO NOT hard-code category image URLs.
+
+==================================================
+CATEGORY DROPDOWN / ACCORDION
+==================================================
+
+Each category must have a dropdown/expand option.
+
+Example:
+
+[ CATEGORY IMAGE ]
+
+SIGNAGE & DISPLAY                         ▼
+
+When expanded:
+
+Signage
+Stainless-steel sign boards
+Acrylic sign boards
+Acrylic nameplates
+QR-code stands
+...
+
+Click ▼ again:
+→ Collapse the category.
+
+The category image/card itself should also open/expand the category.
+
+Use smooth, subtle expand/collapse animation.
+
+Only one category needs to be expanded at a time if that creates a cleaner premium UI.
+
+==================================================
+CATEGORY IMAGE ADMIN PANEL
+==================================================
+
+Add proper category-image management to the Admin Panel.
+
+For EVERY ONE of the 12 categories, Admin must be able to:
+
+- Upload category image
+- Replace category image
+- Remove category image if needed
+- Preview category image before saving
+- Save the image
+- See the currently saved image
+- Edit/update it later
+
+The uploaded category image must be stored in:
+
+Firebase Storage
+        ↓
+Permanent Storage URL
+        ↓
+Firestore category data
+        ↓
+Public Products Page
+
+DO NOT use:
+- Blob URLs
+- Base64 images
+- Local file paths
+- Temporary preview URLs as permanent values
+- Random external image URLs
+
+The public Products page must always load the saved category image from production data.
+
+If no category image has been uploaded yet:
+→ show a clean empty/neutral state
+→ DO NOT generate an AI image automatically.
+
+==================================================
+PRODUCT IMAGE ADMIN PANEL
+==================================================
+
+The existing product image upload system must ALSO work correctly.
+
+For EVERY PRODUCT, Admin must be able to:
+
+- Upload product image
+- Preview image
+- Save image
+- Replace image
+- Remove/clear image
+- See the currently saved image
+
+Flow:
+
+Admin Panel
+    ↓
+Select Product
+    ↓
+Upload Image
+    ↓
+Firebase Storage
+    ↓
+Permanent image URL
+    ↓
+Firestore product document
+    ↓
+Public Products Page
+    ↓
+Correct product card displays that image
+
+DO NOT generate AI product images.
+
+I will manually upload the product images from the Admin Panel.
+
+IMPORTANT:
+The image must be linked to the CORRECT product.
+
+Example:
+
+Product:
+"Signage"
+
+Uploaded image:
+→ must appear only on the "Signage" product.
+
+Product:
+"Digital printing"
+
+Uploaded image:
+→ must appear only on "Digital printing".
+
+Do not accidentally assign one product's image to another product.
+
+==================================================
+FIRESTORE STRUCTURE
+==================================================
+
+Keep category and product data properly separated.
+
+CATEGORY DATA should contain something similar to:
+
+categoryId
+categoryName
+categoryImageUrl
+active
+
+PRODUCT DATA should contain:
+
+productId
+name
+category
+imageUrl
+active/status
+
+Use the existing production schema where possible instead of unnecessarily creating a new architecture.
+
+The category image must belong to the category.
+
+The product image must belong to the individual product.
+
+==================================================
+PRODUCT FILTERING
+==================================================
+
+Do NOT hard-code product lists in the frontend.
+
+Use the existing Firestore `category` field.
+
+When:
+
+SIGNAGE & DISPLAY
+
+is opened:
+
+→ query/filter products where category = "SIGNAGE & DISPLAY"
+
+Only products belonging to that category should appear.
+
+Do this dynamically for all 12 categories.
+
+==================================================
+PUBLIC PRODUCT CARDS
+==================================================
+
+When a product has an uploaded image:
+
+→ display the uploaded Firebase image.
+
+When a product does NOT have an image yet:
+
+→ show a clean premium empty-image state.
+
+DO NOT generate an image automatically.
+
+Do not use random placeholder product photos.
+
+==================================================
+CATEGORY LIST
+==================================================
+
+Keep these EXACT 12 category names:
+
+1. CORE PRINTING & BRANDING
+2. SIGNAGE & DISPLAY
+3. PAPER & CORPORATE PRINTING
+4. LABELS & STICKERS
+5. ACRYLIC PRODUCTS
+6. PROMOTIONAL PRODUCTS
+7. APPAREL
+8. FOOD / HOSPITALITY PACKAGING
+9. EVENTS & WEDDING
+10. AWARDS & RECOGNITION
+11. OFFICE / CORPORATE UTILITY
+12. SPECIALIZED PRODUCTS
+
+Do not rename them.
+
+==================================================
+202 PRODUCTS
+==================================================
+
+DO NOT change the existing 202-product catalog.
+
+Do not:
+- Delete products
+- Rename products
+- Merge products
+- Move products into different categories
+- Create duplicate products
+- Remove products
+
+The category dropdown must display the correct products from the existing Firestore data.
+
+==================================================
+DESIGN
+==================================================
+
+Make the whole Products page look premium and modern.
+
+Category cards:
+- Clean
+- Professional
+- Consistent image proportions
+- Rounded corners where appropriate
+- Subtle shadows/borders
+- Smooth hover interaction
+- Clear typography
+- Responsive layout
+
+Desktop:
+→ attractive category grid
+
+Tablet:
+→ responsive category grid
+
+Mobile:
+→ 1 or 2-column layout depending on available width
+
+Dropdown/accordion:
+→ smooth animation
+→ clear arrow
+→ clean product grid
+→ no excessive spacing
+
+Do not make the page visually crowded.
+
+==================================================
+VERY IMPORTANT: IMAGE UPLOAD TEST
+==================================================
+
+After implementation, TEST BOTH systems.
+
+TEST 1:
+Upload a category image from Admin Panel.
+
+Then verify:
+
+Admin Panel
+→ Firebase Storage
+→ Firestore
+→ Public Products Page
+
+The category image must appear correctly.
+
+TEST 2:
+Upload a product image from Admin Panel.
+
+Then verify:
+
+Admin Panel
+→ Firebase Storage
+→ Firestore
+→ Public Products Page
+
+The product image must appear on the correct product.
+
+Then:
+- Refresh Admin Panel
+- Refresh public Products page
+- Verify images remain visible
+- Verify images remain after logout/login
+- Verify images are still present after deployment
+
+Do not report the image system as complete until these tests work.
+
+==================================================
+FINAL RESULT
+==================================================
+
+Products Page:
+
+12 CATEGORY CARDS
+        ↓
+Category image uploaded from Admin Panel
+        ↓
+Click category / dropdown
+        ↓
+Products belonging to that category
+        ↓
+Individual product cards
+        ↓
+Product image uploaded from Admin Panel
+        ↓
+Product details
+
+IMPORTANT:
+
+I will provide/upload the images manually.
+
+DO NOT generate AI images.
+
+Make sure the Admin Panel provides a reliable way to upload and manage:
+1. Category images
+2. Individual product images
+
+Both must use production Firebase Storage + Firestore and must display correctly on the live Products page.

@@ -1,0 +1,113 @@
+Update the existing New National Advertising website with the following changes. Do not change unrelated functionality or design.
+
+1. SERVICES
+
+Change ONLY this service title:
+
+FROM:
+"Offset Printing"
+
+TO:
+"Flex Printing"
+
+Keep the existing image, description, layout, styling, icon, buttons, and links unchanged.
+
+If the title is stored in Firestore/CMS, update the production record instead of hardcoded UI text.
+
+2. MACHINES - PRIORITY RANKING
+
+Reorder the existing Machines section so these machines appear FIRST in exactly this order:
+
+1. Laser CO2
+2. Epson
+3. 512i Konica Flex Machine
+4. Excel Z
+5. Konica Minolta
+
+Then display ALL remaining existing machines after these five.
+
+Important:
+- Do not delete any machines.
+- Do not create duplicate machines.
+- Do not unnecessarily rename existing machine records.
+- Match the ranking to the actual existing machine names/data.
+- Keep all existing machine images and information unchanged.
+- Only change the display/order priority.
+- The ranking must work on the live website and after page refresh.
+
+3. PRODUCTS - PRIORITY RANKING
+
+Reorder the existing Products section so these eight products appear FIRST in exactly this order:
+
+1. Signage
+2. Banner
+3. Brochure
+4. Acrylic Clip-on Board
+5. Calendars
+6. Business Card
+7. Letterhead
+8. Hoarding Banner
+
+Then display ALL remaining existing products after these eight.
+
+Important:
+- Do not delete any products.
+- Do not create duplicate products.
+- Do not unnecessarily rename products.
+- Match these names to the existing product records/data.
+- Preserve all existing product images, descriptions, prices/details, and other information.
+- Only change the display/sorting priority.
+
+4. ADMIN PANEL IMAGE UPLOAD - MUST WORK
+
+The current Admin Panel image functionality is not working properly.
+
+Fix the image management system so I can easily add and replace images from the Admin Panel for:
+
+- Products
+- Machines
+- Services
+- Projects
+- Any existing content type that supports images
+
+Required flow:
+
+Admin Panel
+→ Select/Add image
+→ Upload actual image
+→ Firebase Storage
+→ Save production Storage URL in Firestore
+→ Display image in Admin Panel
+→ Refresh Admin Panel
+→ Image still loads
+→ Public website uses the same image
+
+When replacing an image, the new image must replace the old image correctly.
+
+Do NOT use:
+- local file paths
+- blob URLs as permanent image URLs
+- temporary URLs
+- base64 as the permanent image source
+- localStorage for production images
+- Replit-only storage
+- placeholder images
+
+Use the EXISTING production Firebase project, Firebase Storage, and Firestore.
+
+5. VERIFY EVERYTHING
+
+Before declaring the task complete, actually verify:
+
+- Offset Printing → Flex Printing
+- Machines ranking is correct
+- Products ranking is correct
+- Admin Panel can upload a new image
+- Uploaded image is stored in production Firebase Storage
+- Firestore contains the correct image URL
+- Image remains after Admin Panel refresh
+- Image appears correctly on the public website
+- Existing products/machines were not deleted
+- No duplicate records were created
+
+Do not redesign the website or modify unrelated sections.
