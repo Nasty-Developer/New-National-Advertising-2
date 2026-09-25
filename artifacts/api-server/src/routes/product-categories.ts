@@ -92,7 +92,10 @@ async function productCategoryResponse(
       categoryImageUrl = storedUrl;
     } else {
       try {
-        categoryImageUrl = await createFirebaseDownloadUrl(categoryImagePath);
+        categoryImageUrl = await createFirebaseImageDownloadUrl(
+          categoryImagePath,
+          "category-images",
+        );
       } catch {
         categoryImageUrl = null;
       }
