@@ -46,6 +46,7 @@ import {
   type WebsiteSettings,
   type WebsiteSettingsInput,
 } from "@workspace/api-client-react";
+import { uploadFileToServer } from "@/lib/image-upload";
 
 type CmsPage = "Machines" | "Services" | "Website Content" | "Settings";
 
@@ -103,10 +104,7 @@ async function uploadFiles(files: File[], folder: "machines" | "services", reque
   const paths: string[] = [];
   for (const file of files) {
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 10 * 1024 * 1024) throw new Error("Use JPG, PNG, or WebP images up to 10 MB.");
-    const response = await request.mutateAsync({ data: { name: file.name, size: file.size, contentType: file.type as UploadRequestContentType, folder } });
-    const result = await fetch(response.uploadURL, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-    if (!result.ok) throw new Error("The image upload failed. Please try again.");
-    paths.push(response.objectPath);
+    paths.push(await uploadFileToServer(file, folder, request.mutateAsync));
   }
   return paths;
 }

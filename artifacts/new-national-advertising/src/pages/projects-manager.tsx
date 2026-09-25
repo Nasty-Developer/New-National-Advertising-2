@@ -12,6 +12,7 @@ import {
   type ProjectInput,
   type UploadRequestContentType,
 } from "@workspace/api-client-react";
+import { uploadFileToServer } from "@/lib/image-upload";
 
 const blankProject: ProjectInput = {
   name: "",
@@ -45,12 +46,7 @@ async function uploadProjectImages(files: File[], upload: ReturnType<typeof useR
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 10 * 1024 * 1024) {
       throw new Error("Use JPG, PNG, or WebP images up to 10 MB.");
     }
-    const response = await upload.mutateAsync({
-      data: { name: file.name, size: file.size, contentType: file.type as UploadRequestContentType, folder: "projects" },
-    });
-    const result = await fetch(response.uploadURL, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-    if (!result.ok) throw new Error("The image upload failed. Please try again.");
-    paths.push(response.objectPath);
+    paths.push(await uploadFileToServer(file, "projects", upload.mutateAsync));
   }
   return paths;
 }

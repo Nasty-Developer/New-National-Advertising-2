@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { z } from "zod";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import { createFirebaseReadUrl } from "../lib/firebase-storage";
+import { mediaReadUrl } from "../lib/cloudinary-storage";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
@@ -32,7 +32,7 @@ function clean<T extends Record<string, unknown>>(value: T) {
 }
 
 function validAttachment(path: string | undefined) {
-  return !path || /^\/?requests\/[a-zA-Z0-9._/-]+$/.test(path);
+  return !path || /^https?:\/\//i.test(path) || /^\/?requests\/[a-zA-Z0-9._/-]+$/.test(path);
 }
 
 router.post("/requests/quote", async (req, res): Promise<void> => {
@@ -74,7 +74,7 @@ async function listRequests(collectionName: "quoteRequests" | "contactRequests")
       ...data,
       createdAt: data.createdAt?.toDate?.() ?? data.createdAt,
       updatedAt: data.updatedAt?.toDate?.() ?? data.updatedAt,
-      ...(collectionName === "quoteRequests" ? { attachmentUrl: await createFirebaseReadUrl(data.attachmentUrl) } : {}),
+      ...(collectionName === "quoteRequests" ? { attachmentUrl: mediaReadUrl(data.attachmentUrl) } : {}),
     };
   }));
 }

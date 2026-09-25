@@ -7,11 +7,7 @@ import {
 } from "@workspace/api-zod";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
 import { firestore } from "../lib/firebase";
-import {
-  createFirebaseImageDownloadUrl,
-  deleteFirebaseProductImageIfUnreferenced,
-  normalizeFirebaseCategoryImagePath,
-} from "../lib/firebase-storage";
+import { mediaReference } from "../lib/cloudinary-storage";
 
 const router: IRouter = Router();
 const productCategories = () => firestore().collection("productCategories");
@@ -82,25 +78,12 @@ async function productCategoryResponse(
   data: Record<string, unknown>,
 ) {
   const categoryImagePath =
-    normalizeFirebaseCategoryImagePath(data.categoryImagePath ?? data.categoryImageUrl) ?? null;
+    mediaReference(data.categoryImagePath ?? data.categoryImageUrl) ?? null;
   const storedUrl = typeof data.categoryImageUrl === "string" ? data.categoryImageUrl : null;
-  const storedUrlPath = normalizeFirebaseCategoryImagePath(storedUrl);
-  let categoryImageUrl: string | null = null;
-
-  if (categoryImagePath) {
-    if (storedUrl && storedUrlPath === categoryImagePath && /[?&]token=/.test(storedUrl)) {
-      categoryImageUrl = storedUrl;
-    } else {
-      try {
-        categoryImageUrl = await createFirebaseImageDownloadUrl(
-          categoryImagePath,
-          "category-images",
-        );
-      } catch {
-        categoryImageUrl = null;
-      }
-    }
-  }
+  const categoryImageUrl =
+    storedUrl && /^https?:\/\//i.test(storedUrl)
+      ? storedUrl
+      : categoryImagePath;
 
   return {
     categoryId,
@@ -159,9 +142,9 @@ router.put(
     const snapshot = await reference.get();
     const previous = snapshot.data() ?? {};
     const previousImagePath =
-      normalizeFirebaseCategoryImagePath(previous.categoryImagePath ?? previous.categoryImageUrl);
+      mediaReference(previous.categoryImagePath ?? previous.categoryImageUrl);
     const categoryImagePath = parsed.data.categoryImagePath
-      ? normalizeFirebaseCategoryImagePath(parsed.data.categoryImagePath)
+      ? mediaReference(parsed.data.categoryImagePath)
       : null;
 
     if (parsed.data.categoryImagePath && !categoryImagePath) {
@@ -177,23 +160,11 @@ router.put(
         typeof previous.categoryImageUrl === "string" ? previous.categoryImageUrl : "";
       if (
         previousImagePath === categoryImagePath &&
-        /^https?:\/\//i.test(previousImageUrl) &&
-        /[?&]token=/.test(previousImageUrl)
+        /^https?:\/\//i.test(previousImageUrl)
       ) {
         categoryImageUrl = previousImageUrl;
       } else {
-        try {
-          categoryImageUrl = await createFirebaseImageDownloadUrl(
-            categoryImagePath,
-            "category-images",
-          );
-        } catch (error) {
-          req.log.warn({ err: error }, "Could not verify uploaded category image");
-          res.status(422).json({
-            error: "The category image could not be verified in Firebase Storage. Please upload it again.",
-          });
-          return;
-        }
+        categoryImageUrl = categoryImagePath;
       }
     }
     const values = {
@@ -213,10 +184,6 @@ router.put(
     };
 
     await reference.set(values, { merge: true });
-
-    if (previousImagePath && previousImagePath !== categoryImagePath) {
-      await deleteFirebaseProductImageIfUnreferenced(previousImagePath);
-    }
 
     res.json(UpdateAdminProductCategoryResponse.parse(
       await productCategoryResponse(category.id, category.name, category.displayOrder, values),

@@ -373,7 +373,7 @@ paths:
               $ref: "#/components/schemas/UploadRequest"
       responses:
         "200":
-          description: Signed Firebase Storage upload details
+          description: Server upload details for a Cloudinary-backed file upload
           content:
             application/json:
               schema:
@@ -395,7 +395,7 @@ paths:
               $ref: "#/components/schemas/QuoteAttachmentUploadInput"
       responses:
         "200":
-          description: Signed Firebase Storage upload details
+          description: Server upload details for a Cloudinary-backed file upload
           content:
             application/json:
               schema:

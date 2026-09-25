@@ -1,15 +1,8 @@
 import { Router, type IRouter } from "express";
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
 import { z } from "zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import {
-  createFirebaseReadUrl,
-  deleteFirebaseStorageImageIfUnreferenced,
-  normalizeFirebaseStoragePath,
-} from "../lib/firebase-storage";
-import { firebaseBucket, hasFirebaseConfiguration } from "../lib/firebase";
+import { mediaReadUrl, mediaReference } from "../lib/cloudinary-storage";
 import { firestore } from "../lib/firebase";
 import { ensureExactProductCatalog } from "../lib/product-catalog";
 
@@ -33,21 +26,7 @@ const approvedServiceTitles = new Map([
 ]);
 
 function normalizeCatalogImage(value: string) {
-  return normalizeFirebaseStoragePath(value) ?? value;
-}
-
-async function removeReplacedCatalogImages(
-  previous: DocumentData,
-  nextImages: string[],
-) {
-  const next = new Set(nextImages.map((image) => normalizeFirebaseStoragePath(image) ?? image));
-  const previousImages = [
-    ...(Array.isArray(previous.images) ? previous.images : []),
-    previous.imageUrl,
-  ].filter((image): image is string => typeof image === "string" && image.length > 0);
-  await Promise.all(previousImages
-    .filter((image) => !next.has(normalizeFirebaseStoragePath(image) ?? image))
-    .map((image) => deleteFirebaseStorageImageIfUnreferenced(image)));
+  return mediaReference(value) ?? value;
 }
 
 const machineBody = z.object({
@@ -181,53 +160,14 @@ const providedServiceImageSeeds = [
   ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790081846306.png"],
 ] as const;
 
-let providedServiceImageStorageUnavailable = false;
-
-async function readProvidedServiceImage(filename: string) {
-  const candidates = [
-    resolve(process.cwd(), "assets/service-images", filename),
-    resolve(process.cwd(), "artifacts/api-server/assets/service-images", filename),
-    resolve(process.cwd(), "attached_assets", filename),
-    resolve(process.cwd(), "../attached_assets", filename),
-    resolve(process.cwd(), "../../attached_assets", filename),
-  ];
-  for (const candidate of candidates) {
-    try {
-      return await readFile(candidate);
-    } catch {
-      // Try the next workspace location.
-    }
-  }
-  return null;
-}
-
 async function syncProvidedServiceImages() {
   const services = firestore().collection("services");
-  await Promise.all(providedServiceImageSeeds.map(async ([slug, localPath, sourceFilename]) => {
+  await Promise.all(providedServiceImageSeeds.map(async ([slug, localPath]) => {
     const reference = services.doc(slug);
     const current = await reference.get();
     if (!current.exists) return;
 
     let imagePath = `/${localPath}`;
-    if (hasFirebaseConfiguration() && !providedServiceImageStorageUnavailable) {
-      const bytes = await readProvidedServiceImage(sourceFilename);
-      if (!bytes) throw new Error(`Provided service image is missing: ${sourceFilename}`);
-      const storagePath = `services/${localPath}`;
-      try {
-        const file = firebaseBucket().file(storagePath);
-        await file.save(bytes, {
-          resumable: false,
-          metadata: {
-            contentType: "image/png",
-            cacheControl: "public,max-age=31536000",
-          },
-        });
-        imagePath = `/${storagePath}`;
-      } catch {
-        providedServiceImageStorageUnavailable = true;
-      }
-    }
-
     const data = current.data();
     const updates: DocumentData = {};
     const title = approvedServiceTitles.get(slug);
@@ -301,8 +241,8 @@ async function publicDocuments(kind: "machines" | "services") {
       return {
         id: doc.id,
         ...data,
-        imageUrl: kind === "machines" ? await createFirebaseReadUrl(data.imageUrl ?? images[0]) : undefined,
-        images: await Promise.all(images.map((image: string) => createFirebaseReadUrl(image))),
+        imageUrl: kind === "machines" ? mediaReadUrl(data.imageUrl ?? images[0]) : undefined,
+        images: images.map((image: string) => mediaReadUrl(image)),
       };
     }));
 }
@@ -393,12 +333,10 @@ router.put("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const now = new Date();
-  const previous = await reference.get();
   const imageUrl = parsed.data.imageUrl ? normalizeCatalogImage(parsed.data.imageUrl) : "";
   const images = parsed.data.images.map(normalizeCatalogImage).filter(Boolean);
   const nextImages = images.length ? images : imageUrl ? [imageUrl] : [];
   await reference.set({ ...parsed.data, imageUrl, fullDescription: parsed.data.fullDescription || parsed.data.description, images: nextImages, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
-  await removeReplacedCatalogImages(previous.data(), nextImages);
   res.json({ id: reference.id, ...parsed.data, updatedAt: now });
 });
 
@@ -445,10 +383,8 @@ router.put("/admin/services/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const now = new Date();
-  const previous = await reference.get();
   const nextImages = parsed.data.images.map(normalizeCatalogImage).filter(Boolean);
   await reference.set({ ...parsed.data, images: nextImages, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
-  await removeReplacedCatalogImages(previous.data(), nextImages);
   res.json({ id: reference.id, ...parsed.data, updatedAt: now });
 });
 

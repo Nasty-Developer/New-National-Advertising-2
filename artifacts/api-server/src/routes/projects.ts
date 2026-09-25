@@ -11,11 +11,7 @@ import {
 } from "@workspace/api-zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import {
-  createFirebaseReadUrl,
-  deleteFirebaseStorageImageIfUnreferenced,
-  normalizeFirebaseStoragePath,
-} from "../lib/firebase-storage";
+import { mediaReadUrl, mediaReference } from "../lib/cloudinary-storage";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
@@ -42,9 +38,9 @@ async function projectResponse(id: string, data: DocumentData, signedUrls: boole
     name: String(data.name ?? ""),
     shortDescription: String(data.shortDescription ?? ""),
     fullDescription: String(data.fullDescription ?? ""),
-    imagePath: signedUrls ? await createFirebaseReadUrl(imagePath) : imagePath,
+    imagePath: signedUrls ? mediaReadUrl(imagePath) : imagePath,
     additionalImages: signedUrls
-      ? await Promise.all(additionalImages.map((path: string) => createFirebaseReadUrl(path)))
+      ? additionalImages.map((path: string) => mediaReadUrl(path))
       : additionalImages,
     videoUrl: typeof data.videoUrl === "string" ? data.videoUrl : "",
     published: data.published === true,
@@ -68,10 +64,10 @@ function projectValues(data: {
 }, uid: string) {
   const now = new Date();
   const imagePath = data.imagePath
-    ? normalizeFirebaseStoragePath(data.imagePath) ?? data.imagePath
+    ? mediaReference(data.imagePath) ?? data.imagePath
     : null;
   const additionalImages = (data.additionalImages ?? []).map(
-    (path) => normalizeFirebaseStoragePath(path) ?? path,
+    (path) => mediaReference(path) ?? path,
   );
   return {
     name: data.name.trim(),
@@ -147,13 +143,6 @@ router.put("/admin/projects/:id", requireAdmin, async (req, res): Promise<void> 
     next.imagePath,
     ...next.additionalImages,
   ].filter((path): path is string => Boolean(path)));
-  const previousImages = [
-    previous.imagePath,
-    ...(Array.isArray(previous.additionalImages) ? previous.additionalImages : []),
-  ].filter((path): path is string => typeof path === "string" && path.length > 0);
-  await Promise.all(previousImages
-    .filter((path) => !nextImages.has(normalizeFirebaseStoragePath(path) ?? path))
-    .map((path) => deleteFirebaseStorageImageIfUnreferenced(path)));
   res.json(UpdateProjectResponse.parse(await projectResponse(reference.id, (await reference.get()).data()!, false)));
 });
 

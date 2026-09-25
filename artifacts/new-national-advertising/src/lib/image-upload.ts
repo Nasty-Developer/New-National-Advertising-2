@@ -1,37 +1,47 @@
 import { firebaseAuth } from "@/lib/firebase-client";
 import type { UploadRequestContentType } from "@workspace/api-client-react";
 
-export type FirebaseImageFolder = "products" | "category-images";
+export type ImageUploadFolder =
+  | "products"
+  | "category-images"
+  | "machines"
+  | "services"
+  | "projects"
+  | "requests";
 
 type UploadTarget = {
   uploadURL: string;
   uploadToken?: string;
-  objectPath: string;
 };
 
 type UploadInput = {
   name: string;
   size: number;
   contentType: UploadRequestContentType;
-  folder: FirebaseImageFolder;
+  folder: ImageUploadFolder;
 };
 
 type UploadRequester = (input: { data: UploadInput }) => Promise<UploadTarget>;
 
-const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+const allowedTypes = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+]);
 const maxBytes = 10 * 1024 * 1024;
 
-export async function uploadFirebaseImage(
+export async function uploadFileToServer(
   file: File,
-  folder: FirebaseImageFolder,
+  folder: ImageUploadFolder,
   requestUpload: UploadRequester,
-  onProgress: (progress: number) => void,
+  onProgress: (progress: number) => void = () => {},
 ): Promise<string> {
   if (!allowedTypes.has(file.type)) {
-    throw new Error("Use a JPG, PNG, or WebP image.");
+    throw new Error("Use a JPG, PNG, WebP, or PDF file.");
   }
   if (file.size < 1 || file.size > maxBytes) {
-    throw new Error("Images must be between 1 byte and 10 MB.");
+    throw new Error("Files must be between 1 byte and 10 MB.");
   }
 
   const user = firebaseAuth?.currentUser;
@@ -52,40 +62,42 @@ export async function uploadFirebaseImage(
   }
 
   const idToken = await user.getIdToken();
-  await new Promise<void>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     const request = new XMLHttpRequest();
     request.open("PUT", target.uploadURL);
     request.timeout = 120_000;
     request.setRequestHeader("Content-Type", file.type);
     request.setRequestHeader("Authorization", `Bearer ${idToken}`);
-    request.setRequestHeader("X-Upload-Ticket", target.uploadToken!);
+    request.setRequestHeader("X-Upload-Ticket", target.uploadToken);
     request.upload.onprogress = (event) => {
       if (event.lengthComputable) {
-        onProgress(Math.max(1, Math.min(99, Math.round((event.loaded / event.total) * 100))));
+        onProgress(
+          Math.max(1, Math.min(99, Math.round((event.loaded / event.total) * 100))),
+        );
       }
     };
     request.onload = () => {
       if (request.status < 200 || request.status >= 300) {
-        reject(new Error(`Firebase Storage rejected the upload (HTTP ${request.status}).`));
+        reject(new Error(`Cloudinary rejected the upload (HTTP ${request.status}).`));
         return;
       }
       try {
         const result = JSON.parse(request.responseText) as { objectPath?: unknown };
-        if (result.objectPath !== target.objectPath) {
-          reject(new Error("The server saved the image to an unexpected storage path."));
+        if (typeof result.objectPath !== "string" || !/^https?:\/\//i.test(result.objectPath)) {
+          reject(new Error("The upload completed without a valid Cloudinary URL."));
           return;
         }
         onProgress(100);
-        resolve();
+        resolve(result.objectPath);
       } catch {
         reject(new Error("The upload completed without a valid storage confirmation."));
       }
     };
-    request.onerror = () => reject(new Error("The image upload failed. Check your connection and try again."));
-    request.ontimeout = () => reject(new Error("The image upload timed out. Please try again."));
+    request.onerror = () =>
+      reject(new Error("The image upload failed. Check your connection and try again."));
+    request.ontimeout = () =>
+      reject(new Error("The image upload timed out. Please try again."));
     request.onabort = () => reject(new Error("The image upload was cancelled."));
     request.send(file);
   });
-
-  return target.objectPath;
 }

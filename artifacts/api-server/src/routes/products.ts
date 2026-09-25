@@ -15,12 +15,7 @@ import {
 } from "@workspace/api-zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import {
-  createFirebaseDownloadUrl,
-  createFirebaseImageDownloadUrl,
-  deleteFirebaseProductImageIfUnreferenced,
-  normalizeFirebaseProductImagePath,
-} from "../lib/firebase-storage";
+import { mediaReference } from "../lib/cloudinary-storage";
 import { firestore } from "../lib/firebase";
 import { ensureExactProductCatalog } from "../lib/product-catalog";
 
@@ -65,25 +60,16 @@ function toDate(value: unknown): Date {
 
 async function productResponse(id: string, data: DocumentData) {
   const storedImagePath = data.imagePath ?? data.imageUrl ?? null;
-  const imagePath =
-    normalizeFirebaseProductImagePath(storedImagePath) ?? storedImagePath;
+  const imagePath = mediaReference(storedImagePath) ?? storedImagePath;
   const storedImageUrl =
     typeof data.imageUrl === "string" && data.imageUrl
       ? data.imageUrl
       : null;
-  const storedUrlIsStable =
-    storedImageUrl &&
-    (!normalizeFirebaseProductImagePath(storedImageUrl) ||
-      /[?&]token=/.test(storedImageUrl));
-
-  let imageUrl = storedUrlIsStable ? storedImageUrl : null;
-  if (!imageUrl) {
-    try {
-      imageUrl = await createFirebaseDownloadUrl(imagePath ?? storedImagePath);
-    } catch {
-      imageUrl = null;
-    }
-  }
+  const imageUrl = storedUrlIsStable(storedImageUrl)
+    ? storedImageUrl
+    : typeof imagePath === "string"
+      ? imagePath
+      : null;
 
   return {
     id,
@@ -102,6 +88,10 @@ async function productResponse(id: string, data: DocumentData) {
     createdAt: toDate(data.createdAt),
     updatedAt: toDate(data.updatedAt),
   };
+}
+
+function storedUrlIsStable(value: string | null): value is string {
+  return Boolean(value && /^https?:\/\//i.test(value));
 }
 
 async function allProducts() {
@@ -134,12 +124,12 @@ async function productValues(data: {
   const previousImageValue = previousData?.imagePath ?? previousData?.imageUrl;
   const submittedImagePath = data.imagePath?.trim() || null;
   const normalizedImagePath = submittedImagePath
-    ? normalizeFirebaseProductImagePath(submittedImagePath)
+    ? mediaReference(submittedImagePath)
     : null;
-  const previousNormalizedImagePath =
-    normalizeFirebaseProductImagePath(previousImageValue) ??
-    (typeof previousImageValue === "string" ? previousImageValue.trim() : null);
-  const isUnchangedImage = submittedImagePath === previousNormalizedImagePath;
+  const previousNormalizedImagePath = mediaReference(previousImageValue);
+  const isUnchangedImage =
+    submittedImagePath === previousNormalizedImagePath ||
+    submittedImagePath === previousImageValue;
   const imagePath = submittedImagePath
     ? normalizedImagePath ?? (isUnchangedImage ? submittedImagePath : null)
     : null;
@@ -149,11 +139,9 @@ async function productValues(data: {
   const existingImageUrl =
     typeof previousData?.imageUrl === "string" ? previousData.imageUrl.trim() : "";
   const imageUrl = imagePath
-    ? isUnchangedImage && /^https?:\/\//i.test(existingImageUrl)
+    ? isUnchangedImage && storedUrlIsStable(existingImageUrl)
       ? existingImageUrl
-      : normalizedImagePath
-        ? await createFirebaseImageDownloadUrl(normalizedImagePath, "products")
-        : await createFirebaseDownloadUrl(imagePath)
+      : imagePath
     : null;
   return {
     name: data.name.trim(),
@@ -219,7 +207,7 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
     res.status(400).json({ error: "Invalid product details", details: parsed.error.flatten() });
     return;
   }
-  if (parsed.data.imagePath && !normalizeFirebaseProductImagePath(parsed.data.imagePath)) {
+  if (parsed.data.imagePath && !mediaReference(parsed.data.imagePath)) {
     res.status(400).json({ error: "Upload product images through the product editor before saving." });
     return;
   }
@@ -230,7 +218,7 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
     values = await productValues(parsed.data, admin.uid);
   } catch (error) {
     req.log.warn({ err: error }, "Could not verify uploaded product image");
-    res.status(422).json({ error: "The product image could not be verified in Firebase Storage. Please upload it again." });
+    res.status(422).json({ error: "The product image could not be verified in Cloudinary. Please upload it again." });
     return;
   }
   await reference.set(values);
@@ -268,7 +256,7 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
   const previousImagePath = snapshot.data()?.imagePath ?? snapshot.data()?.imageUrl;
   if (
     parsed.data.imagePath &&
-    !normalizeFirebaseProductImagePath(parsed.data.imagePath) &&
+    !mediaReference(parsed.data.imagePath) &&
     parsed.data.imagePath !== previousImagePath
   ) {
     res.status(400).json({ error: "Upload product images through the product editor before saving." });
@@ -279,7 +267,7 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     values = await productValues(parsed.data, admin.uid, snapshot.data());
   } catch (error) {
     req.log.warn({ err: error }, "Could not verify uploaded product image");
-    res.status(422).json({ error: "The product image could not be verified in Firebase Storage. Please upload it again." });
+    res.status(422).json({ error: "The product image could not be verified in Cloudinary. Please upload it again." });
     return;
   }
   await reference.set({
@@ -287,13 +275,6 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     createdAt: snapshot.data()?.createdAt ?? new Date(),
     createdBy: snapshot.data()?.createdBy ?? admin.uid,
   }, { merge: true });
-  if (
-    previousImagePath &&
-    normalizeFirebaseProductImagePath(previousImagePath) !==
-      normalizeFirebaseProductImagePath(values.imagePath)
-  ) {
-    await deleteFirebaseProductImageIfUnreferenced(previousImagePath);
-  }
   res.json(UpdateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 

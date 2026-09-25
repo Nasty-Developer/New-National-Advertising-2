@@ -64,6 +64,7 @@ import CmsManager from "@/pages/cms-manager";
 import ProjectsManager from "@/pages/projects-manager";
 import RequestsManager from "@/pages/requests-manager";
 import { firebaseAuth } from "@/lib/firebase-client";
+import { uploadFileToServer } from "@/lib/image-upload";
 
 type AdminPage =
   | "Dashboard"
@@ -605,32 +606,13 @@ function ProductForm({
     setPreview(objectUrl.current);
     setUploadProgress(1);
     try {
-      const response = await uploadUrl.mutateAsync({
-        data: {
-          name: file.name,
-          size: file.size,
-          contentType: file.type as UploadRequestContentType,
-        },
-      });
-      await new Promise<void>((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.open("PUT", response.uploadURL);
-        request.setRequestHeader("Content-Type", file.type);
-        request.upload.onprogress = (event) => {
-          if (event.lengthComputable)
-            setUploadProgress(
-              Math.max(1, Math.round((event.loaded / event.total) * 100)),
-            );
-        };
-        request.onload = () =>
-          request.status >= 200 && request.status < 300
-            ? resolve()
-            : reject(new Error("The image upload was not accepted."));
-        request.onerror = () =>
-          reject(new Error("The image upload failed. Please try again."));
-        request.send(file);
-      });
-      setField("imagePath", response.objectPath);
+      const imagePath = await uploadFileToServer(
+        file,
+        "products",
+        uploadUrl.mutateAsync,
+        setUploadProgress,
+      );
+      setField("imagePath", imagePath);
       setUploadProgress(100);
       setFeedback("Image uploaded and ready to save.");
     } catch (error) {

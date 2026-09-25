@@ -5,14 +5,18 @@ import {
 } from "@workspace/api-zod";
 import { requireAdmin } from "../lib/firebase-auth";
 import {
-  createFirebaseReadUrl,
-  createFirebaseUploadTarget,
-  storeFirebaseImageUpload,
-  verifyFirebaseImageUploadTicket,
-} from "../lib/firebase-storage";
+  createCloudinaryUploadTarget,
+  uploadToCloudinary,
+  verifyCloudinaryUploadTicket,
+} from "../lib/cloudinary-storage";
 
 const router: IRouter = Router();
-const imageContentTypes = ["image/jpeg", "image/png", "image/webp"];
+const uploadContentTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+];
 
 router.get("/storage/read", async (req, res): Promise<void> => {
   const path = typeof req.query.path === "string" ? req.query.path : "";
@@ -20,12 +24,16 @@ router.get("/storage/read", async (req, res): Promise<void> => {
     res.status(400).json({ error: "Image path is required" });
     return;
   }
-  const url = await createFirebaseReadUrl(path);
-  if (!url || url === path) {
-    res.status(404).json({ error: "Image not found" });
+  if (/^https?:\/\//i.test(path)) {
+    res.redirect(path);
     return;
   }
-  res.redirect(url);
+  const relativePath = path.startsWith("/") ? path : `/${path}`;
+  if (!/^\/[a-zA-Z0-9._/-]+$/.test(relativePath)) {
+    res.status(400).json({ error: "Invalid image path" });
+    return;
+  }
+  res.redirect(relativePath);
 });
 
 router.post(
@@ -43,7 +51,7 @@ router.post(
     }
 
     try {
-      const target = await createFirebaseUploadTarget({
+      const target = createCloudinaryUploadTarget({
         folder: parsed.data.folder ?? "products",
         name: parsed.data.name,
         size: parsed.data.size,
@@ -54,7 +62,7 @@ router.post(
     } catch (error) {
       req.log.warn(
         { err: error },
-        "Failed to create Firebase upload target",
+        "Failed to create Cloudinary upload target",
       );
 
       res.status(400).json({
@@ -70,9 +78,9 @@ router.post(
 router.put(
   "/storage/uploads/content",
   requireAdmin,
-  raw({ type: imageContentTypes, limit: "10mb" }),
+  raw({ type: uploadContentTypes, limit: "10mb" }),
   async (req, res): Promise<void> => {
-    const ticket = verifyFirebaseImageUploadTicket(req.get("x-upload-ticket"));
+    const ticket = verifyCloudinaryUploadTicket(req.get("x-upload-ticket"));
     if (!ticket) {
       res.status(403).json({ error: "This image upload has expired. Please choose the image again." });
       return;
@@ -85,23 +93,15 @@ router.put(
     }
 
     try {
-      const objectPath = await storeFirebaseImageUpload(ticket, contentType, req.body);
+      const objectPath = await uploadToCloudinary(ticket, contentType, req.body);
       res.status(201).json({ objectPath });
     } catch (error) {
-      req.log.warn({ err: error }, "Failed to store Firebase image upload");
-      const code =
-        error && typeof error === "object" && "code" in error
-          ? (error as { code?: unknown }).code
-          : undefined;
-      if (code === 412 || code === "412") {
-        res.status(409).json({ error: "This image upload was already used. Please choose the image again." });
-        return;
-      }
+      req.log.warn({ err: error }, "Failed to upload file to Cloudinary");
       res.status(400).json({
         error:
           error instanceof Error
             ? error.message
-            : "Unable to store the image in Firebase Storage.",
+            : "Unable to upload the file to Cloudinary.",
       });
     }
   },
