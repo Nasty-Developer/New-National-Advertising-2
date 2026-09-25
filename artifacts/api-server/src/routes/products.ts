@@ -17,7 +17,7 @@ import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
 import { mediaReference } from "../lib/cloudinary-storage";
 import { firestore } from "../lib/firebase";
-import { ensureExactProductCatalog } from "../lib/product-catalog";
+import { ensureExactProductCatalog, isExactProductCatalogRecord } from "../lib/product-catalog";
 
 const router: IRouter = Router();
 const products = () => firestore().collection("products");
@@ -42,8 +42,8 @@ function productOrder(
   left: { id: string; name: string; displayOrder: number; updatedAt: Date },
   right: { id: string; name: string; displayOrder: number; updatedAt: Date },
 ) {
-  return Number(left.displayOrder) - Number(right.displayOrder)
-    || productPriorityRank(left.name) - productPriorityRank(right.name)
+  return productPriorityRank(left.name) - productPriorityRank(right.name)
+    || Number(left.displayOrder) - Number(right.displayOrder)
     || right.updatedAt.getTime() - left.updatedAt.getTime()
     || left.name.localeCompare(right.name)
     || left.id.localeCompare(right.id);
@@ -97,7 +97,9 @@ function storedUrlIsStable(value: string | null): value is string {
 async function allProducts() {
   await ensureExactProductCatalog();
   const snapshot = await products().get();
-  return Promise.all(snapshot.docs.map(async (doc) => ({
+  return Promise.all(snapshot.docs
+    .filter((doc) => isExactProductCatalogRecord(doc.id, doc.data()))
+    .map(async (doc) => ({
     doc,
     value: await productResponse(doc.id, doc.data()),
   })));

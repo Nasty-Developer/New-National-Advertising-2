@@ -267,6 +267,23 @@ function publicImageUrl(path?: string | null) {
   return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
 }
 
+function responsiveCloudinarySrcSet(path?: string | null) {
+  const source = publicImageUrl(path);
+  const uploadMarker = "/upload/";
+  const uploadIndex = source.indexOf(uploadMarker);
+  if (uploadIndex < 0) return undefined;
+
+  const prefix = source.slice(0, uploadIndex + uploadMarker.length);
+  const segments = source.slice(uploadIndex + uploadMarker.length).split("/");
+  const versionIndex = segments.findIndex((segment) => /^v\d+$/.test(segment));
+  if (versionIndex < 0) return undefined;
+
+  const assetPath = segments.slice(versionIndex).join("/");
+  return [480, 768, 1200, 1600]
+    .map((width) => `${prefix}f_auto,q_auto,c_limit,w_${width}/${assetPath} ${width}w`)
+    .join(", ");
+}
+
 function usePublicMachines() {
   const [data, setData] = useState<MachineRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -897,7 +914,7 @@ function Home() {
                 {publicServices.map((service, index) => { const Icon = service.icon; return (
                   <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
                     <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
-                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" className={`h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-3' : 'object-cover'} transition duration-700`} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
                       <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
                     </Link>
                  </Reveal>
@@ -1144,7 +1161,7 @@ function Products() {
                     data-testid={`product-category-card-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                   >
                     <div className="relative aspect-[1.45/1] overflow-hidden bg-[#edf4f6]">
-                      <img src={category.image} alt={category.alt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]" />
+                      <img src={category.image} alt={category.alt} loading="lazy" decoding="async" className={`h-full w-full ${category.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition duration-700 group-hover:scale-[1.03]`} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#102941]/75 via-[#102941]/10 to-transparent" />
                       <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold text-[#1c4661]">{categoryCounts.get(category.name) ?? 0} products</span>
                     </div>
@@ -1184,7 +1201,7 @@ function Products() {
                   {filteredProducts.map((product) => (
                     <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
                       <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
-                        {product.imageUrl || product.imagePath ? <img src={(product.imageUrl || product.imagePath || "").startsWith("http") || (product.imageUrl || product.imagePath || "").startsWith("/api/") ? product.imageUrl || product.imagePath || "" : `/api/storage${(product.imagePath || "").startsWith("/") ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
+                        {product.imageUrl || product.imagePath ? <img src={publicImageUrl(product.imageUrl || product.imagePath)} srcSet={responsiveCloudinarySrcSet(product.imageUrl || product.imagePath)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={product.imageAlt || product.name} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
                       </div>
                       <div className="p-5">
                         <h3 className="display text-[22px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{product.name}</h3>
@@ -1278,7 +1295,7 @@ function Machines() {
               {!publicMachines.loading && publicMachines.data.map((machine, index) => (
                 <Reveal key={machine.name} delay={index * 90} className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
                   <div className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-[#e4ecef] bg-[#eef3f3] p-3 sm:p-4">
-                    <img src={machine.imageUrl} alt={machine.imageAlt || machine.name} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
+                    <img src={machine.imageUrl} srcSet={responsiveCloudinarySrcSet(machine.imageUrl)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={machine.imageAlt || machine.name} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} decoding="async" className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
                   </div>
                   <div className="flex flex-1 flex-col p-5 sm:p-6">
                     <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#1b78ad]">{machine.category}</p>
@@ -1557,7 +1574,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
               </motion.div>
               <motion.div initial={{ opacity: 0, scale: .98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .7, delay: .08 }} className="relative">
                 <div className="overflow-hidden rounded-[16px] border border-white bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                  <img src={service.image} alt={service.imageAlt} className="aspect-[1.35/1] h-full w-full object-cover transition duration-700 hover:scale-[1.025]" />
+                  <img src={service.image} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 560px, 100vw" alt={service.imageAlt} loading="eager" fetchPriority="high" decoding="async" className={`aspect-[1.35/1] h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-5' : 'object-cover'} transition duration-700 hover:scale-[1.025]`} />
                 </div>
                 <div className="absolute -bottom-4 left-4 rounded-[9px] border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:left-7">
                   <p className="eyebrow text-[8px]" style={{ color: service.accent }}>Print / design / finish</p>

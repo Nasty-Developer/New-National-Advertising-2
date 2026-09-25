@@ -355,6 +355,10 @@ function isManagedCatalogRecord(id: string, data: DocumentData) {
   return id.startsWith("catalog-") && data.createdBy === "exact-product-catalog-import";
 }
 
+export function isExactProductCatalogRecord(id: string, data: DocumentData) {
+  return isManagedCatalogRecord(id, data);
+}
+
 async function migrateExactProductCatalog() {
   const metadata = firestore()
     .collection("catalogMetadata")

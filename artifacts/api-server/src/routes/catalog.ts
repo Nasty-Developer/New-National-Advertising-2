@@ -71,8 +71,8 @@ const serviceBody = z.object({
 const machineSeed = [
   {
     id: "epson-surecolor-s80670",
-    name: "Epson SureColor S80670",
-    slug: "epson-surecolor-s80670",
+    name: "Axon",
+    slug: "axon",
     category: "Large-Format Printing",
     shortDescription: "Professional large-format printing for detailed, vibrant advertising output.",
     description: "A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.",
@@ -85,8 +85,8 @@ const machineSeed = [
   },
   {
     id: "wide-format-roll-laminator",
-    name: "Wide-Format Roll Laminator",
-    slug: "wide-format-roll-laminator",
+    name: "Accent Z (Wide Format Roll Laminator)",
+    slug: "accent-z-wide-format-roll-laminator",
     category: "Finishing Equipment",
     shortDescription: "Controlled roll laminating for advertising, signage and display graphics.",
     description: "A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.",
@@ -99,8 +99,8 @@ const machineSeed = [
   },
   {
     id: "large-format-printing-machine",
-    name: "Large-Format Printing Machine",
-    slug: "large-format-printing-machine",
+    name: "512i Konica Flex Machine",
+    slug: "512i-konica-flex-machine",
     category: "Wide-Format Production",
     shortDescription: "Roll-to-roll production for banners, signage graphics and advertising materials.",
     description: "A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials.",
@@ -113,8 +113,8 @@ const machineSeed = [
   },
   {
     id: "co2-laser-cutting-engraving-machine",
-    name: "CO₂ Laser Cutting & Engraving Machine",
-    slug: "co2-laser-cutting-engraving-machine",
+    name: "Laser CO2",
+    slug: "laser-co2",
     category: "Laser Cutting & Engraving",
     shortDescription: "Precise cutting, engraving and custom fabrication for display work.",
     description: "A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.",
@@ -127,8 +127,8 @@ const machineSeed = [
   },
   {
     id: "konica-minolta-bizhub-c6000",
-    name: "Konica Minolta bizhub C6000",
-    slug: "konica-minolta-bizhub-c6000",
+    name: "Konica Minolta Bizhub",
+    slug: "konica-minolta-bizhub",
     category: "Digital Printing Machine",
     shortDescription: "Professional digital production printing for crisp, consistent commercial output.",
     description: "The Konica Minolta bizhub C6000 is a professional digital printing machine designed for reliable, high-quality production of business cards, brochures, catalogues, flyers and other commercial print materials.",
@@ -216,6 +216,17 @@ async function ensureSeeded() {
       await reference.set({ ...seed, fullDescription: seed.description, specifications: [], features: seed.applications, images: seed.imageUrl ? [seed.imageUrl] : [], createdAt: now, updatedAt: now });
     }
   }));
+  await Promise.all(machineSeed.map(async (seed) => {
+    const reference = machines.doc(seed.id);
+    if ((await reference.get()).exists) {
+      await reference.set({
+        name: seed.name,
+        slug: seed.slug,
+        displayOrder: seed.displayOrder,
+        published: true,
+      }, { merge: true });
+    }
+  }));
   await Promise.all(serviceSeed.map(async ([slug, title, category, description, offerings, applications, image]) => {
     const reference = services.doc(slug);
     if (!(await reference.get()).exists) {
@@ -232,7 +243,7 @@ async function publicDocuments(kind: "machines" | "services") {
   const snapshot = await collections()[kind].get();
   return Promise.all(snapshot.docs
     .filter((doc) => kind === "machines"
-      ? doc.data().published !== false
+      ? doc.data().published !== false && machineSeed.some((machine) => machine.id === doc.id)
       : doc.data().status === "published" && publicServiceSlugs.has(String(doc.data().slug ?? doc.id)))
     .sort((a, b) => catalogOrder(kind, a.data(), b.data()))
     .map(async (doc) => {
@@ -249,9 +260,9 @@ async function publicDocuments(kind: "machines" | "services") {
 
 const machinePriority = [
   ["laser", "co2"],
-  ["epson"],
+  ["axon"],
   ["512i", "konica", "flex"],
-  ["excel", "z"],
+  ["accent", "z"],
   ["konica", "minolta"],
 ];
 
@@ -304,7 +315,9 @@ router.get("/admin/machines", requireAdmin, async (_req, res): Promise<void> => 
   await ensureSeeded();
   const snapshot = await collections().machines.get();
   const rows = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Array<{ id: string; displayOrder?: number }>;
-  res.json(rows.sort((a, b) => Number(a.displayOrder ?? 0) - Number(b.displayOrder ?? 0)));
+  res.json(rows
+    .filter((row) => machineSeed.some((machine) => machine.id === row.id))
+    .sort((a, b) => Number(a.displayOrder ?? 0) - Number(b.displayOrder ?? 0)));
 });
 
 router.post("/admin/machines", requireAdmin, async (req, res): Promise<void> => {

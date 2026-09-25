@@ -118,6 +118,7 @@
 .service-icon { color: var(--service-accent, var(--primary-blue)); }
 .service-arrow { color: var(--service-accent, var(--primary-blue)); border-color: color-mix(in srgb, var(--service-accent, var(--primary-blue)) 30%, #d8e4ea); }
 .service-details summary { color: var(--service-accent, var(--primary-blue)); }
+img[src="/services-main-signage.webp"] { content: url("/machine-large-format-printer.png"); object-fit: contain !important; padding: 1.25rem; background: #edf3f4; }
 .print-registration { position: relative; display: flex; align-items: center; gap: 3px; }
 .print-registration span { display: block; width: 12px; height: 12px; border: 1px solid currentColor; border-radius: 999px; }
 .print-registration span:nth-child(1) { color: var(--cmyk-cyan); transform: translateX(3px); }

@@ -1,4 +1,11 @@
-export const productCategories = [
+type ProductCategoryCard = {
+  name: string;
+  image: string;
+  alt: string;
+  imageFit?: "contain" | "cover";
+};
+
+export const productCategories: readonly ProductCategoryCard[] = [
   {
     name: "Core Printing & Branding",
     image: "/category-images/category-core-printing-branding.png",

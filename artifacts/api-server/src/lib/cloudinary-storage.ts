@@ -210,5 +210,14 @@ export function mediaReference(value: unknown): string | null {
 
 export function mediaReadUrl(value: string | null | undefined): string | null {
   if (!value) return null;
-  return value;
+  const uploadMarker = "/upload/";
+  const uploadIndex = value.indexOf(uploadMarker);
+  if (uploadIndex < 0) return value;
+
+  const prefix = value.slice(0, uploadIndex + uploadMarker.length);
+  const segments = value.slice(uploadIndex + uploadMarker.length).split("/");
+  const versionIndex = segments.findIndex((segment) => /^v\d+$/.test(segment));
+  if (versionIndex < 0) return value;
+
+  return `${prefix}f_auto,q_auto,c_limit,w_2000/${segments.slice(versionIndex).join("/")}`;
 }
