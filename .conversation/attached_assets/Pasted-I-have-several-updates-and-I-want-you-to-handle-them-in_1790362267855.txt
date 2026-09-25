@@ -1,0 +1,185 @@
+I have several updates and I want you to handle them in order. Do NOT remove existing products, catalog data, categories, or working admin functionality.
+
+FIRST: SESSION_SECRET / CLOUDINARY SETUP
+
+1. I am moving the project to another account/workspace.
+2. I need the production backend to use Cloudinary for image uploads, NOT Firebase Storage.
+3. Generate a secure random SESSION_SECRET for me if you can.
+4. DO NOT commit the SESSION_SECRET to GitHub or put it into source code.
+5. Show me the generated SESSION_SECRET clearly so I can manually add it to the Render backend Environment Variables.
+6. Tell me exactly which Cloudinary environment variables the Render backend will require.
+7. Do not ask me to upgrade Firebase Storage. Firebase Storage is NOT being used for image uploads.
+8. Keep Firebase Authentication and Firestore working normally.
+9. Cloudinary should handle uploaded product/service/category/machine images.
+10. Make sure the production API does not require FIREBASE_STORAGE_BUCKET anymore.
+
+IMPORTANT ABOUT IMAGE ATTACHMENTS:
+
+Before I start attaching many product images to this Replit/Rapid conversation, tell me the CURRENT attachment/image upload limit for this environment.
+
+I want to collect product images from Google and then attach them to you/Replit in batches.
+
+Tell me:
+- maximum number of images/files I can attach in one message/batch
+- maximum supported image/file size if relevant
+- whether there is a total attachment limit for the conversation
+- whether multiple image attachments can be processed together
+
+Do not guess the limit. Check the actual current environment/tool limitation if available.
+
+After telling me the limit, wait for my images.
+
+==================================================
+SERVICE IMAGE FIXES
+==================================================
+
+There is currently an image mix-up between Flex Printing and Digital Printing.
+
+I will provide the correct Flex Printing image myself.
+
+Current requirement:
+
+- Digital Printing currently has the wrong image.
+- The image currently shown for Flex Printing is the image I want to use for Digital Printing.
+- Replace the current Digital Printing image with the existing Flex Printing image.
+- For Flex Printing, I will attach ONE new/correct image.
+- Use the new image I provide for Flex Printing.
+- Do not distort or crop the image unnecessarily.
+- Fit it properly into the existing image container while preserving the important content and aspect ratio.
+- Do not redesign the entire service section.
+
+==================================================
+"MAKE YOUR BRAND STAND" SECTION
+==================================================
+
+I will also provide ONE image.
+
+Use that image in:
+1. Flex Printing service
+2. Make Your Brand Stand section
+
+The same uploaded image can be used in both places.
+
+Do not create a fake/generated replacement image.
+Use the image I provide and make it fit cleanly into the existing design.
+
+IMPORTANT:
+The current Digital Printing image should NOT remain there.
+Digital Printing should use the CURRENT Flex Printing image.
+Flex Printing should use the NEW image I will attach.
+Make Your Brand Stand should use that SAME NEW image.
+
+So the final image mapping must be:
+
+Digital Printing → current Flex Printing image
+
+Flex Printing → new image I provide
+
+Make Your Brand Stand → same new image I provide
+
+==================================================
+PRODUCT DISPLAY PRIORITY
+==================================================
+
+On the public Products page, change the display priority/order of the first products to:
+
+1. Signage
+2. Banner
+3. Brochure
+4. Acrylic Clip-on Board
+5. Calendars
+6. Business Cards
+7. Letterhead
+8. Hoarding Banner
+
+After these, keep the remaining products in their existing order.
+
+IMPORTANT:
+Do not delete, rename, merge, or remove any products.
+Only change the display ordering/priority.
+
+The complete existing catalog must remain intact, including all 202 products.
+
+==================================================
+MACHINES ORDER AND NAMES
+==================================================
+
+Reorder the Machines section to this exact order:
+
+1. Laser CO2
+2. Axon
+3. 512i Konica Flex Machine
+4. Accent Z (Wide Format Roll Laminator)
+5. Konica Minolta Bizhub
+
+Do NOT add duplicate machines if these machines already exist.
+Use the existing machine records where possible and only change their display order/name as requested.
+
+NAME CHANGES:
+
+The machine currently described/named as the large format printing machine should be renamed to:
+
+512i Konica Flex Machine
+
+The machine currently named Accent Z / Wide Format Roll Laminator should display as:
+
+Accent Z (Wide Format Roll Laminator)
+
+Konica Minolta Bizhub should be the LAST machine.
+
+The digital printing machine/image should be at the LAST machine position and should use the correct image mapping requested above.
+
+IMPORTANT:
+Do not delete machine data.
+Do not create duplicate machine records.
+Only update names, ordering, and image assignments where required.
+
+==================================================
+IMAGE HANDLING
+==================================================
+
+When I attach an image:
+
+- Upload it through the new Cloudinary flow.
+- Save the resulting Cloudinary URL/path correctly.
+- Keep Firebase Firestore as the data source.
+- Do not use Firebase Storage.
+- Do not require FIREBASE_STORAGE_BUCKET.
+- Preserve image quality.
+- Do not aggressively crop the image.
+- Fit the image naturally inside the existing UI.
+- Do not redesign the surrounding cards/components unless necessary.
+
+==================================================
+BEFORE YOU FINISH
+==================================================
+
+Run:
+
+pnpm install --frozen-lockfile
+pnpm run typecheck
+pnpm --filter @workspace/api-server run build
+PORT=3000 BASE_PATH=/ pnpm --filter @workspace/new-national-advertising run build
+
+Fix actual errors rather than disabling TypeScript checks.
+
+Make sure the Render backend can deploy successfully.
+
+Do NOT:
+- remove products
+- remove categories
+- remove machines
+- remove services
+- remove existing catalog data
+- switch back to Firebase Storage
+- expose Cloudinary secrets in frontend code
+- commit secrets to GitHub
+- disable typechecking
+- create duplicate products/machines/services
+- change unrelated UI
+
+FIRST ACTION:
+1. Tell me the current image/file attachment limit for this Replit/Rapid environment.
+2. Generate a secure SESSION_SECRET if possible and show it to me so I can add it manually to Render.
+3. Tell me exactly which Cloudinary environment variables I need to configure on Render.
+4. Then wait for my image attachments.
