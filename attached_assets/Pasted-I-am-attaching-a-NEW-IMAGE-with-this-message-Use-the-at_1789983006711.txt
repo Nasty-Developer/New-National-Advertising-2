@@ -1,0 +1,211 @@
+I am attaching a NEW IMAGE with this message. Use the attached image as the new hero visual.
+
+IMPORTANT: DO NOT generate or recreate the image. Use the exact image I am attaching.
+
+CURRENT WEBSITE:
+The homepage hero currently has a blue/dark printing-themed image on the right side.
+
+I want you to REMOVE/REPLACE that current blue image.
+
+NEW HERO IMAGE:
+Use the yellow, colorful New National Advertising storefront/advertising image that I am attaching.
+
+==================================================
+HERO IMAGE REPLACEMENT
+==================================================
+
+1. Completely remove the current blue hero image from the hero section.
+
+2. Replace it with the EXACT attached yellow image.
+
+3. Do NOT modify, regenerate, redraw, recolor, or recreate the attached image.
+
+4. Preserve the actual image content exactly as provided.
+
+5. The attached image should become the main visual of the hero section.
+
+==================================================
+MAKE IT FIT BEAUTIFULLY
+==================================================
+
+This is the most important part.
+
+Do NOT simply place the image as a small rectangular image beside the text.
+
+Integrate it properly into the existing hero composition so it looks intentional and premium.
+
+The current hero has:
+- left-side headline and text
+- CTA buttons
+- right-side visual area
+- soft light background
+- large rounded visual container
+
+Keep the existing overall hero structure, but make the new attached image fit naturally into the right-side visual area.
+
+The image should:
+- fill the available visual area properly
+- have the correct aspect ratio
+- remain sharp
+- not look stretched
+- not look squeezed
+- not have ugly empty white/blue gaps
+- not have an unwanted border
+- not have an additional colored frame
+- not have a visible rectangular background around it
+- have clean rounded corners matching the existing website
+- align perfectly with the hero layout
+
+Use object-fit/object-position or an appropriate responsive image treatment where necessary.
+
+==================================================
+YELLOW IMAGE MUST BE VISUALLY PROMINENT
+==================================================
+
+The attached yellow storefront image contains strong yellow, blue, orange and colorful advertising visuals.
+
+Let those colors become the visual energy of the hero.
+
+Do NOT cover the image with:
+- blue overlays
+- dark overlays
+- gradients
+- excessive transparency
+- glassmorphism
+- another background image
+
+The actual yellow/colorful image should remain clearly visible.
+
+The existing hero's light/white background can remain around the visual area, but the blue image currently occupying the visual area must be completely removed.
+
+==================================================
+DESKTOP
+==================================================
+
+On desktop:
+
+Keep the existing left-side content approximately as it is.
+
+On the right:
+- use the attached yellow image as the primary hero visual
+- make it large and visually prominent
+- fit it within the existing hero grid
+- maintain balanced spacing between the text and image
+- ensure the image does not overflow the hero section
+- ensure the full storefront/banner composition is visible as much as reasonably possible
+
+Do not unnecessarily crop important parts of the image.
+
+If cropping is unavoidable because of the existing aspect ratio, choose the crop carefully so the important New National Advertising branding and storefront/advertising content remains visible.
+
+==================================================
+MOBILE
+==================================================
+
+On mobile:
+
+Do not simply shrink the desktop image until it becomes unreadable.
+
+Create a proper responsive treatment.
+
+The yellow image should:
+- remain clearly visible
+- maintain its aspect ratio
+- fit within the screen width
+- not cause horizontal scrolling
+- not overlap text/buttons
+- not break the hero layout
+
+Use an appropriate mobile image height/aspect ratio while preserving the important visual content.
+
+==================================================
+DO NOT CHANGE THE LEFT SIDE
+==================================================
+
+Keep the existing:
+
+- "New National Advertising" headline
+- Print · Design · Signage · Advertising eyebrow
+- "Printing, Signage & Design Solutions"
+- description
+- Get a Quote button
+- View Services button
+- existing typography
+- existing spacing
+- existing design language
+
+Only make small spacing/layout adjustments if genuinely required to accommodate the new image.
+
+==================================================
+DO NOT BREAK ANYTHING
+==================================================
+
+This is ONLY a hero visual replacement.
+
+Do NOT change or remove:
+
+- Navbar
+- Services
+- More Info links
+- Service detail pages
+- Products page
+- About
+- Contact
+- Quote form
+- WhatsApp
+- Call buttons
+- AI Assistant
+- Admin Panel
+- Existing routes
+- Existing business information
+- Mobile navigation
+
+Do not rewrite the application unnecessarily.
+
+==================================================
+IMPORTANT IMAGE RULE
+==================================================
+
+The image I attach is the authoritative source for the new hero visual.
+
+Use the exact attached image.
+
+Do not create an AI-generated replacement.
+Do not substitute a stock image.
+Do not use the previous blue image.
+Do not alter the image's colors.
+
+==================================================
+FINAL VISUAL CHECK
+==================================================
+
+After implementation, inspect the homepage carefully.
+
+The final hero should look like:
+
+LEFT:
+Existing New National Advertising text + CTA
+
+RIGHT:
+The NEW ATTACHED yellow/colorful New National Advertising storefront image
+
+The yellow image should be the main visual focus on the right side and should look naturally integrated into the hero rather than pasted on.
+
+Check:
+- Desktop
+- Tablet
+- Mobile
+- 320px width
+- 768px width
+- Large desktop
+
+Make sure there are no:
+- blue remnants
+- unwanted borders
+- white image boxes
+- empty gaps
+- image distortion
+- horizontal overflow
+- broken layout
+
+Finally run the TypeScript check/build and fix only issues caused by this change.
