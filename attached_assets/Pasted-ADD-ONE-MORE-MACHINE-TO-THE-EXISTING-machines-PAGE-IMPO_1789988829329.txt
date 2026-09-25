@@ -1,0 +1,62 @@
+ADD ONE MORE MACHINE TO THE EXISTING /machines PAGE.
+
+IMPORTANT:
+Do not redesign, remove, or break the existing Machines page or any existing machine cards.
+Keep all currently added machines exactly as they are.
+Only add this new machine as the 4th machine/card.
+
+NEW MACHINE IMAGE:
+Use the exact uploaded machine image provided with this request.
+Do NOT generate a new image.
+Do NOT replace it with a stock image.
+Do NOT crop important parts of the machine.
+Preserve the original image quality and proportions.
+Make it responsive and visually consistent with the existing machine cards.
+
+NEW MACHINE DETAILS:
+
+Title:
+CO₂ Laser Cutting & Engraving Machine
+
+Description:
+"A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials."
+
+Applications:
+- Precision Laser Cutting
+- Laser Engraving
+- Custom Lettering & Shapes
+- Signage Components
+- Decorative Panels
+- Advertising & Display Materials
+- Custom Fabrication Work
+
+IMPORTANT FACTUAL ACCURACY:
+The uploaded image visibly shows a laser cutting/engraving machine and Silasers.com branding.
+Do NOT invent or display an exact model number, power rating, working-area dimensions, laser wattage, cutting speed, or technical specifications unless they are explicitly available in the existing project data.
+Do not claim a specific model.
+
+DESIGN:
+Match the existing Machines page design exactly.
+Keep:
+- Same card style
+- Same typography
+- Same spacing
+- Same border radius
+- Same shadows
+- Same responsive behavior
+- Same hover interaction
+- Same overall premium/minimal visual style
+
+The new machine should appear as the 4th machine in the existing machine grid.
+
+If the current machine data is stored in an array/object/configuration, add this machine to that same data structure instead of duplicating page markup.
+
+Do not modify existing machine information.
+Do not modify navbar, footer, routes, services, Products page, Admin panel, or other website functionality.
+
+After implementation:
+- Verify the new machine appears correctly on /machines.
+- Verify the uploaded image loads correctly.
+- Verify desktop and mobile layouts.
+- Run TypeScript/build checks if available.
+- Do not create fake machine specifications.
