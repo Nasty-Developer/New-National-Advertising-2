@@ -1,0 +1,63 @@
+TASK CORRECTION: You did NOT complete the logo replacement correctly.
+
+Look at the Home page hero section.
+
+The large blue text:
+
+"New National Advertising"
+
+is STILL being displayed as text.
+
+THIS IS THE ELEMENT I SPECIFICALLY WANTED REPLACED.
+
+I want the EXACT EXISTING New National Advertising logo IMAGE asset already present in the project to appear there instead of the large text.
+
+IMPORTANT:
+- Do NOT keep the large text "New National Advertising" in that hero brand/identity position.
+- Replace that exact hero text element with the existing logo image.
+- Use the SAME actual logo asset already used by the website/navbar.
+- Do NOT create a new logo.
+- Do NOT redesign the logo.
+- Do NOT recreate it using HTML/CSS text.
+- Do NOT convert the logo into text.
+- Do NOT use a generic "NN" icon.
+- Do NOT use a different image.
+
+The result should visually be:
+
+[ACTUAL EXISTING NEW NATIONAL ADVERTISING LOGO IMAGE]
+
+instead of:
+
+"New National Advertising"
+
+### Hero logo requirements
+
+1. Use the exact existing logo asset from the project.
+2. Preserve the logo's original colors and proportions.
+3. Do not stretch or distort it.
+4. Size it appropriately for the hero section.
+5. Keep it responsive on desktop, tablet and mobile.
+6. Make sure it is sharp and readable.
+7. Add appropriate alt text.
+8. Preserve the current hero layout, spacing and design as much as possible.
+9. Do not move or remove the other hero content unnecessarily.
+
+### VERY IMPORTANT
+
+Search the project and identify the exact image file currently used for the small logo in the navbar.
+
+Use that SAME asset for the hero logo.
+
+Do not simply tell me that the logo already exists. I need the large blue hero text actually replaced in the rendered Home page.
+
+After making the change:
+
+1. Run the production build.
+2. Open the Home page in the Replit preview.
+3. Verify that the large blue "New National Advertising" text is gone from the hero.
+4. Verify that the actual logo image appears in its place.
+5. Check desktop and mobile responsive layouts.
+6. Do not modify Cloudinary, Firebase, Machines, Products, Projects, SEO, About Us, or any other feature in this task.
+
+This task is ONLY to replace the large hero "New National Advertising" text with the existing actual logo image.
