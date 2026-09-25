@@ -14,3 +14,9 @@ Imported repositories can include a complete `.replit-artifact/artifact.toml` wi
 **Why:** Copying repository files into a project does not necessarily create the platform artifact record or its managed workflow.
 
 **How to apply:** Compare the imported artifact directories against the registered artifact list, and register the app before restarting or presenting it.
+
+After registration, scan imported TypeScript, TSX, and OpenAPI sources for committed merge-conflict markers before relying on the preview.
+
+**Why:** The imported repository's merge commit contained unresolved markers in executable app, API, and generated-client files even though Git reported a clean checkout.
+
+**How to apply:** Use the merge parents to recover a coherent source set, then typecheck the affected app and API packages and confirm the preview and health endpoint respond.

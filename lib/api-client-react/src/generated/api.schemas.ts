@@ -81,12 +81,17 @@ export interface ProductInput {
   displayOrder?: number;
 }
 
-export type Product = ProductInput & {
+export type Product = ProductInput & ({
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  imageUrl?: string | null;
   /** @minLength 1 */
   id: string;
   createdAt: string;
   updatedAt: string;
-};
+});
 
 export interface AdminSummary {
   totalProducts: number;
@@ -409,7 +414,6 @@ export interface QuoteRequest {
   [key: string]: unknown;
  }
 
-<<<<<<< HEAD
 export interface QuoteRequestInput {
   /**
      * @minLength 1
@@ -479,8 +483,6 @@ export interface QuoteAttachmentUploadInput {
   contentType: QuoteAttachmentUploadInputContentType;
 }
 
-=======
->>>>>>> origin/main
 export interface ContactRequest {
   id: string;
   name: string;
@@ -503,10 +505,6 @@ export const RequestStatusInputStatus = {
   approved: 'approved',
   completed: 'completed',
   cancelled: 'cancelled',
-<<<<<<< HEAD
-  rejected: 'rejected',
-=======
->>>>>>> origin/main
 } as const;
 
 export interface RequestStatusInput {
