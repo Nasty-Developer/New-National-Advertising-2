@@ -180,7 +180,7 @@ const machineSeed = [
     imageUrl: "/machine-konica-minolta-bizhub-c6000.png",
     imageAlt: "Konica Minolta bizhub C6000 digital printing machine",
     applications: ["Digital Printing", "Business Cards", "Brochures & Catalogues", "Flyers & Marketing Materials"],
-    relatedServices: ["digital-printing", "Flex printing"],
+    relatedServices: ["digital-printing", "Flex Printing"],
     displayOrder: 4,
     published: true,
   },
