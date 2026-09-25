@@ -409,6 +409,75 @@ export interface QuoteRequest {
   [key: string]: unknown;
  }
 
+export interface QuoteRequestInput {
+  /**
+     * @minLength 1
+     * @maxLength 120
+     */
+  name: string;
+  /**
+     * @minLength 1
+     * @maxLength 40
+     */
+  phone: string;
+  /** @maxLength 180 */
+  email?: string;
+  /**
+     * @minLength 1
+     * @maxLength 160
+     */
+  service: string;
+  /**
+     * @minLength 1
+     * @maxLength 4000
+     */
+  requirementDetails: string;
+  /** @maxLength 100 */
+  quantity?: string;
+  /** @maxLength 40 */
+  preferredDate?: string;
+  /** @maxLength 500 */
+  attachmentUrl?: string;
+  /** @maxLength 180 */
+  attachmentName?: string;
+}
+
+export type QuoteRequestCreatedStatus = typeof QuoteRequestCreatedStatus[keyof typeof QuoteRequestCreatedStatus];
+
+
+export const QuoteRequestCreatedStatus = {
+  new: 'new',
+} as const;
+
+export interface QuoteRequestCreated {
+  id: string;
+  status: QuoteRequestCreatedStatus;
+}
+
+export type QuoteAttachmentUploadInputContentType = typeof QuoteAttachmentUploadInputContentType[keyof typeof QuoteAttachmentUploadInputContentType];
+
+
+export const QuoteAttachmentUploadInputContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+  'application/pdf': 'application/pdf',
+} as const;
+
+export interface QuoteAttachmentUploadInput {
+  /**
+     * @minLength 1
+     * @maxLength 180
+     */
+  name: string;
+  /**
+     * @minimum 1
+     * @maximum 10485760
+     */
+  size: number;
+  contentType: QuoteAttachmentUploadInputContentType;
+}
+
 export interface ContactRequest {
   id: string;
   name: string;
@@ -431,6 +500,7 @@ export const RequestStatusInputStatus = {
   approved: 'approved',
   completed: 'completed',
   cancelled: 'cancelled',
+  rejected: 'rejected',
 } as const;
 
 export interface RequestStatusInput {

@@ -334,6 +334,46 @@ paths:
           description: Invalid upload request
         "401":
           description: Authentication required
+  /requests/quote-attachment-upload-url:
+    post:
+      operationId: requestQuoteAttachmentUploadUrl
+      tags: [requests]
+      summary: Prepare a quote request attachment upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteAttachmentUploadInput"
+      responses:
+        "200":
+          description: Signed Firebase Storage upload details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadResponse"
+        "400":
+          description: Invalid upload request
+  /requests/quote:
+    post:
+      operationId: createQuoteRequest
+      tags: [requests]
+      summary: Submit a website quote request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteRequestInput"
+      responses:
+        "201":
+          description: Quote request saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuoteRequestCreated"
+        "400":
+          description: Invalid quote request
   /machines:
     get:
       operationId: getPublicMachines
@@ -1023,6 +1063,34 @@ components:
         createdAt: { type: string, format: date-time }
         updatedAt: { type: string, format: date-time }
       required: [id, name, phone, service, requirementDetails, status]
+    QuoteRequestInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1, maxLength: 120 }
+        phone: { type: string, minLength: 1, maxLength: 40 }
+        email: { type: string, format: email, maxLength: 180 }
+        service: { type: string, minLength: 1, maxLength: 160 }
+        requirementDetails: { type: string, minLength: 1, maxLength: 4000 }
+        quantity: { type: string, maxLength: 100 }
+        preferredDate: { type: string, maxLength: 40 }
+        attachmentUrl: { type: string, maxLength: 500 }
+        attachmentName: { type: string, maxLength: 180 }
+      required: [name, phone, service, requirementDetails]
+    QuoteRequestCreated:
+      type: object
+      properties:
+        id: { type: string }
+        status: { type: string, enum: [new] }
+      required: [id, status]
+    QuoteAttachmentUploadInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1, maxLength: 180 }
+        size: { type: integer, minimum: 1, maximum: 10485760 }
+        contentType:
+          type: string
+          enum: [image/jpeg, image/png, image/webp, application/pdf]
+      required: [name, size, contentType]
     ContactRequest:
       type: object
       additionalProperties: true
@@ -1041,6 +1109,6 @@ components:
       properties:
         status:
           type: string
-          enum: [new, contacted, quoted, approved, completed, cancelled]
+          enum: [new, contacted, quoted, approved, completed, cancelled, rejected]
       required: [status]
 

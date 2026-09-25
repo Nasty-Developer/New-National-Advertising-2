@@ -629,6 +629,68 @@ export const RequestProductImageUploadUrlResponse = zod.object({
 
 
 /**
+ * @summary Prepare a quote request attachment upload
+ */
+export const requestQuoteAttachmentUploadUrlBodyNameMax = 180;
+
+export const requestQuoteAttachmentUploadUrlBodySizeMax = 10485760;
+
+
+
+export const RequestQuoteAttachmentUploadUrlBody = zod.object({
+  "name": zod.string().min(1).max(requestQuoteAttachmentUploadUrlBodyNameMax),
+  "size": zod.number().int().min(1).max(requestQuoteAttachmentUploadUrlBodySizeMax),
+  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
+})
+
+export const RequestQuoteAttachmentUploadUrlResponse = zod.object({
+  "uploadURL": zod.string().url(),
+  "objectPath": zod.string()
+})
+
+
+/**
+ * @summary Submit a website quote request
+ */
+export const createQuoteRequestBodyNameMax = 120;
+
+export const createQuoteRequestBodyPhoneMax = 40;
+
+export const createQuoteRequestBodyEmailMax = 180;
+
+export const createQuoteRequestBodyServiceMax = 160;
+
+export const createQuoteRequestBodyRequirementDetailsMax = 4000;
+
+export const createQuoteRequestBodyQuantityMax = 100;
+
+export const createQuoteRequestBodyPreferredDateMax = 40;
+
+export const createQuoteRequestBodyAttachmentUrlMax = 500;
+
+export const createQuoteRequestBodyAttachmentNameMax = 180;
+
+
+
+export const CreateQuoteRequestBody = zod.object({
+  "name": zod.string().min(1).max(createQuoteRequestBodyNameMax),
+  "phone": zod.string().min(1).max(createQuoteRequestBodyPhoneMax),
+  "email": zod.string().email().max(createQuoteRequestBodyEmailMax).optional(),
+  "service": zod.string().min(1).max(createQuoteRequestBodyServiceMax),
+  "requirementDetails": zod.string().min(1).max(createQuoteRequestBodyRequirementDetailsMax),
+  "quantity": zod.string().max(createQuoteRequestBodyQuantityMax).optional(),
+  "preferredDate": zod.string().max(createQuoteRequestBodyPreferredDateMax).optional(),
+  "attachmentUrl": zod.string().max(createQuoteRequestBodyAttachmentUrlMax).optional(),
+  "attachmentName": zod.string().max(createQuoteRequestBodyAttachmentNameMax).optional()
+})
+
+export const CreateQuoteRequestResponse = zod.object({
+  "id": zod.string(),
+  "status": zod.enum(['new'])
+})
+
+
+/**
  * @summary List published machines
  */
 export const getPublicMachinesResponseOneNameMax = 180;
@@ -1889,7 +1951,7 @@ export const UpdateRequestStatusParams = zod.object({
 })
 
 export const UpdateRequestStatusBody = zod.object({
-  "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled'])
+  "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled', 'rejected'])
 })
 
 export const UpdateRequestStatusResponse = zod.object({
