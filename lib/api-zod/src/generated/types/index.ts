@@ -14,6 +14,7 @@ export * from './contactNumberInput';
 export * from './contactRequest';
 export * from './getAdminProductsParams';
 export * from './getAdminProductsSort';
+export * from './getPublicProductsParams';
 export * from './healthStatus';
 export * from './machine';
 export * from './machineInput';

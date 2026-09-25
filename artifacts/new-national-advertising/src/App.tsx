@@ -12,6 +12,7 @@ import AdminPage from '@/pages/admin';
 import AdminLogin from '@/pages/admin-login';
 import { firebaseAuth } from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
+import { productCategories } from '@/product-categories';
 
 const queryClient = new QueryClient();
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;

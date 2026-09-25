@@ -1,0 +1,91 @@
+After all 202 products have been successfully imported and verified, improve the PUBLIC PRODUCTS PAGE category presentation.
+
+IMPORTANT:
+Create ONE clean, professional category image for EACH of the 12 product categories only.
+
+DO NOT generate individual product images at this stage.
+
+The Products page should work like this:
+
+CATEGORY IMAGE GRID
+↓
+User sees the 12 categories as attractive visual category cards
+↓
+Each category card has:
+- One professional category image
+- Exact category name
+- Clean premium layout
+↓
+When the user clicks a category
+↓
+Show ONLY the products belonging to that selected category.
+
+CATEGORY REQUIREMENTS:
+
+1. Core Printing & Branding
+2. Signage & Display
+3. Paper & Corporate Printing
+4. Labels & Stickers
+5. Acrylic Products
+6. Promotional Products
+7. Apparel
+8. Food / Hospitality Packaging
+9. Events & Wedding
+10. Awards & Recognition
+11. Office / Corporate Utility
+12. Specialized Products
+
+IMPORTANT:
+- Create exactly 12 category images.
+- One image per category.
+- Images must visually represent the category.
+- Use a clean, premium, professional commercial style.
+- Keep all category images visually consistent.
+- Do not create images for individual products.
+- Do not create duplicate category images.
+- Do not rename any category.
+- Do not change the 202-product catalog.
+- Do not remove or merge any products.
+
+CATEGORY → PRODUCT CONNECTION:
+
+When a category is selected, query/filter the existing Firestore products using the exact category field.
+
+Example:
+
+"Signage & Display"
+→ show only products whose category is "Signage & Display"
+
+"Apparel"
+→ show only products whose category is "Apparel"
+
+Do NOT hard-code separate product lists in the frontend.
+
+Use the production Firebase/Firestore data.
+
+ADMIN PANEL:
+Do not add these category images as individual products.
+
+If the existing CMS supports category images, store the category image there and make it editable from Admin Panel.
+
+If category-image management does not currently exist, implement it cleanly without breaking the existing product management system.
+
+FINAL RESULT:
+
+Public Products Page:
+12 beautiful category cards/images
+↓
+Click category
+↓
+Products belonging to that category
+↓
+Click product
+↓
+Product details
+
+IMPORTANT:
+Finish and verify ALL 202 products FIRST.
+Only after the 202-product catalog is complete should you create and add the 12 category images.
+
+Do not generate 202 product images.
+Generate category images ONLY.

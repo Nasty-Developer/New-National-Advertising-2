@@ -511,6 +511,13 @@ export interface RequestStatusInput {
   status: RequestStatusInputStatus;
 }
 
+export type GetPublicProductsParams = {
+/**
+ * Return only products from the exact category value.
+ */
+category?: string;
+};
+
 export type GetAdminProductsParams = {
 search?: string;
 category?: string;

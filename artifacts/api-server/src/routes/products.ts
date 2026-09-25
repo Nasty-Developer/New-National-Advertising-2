@@ -149,10 +149,15 @@ async function productValues(data: {
   };
 }
 
-router.get("/products", async (_req, res): Promise<void> => {
-  const rows = (await allProducts())
+router.get("/products", async (req, res): Promise<void> => {
+  const category =
+    typeof req.query.category === "string" ? req.query.category.trim() : "";
+  let rows = (await allProducts())
     .filter(({ doc }) => doc.data().status === "published")
     .sort((a, b) => productOrder(a.value, b.value));
+  if (category) {
+    rows = rows.filter(({ value }) => value.category === category);
+  }
   res.json(GetPublicProductsResponse.parse(rows.map(({ value }) => value)));
 });
 

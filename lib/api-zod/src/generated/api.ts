@@ -51,6 +51,10 @@ export const AdminLogoutResponse = zod.void()
 /**
  * @summary List published products
  */
+export const GetPublicProductsQueryParams = zod.object({
+  "category": zod.coerce.string().optional().describe('Return only products from the exact category value.')
+})
+
 export const getPublicProductsResponseOneNameMax = 160;
 
 export const getPublicProductsResponseOneShortDescriptionMax = 320;
