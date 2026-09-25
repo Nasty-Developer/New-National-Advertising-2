@@ -690,8 +690,9 @@ export const RequestProductImageUploadUrlBody = zod.object({
 })
 
 export const RequestProductImageUploadUrlResponse = zod.object({
-  "uploadURL": zod.string().url(),
-  "objectPath": zod.string()
+  "uploadURL": zod.string(),
+  "objectPath": zod.string(),
+  "uploadToken": zod.string().optional()
 })
 
 
@@ -711,8 +712,21 @@ export const RequestQuoteAttachmentUploadUrlBody = zod.object({
 })
 
 export const RequestQuoteAttachmentUploadUrlResponse = zod.object({
-  "uploadURL": zod.string().url(),
-  "objectPath": zod.string()
+  "uploadURL": zod.string(),
+  "objectPath": zod.string(),
+  "uploadToken": zod.string().optional()
+})
+
+
+/**
+ * @summary Upload file content through the authenticated server
+ */
+export const UploadFileContentHeader = zod.object({
+  "X-Upload-Ticket": zod.string()
+})
+
+export const UploadFileContentResponse = zod.object({
+  "objectPath": zod.string().url()
 })
 
 

@@ -173,6 +173,11 @@ export interface UploadRequest {
 export interface UploadResponse {
   uploadURL: string;
   objectPath: string;
+  uploadToken?: string;
+}
+
+export interface UploadCompletedResponse {
+  objectPath: string;
 }
 
 export interface MachineInput {

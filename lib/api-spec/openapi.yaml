@@ -402,6 +402,49 @@ paths:
                 $ref: "#/components/schemas/UploadResponse"
         "400":
           description: Invalid upload request
+  /storage/uploads/content:
+    put:
+      operationId: uploadFileContent
+      tags: [storage]
+      summary: Upload file content through the authenticated server
+      security:
+        - firebaseBearer: []
+      parameters:
+        - name: X-Upload-Ticket
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+          image/webp:
+            schema:
+              type: string
+              format: binary
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: Cloudinary upload completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadCompletedResponse"
+        "400":
+          description: Upload failed
+        "403":
+          description: Upload ticket missing or expired
   /requests/quote:
     post:
       operationId: createQuoteRequest
@@ -980,6 +1023,13 @@ components:
         uploadToken:
           type: string
       required: [uploadURL, objectPath]
+    UploadCompletedResponse:
+      type: object
+      properties:
+        objectPath:
+          type: string
+          format: uri
+      required: [objectPath]
     MachineInput:
       type: object
       properties:

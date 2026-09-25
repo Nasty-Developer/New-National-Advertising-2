@@ -40,7 +40,6 @@ import {
   type MachineInput,
   type Service,
   type ServiceInput,
-  type UploadRequestContentType,
   type WebsiteContent,
   type WebsiteContentInput,
   type WebsiteSettings,

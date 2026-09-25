@@ -58,7 +58,6 @@ import {
   useUpdateProduct,
   type Product,
   type ProductInput,
-  type UploadRequestContentType,
 } from "@workspace/api-client-react";
 import CmsManager from "@/pages/cms-manager";
 import ProjectsManager from "@/pages/projects-manager";

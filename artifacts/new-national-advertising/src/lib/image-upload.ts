@@ -68,7 +68,7 @@ export async function uploadFileToServer(
     request.timeout = 120_000;
     request.setRequestHeader("Content-Type", file.type);
     request.setRequestHeader("Authorization", `Bearer ${idToken}`);
-    request.setRequestHeader("X-Upload-Ticket", target.uploadToken);
+    request.setRequestHeader("X-Upload-Ticket", target.uploadToken!);
     request.upload.onprogress = (event) => {
       if (event.lengthComputable) {
         onProgress(

@@ -6,8 +6,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface UploadResponse {
-  uploadURL: string;
+export interface UploadCompletedResponse {
   objectPath: string;
-  uploadToken?: string;
 }

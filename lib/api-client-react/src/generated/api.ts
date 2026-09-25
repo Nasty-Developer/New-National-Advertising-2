@@ -44,6 +44,7 @@ import type {
   Service,
   ServiceInput,
   UpdateRequestStatus200,
+  UploadCompletedResponse,
   UploadRequest,
   UploadResponse,
   WebsiteContent,
@@ -1684,6 +1685,94 @@ export const useRequestQuoteAttachmentUploadUrl = <TError = ErrorType<void>,
         TContext
       > => {
       return useMutation(getRequestQuoteAttachmentUploadUrlMutationOptions(options));
+    }
+
+export const getUploadFileContentUrl = () => {
+
+
+
+
+  return `/api/storage/uploads/content`
+}
+
+/**
+ * @summary Upload file content through the authenticated server
+ */
+export const uploadFileContent = async (uploadFileContentBody: Blob, options?: Parameters<typeof customFetch>[1]): Promise<UploadCompletedResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<UploadCompletedResponse>(getUploadFileContentUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'image/jpeg', ...getHeaders(options?.headers) },
+    body: uploadFileContentBody
+  }
+);}
+
+
+
+
+
+export const getUploadFileContentMutationKey = () => ['uploadFileContent'] as const;
+
+export const getUploadFileContentMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFileContent>>, TError,UploadFileContentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof uploadFileContent>>, TError,UploadFileContentMutationVariables, TContext> => {
+
+const mutationKey = getUploadFileContentMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadFileContent>>, UploadFileContentMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  uploadFileContent(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UploadFileContentMutationResult = NonNullable<Awaited<ReturnType<typeof uploadFileContent>>>
+    export type UploadFileContentMutationBody = BodyType<Blob>
+    export type UploadFileContentMutationError = ErrorType<void>
+    export type UploadFileContentMutationVariables = {data: BodyType<Blob>}
+
+    /**
+ * @summary Upload file content through the authenticated server
+ */
+export const useUploadFileContent = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFileContent>>, TError,UploadFileContentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof uploadFileContent>>,
+        TError,
+        UploadFileContentMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUploadFileContentMutationOptions(options));
     }
 
 export const getCreateQuoteRequestUrl = () => {

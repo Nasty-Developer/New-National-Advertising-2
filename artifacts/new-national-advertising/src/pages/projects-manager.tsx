@@ -10,7 +10,6 @@ import {
   useUpdateProject,
   type Project,
   type ProjectInput,
-  type UploadRequestContentType,
 } from "@workspace/api-client-react";
 import { uploadFileToServer } from "@/lib/image-upload";
 
