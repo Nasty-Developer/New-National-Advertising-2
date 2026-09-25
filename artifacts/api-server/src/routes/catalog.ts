@@ -153,8 +153,8 @@ const serviceSeed = [
 
 const providedServiceImageSeeds = [
   ["solvent-flex", "service-images/solvent-flex.png", "file_000000005d0c81f59b4affa369e5ab8a_1790081802481.png"],
-  ["digital-printing", "service-images/digital-printing.png", "file_000000001f4081f593ead5688281e49b_1790081813324.png"],
-  ["offset-printing", "service-images/offset-printing.png", "file_00000000bec481f5ad95083f9227f996_1790081830489.png"],
+  ["digital-printing", "machine-konica-minolta-bizhub-c6000.png", "file_000000001f4081f593ead5688281e49b_1790081813324.png"],
+  ["offset-printing", "machine-large-format-printer.png", "file_00000000bec481f5ad95083f9227f996_1790081830489.png"],
   ["sign-boards", "service-images/sign-boards.png", "file_00000000e468820ba6a74d0c6e975121_1790081862129.png"],
   ["screen-printing", "service-images/screen-printing.png", "file_000000001c0881f5b3a4184e23a7d362_1790081878225.png"],
   ["graphics-design", "service-images/graphics-design.png", "file_00000000721481f796e2177b9a56bab7_1790081846306.png"],

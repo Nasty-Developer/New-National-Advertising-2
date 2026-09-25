@@ -192,7 +192,7 @@
       "content": "Professional printed materials for businesses, events, stationery and marketing requirements.",
       "features": [],
       "images": [
-        "/service-images/offset-printing.png"
+        "/machine-large-format-printer.png"
       ],
       "imageAlt": "Offset Printing",
       "offerings": [
@@ -221,7 +221,7 @@
       "status": "published",
       "featured": false,
       "createdAt": "2026-09-25T09:46:37.315Z",
-      "updatedAt": "2026-09-25T17:04:51.629Z"
+      "updatedAt": "2026-09-25T19:07:04.600Z"
     },
     "screen-printing": {
       "title": "Screen Printing",
@@ -317,7 +317,7 @@
       "content": "High-quality digital printing for business, promotional and everyday printing requirements.",
       "features": [],
       "images": [
-        "/service-images/digital-printing.png"
+        "/machine-konica-minolta-bizhub-c6000.png"
       ],
       "imageAlt": "Digital Printing",
       "offerings": [
@@ -348,7 +348,7 @@
       "status": "published",
       "featured": false,
       "createdAt": "2026-09-25T09:46:37.316Z",
-      "updatedAt": "2026-09-25T09:46:37.317Z"
+      "updatedAt": "2026-09-25T19:07:04.597Z"
     }
   },
   "products": {

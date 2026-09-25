@@ -1,0 +1,62 @@
+IMPORTANT IMAGE MAPPING UPDATE
+
+We are NOT redesigning the website. We are only correcting/reassigning existing images and sorting the existing content.
+
+MACHINE IMAGE:
+The machine image I am referring to is the image of the:
+
+Konica Minolta 6000
+
+in the Machines section.
+
+Use that Konica Minolta 6000 machine image for:
+
+1. Digital Printing service image
+2. Flex Printing service image
+
+However, there is one important exception:
+
+For Flex Printing, I may attach a new/correct Flex Printing image myself.
+
+If I provide a new Flex Printing image, use the image I provide for Flex Printing instead of the Konica Minolta 6000 image.
+
+If I do NOT provide a new Flex Printing image, you may use the existing machine image from the Machines section that represents the large-format / Konica Flex machine for the Flex Printing service.
+
+Therefore the priority is:
+
+Digital Printing:
+→ Use the Konica Minolta 6000 machine image from the Machines section.
+
+Flex Printing:
+→ First preference: the new Flex Printing image I attach.
+→ If I do not provide one: use the existing Konica Flex / large-format machine image from the Machines section.
+
+DO NOT use the current incorrect Digital Printing image.
+
+DO NOT delete or replace the original machine image in the Machines section just because it is being reused elsewhere. The machine record and its image must remain intact.
+
+MAKE YOUR BRAND STAND:
+When I provide the new Flex Printing image, use that SAME image in the "Make Your Brand Stand" section.
+
+FINAL IMAGE LOGIC:
+
+Konica Minolta 6000 machine image
+→ Digital Printing
+
+New Flex Printing image that I provide
+→ Flex Printing
+→ Make Your Brand Stand
+
+If I do not provide a Flex Printing image:
+Konica Flex / large-format machine image
+→ Flex Printing
+
+IMPORTANT:
+Do not generate a replacement image.
+Do not distort the machine.
+Do not heavily crop it.
+Keep the existing card/layout/design.
+Fit the image naturally inside the existing image container while preserving its aspect ratio.
+
+Do not change the actual product/service/machine data unless specifically instructed.
+This is an image-assignment task only.
