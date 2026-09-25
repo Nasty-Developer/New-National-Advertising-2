@@ -85,8 +85,8 @@ const machineSeed = [
   },
   {
     id: "wide-format-roll-laminator",
-    name: "Accent Z (Wide Format Roll Laminator)",
-    slug: "accent-z-wide-format-roll-laminator",
+    name: "Excel Z (Wide Format Roll Laminator)",
+    slug: "excel-z-wide-format-roll-laminator",
     category: "Finishing Equipment",
     shortDescription: "Controlled roll laminating for advertising, signage and display graphics.",
     description: "A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.",
@@ -262,7 +262,7 @@ const machinePriority = [
   ["laser", "co2"],
   ["axon"],
   ["512i", "konica", "flex"],
-  ["accent", "z"],
+  ["excel", "z"],
   ["konica", "minolta"],
 ];
 
