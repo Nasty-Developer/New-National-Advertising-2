@@ -1103,7 +1103,7 @@ function Products() {
               {products.data.map((product) => (
                 <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
                   <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
-                    {product.imagePath ? <img src={product.imagePath.startsWith('/api/') ? product.imagePath : `/api/storage${product.imagePath.startsWith('/') ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
+                    {product.imageUrl || product.imagePath ? <img src={(product.imageUrl || product.imagePath || "").startsWith("http") || (product.imageUrl || product.imagePath || "").startsWith("/api/") ? product.imageUrl || product.imagePath || "" : `/api/storage${(product.imagePath || "").startsWith("/") ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
                   </div>
                   <div className="p-5">
                     <p className="eyebrow">{product.category}</p>

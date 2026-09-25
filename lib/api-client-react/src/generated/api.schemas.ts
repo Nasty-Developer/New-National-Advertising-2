@@ -81,12 +81,17 @@ export interface ProductInput {
   displayOrder?: number;
 }
 
-export type Product = ProductInput & {
+export type Product = ProductInput & ({
+  /**
+     * @maxLength 500
+     * @nullable
+     */
+  imageUrl?: string | null;
   /** @minLength 1 */
   id: string;
   createdAt: string;
   updatedAt: string;
-};
+});
 
 export interface AdminSummary {
   totalProducts: number;

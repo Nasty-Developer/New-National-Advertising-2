@@ -15,7 +15,11 @@ import {
 } from "@workspace/api-zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import { createFirebaseReadUrl } from "../lib/firebase-storage";
+import {
+  createFirebaseDownloadUrl,
+  deleteFirebaseProductImageIfUnreferenced,
+  normalizeFirebaseProductImagePath,
+} from "../lib/firebase-storage";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
@@ -31,12 +35,27 @@ function toDate(value: unknown): Date {
 }
 
 async function productResponse(id: string, data: DocumentData) {
+  const storedImagePath = data.imagePath ?? data.imageUrl ?? null;
+  const imagePath =
+    normalizeFirebaseProductImagePath(storedImagePath) ?? storedImagePath;
+  const storedImageUrl =
+    typeof data.imageUrl === "string" && data.imageUrl
+      ? data.imageUrl
+      : null;
+  const storedUrlIsStable =
+    storedImageUrl &&
+    (!normalizeFirebaseProductImagePath(storedImageUrl) ||
+      /[?&]token=/.test(storedImageUrl));
+
   return {
     id,
     name: String(data.name ?? ""),
     shortDescription: String(data.shortDescription ?? ""),
     fullDescription: String(data.fullDescription ?? data.description ?? ""),
-    imagePath: await createFirebaseReadUrl(data.imagePath ?? data.imageUrl),
+    imagePath,
+    imageUrl: storedUrlIsStable
+      ? storedImageUrl
+      : await createFirebaseDownloadUrl(imagePath ?? storedImagePath),
     imageAlt: data.imageAlt ?? null,
     category: String(data.category ?? ""),
     serviceSlug: data.serviceSlug ?? null,
@@ -61,7 +80,7 @@ function slugify(value: string) {
   return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-function productValues(data: {
+async function productValues(data: {
   name: string;
   shortDescription: string;
   fullDescription: string;
@@ -75,13 +94,17 @@ function productValues(data: {
   displayOrder?: number;
 }, uid: string) {
   const now = new Date();
+  const imagePath = data.imagePath
+    ? normalizeFirebaseProductImagePath(data.imagePath) ?? data.imagePath.trim()
+    : null;
   return {
     name: data.name.trim(),
     slug: slugify(data.name),
     shortDescription: data.shortDescription.trim(),
     description: data.fullDescription.trim(),
     fullDescription: data.fullDescription.trim(),
-    imagePath: data.imagePath ?? null,
+    imagePath,
+    imageUrl: await createFirebaseDownloadUrl(imagePath),
     imageAlt: data.imageAlt?.trim() || null,
     category: data.category.trim(),
     serviceSlug: data.serviceSlug?.trim() || null,
@@ -135,7 +158,7 @@ router.post("/admin/products", requireAdmin, async (req, res): Promise<void> => 
   }
   const admin = currentAdmin(res);
   const reference = products().doc();
-  await reference.set(productValues(parsed.data, admin.uid));
+  await reference.set(await productValues(parsed.data, admin.uid));
   res.status(201).json(CreateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 
@@ -167,11 +190,20 @@ router.put("/admin/products/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const admin = currentAdmin(res);
+  const previousImagePath = snapshot.data()?.imagePath ?? snapshot.data()?.imageUrl;
+  const values = await productValues(parsed.data, admin.uid);
   await reference.set({
-    ...productValues(parsed.data, admin.uid),
+    ...values,
     createdAt: snapshot.data()?.createdAt ?? new Date(),
     createdBy: snapshot.data()?.createdBy ?? admin.uid,
   }, { merge: true });
+  if (
+    previousImagePath &&
+    normalizeFirebaseProductImagePath(previousImagePath) !==
+      normalizeFirebaseProductImagePath(values.imagePath)
+  ) {
+    await deleteFirebaseProductImageIfUnreferenced(previousImagePath);
+  }
   res.json(UpdateProductResponse.parse(await productResponse(reference.id, (await reference.get()).data()!)));
 });
 

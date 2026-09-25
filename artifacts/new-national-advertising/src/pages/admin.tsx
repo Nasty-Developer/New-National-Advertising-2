@@ -556,7 +556,7 @@ function ProductForm({
         stockStatus: product.stockStatus,
         displayOrder: String(product.displayOrder ?? 0),
       });
-      setPreview(imageUrl(product.imagePath));
+      setPreview(imageUrl(product.imageUrl ?? product.imagePath));
     }
   }, [productQuery.data, isEditing]);
 
@@ -919,6 +919,25 @@ function ProductForm({
                       data-testid="input-product-image"
                     />
                   </label>
+                  {(form.imagePath || preview) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (objectUrl.current) {
+                          URL.revokeObjectURL(objectUrl.current);
+                          objectUrl.current = "";
+                        }
+                        setField("imagePath", "");
+                        setPreview("");
+                        setUploadProgress(0);
+                        setFeedback("Image will be removed when you save.");
+                      }}
+                      className="mt-2 w-full rounded-lg px-3 py-2 text-[11px] font-bold text-[#a3443c] transition hover:bg-[#fff5f3]"
+                      data-testid="button-remove-product-image"
+                    >
+                      Remove image
+                    </button>
+                  )}
                 </div>
                 <Field label="Image alt text" hint="Recommended">
                   <input
@@ -1384,14 +1403,15 @@ function ProductRow({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const productImage = product.imageUrl ?? product.imagePath;
   return (
     <tr data-testid={`row-product-${product.id}`}>
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
           <div className="h-11 w-14 shrink-0 overflow-hidden rounded-lg bg-[#eaf2f4]">
-            {product.imagePath ? (
+            {productImage ? (
               <img
-                src={imageUrl(product.imagePath)}
+                src={imageUrl(productImage)}
                 alt={product.imageAlt || product.name}
                 className="h-full w-full object-cover"
               />
@@ -1463,13 +1483,14 @@ function ProductCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const productImage = product.imageUrl ?? product.imagePath;
   return (
     <article className="p-4" data-testid={`card-product-${product.id}`}>
       <div className="flex gap-3">
         <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-[#eaf2f4]">
-          {product.imagePath ? (
+          {productImage ? (
             <img
-              src={imageUrl(product.imagePath)}
+              src={imageUrl(productImage)}
               alt={product.imageAlt || product.name}
               className="h-full w-full object-cover"
             />

@@ -834,6 +834,10 @@ components:
         - $ref: "#/components/schemas/ProductInput"
         - type: object
           properties:
+            imageUrl:
+              type: [string, "null"]
+              format: uri
+              maxLength: 500
             id:
               type: string
               minLength: 1
