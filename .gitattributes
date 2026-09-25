@@ -1,7 +1,2 @@
-attached_assets/New_National_Advertising_All_Created_Images_1790298866408.zip filter=lfs diff=lfs merge=lfs -text
-<<<<<<< HEAD
-attached_assets/New_National_Advertising_All_Created_Images_1790320367834.zip filter=lfs diff=lfs merge=lfs -text
-=======
->>>>>>> origin/main
-attached_assets/New_National_Advertising_All_Created_Images_1790322691739.zip filter=lfs diff=lfs merge=lfs -text
-attached_assets/New_National_Advertising_All_Created_Images_1790323200778.zip filter=lfs diff=lfs merge=lfs -text
+lib/api-client-react/src/generated/** linguist-generated=true
+lib/api-zod/src/generated/** linguist-generated=true
