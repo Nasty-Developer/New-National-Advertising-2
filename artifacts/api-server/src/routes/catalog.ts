@@ -11,6 +11,7 @@ import {
 } from "../lib/firebase-storage";
 import { firebaseBucket, hasFirebaseConfiguration } from "../lib/firebase";
 import { firestore } from "../lib/firebase";
+import { ensureExactProductCatalog } from "../lib/product-catalog";
 
 const router: IRouter = Router();
 
@@ -283,35 +284,7 @@ async function ensureSeeded() {
     }
   }));
   await syncProvidedServiceImages();
-  const products = firestore().collection("products");
-  await Promise.all(serviceSeed.map(async ([slug, title, , description, offerings]) => {
-    const existing = await products.where("serviceSlug", "==", slug).get();
-    if (!existing.empty) return;
-    const serviceSnapshot = await services.doc(slug).get();
-    const currentOfferings = Array.isArray(serviceSnapshot.data()?.offerings)
-      ? serviceSnapshot.data()?.offerings as string[]
-      : offerings;
-    const now = new Date();
-    await Promise.all(currentOfferings.map((name, displayOrder) => products.add({
-      name,
-      serviceSlug: slug,
-      shortDescription: `${name} from ${title}.`,
-      description,
-      fullDescription: description,
-      imagePath: null,
-      imageAlt: name,
-      category: title,
-      price: null,
-      status: "published",
-      stockStatus: "in_stock",
-      displayOrder,
-      featured: false,
-      createdAt: now,
-      updatedAt: now,
-      createdBy: "catalog-seed",
-      updatedBy: "catalog-seed",
-    })));
-  }));
+  await ensureExactProductCatalog();
 }
 
 async function publicDocuments(kind: "machines" | "services") {

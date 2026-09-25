@@ -21,24 +21,24 @@ import {
   normalizeFirebaseProductImagePath,
 } from "../lib/firebase-storage";
 import { firestore } from "../lib/firebase";
+import { ensureExactProductCatalog } from "../lib/product-catalog";
 
 const router: IRouter = Router();
 const products = () => firestore().collection("products");
 const productPriority = [
-  ["signage"],
-  ["banner"],
-  ["brochure"],
-  ["acrylic", "clip", "board"],
-  ["calendar"],
-  ["business", "card"],
-  ["letterhead"],
-  ["hoarding", "banner"],
+  new Set(["signage"]),
+  new Set(["banner"]),
+  new Set(["brochure", "brochure printing", "brochures"]),
+  new Set(["acrylic clip-on board"]),
+  new Set(["calendar", "calendars"]),
+  new Set(["business card", "business cards", "business/visiting card printing"]),
+  new Set(["letterhead", "letterhead printing", "letterheads", "business letterheads"]),
+  new Set(["hoarding banner"]),
 ];
 
 function productPriorityRank(name: string) {
-  const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, " ");
-  if (normalized.includes("hoarding banner")) return 7;
-  const index = productPriority.findIndex((tokens) => tokens.every((token) => normalized.includes(token)));
+  const normalized = name.toLowerCase().trim().replace(/\s+/g, " ");
+  const index = productPriority.findIndex((names) => names.has(normalized));
   return index < 0 ? Number.MAX_SAFE_INTEGER : index;
 }
 
@@ -97,6 +97,7 @@ async function productResponse(id: string, data: DocumentData) {
 }
 
 async function allProducts() {
+  await ensureExactProductCatalog();
   const snapshot = await products().get();
   return Promise.all(snapshot.docs.map(async (doc) => ({
     doc,
