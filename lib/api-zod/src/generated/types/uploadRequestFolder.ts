@@ -11,7 +11,10 @@ export type UploadRequestFolder = typeof UploadRequestFolder[keyof typeof Upload
 
 export const UploadRequestFolder = {
   products: 'products',
+<<<<<<< HEAD
   'category-images': 'category-images',
+=======
+>>>>>>> origin/main
   machines: 'machines',
   services: 'services',
   projects: 'projects',

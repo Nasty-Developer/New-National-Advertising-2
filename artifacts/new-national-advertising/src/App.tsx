@@ -1078,9 +1078,15 @@ function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const allProducts = useGetPublicProducts();
+<<<<<<< HEAD
   const selectedProducts = useMemo(
     () => (allProducts.data ?? []).filter((product) => product.category === selectedCategory),
     [allProducts.data, selectedCategory],
+=======
+  const selectedProducts = useGetPublicProducts(
+    selectedCategory ? { category: selectedCategory } : undefined,
+    { query: { enabled: Boolean(selectedCategory) } },
+>>>>>>> origin/main
   );
   const categoryCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -1091,14 +1097,22 @@ function Products() {
   }, [allProducts.data]);
   const filteredProducts = useMemo(() => {
     const term = search.trim().toLowerCase();
+<<<<<<< HEAD
     return selectedProducts.filter((product) =>
+=======
+    return (selectedProducts.data ?? []).filter((product) =>
+>>>>>>> origin/main
       !term ||
       [product.name, product.shortDescription]
         .join(" ")
         .toLowerCase()
         .includes(term),
     );
+<<<<<<< HEAD
   }, [search, selectedProducts]);
+=======
+  }, [search, selectedProducts.data]);
+>>>>>>> origin/main
 
   return (
     <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641]">
@@ -1156,17 +1170,29 @@ function Products() {
                 ))}
               </div>
             </div>
+<<<<<<< HEAD
           ) : allProducts.isLoading ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
               {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
             </div>
           ) : allProducts.isError ? (
+=======
+          ) : selectedProducts.isLoading ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
+              {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
+            </div>
+          ) : selectedProducts.isError ? (
+>>>>>>> origin/main
             <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert" data-testid="state-public-products-error">
               <p className="eyebrow !text-[#a3443c]">Products</p>
               <h2 className="display mt-3 text-3xl font-extrabold tracking-[-.06em] text-[#703a36]">Category unavailable</h2>
               <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#9a625c]">We could not load this category. Please try again shortly or contact us for help.</p>
             </div>
+<<<<<<< HEAD
           ) : selectedProducts.length ? (
+=======
+          ) : (
+>>>>>>> origin/main
             <div className="space-y-8" data-testid="public-product-category-detail">
               <div className="flex flex-col gap-4 border-b border-[#dce7ec] pb-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>

@@ -154,6 +154,7 @@ class LocalDocumentReference {
     return snapshot(this.id, collectionRecords(this.collectionName)[this.id]);
   }
 
+<<<<<<< HEAD
   async create(value: LocalRecord) {
     const records = collectionRecords(this.collectionName);
     if (records[this.id] !== undefined) {
@@ -165,6 +166,8 @@ class LocalDocumentReference {
     saveDatabase();
   }
 
+=======
+>>>>>>> origin/main
   async set(value: LocalRecord, options?: SetOptions) {
     const records = collectionRecords(this.collectionName);
     records[this.id] = options?.merge

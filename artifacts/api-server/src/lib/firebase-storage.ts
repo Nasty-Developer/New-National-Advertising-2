@@ -3,7 +3,11 @@ import { firebaseBucket, firestore, hasFirebaseConfiguration } from "./firebase"
 
 const allowedContentTypes = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
 const maxBytes = 10 * 1024 * 1024;
+<<<<<<< HEAD
 const storageFolders = ["products", "category-images", "machines", "services", "projects", "requests"] as const;
+=======
+const storageFolders = ["products", "machines", "services", "projects", "requests"] as const;
+>>>>>>> origin/main
 
 export function validateUpload(input: { size: number; contentType: string }) {
   if (!Number.isInteger(input.size) || input.size < 1 || input.size > maxBytes) {
@@ -15,7 +19,11 @@ export function validateUpload(input: { size: number; contentType: string }) {
 }
 
 export async function createFirebaseUploadTarget(input: {
+<<<<<<< HEAD
   folder: "products" | "category-images" | "machines" | "services" | "projects" | "requests";
+=======
+  folder: "products" | "machines" | "services" | "projects" | "requests";
+>>>>>>> origin/main
   name: string;
   contentType: string;
   size: number;
@@ -56,11 +64,14 @@ export function normalizeFirebaseProductImagePath(value: unknown): string | null
   return path?.startsWith("/products/") ? path : null;
 }
 
+<<<<<<< HEAD
 export function normalizeFirebaseCategoryImagePath(value: unknown): string | null {
   const path = normalizeFirebaseStoragePath(value);
   return path?.startsWith("/category-images/") ? path : null;
 }
 
+=======
+>>>>>>> origin/main
 export function normalizeFirebaseStoragePath(value: unknown): string | null {
   if (typeof value !== "string" || !value.trim()) return null;
 
@@ -157,7 +168,10 @@ export async function deleteFirebaseStorageImageIfUnreferenced(
   const objectPath = normalizedPath.replace(/^\/+/, "");
   const collectionNames = [
     "products",
+<<<<<<< HEAD
     "productCategories",
+=======
+>>>>>>> origin/main
     "machines",
     "services",
     "projects",

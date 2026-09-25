@@ -18,8 +18,11 @@ export * from './healthStatus';
 export * from './machine';
 export * from './machineInput';
 export * from './product';
+<<<<<<< HEAD
 export * from './productCategory';
 export * from './productCategoryImageInput';
+=======
+>>>>>>> origin/main
 export * from './productInput';
 export * from './productStatus';
 export * from './project';

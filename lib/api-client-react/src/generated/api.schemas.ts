@@ -93,6 +93,7 @@ export type Product = ProductInput & ({
   updatedAt: string;
 });
 
+<<<<<<< HEAD
 export interface ProductCategoryImageInput {
   /**
      * @maxLength 500
@@ -121,6 +122,8 @@ export interface ProductCategory {
   updatedAt: string;
 }
 
+=======
+>>>>>>> origin/main
 export interface AdminSummary {
   totalProducts: number;
   publishedProducts: number;
@@ -148,7 +151,10 @@ export type UploadRequestFolder = typeof UploadRequestFolder[keyof typeof Upload
 
 export const UploadRequestFolder = {
   products: 'products',
+<<<<<<< HEAD
   'category-images': 'category-images',
+=======
+>>>>>>> origin/main
   machines: 'machines',
   services: 'services',
   projects: 'projects',

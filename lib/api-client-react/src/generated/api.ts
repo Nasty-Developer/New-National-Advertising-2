@@ -31,8 +31,11 @@ import type {
   Machine,
   MachineInput,
   Product,
+<<<<<<< HEAD
   ProductCategory,
   ProductCategoryImageInput,
+=======
+>>>>>>> origin/main
   ProductInput,
   Project,
   ProjectInput,
@@ -474,6 +477,7 @@ export function useGetPublicProducts<TData = Awaited<ReturnType<typeof getPublic
 
 
 
+<<<<<<< HEAD
 export const getGetProductCategoriesUrl = () => {
 
 
@@ -640,6 +644,8 @@ export const useUpdateAdminProductCategory = <TError = ErrorType<void>,
       return useMutation(getUpdateAdminProductCategoryMutationOptions(options));
     }
 
+=======
+>>>>>>> origin/main
 export const getGetAdminProductsUrl = (params?: GetAdminProductsParams,) => {
   const normalizedParams = new URLSearchParams();
 

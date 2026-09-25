@@ -2,10 +2,10 @@ kind = "web"
 previewPath = "/"
 title = "New National Advertising"
 <<<<<<< HEAD
-description = "Company website and admin content-management tools for New National Advertising, covering printing and signage services, equipment, projects, and quote requests."
+description = "A responsive business website for New National Advertising, showcasing printing, signage, advertising and graphic design services in Mumbai with quote requests and direct contact actions."
 =======
-description = "The company website and admin content-management tools for New National Advertising, including printing and signage services, equipment, project portfolio, and quote requests."
->>>>>>> origin/main
+description = "The New National Advertising business website and admin tools for printing, signage, design, product management, and quote requests."
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
 version = "1.0.0"
 id = "artifacts/new-national-advertising"
 router = "path"
