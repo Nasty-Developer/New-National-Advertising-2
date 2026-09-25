@@ -51,7 +51,7 @@ const defaultSettings = {
   businessName: "New National Advertising",
   email: "newnationaladv2022@gmail.com",
   address: "Room No. 3, New National Advertising, Plot No. 47, Line No. K, Road No. 5, Opposite Mahesh Jewellers, Govandi West, Mumbai - 400043, India",
-  whatsappNumbers: ["9555759677"],
+  whatsappNumbers: ["9555756577", "7506269783"],
   socialLinks: [],
   googleMapsUrl: "https://maps.app.goo.gl/fp4fTcaVwx2bojXz7",
   footerInformation: "Printing, signage, advertising and graphic design solutions for businesses, brands and individuals.",
@@ -94,9 +94,8 @@ async function ensureCmsSeeded() {
   if (existing.empty) {
     const now = new Date();
     await Promise.all([
-      contacts.doc().set({ label: "Primary", phone: "9555759677", showOnWebsite: true, useForCalls: true, useForWhatsApp: true, isPrimary: true, displayOrder: 0, createdAt: now, updatedAt: now }),
-      contacts.doc().set({ label: "Office", phone: "7506269783", showOnWebsite: true, useForCalls: true, useForWhatsApp: false, isPrimary: false, displayOrder: 1, createdAt: now, updatedAt: now }),
-      contacts.doc().set({ label: "Studio", phone: "8898805753", showOnWebsite: true, useForCalls: true, useForWhatsApp: false, isPrimary: false, displayOrder: 2, createdAt: now, updatedAt: now }),
+      contacts.doc().set({ label: "Taukeer Ahmed", phone: "9555756577", showOnWebsite: true, useForCalls: true, useForWhatsApp: true, isPrimary: true, displayOrder: 0, createdAt: now, updatedAt: now }),
+      contacts.doc().set({ label: "Aurangzeb Khan", phone: "7506269783", showOnWebsite: true, useForCalls: true, useForWhatsApp: false, isPrimary: false, displayOrder: 1, createdAt: now, updatedAt: now }),
     ]);
   }
 }
