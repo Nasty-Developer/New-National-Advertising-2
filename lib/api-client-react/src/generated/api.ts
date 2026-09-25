@@ -27,7 +27,6 @@ import type {
   ContactNumberInput,
   ContactRequest,
   GetAdminProductsParams,
-  GetPublicProductsParams,
   HealthStatus,
   Machine,
   MachineInput,
@@ -396,27 +395,20 @@ export const useAdminLogout = <TError = ErrorType<unknown>,
       return useMutation(getAdminLogoutMutationOptions(options));
     }
 
-export const getGetPublicProductsUrl = (params?: GetPublicProductsParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getGetPublicProductsUrl = () => {
 
-  Object.entries(params || {}).forEach(([key, value]) => {
 
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
 
-  const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/products?${stringifiedParams}` : `/api/products`
+  return `/api/products`
 }
 
 /**
  * @summary List published products
  */
-export const getPublicProducts = async (params?: GetPublicProductsParams, options?: Parameters<typeof customFetch>[1]): Promise<Product[]> => {
+export const getPublicProducts = async ( options?: Parameters<typeof customFetch>[1]): Promise<Product[]> => {
 
-  return customFetch<Product[]>(getGetPublicProductsUrl(params),
+  return customFetch<Product[]>(getGetPublicProductsUrl(),
   {
     ...options,
     method: 'GET'
@@ -429,23 +421,23 @@ export const getPublicProducts = async (params?: GetPublicProductsParams, option
 
 
 
-export const getGetPublicProductsQueryKey = (params?: GetPublicProductsParams,) => {
+export const getGetPublicProductsQueryKey = () => {
     return [
-    `/api/products`, ...(params ? [params] : [])
+    `/api/products`
     ] as const;
     }
 
 
-export const getGetPublicProductsQueryOptions = <TData = Awaited<ReturnType<typeof getPublicProducts>>, TError = ErrorType<unknown>>(params?: GetPublicProductsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicProducts>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+export const getGetPublicProductsQueryOptions = <TData = Awaited<ReturnType<typeof getPublicProducts>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicProducts>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetPublicProductsQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getGetPublicProductsQueryKey();
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPublicProducts>>> = ({ signal }) => getPublicProducts(params, { signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPublicProducts>>> = ({ signal }) => getPublicProducts({ signal, ...requestOptions });
 
 
 
@@ -463,11 +455,11 @@ export type GetPublicProductsQueryError = ErrorType<unknown>
  */
 
 export function useGetPublicProducts<TData = Awaited<ReturnType<typeof getPublicProducts>>, TError = ErrorType<unknown>>(
- params?: GetPublicProductsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicProducts>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicProducts>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getGetPublicProductsQueryOptions(params,options)
+  const queryOptions = getGetPublicProductsQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

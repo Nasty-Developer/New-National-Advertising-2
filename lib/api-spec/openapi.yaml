@@ -84,12 +84,6 @@ paths:
       operationId: getPublicProducts
       tags: [products]
       summary: List published products
-      parameters:
-        - name: category
-          in: query
-          description: Return only products from the exact category value.
-          schema:
-            type: string
       responses:
         "200":
           description: Published products
