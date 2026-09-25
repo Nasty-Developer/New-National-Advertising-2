@@ -1075,37 +1075,30 @@ function Home() {
 }
 
 function Products() {
-  const products = useGetPublicProducts();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All categories");
-  const categories = useMemo(() => {
-    const seen = new Set<string>();
-    for (const product of products.data ?? []) seen.add(product.category);
-    return Array.from(seen);
-  }, [products.data]);
+  const allProducts = useGetPublicProducts();
+  const selectedProducts = useGetPublicProducts(
+    selectedCategory ? { category: selectedCategory } : undefined,
+    { query: { enabled: Boolean(selectedCategory) } },
+  );
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const product of allProducts.data ?? []) {
+      counts.set(product.category, (counts.get(product.category) ?? 0) + 1);
+    }
+    return counts;
+  }, [allProducts.data]);
   const filteredProducts = useMemo(() => {
     const term = search.trim().toLowerCase();
-    return (products.data ?? []).filter((product) => {
-      const matchesCategory =
-        category === "All categories" || product.category === category;
-      const matchesSearch =
-        !term ||
-        [product.name, product.category, product.shortDescription]
-          .join(" ")
-          .toLowerCase()
-          .includes(term);
-      return matchesCategory && matchesSearch;
-    });
-  }, [category, products.data, search]);
-  const groupedProducts = useMemo(() => {
-    const groups = new Map<string, typeof filteredProducts>();
-    for (const product of filteredProducts) {
-      const group = groups.get(product.category) ?? [];
-      group.push(product);
-      groups.set(product.category, group);
-    }
-    return Array.from(groups.entries());
-  }, [filteredProducts]);
+    return (selectedProducts.data ?? []).filter((product) =>
+      !term ||
+      [product.name, product.shortDescription]
+        .join(" ")
+        .toLowerCase()
+        .includes(term),
+    );
+  }, [search, selectedProducts.data]);
 
   return (
     <div className="site-noise min-h-[100dvh] overflow-x-hidden bg-[#fbfcfd] text-[#122641]">
@@ -1119,81 +1112,96 @@ function Products() {
           </div>
         </section>
         <section className="container-nna py-14 sm:py-20">
-          {products.isLoading ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
-              {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
+          {allProducts.isLoading ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading product categories" data-testid="state-public-product-categories-loading">
+              {productCategories.map((category) => <div key={category.name} className="admin-skeleton h-[300px] rounded-[16px] border border-[#e1eaee]" />)}
             </div>
-          ) : products.isError ? (
+          ) : allProducts.isError ? (
             <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert" data-testid="state-public-products-error">
               <p className="eyebrow !text-[#a3443c]">Products</p>
               <h2 className="display mt-3 text-3xl font-extrabold tracking-[-.06em] text-[#703a36]">Catalogue unavailable</h2>
               <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#9a625c]">We could not load the current catalogue. Please try again shortly or contact us for help.</p>
             </div>
-          ) : products.data?.length ? (
-            <div className="space-y-12" data-testid="public-product-catalogue">
-              <div className="rounded-[16px] border border-[#dce7ec] bg-white p-4 shadow-[0_10px_28px_rgba(24,52,82,.05)] sm:p-5">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-                  <label className="flex-1">
-                    <span className="sr-only">Search products</span>
-                    <input
-                      value={search}
-                      onChange={(event) => setSearch(event.target.value)}
-                      placeholder="Search products by name or category"
-                      className="admin-input"
-                      data-testid="input-public-product-search"
-                    />
-                  </label>
-                  <span className="text-[11px] font-semibold text-[#728692]">
-                    {filteredProducts.length} of {products.data.length} products
-                  </span>
+          ) : !selectedCategory ? (
+            <div className="space-y-8" data-testid="public-product-categories">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="eyebrow">Browse by category</p>
+                  <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.06em] text-[#14213d] sm:text-4xl">Choose the work you need.</h2>
                 </div>
-                <div className="mt-4 flex gap-2 overflow-x-auto pb-1" aria-label="Product categories">
-                  {["All categories", ...categories].map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => setCategory(item)}
-                      className={`shrink-0 rounded-full border px-3 py-2 text-[10px] font-bold transition ${category === item ? "border-[#1769aa] bg-[#1769aa] text-white" : "border-[#d5e3e8] bg-[#f8fbfb] text-[#3e5b70] hover:border-[#8ab9c6]"}`}
-                      aria-pressed={category === item}
-                      data-testid={`filter-public-products-${item === "All categories" ? "all" : item.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                    >
-                      {item}
-                    </button>
+                <span className="hidden text-[11px] font-semibold text-[#728692] sm:block">{allProducts.data?.length ?? 0} products across 12 categories</span>
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {productCategories.map((category) => (
+                  <button
+                    key={category.name}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(category.name);
+                      setSearch("");
+                    }}
+                    className="group overflow-hidden rounded-[16px] border border-[#dce7ec] bg-white text-left shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(24,52,82,.12)]"
+                    data-testid={`product-category-card-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                  >
+                    <div className="relative aspect-[1.45/1] overflow-hidden bg-[#edf4f6]">
+                      <img src={category.image} alt={category.alt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#102941]/75 via-[#102941]/10 to-transparent" />
+                      <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold text-[#1c4661]">{categoryCounts.get(category.name) ?? 0} products</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 p-5">
+                      <h3 className="display text-[21px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{category.name}</h3>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eaf4f6] text-[#1769aa] transition group-hover:translate-x-1 group-hover:bg-[#1769aa] group-hover:text-white"><ArrowRight size={16} /></span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : selectedProducts.isLoading ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading products" data-testid="state-public-products-loading">
+              {[1, 2, 3].map((item) => <div key={item} className="admin-skeleton h-[330px] rounded-[14px] border border-[#e1eaee]" />)}
+            </div>
+          ) : selectedProducts.isError ? (
+            <div className="mx-auto max-w-[560px] rounded-[14px] border border-[#edcbc7] bg-[#fff5f3] px-6 py-12 text-center" role="alert" data-testid="state-public-products-error">
+              <p className="eyebrow !text-[#a3443c]">Products</p>
+              <h2 className="display mt-3 text-3xl font-extrabold tracking-[-.06em] text-[#703a36]">Category unavailable</h2>
+              <p className="mx-auto mt-4 max-w-[360px] text-[13px] leading-6 text-[#9a625c]">We could not load this category. Please try again shortly or contact us for help.</p>
+            </div>
+          ) : (
+            <div className="space-y-8" data-testid="public-product-category-detail">
+              <div className="flex flex-col gap-4 border-b border-[#dce7ec] pb-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <button type="button" onClick={() => setSelectedCategory(null)} className="mb-4 inline-flex items-center gap-2 text-[11px] font-bold text-[#1769aa] hover:text-[#0e4d80]"><ArrowDownRight className="rotate-90" size={14} /> All categories</button>
+                  <p className="eyebrow">Category</p>
+                  <h2 className="display mt-2 text-4xl font-extrabold tracking-[-.06em] text-[#14213d]">{selectedCategory}</h2>
+                </div>
+                <label className="sm:w-[300px]">
+                  <span className="sr-only">Search this category</span>
+                  <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search this category" className="admin-input" data-testid="input-public-product-search" />
+                </label>
+              </div>
+              {filteredProducts.length ? (
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-testid="public-product-grid">
+                  {filteredProducts.map((product) => (
+                    <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
+                      <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
+                        {product.imageUrl || product.imagePath ? <img src={(product.imageUrl || product.imagePath || "").startsWith("http") || (product.imageUrl || product.imagePath || "").startsWith("/api/") ? product.imageUrl || product.imagePath || "" : `/api/storage${(product.imagePath || "").startsWith("/") ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
+                      </div>
+                      <div className="p-5">
+                        <h3 className="display text-[22px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{product.name}</h3>
+                        <p className="mt-3 text-[13px] leading-6 text-[#68798a]">{product.shortDescription}</p>
+                        <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#edf1f3] pt-4">
+                          <span className="text-[12px] font-bold text-[#304a60]">{product.price === null || product.price === undefined ? 'Ask for a quote' : `₹${product.price.toLocaleString('en-IN')}`}</span>
+                          <a href="/#contact" className="button-arrow inline-flex items-center gap-2 text-[11px] font-bold text-[#1769aa]">Enquire <ArrowRight size={14} /></a>
+                        </div>
+                      </div>
+                    </article>
                   ))}
                 </div>
-              </div>
-              {groupedProducts.length ? groupedProducts.map(([group, groupProducts]) => (
-                <section key={group} data-testid={`public-product-category-${group.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
-                  <div className="mb-5 flex items-end justify-between gap-4 border-b border-[#dce7ec] pb-3">
-                    <div>
-                      <p className="eyebrow">Category</p>
-                      <h2 className="display mt-1 text-3xl font-extrabold tracking-[-.06em] text-[#14213d]">{group}</h2>
-                    </div>
-                    <span className="text-[11px] font-semibold text-[#7b8e99]">{groupProducts.length} items</span>
-                  </div>
-                  <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-testid="public-product-grid">
-                    {groupProducts.map((product) => (
-                      <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
-                        <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
-                          {product.imageUrl || product.imagePath ? <img src={(product.imageUrl || product.imagePath || "").startsWith("http") || (product.imageUrl || product.imagePath || "").startsWith("/api/") ? product.imageUrl || product.imagePath || "" : `/api/storage${(product.imagePath || "").startsWith("/") ? product.imagePath : `/${product.imagePath}`}`} alt={product.imageAlt || product.name} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
-                        </div>
-                        <div className="p-5">
-                          <h3 className="display text-[22px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{product.name}</h3>
-                          <p className="mt-3 text-[13px] leading-6 text-[#68798a]">{product.shortDescription}</p>
-                          <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#edf1f3] pt-4">
-                            <span className="text-[12px] font-bold text-[#304a60]">{product.price === null || product.price === undefined ? 'Ask for a quote' : `₹${product.price.toLocaleString('en-IN')}`}</span>
-                            <a href="/#contact" className="button-arrow inline-flex items-center gap-2 text-[11px] font-bold text-[#1769aa]">Enquire <ArrowRight size={14} /></a>
-                          </div>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )) : (
+              ) : (
                 <div className="rounded-[14px] border border-dashed border-[#b9d0d9] bg-white px-6 py-14 text-center" data-testid="state-public-products-filtered-empty">
                   <p className="eyebrow">Products</p>
                   <h2 className="display mt-3 text-3xl font-extrabold tracking-[-.06em] text-[#122641]">No matching products</h2>
-                  <p className="mt-3 text-[13px] text-[#68798a]">Try another search or category.</p>
+                  <p className="mt-3 text-[13px] text-[#68798a]">Try another search in this category.</p>
                 </div>
               )}
             </div>
