@@ -34,10 +34,14 @@ import type {
   ProductInput,
   Project,
   ProjectInput,
+<<<<<<< HEAD
   QuoteAttachmentUploadInput,
   QuoteRequest,
   QuoteRequestCreated,
   QuoteRequestInput,
+=======
+  QuoteRequest,
+>>>>>>> origin/main
   RequestStatusInput,
   Service,
   ServiceInput,
@@ -1430,6 +1434,7 @@ export const useRequestProductImageUploadUrl = <TError = ErrorType<void>,
       return useMutation(getRequestProductImageUploadUrlMutationOptions(options));
     }
 
+<<<<<<< HEAD
 export const getRequestQuoteAttachmentUploadUrlUrl = () => {
 
 
@@ -1606,6 +1611,8 @@ export const useCreateQuoteRequest = <TError = ErrorType<void>,
       return useMutation(getCreateQuoteRequestMutationOptions(options));
     }
 
+=======
+>>>>>>> origin/main
 export const getGetPublicMachinesUrl = () => {
 
 

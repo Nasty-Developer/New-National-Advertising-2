@@ -629,6 +629,7 @@ export const RequestProductImageUploadUrlResponse = zod.object({
 
 
 /**
+<<<<<<< HEAD
  * @summary Prepare a quote request attachment upload
  */
 export const requestQuoteAttachmentUploadUrlBodyNameMax = 180;
@@ -691,6 +692,8 @@ export const CreateQuoteRequestResponse = zod.object({
 
 
 /**
+=======
+>>>>>>> origin/main
  * @summary List published machines
  */
 export const getPublicMachinesResponseOneNameMax = 180;
@@ -1951,7 +1954,11 @@ export const UpdateRequestStatusParams = zod.object({
 })
 
 export const UpdateRequestStatusBody = zod.object({
+<<<<<<< HEAD
   "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled', 'rejected'])
+=======
+  "status": zod.enum(['new', 'contacted', 'quoted', 'approved', 'completed', 'cancelled'])
+>>>>>>> origin/main
 })
 
 export const UpdateRequestStatusResponse = zod.object({
