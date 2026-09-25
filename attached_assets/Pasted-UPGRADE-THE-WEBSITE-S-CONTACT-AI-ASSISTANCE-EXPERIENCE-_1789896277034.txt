@@ -1,0 +1,455 @@
+UPGRADE THE WEBSITE'S CONTACT + AI ASSISTANCE EXPERIENCE.
+
+Do not change the existing overall design.
+Keep the website soft, minimal, professional and premium.
+
+==================================================
+1. NAVBAR IMPROVEMENT
+==================================================
+
+Make the navbar navigation headings slightly larger and more prominent.
+
+Navigation:
+
+Home
+Services
+Our Work
+Products
+About
+Contact
+
+Use:
+- slightly larger font size
+- medium/semi-bold weight
+- better spacing
+- clean hover underline
+- subtle active-page indicator
+
+Do NOT make the navbar oversized.
+
+Add a polished "Get a Quote" CTA on the right.
+
+==================================================
+2. SMART FLOATING CONTACT SYSTEM
+==================================================
+
+Instead of two random floating circles, create a refined floating assistance widget.
+
+Desktop:
+Place it at the bottom-right.
+
+Show:
+
+WhatsApp
+AI Assistant
+
+Keep both buttons compact and elegant.
+
+WhatsApp:
+- green
+- WhatsApp icon
+- hover label: "Chat on WhatsApp"
+- link to +91 9555759677
+
+AI Assistant:
+- primary website blue
+- clean AI/chat icon
+- hover label: "Ask New National AI"
+
+Use subtle shadow and smooth hover animation.
+
+Do not make the buttons huge.
+
+==================================================
+3. FLOATING WIDGET BEHAVIOR
+==================================================
+
+Make the floating widget intelligent.
+
+When the user first visits the website, do NOT immediately open a huge chatbot.
+
+Instead, after a short delay, show a tiny elegant tooltip:
+
+"Need help choosing a service?"
+
+Buttons:
+
+Ask AI
+WhatsApp
+
+Allow the user to dismiss it.
+
+Do not repeatedly show it after dismissal.
+
+==================================================
+4. AI CHATBOT
+==================================================
+
+Create a premium chatbot panel.
+
+Name:
+
+New National Assistant
+
+Subtitle:
+
+Your guide to printing, signage & design.
+
+The chatbot should visually match the website.
+
+Design:
+
+- white background
+- soft border
+- rounded corners
+- subtle shadow
+- clean typography
+- blue accent
+- small AI icon
+- smooth open/close animation
+
+Desktop:
+Compact panel around 360–420px wide.
+
+Mobile:
+Almost full-width bottom sheet with safe margins.
+
+==================================================
+5. CHATBOT WELCOME SCREEN
+==================================================
+
+When opened, show:
+
+"Hello 👋
+How can we help you today?"
+
+Then show quick actions:
+
+🖨️ Explore Services
+📋 Get a Quote
+🏪 Sign Boards
+🖨️ Digital Printing
+🎨 Graphics Design
+💬 Talk on WhatsApp
+
+These should be clickable.
+
+==================================================
+6. AI KNOWLEDGE
+==================================================
+
+The chatbot should understand the actual New National Advertising services.
+
+It should be able to answer questions about:
+
+Sign Boards
+Solvent Flex
+Offset Printing
+Screen Printing
+Graphics Design
+Banner Printing
+Digital Printing
+
+It should also understand the individual offerings under each service.
+
+For example:
+
+Digital Printing:
+- Visiting Cards
+- Brochures
+- Catalogues
+- Pamphlets
+- Posters
+- Annual Reports
+- UV Print
+- Hotel Menus
+- Hospital Files
+- Trophy Stickers
+
+Sign Boards:
+- Acrylic Clip-on Boards
+- Crystal Letters
+- LED Signage
+- Steel & Brass Letters
+- Pixel LED
+- Backlit Signage
+- Iron Standee
+- Roll-up Standee
+- Sunboard Cutouts
+
+Solvent Flex:
+- Star Flex
+- Star Black Back
+- One Way Vision
+- Canvas
+- Gloss Vinyl
+- Matt Vinyl
+- Vinyl with Sunboard
+- Vinyl with Sunpack
+- Sunboard
+- Backlight Printing
+
+And the other existing services and offerings.
+
+==================================================
+7. IMPORTANT AI RULE
+==================================================
+
+The AI MUST NOT invent:
+
+- prices
+- discounts
+- delivery times
+- guarantees
+- years of experience
+- customer numbers
+- certifications
+- awards
+- fake testimonials
+- unsupported services
+
+If the user asks for pricing, respond:
+
+"Please contact New National Advertising for a current quote based on your requirements."
+
+Then provide:
+
+Get a Quote
+WhatsApp
+Call
+
+==================================================
+8. SERVICE-AWARE AI
+==================================================
+
+Make the chatbot context-aware.
+
+If a visitor is currently on:
+
+Digital Printing
+
+the chatbot should understand that context.
+
+Example:
+
+User:
+"I need 100 visiting cards."
+
+AI:
+"Visiting cards are available under Digital Printing. I can help you send an enquiry to New National Advertising."
+
+Buttons:
+
+Book Digital Printing
+WhatsApp
+Get a Quote
+
+If the visitor is on Sign Boards:
+
+AI should prioritize signage-related options.
+
+==================================================
+9. SMART QUOTE FLOW
+==================================================
+
+Add a conversational quote flow.
+
+When the visitor chooses:
+
+Get a Quote
+
+Ask:
+
+"What service do you need?"
+
+Options:
+
+Sign Boards
+Solvent Flex
+Offset Printing
+Screen Printing
+Graphics Design
+Banner Printing
+Digital Printing
+Other
+
+Then ask:
+
+"What do you need?"
+
+Then:
+
+"Approximately how many?"
+
+Then:
+
+"Your name?"
+
+Then:
+
+"Your phone number?"
+
+Then provide:
+
+SEND ENQUIRY
+WHATSAPP
+
+Do not actually submit/store personal information unless a proper backend is configured.
+
+==================================================
+10. WHATSAPP HANDOFF
+==================================================
+
+Create a dynamic WhatsApp message.
+
+Example:
+
+Hello New National Advertising,
+I am interested in Digital Printing.
+
+Requirement:
+100 visiting cards
+
+Name:
+[Name]
+
+Please share the details and quotation.
+
+Open:
+
+https://wa.me/919555759677
+
+The service name and enquiry details should be dynamically included.
+
+==================================================
+11. AI → WHATSAPP HANDOFF
+==================================================
+
+Add a button inside the chatbot:
+
+"Continue on WhatsApp"
+
+This should be available whenever the user has a specific enquiry.
+
+This creates a natural journey:
+
+Website
+↓
+AI Assistant
+↓
+Service Selection
+↓
+Requirement
+↓
+WhatsApp
+↓
+Business
+
+==================================================
+12. CALL HANDOFF
+==================================================
+
+Inside the chatbot add:
+
+Call New National
+
+tel:+919555759677
+
+Keep this as a secondary action.
+
+==================================================
+13. CHATBOT MICRO-INTERACTIONS
+==================================================
+
+Use subtle animations:
+
+- smooth panel opening
+- message fade-in
+- typing indicator
+- button hover
+- message appearance
+- smooth close
+
+Do NOT use flashy AI effects.
+
+No glowing robot.
+
+No futuristic hologram.
+
+Keep it like a premium business assistant.
+
+==================================================
+14. FLOATING BUTTON RESPONSIVENESS
+==================================================
+
+Desktop:
+
+Bottom-right floating widget.
+
+Mobile:
+
+Place it above the mobile contact bar.
+
+Make sure:
+
+- no overlap
+- no content obstruction
+- easy thumb access
+- correct safe-area spacing
+
+==================================================
+15. ACCESSIBILITY
+==================================================
+
+Include:
+
+- keyboard support
+- focus states
+- aria labels
+- readable contrast
+- reduced motion support
+- close button
+- Escape key to close chatbot
+
+==================================================
+16. PERFORMANCE
+==================================================
+
+Do not load a huge chatbot framework just for the UI.
+
+Keep the widget lightweight.
+
+Lazy-load the chatbot if appropriate.
+
+==================================================
+17. FINAL EXPERIENCE
+==================================================
+
+The final customer journey should feel extremely polished:
+
+Visitor enters website
+↓
+Sees professional services
+↓
+Can explore a service
+↓
+Can ask AI about it
+↓
+Can request a quote
+↓
+Can directly continue on WhatsApp
+↓
+Can call the business
+
+The goal is to make contacting New National Advertising extremely easy without making the website feel cluttered.
+
+IMPORTANT:
+
+The chatbot and floating actions should feel like a natural part of the website design, NOT like third-party widgets pasted on top.
+
+Keep everything:
+SOFT
+MINIMAL
+PROFESSIONAL
+PREMIUM
+INTUITIVE
