@@ -1,0 +1,59 @@
+For the New National Advertising project, STOP using Firebase Storage for image uploads.
+
+Firebase Storage requires upgrading the Firebase project to the Blaze billing plan, and I do not want to upgrade/pay for Firebase Storage.
+
+Replace the current Firebase Storage image-upload implementation with Cloudinary.
+
+IMPORTANT:
+
+1. Keep Firebase Authentication and Firestore exactly as they are.
+2. Firebase Auth = authentication/admin access.
+3. Firestore = product/category/content/data storage.
+4. Cloudinary = image/file storage and image delivery.
+5. Do NOT remove or replace Firebase Authentication or Firestore.
+6. Do NOT require Firebase Storage.
+7. Remove the production requirement for:
+   FIREBASE_STORAGE_BUCKET
+8. Product images and category images must upload to Cloudinary.
+9. Existing product/catalog data must NOT be deleted, renamed, merged, or reduced. Preserve all 202 products and the complete existing catalog.
+10. Preserve the current admin panel and public Products page.
+
+IMAGE UPLOAD FLOW:
+
+Admin opens product/category editor
+→ selects image
+→ frontend sends upload request to the backend
+→ backend uploads the image to Cloudinary
+→ Cloudinary returns the secure image URL
+→ backend saves the Cloudinary URL/path in Firestore
+→ public website displays the Cloudinary URL.
+
+Do NOT expose a Cloudinary API secret in frontend code.
+
+I will provide the Cloudinary credentials/API configuration myself when the implementation is ready.
+
+IMPORTANT: When you reach the point where credentials are required, STOP and ask me for the Cloudinary configuration/API credentials. Do not invent credentials, do not hardcode fake values, and do not commit secrets to GitHub.
+
+Use environment variables on Render for the production backend.
+
+Expected environment configuration will be provided by me when requested, such as the appropriate Cloudinary cloud name, API key, API secret, upload configuration, etc.
+
+Also update the existing upload API and frontend code so that the current "Choose image" functionality continues to work.
+
+Remove obsolete Firebase Storage-specific code only after the Cloudinary flow is working.
+
+Before finishing:
+
+- Run pnpm install --frozen-lockfile
+- Run pnpm run typecheck
+- Run pnpm --filter @workspace/api-server run build
+- Run PORT=3000 BASE_PATH=/ pnpm --filter @workspace/new-national-advertising run build
+- Verify there are no remaining production runtime requirements for FIREBASE_STORAGE_BUCKET.
+- Verify the Render deployment can start without Firebase Storage.
+- Do not disable TypeScript checking.
+- Do not remove existing catalog data.
+- Do not change the existing UI unnecessarily.
+
+First inspect the existing Firebase Storage upload implementation and determine every place that must be changed for the Cloudinary migration.
+
+When credentials are needed, ask me for them and wait for me to provide them.

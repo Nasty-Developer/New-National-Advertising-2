@@ -1,0 +1,195 @@
+UPDATE THE "OUR SERVICES" SECTION
+
+The current "Our Services" section is using an old limited list of services.
+
+I want this section updated so that it represents the COMPLETE SERVICES/CATEGORY RANGE of New National Advertising.
+
+IMPORTANT:
+Do NOT remove the Products page category system.
+Products page categories and Our Services categories are separate systems.
+
+The Products page will continue using its existing 12 product categories.
+
+Our Services should ALSO contain a complete category/service presentation.
+
+==================================================
+OUR SERVICES
+==================================================
+
+Keep the existing:
+- Premium design
+- Section heading
+- Description
+- Card layout
+- Images
+- More Info buttons
+- Responsive behavior
+- Animations
+
+But expand/update the service cards so customers can clearly browse the major services/categories we provide.
+
+Include service/category cards for:
+
+1. Core Printing & Branding
+2. Signage & Display
+3. Paper & Corporate Printing
+4. Labels & Stickers
+5. Acrylic Products
+6. Promotional Products
+7. Apparel
+8. Food / Hospitality Packaging
+9. Events & Wedding
+10. Awards & Recognition
+11. Office / Corporate Utility
+12. Specialized Products
+
+IMPORTANT:
+These category names should be clearly visible in the Our Services section.
+
+==================================================
+SERVICE CARD CONTENT
+==================================================
+
+Each service/category card should have:
+
+- Professional image
+- Exact category name
+- Short professional description
+- Relevant products/services preview
+- "More Info" button
+- Clean hover effect
+- Responsive layout
+
+The service card should visually communicate what that category contains.
+
+Example:
+
+SIGNAGE & DISPLAY
+
+Professional signage and display solutions for businesses, storefronts, events and branding.
+
+Preview:
+Signage · Acrylic Sign Boards · LED Signage · ACP Boards
+
+More Info →
+
+==================================================
+DATA
+==================================================
+
+Use the existing production data/CMS architecture wherever possible.
+
+Do NOT create a separate hard-coded database that duplicates the Products catalog unnecessarily.
+
+Where appropriate, derive the category/product previews from the existing Firestore product data.
+
+However:
+
+IMPORTANT:
+The Products page and Our Services page are separate UI experiences.
+
+Products Page:
+→ Full product catalog
+→ 12 categories
+→ Dropdown/accordion
+→ Individual products
+
+Our Services:
+→ Professional service/category showcase
+→ Category image
+→ Short description
+→ Selected relevant product/service previews
+→ More Info
+
+==================================================
+IMAGES
+==================================================
+
+Use the category images that I am uploading through the Admin Panel.
+
+Do NOT generate AI images automatically.
+
+The category image uploaded for:
+
+"Signage & Display"
+
+must be used for the Signage & Display service card.
+
+The category image uploaded for:
+
+"Apparel"
+
+must be used for the Apparel service card.
+
+And so on.
+
+Category images must come from production Firebase Storage/Firestore.
+
+Do NOT use temporary/local/blob/base64 URLs.
+
+==================================================
+ADMIN PANEL
+==================================================
+
+Make sure the Our Services category content can be managed from the Admin Panel if the existing CMS supports service management.
+
+Admin should be able to manage:
+- Service/category name
+- Description
+- Image
+- Preview products/items
+- Active/inactive status
+- Display order
+
+Do NOT break the existing Admin Panel.
+
+==================================================
+IMPORTANT DIFFERENCE
+==================================================
+
+DO NOT replace the Products page with the Services section.
+
+Keep both:
+
+PRODUCTS PAGE
+→ Complete 202-product catalog
+→ 12 product categories
+→ Product images
+→ Product filtering/dropdowns
+
+OUR SERVICES
+→ Complete service/category showcase
+→ 12 major categories
+→ Professional category images
+→ Short service descriptions
+→ Selected product/service examples
+→ More Info
+
+Both should work independently.
+
+==================================================
+FINAL REQUIREMENT
+==================================================
+
+The current five old service cards such as:
+
+- Signage Board
+- Flex Printing
+- Screen Printing
+- Graphics Design
+- Digital Printing
+
+must NOT be the only services shown anymore.
+
+Expand the Our Services section so customers can discover the complete range of New National Advertising offerings.
+
+Do not delete valid existing service information unnecessarily.
+
+Preserve existing URLs/routes where possible so existing links do not break.
+
+Verify the complete Our Services section on:
+- Desktop
+- Tablet
+- Mobile
+
+Make sure all category cards, images, descriptions, links and More Info buttons work correctly.

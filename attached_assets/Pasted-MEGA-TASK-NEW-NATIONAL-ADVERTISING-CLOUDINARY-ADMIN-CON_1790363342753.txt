@@ -1,0 +1,553 @@
+MEGA TASK: NEW NATIONAL ADVERTISING — CLOUDINARY + ADMIN + CONTENT + IMAGE + ORDER FIXES
+
+IMPORTANT:
+Treat this as ONE coordinated task.
+
+Do NOT redesign the website.
+Do NOT remove existing functionality.
+Do NOT delete catalog data.
+Do NOT create duplicate records.
+Do NOT silently rename, merge, remove, or replace products/services/machines unless specifically instructed below.
+
+The existing catalog contains 202 products and ALL 202 products must remain intact.
+
+============================================================
+PHASE 1 — FIRST: INSPECT BEFORE CHANGING ANYTHING
+============================================================
+
+Before making changes:
+
+1. Inspect the current project structure.
+2. Inspect the existing Firebase Authentication implementation.
+3. Inspect Firestore usage.
+4. Inspect the current Cloudinary upload implementation.
+5. Inspect the current product/service/machine data and ordering.
+6. Inspect the current image URLs/assets for:
+   - Digital Printing
+   - Flex Printing
+   - Konica Minolta 6000
+   - 512i Konica Flex / large-format printing machine
+   - Make Your Brand Stand
+7. Identify exactly where these values are stored and how the public website reads them.
+
+Do NOT immediately overwrite data.
+
+First understand the existing implementation, then make the requested changes.
+
+============================================================
+PHASE 2 — STORAGE ARCHITECTURE
+============================================================
+
+Firebase Storage MUST NOT be used.
+
+The project should use:
+
+Firebase Authentication
+→ Admin authentication
+
+Firestore
+→ Product/service/machine/category/content data
+
+Cloudinary
+→ Image/file storage and image delivery
+
+Do NOT ask me to upgrade Firebase Storage or Firebase to the Blaze plan.
+
+Remove the production dependency on:
+
+FIREBASE_STORAGE_BUCKET
+
+The production API must NOT fail because FIREBASE_STORAGE_BUCKET is missing.
+
+Keep Firebase Authentication and Firestore working exactly as they currently do.
+
+============================================================
+PHASE 3 — CLOUDINARY CONFIGURATION
+============================================================
+
+The existing image upload implementation has been moved toward Cloudinary.
+
+Inspect the current implementation and determine exactly which Cloudinary environment variables are required.
+
+Do NOT invent variable names if the current implementation already defines them.
+
+The production Render API must receive the required Cloudinary configuration through Render Environment Variables.
+
+Cloudinary secrets MUST NOT:
+- be committed to GitHub
+- be placed in frontend source code
+- be exposed in the browser
+
+When a secret is required, tell me exactly which environment variable is required and STOP for my credentials if you do not already have them.
+
+Do not invent credentials.
+
+============================================================
+PHASE 4 — SESSION_SECRET
+============================================================
+
+The current Cloudinary upload flow requires SESSION_SECRET.
+
+Generate a cryptographically secure random SESSION_SECRET if the environment allows you to do so.
+
+IMPORTANT:
+
+- Do NOT commit SESSION_SECRET to GitHub.
+- Do NOT place it in source code.
+- Do NOT place it in frontend code.
+- Do NOT expose it publicly.
+- Tell me the generated value so I can manually add it to the Render backend Environment Variables.
+
+If you cannot safely generate/display it in this environment, tell me the exact command I can run to generate one.
+
+The Render API must use SESSION_SECRET through its environment variables.
+
+============================================================
+PHASE 5 — IMAGE ATTACHMENT LIMIT
+============================================================
+
+BEFORE I start attaching many product images:
+
+Tell me the CURRENT actual image/file attachment limits of this Replit/Rapid environment.
+
+I need the actual supported limits, not an estimate.
+
+Tell me:
+
+1. Maximum number of images/files that can be attached in one message/batch.
+2. Maximum supported image/file size.
+3. Whether there is a total attachment limit for the conversation.
+4. Whether multiple images can be processed together.
+5. Any relevant limitation that would affect uploading many product images.
+
+Do NOT guess.
+
+If the platform exposes the actual limit, use that information.
+
+After reporting the limit, WAIT for my image attachments.
+
+Do not start changing product images until I provide them.
+
+============================================================
+PHASE 6 — DIGITAL PRINTING IMAGE
+============================================================
+
+IMPORTANT IMAGE MAPPING:
+
+The machine image in the Machines section for:
+
+Konica Minolta 6000
+
+must be reused as the image for:
+
+Digital Printing
+
+Therefore:
+
+Konica Minolta 6000 machine image
+→ Digital Printing service image
+
+The current incorrect Digital Printing image must NOT remain.
+
+Do NOT generate a new Digital Printing image.
+
+Do NOT delete or modify the original Konica Minolta 6000 machine record or its original image.
+
+The same existing image asset may be referenced/reused by the Digital Printing service.
+
+============================================================
+PHASE 7 — FLEX PRINTING IMAGE
+============================================================
+
+IMPORTANT CORRECTION:
+
+I HAVE NOT uploaded a separate Flex Printing image.
+
+Do NOT wait for me to upload one.
+
+Do NOT generate a new Flex Printing image.
+
+For Flex Printing, use the EXISTING machine image from the Machines section that represents the:
+
+512i Konica Flex Machine
+/ large-format / wide-format printing machine.
+
+The machine currently represented by the large-format/wide-format printing machine image should provide the image for:
+
+Flex Printing
+
+Therefore:
+
+512i Konica Flex Machine / existing large-format machine image
+→ Flex Printing service image
+
+This is the required Flex Printing image.
+
+Do NOT use the Konica Minolta 6000 image for Flex Printing.
+
+The final mapping is:
+
+Konica Minolta 6000 image
+→ Digital Printing
+
+512i Konica Flex / large-format machine image
+→ Flex Printing
+
+Do NOT create another Flex machine image.
+
+Do NOT ask me to upload another Flex image.
+
+Do NOT delete or alter the original machine image in the Machines section.
+
+Reuse the existing image URL/asset.
+
+============================================================
+PHASE 8 — MAKE YOUR BRAND STAND
+============================================================
+
+I will provide a separate image for the:
+
+"Make Your Brand Stand"
+
+section.
+
+Do NOT change this section yet.
+
+Do NOT generate a replacement.
+
+Do NOT use the Digital Printing image.
+
+Do NOT use the Flex Printing machine image unless I explicitly provide that image for this section.
+
+When I later attach the image, use that exact image for:
+
+Make Your Brand Stand
+
+Fit it into the existing design without unnecessary cropping or distortion.
+
+============================================================
+PHASE 9 — IMAGE PRESENTATION
+============================================================
+
+For all existing and future image assignments:
+
+- Preserve image quality.
+- Preserve aspect ratio.
+- Do not stretch images.
+- Do not aggressively crop important machine/product areas.
+- Fit images naturally into the existing card/container.
+- Keep the current UI design.
+- Do not redesign the service cards.
+- Do not redesign the machine cards.
+- Do not change unrelated sections.
+
+The task is image reassignment, not a visual redesign.
+
+============================================================
+PHASE 10 — PRODUCT DISPLAY ORDER
+============================================================
+
+On the PUBLIC Products page, the first products must appear in this exact order:
+
+1. Signage
+2. Banner
+3. Brochure
+4. Acrylic Clip-on Board
+5. Calendars
+6. Business Cards
+7. Letterhead
+8. Hoarding Banner
+
+After these 8 products:
+
+KEEP ALL REMAINING PRODUCTS IN THEIR EXISTING ORDER.
+
+IMPORTANT:
+
+- Do NOT delete products.
+- Do NOT rename products.
+- Do NOT merge products.
+- Do NOT duplicate products.
+- Do NOT change product data unnecessarily.
+- Do NOT reduce the catalog.
+- Preserve all 202 products.
+
+Only change display priority/order.
+
+============================================================
+PHASE 11 — MACHINES
+============================================================
+
+Reorder the existing Machines section to EXACTLY this order:
+
+1. Laser CO2
+2. Axon
+3. 512i Konica Flex Machine
+4. Accent Z (Wide Format Roll Laminator)
+5. Konica Minolta Bizhub
+
+IMPORTANT:
+
+This is the FINAL machine order.
+
+Do NOT put the digital printing machine after Konica Minolta Bizhub.
+The exact five-machine order above takes priority.
+
+Do NOT create duplicate machine records.
+
+Use the existing machine records whenever possible.
+
+============================================================
+PHASE 12 — MACHINE NAME CHANGES
+============================================================
+
+The existing large-format/wide-format printing machine should be renamed:
+
+512i Konica Flex Machine
+
+The existing Accent Z machine should display as:
+
+Accent Z (Wide Format Roll Laminator)
+
+The Konica Minolta machine should display as:
+
+Konica Minolta Bizhub
+
+Konica Minolta Bizhub must remain the LAST machine in the list.
+
+Do NOT delete machine data.
+
+Do NOT create duplicate machines.
+
+Only update the name/order where requested.
+
+============================================================
+PHASE 13 — IMPORTANT DISTINCTION BETWEEN MACHINE DATA AND SERVICE IMAGES
+============================================================
+
+Do NOT confuse the Machines section with the Services section.
+
+The machine records remain in the Machines section.
+
+Their images can be reused by Services.
+
+FINAL IMAGE RELATIONSHIP:
+
+MACHINES:
+
+Konica Minolta Bizhub
+→ keep its own machine record/image.
+
+512i Konica Flex Machine
+→ keep its own machine record/image.
+
+SERVICES:
+
+Digital Printing
+→ use the existing Konica Minolta 6000 machine image.
+
+Flex Printing
+→ use the existing 512i Konica Flex / large-format machine image.
+
+Do not delete the original machine images simply because they are reused in Services.
+
+============================================================
+PHASE 14 — FIREBASE / CLOUDINARY DATA
+============================================================
+
+Keep Firestore as the database/data source.
+
+When an image is uploaded through the admin panel:
+
+Admin selects image
+→ backend receives upload
+→ Cloudinary stores image
+→ Cloudinary returns secure URL/path
+→ Firestore stores the resulting image URL/path
+→ public website displays the image
+
+Do NOT store uploaded images in Firebase Storage.
+
+Do NOT require:
+
+FIREBASE_STORAGE_BUCKET
+
+Do NOT expose Cloudinary API secrets to the frontend.
+
+============================================================
+PHASE 15 — ADMIN PANEL
+============================================================
+
+Preserve the current admin panel.
+
+Do NOT remove:
+
+- Products
+- Projects
+- Requests
+- Services
+- Orders
+- Website Content
+- Machines
+- Settings
+- Dashboard
+- Authentication
+
+The admin panel must continue to work after the storage migration.
+
+Product/service/machine editing must continue to work.
+
+Image upload must use Cloudinary.
+
+============================================================
+PHASE 16 — RENDER DEPLOYMENT
+============================================================
+
+The project is a pnpm workspace monorepo.
+
+Configure it so the backend can deploy correctly on Render.
+
+Do NOT turn the API into a separate unrelated project.
+
+Do NOT remove shared workspace packages.
+
+The Render backend must use the repository/workspace correctly.
+
+Before declaring the task complete, run:
+
+pnpm install --frozen-lockfile
+
+pnpm run typecheck
+
+pnpm --filter @workspace/api-server run build
+
+PORT=3000 BASE_PATH=/ pnpm --filter @workspace/new-national-advertising run build
+
+Fix actual TypeScript/build errors.
+
+Do NOT disable TypeScript checking.
+
+Do NOT use:
+- skipLibCheck just to hide errors
+- no-op builds
+- fake build commands
+- ignored errors
+- fake deployment configuration
+
+The goal is a genuinely deployable production backend.
+
+============================================================
+PHASE 17 — GENERATED API FILES
+============================================================
+
+If the project uses generated OpenAPI/Zod/API client files:
+
+- inspect the source OpenAPI definition first
+- make required source changes there
+- regenerate generated files consistently
+
+Do NOT manually create inconsistent generated files.
+
+Make sure the API schemas remain synchronized.
+
+============================================================
+PHASE 18 — DATA SAFETY
+============================================================
+
+THIS IS CRITICAL.
+
+Do NOT:
+
+- delete products
+- delete categories
+- delete services
+- delete machines
+- delete projects
+- delete requests
+- delete orders
+- delete website content
+- delete Firestore collections
+- reduce the catalog from 202 products
+- replace the existing catalog with placeholder data
+- reset the database
+- replace real data with mock data
+
+Preserve all existing production data.
+
+============================================================
+PHASE 19 — COMPLETION CHECKLIST
+============================================================
+
+Before saying the task is complete, verify:
+
+[ ] Firebase Authentication still works.
+[ ] Firestore still works.
+[ ] Firebase Storage is no longer required.
+[ ] FIREBASE_STORAGE_BUCKET is no longer required by production.
+[ ] Cloudinary upload configuration is correctly implemented.
+[ ] SESSION_SECRET is required only through environment configuration.
+[ ] No secrets are committed to GitHub.
+[ ] Admin product image upload works.
+[ ] Admin service image upload works.
+[ ] Product catalog still contains all 202 products.
+[ ] Product display order is correct.
+[ ] Machine display order is correct.
+[ ] Machine names are correct.
+[ ] Digital Printing uses the Konica Minolta 6000 image.
+[ ] Flex Printing uses the existing 512i Konica Flex / large-format machine image.
+[ ] Make Your Brand Stand is left unchanged until I provide its image.
+[ ] Existing machine images remain intact.
+[ ] Existing service/product UI remains intact.
+[ ] TypeScript passes.
+[ ] API build passes.
+[ ] Frontend build passes.
+[ ] Render deployment configuration is valid.
+
+============================================================
+IMPORTANT EXECUTION ORDER
+============================================================
+
+DO NOT try to do everything blindly at once.
+
+Follow this order:
+
+STEP 1:
+Inspect the existing implementation and report the current image/file attachment limit.
+
+STEP 2:
+Identify the Cloudinary environment variables required by the existing code.
+
+STEP 3:
+Generate a secure SESSION_SECRET if possible and show it to me for manual Render configuration.
+
+STEP 4:
+Wait for my confirmation/credentials where required.
+
+STEP 5:
+Fix the storage/upload architecture and verify the Cloudinary implementation.
+
+STEP 6:
+Apply the exact product ordering.
+
+STEP 7:
+Apply the exact machine ordering and naming.
+
+STEP 8:
+Apply the exact Digital Printing and Flex Printing image mapping.
+
+STEP 9:
+Wait for my future image for Make Your Brand Stand.
+
+STEP 10:
+Run the complete typecheck and production builds.
+
+STEP 11:
+Fix every real build/type error.
+
+STEP 12:
+Verify the project is ready for Render deployment.
+
+DO NOT skip steps.
+DO NOT invent missing credentials.
+DO NOT change unrelated parts of the website.
+DO NOT delete existing data.

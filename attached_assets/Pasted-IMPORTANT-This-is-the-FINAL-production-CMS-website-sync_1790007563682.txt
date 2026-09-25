@@ -1,0 +1,731 @@
+IMPORTANT: This is the FINAL production CMS + website synchronization task for New National Advertising.
+
+The Admin Panel must become the REAL control center of the entire website.
+
+Anything that is marked/editable in the Admin Panel must actually control the corresponding content on the public website.
+
+MOST IMPORTANT:
+DO NOT BREAK ANYTHING THAT IS CURRENTLY WORKING.
+
+The Firebase authentication, admin authorization, backend Firebase configuration, existing working API routes, existing database structure, and currently working website functionality must remain working.
+
+Do not rewrite working authentication code.
+
+==================================================
+1. ADMIN PANEL = REAL WEBSITE CMS
+==================================================
+
+The Admin Panel must not be a separate demo/editor.
+
+It must be the actual CMS for the live website.
+
+The complete flow must be:
+
+Admin Panel
+↓
+Backend API
+↓
+Firebase / Firestore
+↓
+Persistent data
+↓
+Public API
+↓
+Public Website
+
+If I edit something in Admin Panel and save it successfully, the public website must use the new value.
+
+After refreshing the public website, the new value must still be there.
+
+NO hardcoded data should override CMS-managed data.
+
+==================================================
+2. SERVICES MUST BE FULLY EDITABLE
+==================================================
+
+Every service must be manageable from Admin Panel.
+
+Admin should be able to:
+
+- Add service
+- Edit service
+- Change service name
+- Change service description
+- Change service image
+- Change service slug
+- Change service order
+- Publish/unpublish service
+- Archive/remove service
+- Add/edit/remove products belonging to that service
+
+Changes must appear on the public website.
+
+==================================================
+3. SERVICE PRODUCTS MUST BE INDIVIDUALLY EDITABLE
+==================================================
+
+THIS IS VERY IMPORTANT.
+
+Each service can contain multiple products/materials.
+
+These products must NOT be hardcoded inside the frontend.
+
+For example, under the relevant service, the current products include:
+
+- Star Flex
+- Star Black Back
+- One Way Vision
+- Canvas
+- Gloss Vinyl
+- Matt Vinyl
+- Vinyl with Sunboard
+- Vinyl with Sunpack
+- Sunboard 3mm / 5mm
+- Backlight Printing
+
+These are examples of service products.
+
+I must be able to manage EVERY ONE of these from the Admin Panel.
+
+For every service product, Admin must be able to:
+
+- Edit product name
+- Edit product image
+- Upload a new product image
+- Replace an existing image
+- Edit description if available
+- Change order/position
+- Publish/unpublish
+- Remove/archive product
+- Add completely new product
+- Restore/unarchive product if supported
+
+Example:
+
+If Admin changes:
+
+"Star Flex"
+
+to:
+
+"Premium Star Flex"
+
+and changes its image,
+
+then the public website must display:
+
+"Premium Star Flex"
+
+with the new image.
+
+The old hardcoded "Star Flex" must NOT continue appearing anywhere.
+
+==================================================
+4. SERVICE PRODUCT RELATIONSHIP
+==================================================
+
+Every service product must have a reliable relationship with its parent service.
+
+Example:
+
+Service:
+Flex Printing
+
+Products:
+- Star Flex
+- Star Black Back
+- Backlight Printing
+
+The database must know which products belong to which service.
+
+Do NOT rely on manually hardcoded arrays in React.
+
+When a service is opened on the public website, fetch its current products from the backend.
+
+If Admin adds a new product to a service, it must automatically appear on that service page after the data is saved.
+
+If Admin removes/unpublishes a product, it must disappear from the public service page.
+
+==================================================
+5. SERVICE PAGE MUST BE CMS CONTROLLED
+==================================================
+
+The public service detail page must be dynamically controlled.
+
+Admin must be able to manage:
+
+- Service name
+- Service image
+- Service description
+- Service banner/hero image if applicable
+- Service products
+- Product names
+- Product images
+- Product descriptions
+- Product ordering
+- Related projects if supported
+- SEO title
+- SEO description
+- Slug
+
+Do not leave important service page content hardcoded.
+
+==================================================
+6. PRODUCTS SECTION
+==================================================
+
+The main Products section must also be fully editable.
+
+Admin must be able to:
+
+- Add product
+- Edit product
+- Change product name
+- Change product image
+- Upload image
+- Replace image
+- Edit description
+- Edit price if the current model supports pricing
+- Change category
+- Change stock/status if applicable
+- Change order
+- Publish/unpublish
+- Archive/remove
+
+Every change must appear on the public Products page.
+
+If the same product is referenced inside a service, make sure the data relationship remains consistent.
+
+Do not create duplicate/conflicting product records unnecessarily.
+
+==================================================
+7. IMAGES MUST BE FULLY MANAGEABLE
+==================================================
+
+Every CMS-managed image must be editable from Admin.
+
+Admin must be able to:
+
+- Upload image
+- Replace image
+- Preview image
+- Save image
+- Remove image where appropriate
+
+Images must be stored persistently in Firebase Storage or the existing persistent storage system.
+
+Do NOT use temporary blob URLs.
+
+Do NOT store important production images only in browser state.
+
+The database must store the persistent image URL/reference.
+
+When replacing an image:
+
+1. Upload new image successfully
+2. Obtain persistent URL/reference
+3. Update database
+4. Confirm database update
+5. Refresh Admin UI
+6. Public website reads new image
+
+If upload fails, do not destroy the old image.
+
+==================================================
+8. HOMEPAGE CMS
+==================================================
+
+Audit the entire homepage.
+
+Any content that is supposed to be editable must be manageable from Admin Panel.
+
+This includes, where currently implemented:
+
+- Hero heading
+- Hero subtitle
+- Hero image
+- CTA text
+- CTA links
+- Services displayed
+- Featured services
+- Machines
+- Featured projects
+- Project images
+- About content
+- Contact information
+- WhatsApp number
+- Phone number
+- Email
+- Address
+- Social links
+- Footer content
+- Any other CMS-managed section
+
+If Admin changes it, the public website must reflect it.
+
+Do not allow static React data to override the CMS.
+
+==================================================
+9. MACHINES
+==================================================
+
+Machines must remain fully CMS-controlled.
+
+Admin must be able to:
+
+- Add machine
+- Edit machine name
+- Edit description
+- Edit image
+- Replace image
+- Edit specifications
+- Change order
+- Publish/unpublish
+- Archive/remove
+
+Public Machines content must use backend data.
+
+==================================================
+10. PROJECTS
+==================================================
+
+Projects must remain fully CMS-controlled.
+
+Admin must be able to:
+
+- Add project
+- Edit project
+- Edit title
+- Edit description
+- Edit images
+- Upload/replace images
+- Change service relationship
+- Publish/unpublish
+- Feature/unfeature
+- Change order
+- Archive/remove
+
+Homepage featured projects must come from the database.
+
+Do not keep old static project cards that can conflict with CMS data.
+
+==================================================
+11. CONTACT DETAILS / BUSINESS INFORMATION
+==================================================
+
+Admin must be able to edit all business information currently exposed through CMS.
+
+Examples:
+
+- Business name
+- Phone numbers
+- WhatsApp number
+- Email
+- Address
+- Google Maps link
+- Social media links
+- Opening hours if supported
+
+Every public occurrence must use the current CMS value.
+
+Avoid having one phone number in the Admin Panel and a different hardcoded phone number in the footer/header/contact page.
+
+Use one source of truth.
+
+==================================================
+12. FAVICON + WEBSITE BRANDING
+==================================================
+
+FIX THE WEBSITE FAVICON.
+
+The favicon must be properly configured for production.
+
+Check:
+
+- favicon.ico
+- PNG favicon if used
+- apple-touch-icon if used
+- manifest icons if applicable
+- correct <link rel="icon"> references
+- correct public asset paths
+- production build paths
+- custom domain behavior
+- browser caching
+
+The favicon must work on:
+
+https://newnationaladvertising.com
+
+and must not depend on a development/Replit-only path.
+
+Use the correct New National Advertising branding/logo where appropriate.
+
+Do not break the existing website logo.
+
+Also check:
+
+- Page title
+- Meta description
+- Open Graph image if already implemented
+- Site name
+- Manifest branding
+
+Do not introduce broken asset URLs.
+
+==================================================
+13. SEO CONTENT
+==================================================
+
+Where SEO fields are already supported by the project, make them editable through Admin.
+
+For CMS-managed pages/services/products/projects, support where appropriate:
+
+- SEO title
+- Meta description
+- Slug
+- Canonical URL if already implemented
+
+Do not break existing SEO implementation.
+
+Do not generate duplicate URLs or duplicate slugs.
+
+==================================================
+14. PUBLIC WEBSITE DATA
+==================================================
+
+Audit the entire frontend and identify:
+
+- hardcoded service arrays
+- hardcoded product arrays
+- hardcoded machine arrays
+- hardcoded project arrays
+- hardcoded contact information
+- mock/demo data
+- duplicate CMS data
+- localStorage being incorrectly used as the source of truth
+- static content that should be CMS-controlled
+
+Replace only the content that is supposed to be dynamically managed.
+
+Do NOT remove legitimate static UI configuration.
+
+==================================================
+15. CACHE / REFRESH
+==================================================
+
+After an Admin update:
+
+- Admin must receive confirmed backend success
+- Admin UI must refresh
+- Public API must return the updated data
+- Public website must display the updated data after refresh
+
+If React Query or another cache is used:
+
+- invalidate the affected query
+- refetch the updated data
+
+Do not allow stale cached content to make the Admin appear broken.
+
+Do NOT add unnecessary realtime architecture if normal API refetch/invalidation is reliable.
+
+==================================================
+16. ERROR HANDLING
+==================================================
+
+Never show "Saved successfully" unless the backend actually confirms success.
+
+For every mutation:
+
+Loading
+↓
+API request
+↓
+Backend validation
+↓
+Database update
+↓
+Success response
+↓
+Refresh UI
+
+If anything fails:
+
+- show error
+- preserve existing data
+- do not clear the form
+- do not show fake success
+- do not partially corrupt the record
+
+Handle:
+
+- 400 errors
+- 401 errors
+- 403 errors
+- 404 errors
+- 500 errors
+- Firebase errors
+- Storage errors
+- network failures
+- invalid data
+- duplicate submissions
+
+==================================================
+17. ADMIN UI SAFETY
+==================================================
+
+All Save buttons must:
+
+- show loading state
+- prevent duplicate clicks
+- disable while saving
+- re-enable after response
+
+Delete/archive actions must require confirmation where appropriate.
+
+Do not accidentally delete unrelated records.
+
+Use IDs correctly.
+
+Do not use array indexes as permanent database identifiers.
+
+==================================================
+18. DATA VALIDATION
+==================================================
+
+Validate important fields on both frontend and backend.
+
+Prevent:
+
+- empty required names
+- invalid IDs
+- broken image references
+- invalid URLs
+- malformed records
+- duplicate/conflicting slugs
+- corrupted service/product relationships
+
+Do not trust frontend validation alone.
+
+==================================================
+19. SECURITY
+==================================================
+
+DO NOT weaken the existing authentication.
+
+DO NOT add an authentication bypass.
+
+DO NOT expose Firebase Admin credentials to the frontend.
+
+DO NOT put private Firebase service account credentials in client-side code.
+
+Keep existing admin authorization intact.
+
+Only authenticated authorized admins can modify CMS data.
+
+Public users should only be able to read content that is intended to be public.
+
+==================================================
+20. DO NOT BREAK EXISTING FEATURES
+==================================================
+
+Before changing anything:
+
+Inspect the existing architecture.
+
+Reuse:
+
+- current Firebase setup
+- current Firestore collections
+- current Storage setup
+- current API routes
+- current authentication middleware
+- current frontend API client
+- current TypeScript types
+- existing working components
+
+Do not unnecessarily rewrite the application.
+
+Do not change Render configuration unless absolutely necessary.
+
+Do not change Firebase project configuration.
+
+Do not modify working Admin authentication.
+
+==================================================
+21. PRODUCTION TESTING
+==================================================
+
+After implementation, test the COMPLETE data flow.
+
+TEST 1:
+Admin edits service name
+→ Save
+→ Refresh Admin
+→ Public website
+→ Verify new name
+
+TEST 2:
+Admin edits service image
+→ Save
+→ Refresh
+→ Verify new image publicly
+
+TEST 3:
+Admin edits "Star Flex"
+→ Change name
+→ Change image
+→ Save
+→ Public service page
+→ Verify both changed
+
+TEST 4:
+Admin adds a new service product
+→ Save
+→ Public service page
+→ Verify it appears
+
+TEST 5:
+Admin unpublishes a service product
+→ Save
+→ Public website
+→ Verify it disappears
+
+TEST 6:
+Admin edits a main Product
+→ Save
+→ Public Products page
+→ Verify change
+
+TEST 7:
+Admin edits Machine
+→ Save
+→ Public Machines/homepage
+→ Verify change
+
+TEST 8:
+Admin edits Project
+→ Save
+→ Public Projects/homepage
+→ Verify change
+
+TEST 9:
+Admin edits contact information
+→ Save
+→ Check header/footer/contact page
+→ Verify every relevant location uses updated data
+
+TEST 10:
+Admin uploads/replaces image
+→ Save
+→ Refresh
+→ Verify persistent image
+
+TEST 11:
+Admin refreshes browser
+→ Verify changes remain
+
+TEST 12:
+Public website is opened in a new browser/incognito window
+→ Verify database content is displayed
+
+TEST 13:
+Failed save
+→ Verify old data remains safe
+→ Verify no fake success message
+
+TEST 14:
+Admin authentication
+→ Verify existing login still works
+
+TEST 15:
+Favicon
+→ Production website
+→ Hard refresh
+→ Verify favicon appears correctly
+
+==================================================
+22. TYPESCRIPT + BUILD
+==================================================
+
+After all changes run:
+
+- TypeScript typecheck
+- production build
+- lint if configured
+- verify all API routes
+- verify Firebase integration
+- verify Storage integration
+
+Fix all errors introduced by the changes.
+
+Do not leave broken imports.
+
+Do not leave TODOs for core CMS functionality.
+
+==================================================
+23. FINAL REQUIREMENT
+==================================================
+
+The Admin Panel must control the website for REAL.
+
+For example:
+
+Admin:
+Service → Flex Printing
+Product → Star Flex
+Image → New Image
+
+After Save:
+
+Public website:
+Flex Printing
+→ Star Flex
+→ New Image
+
+If I change Admin to:
+
+Product → Premium Star Flex
+Image → Another Image
+
+Then after saving and refreshing the public website:
+
+Premium Star Flex
+→ Another Image
+
+must appear.
+
+This same behavior must work for ALL CMS-managed:
+
+Services
+Service Products
+Products
+Machines
+Projects
+Homepage Content
+Images
+Contact Information
+Website Settings
+SEO fields where implemented
+
+FINAL RULE:
+
+DO NOT CLAIM SOMETHING IS WORKING UNTIL IT HAS BEEN TESTED END-TO-END.
+
+At the end, provide a concise implementation report:
+
+1. Admin modules connected to public website
+2. Service/product data model
+3. Firestore collections used
+4. API routes used
+5. Image storage flow
+6. Cache/revalidation strategy
+7. Favicon fix
+8. Tests performed
+9. Any remaining issue
+
+The priority is:
+
+FUNCTIONALITY > DATA CONSISTENCY > SAFETY > UI
+
+Do not sacrifice working functionality just to make the UI look better.

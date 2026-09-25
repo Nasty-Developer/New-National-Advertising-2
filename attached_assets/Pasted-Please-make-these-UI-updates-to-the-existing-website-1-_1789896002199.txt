@@ -1,0 +1,99 @@
+Please make these UI updates to the existing website:
+
+1. NAVBAR TYPOGRAPHY
+Increase the size of all navbar navigation headings slightly:
+
+Home
+Services
+Our Work
+Products
+About
+Contact
+
+Make them more readable and prominent while keeping the navbar elegant and minimal.
+
+Use slightly stronger font weight and better spacing between navigation items.
+
+Do NOT make the navbar oversized.
+
+Keep the existing professional design.
+
+2. FLOATING CONTACT ACTIONS
+Add a professional floating contact system on the website.
+
+Include two floating buttons:
+
+WHATSAPP
+AI CHAT
+
+WhatsApp:
+- Use the existing WhatsApp number: +91 9555759677
+- Link: https://wa.me/919555759677
+- Use a WhatsApp-style green icon
+- On hover, show "Chat on WhatsApp"
+
+AI Chat:
+- Add a separate floating AI chatbot button
+- Use a clean chat/AI icon
+- On hover, show "Ask AI"
+- Clicking it should open a beautiful small chatbot panel/modal on the website.
+
+3. AI CHATBOT UI
+Create a premium, minimal chatbot interface matching the website design.
+
+Header:
+"New National Assistant"
+
+Subtitle:
+"How can we help you?"
+
+The chatbot should help visitors with:
+- Available services
+- Service details
+- Printing options
+- Sign boards
+- Solvent Flex
+- Digital Printing
+- Offset Printing
+- Screen Printing
+- Graphics Design
+- Banner Printing
+- Getting a quote
+- Contact information
+- WhatsApp enquiry
+
+Add quick action buttons:
+
+View Services
+Get a Quote
+Talk on WhatsApp
+Contact Us
+
+The chatbot should NOT invent prices, services, guarantees, company history, or other unsupported information.
+
+4. FLOATING BUTTON DESIGN
+Place the floating buttons at the bottom-right on desktop.
+
+Keep them:
+- clean
+- compact
+- professional
+- rounded
+- slightly elevated
+- easy to access
+
+WhatsApp should use green.
+
+AI Chat should use the website's primary blue.
+
+Add subtle hover animation only.
+
+On mobile, make sure the floating buttons do not cover important content or the fixed mobile contact bar.
+
+5. IMPORTANT
+Keep the existing website design unchanged apart from these improvements.
+
+Do not make the floating UI flashy.
+
+The final result should feel like a professional business website with:
+WhatsApp support + AI assistance.

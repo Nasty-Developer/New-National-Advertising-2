@@ -1,0 +1,57 @@
+YES, apply the PDF instructions, but one important requirement:
+
+DO NOT add all products into one flat Products list.
+
+Create and organize the Products catalog CATEGORY-WISE exactly according to the 12 categories in the PDF.
+
+The categories must be:
+
+1. Core Printing & Branding
+2. Signage & Display
+3. Paper & Corporate Printing
+4. Labels & Stickers
+5. Acrylic Products
+6. Promotional Products
+7. Apparel
+8. Food / Hospitality Packaging
+9. Events & Wedding
+10. Awards & Recognition
+11. Office / Corporate Utility
+12. Specialized Products
+
+Each product must be assigned to its correct category.
+
+For example:
+- Flex / large-format printing → Core Printing & Branding
+- Signage → Signage & Display
+- Business cards → Paper & Corporate Printing
+- Die-cut stickers → Labels & Stickers
+- Acrylic trophies → Acrylic Products
+- Metal ball pens → Promotional Products
+- Cotton T-shirts → Apparel
+- Food containers → Food / Hospitality Packaging
+- Wedding cards → Events & Wedding
+- Crystal trophies → Awards & Recognition
+- ID cards → Office / Corporate Utility
+- Mouse pads → Specialized Products
+
+IMPORTANT:
+- Create the actual category records/structure in the Products system.
+- Products should be filterable/browsable by category in the Admin Panel and on the website wherever the existing UI supports categories.
+- Do not merely put the category name inside the product description.
+- Each product must have a proper category field/reference in Firestore.
+- Keep the 12 categories separate and organized.
+- Keep all products within their correct category.
+- Do not duplicate products across categories unless the same product genuinely belongs to multiple categories.
+- Keep the images EMPTY for now.
+- Do not generate AI images yet.
+- Do not copy Nivara images.
+- Keep Products separate from Projects and Machines.
+- Preserve the existing website design and functionality.
+
+After importing, verify that:
+Category → Products → Firestore → Admin Panel → Public Products section
+
+all show the correct category relationships.
+
+Report the total number of categories and products imported when finished.
