@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "New National Advertising"
+description = "The public website and admin content-management tools for New National Advertising, an advertising and print services company."
+version = "1.0.0"
+id = "artifacts/new-national-advertising"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21213
+
+[services.development]
+run = "pnpm --filter @workspace/new-national-advertising run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/new-national-advertising", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/new-national-advertising/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21213"
+BASE_PATH = "/"
