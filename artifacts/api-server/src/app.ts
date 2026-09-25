@@ -38,10 +38,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
 
 // Frontend
-const frontendPath = path.resolve(
+const localFrontendPath = path.resolve(
   process.cwd(),
   "../new-national-advertising/dist/public",
 );
+const workspaceFrontendPath = path.resolve(
+  process.cwd(),
+  "artifacts/new-national-advertising/dist/public",
+);
+
+const frontendPath = existsSync(localFrontendPath)
+  ? localFrontendPath
+  : workspaceFrontendPath;
+
 const frontendIndexPath = path.join(frontendPath, "index.html");
 
 if (existsSync(frontendPath)) {
