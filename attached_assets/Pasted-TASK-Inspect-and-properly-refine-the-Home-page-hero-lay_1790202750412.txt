@@ -1,0 +1,91 @@
+TASK: Inspect and properly refine the Home page hero layout, especially the positioning of the right-side promotional image.
+
+IMPORTANT: FIRST INSPECT, THEN CHANGE.
+
+I am attaching a screenshot of the current rendered website.
+
+Before making ANY code changes:
+
+1. Inspect the screenshot carefully.
+2. Inspect the actual Home page DOM/components and CSS.
+3. Open the page at 100% browser zoom / normal desktop viewport.
+4. Check the actual hero container dimensions, grid/flex structure, padding, margins, alignment, image dimensions and responsive rules.
+5. Do NOT judge spacing based only on the attached screenshot because the screenshot was captured at 33% browser zoom.
+
+CURRENT DESIGN:
+- The New National Advertising logo in the hero is now CORRECT. Do NOT replace or modify the logo.
+- The right-side promotional image is also correct and should NOT be replaced.
+- The issue we want to investigate is the vertical positioning and spacing of the right-side image inside the hero.
+
+GOAL:
+
+Make the hero feel visually balanced and professionally composed.
+
+Specifically inspect whether the right-side promotional image has unnecessary empty space above it or is sitting too low relative to the hero logo/content.
+
+If the inspection confirms that it is too low:
+- Move the image upward appropriately.
+- Reduce unnecessary top spacing.
+- Align it visually with the main hero content.
+- Keep a small intentional amount of breathing room below the navbar.
+- Do not make it touch the navbar.
+- Do not use a crude fixed negative margin if a proper grid/flex alignment solution is possible.
+
+If the inspection shows that the current positioning is already correct at 100% zoom:
+- DO NOT change it just because the 33% screenshot makes the spacing look unusual.
+- Instead report that the apparent spacing is caused by the screenshot/zoom and leave the layout unchanged.
+
+IMAGE REQUIREMENTS:
+- Preserve original aspect ratio.
+- Never stretch the image.
+- Do not distort it.
+- Do not crop important content.
+- Keep the complete promotional image visible.
+- Maintain appropriate width/height behavior.
+- Keep it responsive.
+
+RESPONSIVE CHECK:
+Inspect at approximately:
+- Desktop: 1440px wide
+- Laptop: 1280px wide
+- Tablet: 768px wide
+- Mobile: 390px wide
+
+The hero should remain balanced at all sizes.
+
+IMPORTANT:
+Do NOT change:
+- Existing New National Advertising logo
+- Logo asset
+- Header/navigation
+- Hero text
+- Hero buttons
+- Hero promotional image itself
+- Services section
+- Machines
+- Products
+- Projects
+- Cloudinary
+- Firebase
+- Authentication
+- Firestore
+- Backend
+- SEO
+- About Us
+
+This task is ONLY about inspecting and, if genuinely necessary, correcting the hero layout/image positioning.
+
+After the inspection and any necessary fix:
+
+1. Run the production build.
+2. Verify the Home page at 100% desktop zoom.
+3. Verify 1280px desktop.
+4. Verify tablet.
+5. Verify mobile.
+6. Confirm the right-side image is fully visible.
+7. Confirm there is no excessive empty space above it.
+8. Confirm it does not overlap the navbar.
+9. Confirm the existing logo remains unchanged.
+10. Report exactly what caused the spacing issue and what CSS/layout change was made.
+
+Do not make a change unless the inspection confirms that the layout actually needs one.
