@@ -7,19 +7,14 @@ type ProductCategoryCard = {
 
 export const productCategories: readonly ProductCategoryCard[] = [
   {
-    name: "Core Printing & Branding",
-    image: "/category-images/category-core-printing-branding.png",
-    alt: "Commercial print studio with large-format printing and branded paper materials",
-  },
-  {
     name: "Signage & Display",
     image: "/category-images/category-signage-display.png",
     alt: "Storefront signage and display installation",
   },
   {
-    name: "Paper & Corporate Printing",
-    image: "/category-images/category-paper-corporate-printing.webp",
-    alt: "Corporate stationery, brochures, folders and notebooks",
+    name: "Acrylic Products",
+    image: "/category-images/category-acrylic-products.jpg",
+    alt: "Acrylic display stands, trophies, nameplates and keychains",
     imageFit: "contain",
   },
   {
@@ -29,10 +24,20 @@ export const productCategories: readonly ProductCategoryCard[] = [
     imageFit: "contain",
   },
   {
-    name: "Acrylic Products",
-    image: "/category-images/category-acrylic-products.jpg",
-    alt: "Acrylic display stands, trophies, nameplates and keychains",
+    name: "Core Printing & Branding",
+    image: "/category-images/category-core-printing-branding.png",
+    alt: "Commercial print studio with large-format printing and branded paper materials",
+  },
+  {
+    name: "Paper & Corporate Printing",
+    image: "/category-images/category-paper-corporate-printing.webp",
+    alt: "Corporate stationery, brochures, folders and notebooks",
     imageFit: "contain",
+  },
+  {
+    name: "Events & Wedding",
+    image: "/category-images/category-events-wedding.png",
+    alt: "Event and wedding invitations, cards and badges",
   },
   {
     name: "Promotional Products",
@@ -49,11 +54,6 @@ export const productCategories: readonly ProductCategoryCard[] = [
     name: "Food / Hospitality Packaging",
     image: "/category-images/category-food-hospitality-packaging.jpg",
     alt: "Food boxes, catering trays and hospitality packaging",
-  },
-  {
-    name: "Events & Wedding",
-    image: "/category-images/category-events-wedding.png",
-    alt: "Event and wedding invitations, cards and badges",
   },
   {
     name: "Awards & Recognition",

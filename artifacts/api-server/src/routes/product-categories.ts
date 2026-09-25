@@ -13,15 +13,15 @@ const router: IRouter = Router();
 const productCategories = () => firestore().collection("productCategories");
 
 const PRODUCT_CATEGORIES = [
-  { id: "core-printing-branding", name: "CORE PRINTING & BRANDING" },
   { id: "signage-display", name: "SIGNAGE & DISPLAY" },
-  { id: "paper-corporate-printing", name: "PAPER & CORPORATE PRINTING" },
-  { id: "labels-stickers", name: "LABELS & STICKERS" },
   { id: "acrylic-products", name: "ACRYLIC PRODUCTS" },
+  { id: "labels-stickers", name: "LABELS & STICKERS" },
+  { id: "core-printing-branding", name: "CORE PRINTING & BRANDING" },
+  { id: "paper-corporate-printing", name: "PAPER & CORPORATE PRINTING" },
+  { id: "events-wedding", name: "EVENTS & WEDDING" },
   { id: "promotional-products", name: "PROMOTIONAL PRODUCTS" },
   { id: "apparel", name: "APPAREL" },
   { id: "food-hospitality-packaging", name: "FOOD / HOSPITALITY PACKAGING" },
-  { id: "events-wedding", name: "EVENTS & WEDDING" },
   { id: "awards-recognition", name: "AWARDS & RECOGNITION" },
   { id: "office-corporate-utility", name: "OFFICE / CORPORATE UTILITY" },
   { id: "specialized-products", name: "SPECIALIZED PRODUCTS" },
