@@ -22,12 +22,16 @@ export * from './productInput';
 export * from './productStatus';
 export * from './project';
 export * from './projectInput';
+<<<<<<< HEAD
 export * from './quoteAttachmentUploadInput';
 export * from './quoteAttachmentUploadInputContentType';
 export * from './quoteRequest';
 export * from './quoteRequestCreated';
 export * from './quoteRequestCreatedStatus';
 export * from './quoteRequestInput';
+=======
+export * from './quoteRequest';
+>>>>>>> origin/main
 export * from './requestStatusInput';
 export * from './requestStatusInputStatus';
 export * from './service';
