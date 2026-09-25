@@ -8,3 +8,4 @@
 - [Firebase Admin project alignment](firebase-admin-project-alignment.md) — a bearer-token 401 after successful Firebase sign-in points to server project/config alignment, not missing frontend auth state.
 - [Imported local Firestore compatibility](imported-local-firestore.md) — keep local fallback query and write methods aligned with Firebase-backed route behavior.
 - [Imported catalog preservation](imported-catalog-preservation.md) — preserve imported records and apply requested priority through deterministic read-time sorting.
+- [Route loading fallbacks](route-loading-fallbacks.md) — removing a global startup gate requires explicit loading or safe fallback states for API-backed detail routes.

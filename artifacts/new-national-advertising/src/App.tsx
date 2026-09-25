@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -6,14 +6,14 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { getGetAdminSessionQueryKey, getGetPublicContactNumbersQueryKey, getGetPublicProjectsQueryKey, getGetPublicServicesQueryKey, getGetPublicSettingsQueryKey, getGetWebsiteContentQueryKey, useGetAdminSession, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, getGetPublicMachinesQueryKey, useGetAdminSession, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
-import AdminPage from '@/pages/admin';
-import AdminLogin from '@/pages/admin-login';
 import { firebaseAuth } from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
 import { productCategories } from '@/product-categories';
 
+const AdminPage = lazy(() => import('@/pages/admin'));
+const AdminLogin = lazy(() => import('@/pages/admin-login'));
 const queryClient = new QueryClient();
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
 
@@ -193,7 +193,15 @@ const navigationItems = [
 
 const machines = [
   {
-    name: 'Epson SureColor S80670',
+    name: 'Laser CO2',
+    category: 'Laser Cutting & Engraving',
+    description: 'A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.',
+    image: '/machine-co2-laser-cutter.png',
+    imageAlt: 'CO₂ laser cutting and engraving machine',
+    applications: ['Precision Laser Cutting', 'Laser Engraving', 'Custom Lettering & Shapes', 'Signage Components'],
+  },
+  {
+    name: 'Axon',
     category: 'Large-Format Printing',
     description: 'A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.',
     image: '/machine-epson-surecolor-s80670.png',
@@ -204,19 +212,7 @@ const machines = [
     ],
   },
   {
-    name: 'Wide-Format Roll Laminator',
-    category: 'Finishing Equipment',
-    description: 'A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.',
-    image: '/machine-wide-format-laminator.png',
-    imageAlt: 'Wide-format roll laminator',
-    related: [
-      { label: 'Eco Solvent Flex', href: '/services/solvent-flex' },
-      { label: 'Banner Printing', href: '/services/banner-printing' },
-      { label: 'Signage Board', href: '/services/sign-boards' },
-    ],
-  },
-  {
-    name: 'Large-Format Printing Machine',
+    name: '512i Konica Flex Machine',
     category: 'Wide-Format Production',
     description: 'A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials.',
     image: '/machine-large-format-printer.png',
@@ -228,19 +224,15 @@ const machines = [
     ],
   },
   {
-    name: 'CO₂ Laser Cutting & Engraving Machine',
-    category: 'Laser Cutting & Engraving',
-    description: 'A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.',
-    image: '/machine-co2-laser-cutter.png',
-    imageAlt: 'CO₂ laser cutting and engraving machine',
+    name: 'Axel Z',
+    category: 'Wide Format Roll Laminator',
+    description: 'A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.',
+    image: '/machine-wide-format-laminator.png',
+    imageAlt: 'Axel Z wide format roll laminator',
     applications: [
-      'Precision Laser Cutting',
-      'Laser Engraving',
-      'Custom Lettering & Shapes',
-      'Signage Components',
-      'Decorative Panels',
-      'Advertising & Display Materials',
-      'Custom Fabrication Work',
+      'Roll Laminating',
+      'Advertising Finishing',
+      'Signage Finishing',
     ],
   },
 ];
@@ -254,8 +246,6 @@ type MachineRecord = {
   related?: Array<{ label: string; href: string }>;
   imageAlt?: string;
 };
-
-const apiBaseUrl = import.meta.env.VITE_API_URL || '';
 
 function publicImageUrl(path?: string | null) {
   if (!path) return '';
@@ -285,34 +275,28 @@ function responsiveCloudinarySrcSet(path?: string | null) {
 }
 
 function usePublicMachines() {
-  const [data, setData] = useState<MachineRecord[]>([]);
-  const [loading, setLoading] = useState(true);
+  const query = useGetPublicMachines({
+    query: {
+      queryKey: getGetPublicMachinesQueryKey(),
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
+  const fallback = machines.map((machine) => ({
+    ...machine,
+    imageUrl: machine.image,
+  }));
+  const data = Array.isArray(query.data)
+    ? query.data.map((machine) => ({
+        ...machine,
+        imageUrl: machine.imageUrl || machine.images?.[0] || '',
+        imageAlt: machine.imageAlt || machine.name,
+      }))
+    : query.isError
+      ? fallback
+      : [];
 
-  useEffect(() => {
-    let active = true;
-    fetch(`${apiBaseUrl}/api/machines`)
-      .then(async (response) => {
-        if (!response.ok) throw new Error('Unable to load machines');
-        return response.json() as Promise<Array<MachineRecord & { imageUrl?: string; image?: string }>>;
-      })
-      .then((records) => {
-        if (!active) return;
-        setData(records.map((machine) => ({
-          ...machine,
-          imageUrl: machine.imageUrl || machine.image || '',
-          imageAlt: machine.imageAlt || machine.name,
-        })));
-      })
-      .catch(() => {
-        if (active) setData([]);
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => { active = false; };
-  }, []);
-
-  return { data, loading };
+  return { data: data as MachineRecord[], loading: query.isLoading };
 }
 
 function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
@@ -454,10 +438,14 @@ const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', 
 
 function usePublicServices() {
   const query = useGetPublicServices();
+  const fallbackServices = useMemo<ServiceRecord[]>(
+    () => services.map((service) => ({ ...service, id: `fallback-${service.slug}` })),
+    [],
+  );
   return useMemo<ServiceRecord[]>(() => {
+    if (!Array.isArray(query.data)) return fallbackServices;
     const remoteServices = (Array.isArray(query.data) ? query.data : [])
-      .filter((remote: ApiService) => approvedServiceSlugs.has(remote.slug))
-      .filter((remote: ApiService) => !removedServiceItemNames.has(remote.title.trim().toLowerCase()));
+      .filter((remote: ApiService) => approvedServiceSlugs.has(remote.slug));
     return remoteServices.map((remote: ApiService) => {
       const visual =
         ({
@@ -494,7 +482,7 @@ function usePublicServices() {
         related: remote.relatedSlugs ?? [],
       };
     });
-  }, [query.data]);
+  }, [fallbackServices, query.data]);
 }
 
 function usePublicSettings() {
@@ -878,6 +866,8 @@ function Home() {
                   <img
                     src="/new-national-advertising-logo.png"
                     alt="New National Advertising"
+                     loading="eager"
+                     fetchPriority="high"
                     className="block h-auto w-full max-w-[390px] object-contain object-left sm:max-w-[500px]"
                   />
                 </h1>
@@ -893,7 +883,7 @@ function Home() {
             </Reveal>
              <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto lg:mt-10">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                  <img src={publicImageUrl(content?.heroImage) || '/hero-new-national-advertising.png'} alt="New National Advertising storefront, printing services and signage display" className="h-full w-full object-contain" />
+                   <img src={publicImageUrl(content?.heroImage) || '/hero-new-national-advertising.png'} alt="New National Advertising storefront, printing services and signage display" loading="eager" fetchPriority="high" decoding="async" className="h-full w-full object-contain" />
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
@@ -960,7 +950,7 @@ function Home() {
                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" className="block aspect-[4/5] w-full object-cover object-top" />
+                        <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" loading="lazy" decoding="async" className="block aspect-[4/5] w-full object-cover object-top" />
                      </div>
                      <div className="mt-3 border-l-2 border-[#1769aa] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
@@ -969,7 +959,7 @@ function Home() {
                    </div>
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" className="block aspect-[4/5] w-full object-cover object-top" />
+                        <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" loading="lazy" decoding="async" className="block aspect-[4/5] w-full object-cover object-top" />
                      </div>
                      <div className="mt-3 border-l-2 border-[#d9468c] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
@@ -1001,14 +991,14 @@ function Home() {
              </div>
              <div className="mt-10 grid gap-5 lg:grid-cols-[1.22fr_.78fr] lg:items-stretch">
                <Reveal className="group relative min-h-[420px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] sm:min-h-[540px]">
-                 <img src="/branch-workplace-office.png" alt="New National Advertising workplace and office" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <img src="/branch-workplace-office.png" alt="New National Advertising workplace and office" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white sm:p-7 sm:pt-24">
                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our workplace</p>
                    <p className="mt-2 max-w-[360px] text-[12px] leading-5 text-white/85">The creative and production environment behind New National Advertising.</p>
                  </div>
                </Reveal>
                <Reveal delay={100} className="group relative min-h-[340px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] lg:min-h-0">
-                 <img src="/branch-workplace-flex-printing.png" alt="New National Advertising flex printing branch" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <img src="/branch-workplace-flex-printing.png" alt="New National Advertising flex printing branch" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white">
                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our branch</p>
                    <p className="mt-2 text-[12px] leading-5 text-white/85">A real view from New National Advertising.</p>
@@ -1060,13 +1050,13 @@ function Home() {
          <section className="overflow-hidden bg-[#f3f7f8] py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <Reveal><p className="eyebrow">Built for your brand</p><h2 className="display mt-3 max-w-[440px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Design that supports your brand.</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">From a first logo to the final printed piece, every detail has a job to do.</p><a href="#contact" data-testid="link-design-enquiry" className="arrow-link mt-6 inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">Start a design conversation <ArrowRight size={14} /></a></Reveal>
-             <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
+              <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" loading="lazy" decoding="async" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
           </div>
         </section>
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
-             <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/services-main-signage.webp" alt="New National Advertising storefront signage" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
+              <Reveal className="order-2 overflow-hidden rounded-[12px] lg:order-1"><div className="relative"><img src="/services-main-signage.webp" alt="New National Advertising storefront signage" loading="lazy" decoding="async" className="h-[280px] w-full object-cover sm:h-[350px]" /><div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/92 px-3 py-2 text-[8px] font-bold uppercase tracking-[.15em] text-[#14213d] shadow-[0_5px_14px_rgba(20,33,61,.12)]"><span className="h-2 w-2 rounded-full bg-[#f2c94c]" /><span className="h-2 w-2 rounded-full bg-[#f26b5b]" /><span className="h-2 w-2 rounded-full bg-[#00a8c6]" />Signage / daylight / night</div></div></Reveal>
              <Reveal delay={100} className="order-1 lg:order-2"><p className="eyebrow">Signage solutions</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Make Your Brand Stand Out</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">{content?.signageBody || signageService?.description || 'Professional signage designed to be seen clearly, day and night.'}</p><div className="mt-7 grid max-w-[380px] grid-cols-2 gap-x-7 gap-y-3 text-[11px] font-semibold text-[#354b61]">{(signageService?.items ?? []).slice(0, 8).map((item, index) => <div key={item} className="flex items-center gap-2"><Check size={13} style={{ color: ['#00A8C6', '#F2C94C', '#D9468C', '#1769AA'][index % 4] }} />{item}</div>)}</div></Reveal>
           </div>
         </section>
@@ -1502,9 +1492,12 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
 
 function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const [submitted, setSubmitted] = useState(false);
+  const [location] = useLocation();
   const publicServices = usePublicServices();
+  const servicesQuery = useGetPublicServices();
   const publicProducts = useGetPublicProducts();
-  const service = publicServices.find((item) => item.slug === params.slug);
+  const requestedSlug = params.slug || location.replace(/^\/services\//, '').split(/[?#/]/)[0];
+  const service = publicServices.find((item) => item.slug === requestedSlug);
 
   useEffect(() => {
     if (!service) return;
@@ -1522,6 +1515,30 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
     }
     canonical.href = canonicalUrl;
   }, [service]);
+
+  if (!service && servicesQuery.isLoading) {
+    return (
+      <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
+        <SiteHeader quoteHref="#service-enquiry" />
+        <main className="container-nna flex min-h-[70dvh] items-center justify-center pt-[70px]" aria-live="polite">
+          <p className="eyebrow">Loading service details</p>
+        </main>
+      </div>
+    );
+  }
+
+  if (!service && servicesQuery.isError) {
+    return (
+      <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
+        <SiteHeader quoteHref="#service-enquiry" />
+        <main className="container-nna flex min-h-[70dvh] flex-col items-center justify-center gap-4 pt-[70px] text-center">
+          <p className="eyebrow !text-[#a3443c]">Service unavailable</p>
+          <p className="max-w-[360px] text-[13px] leading-6 text-[#68798a]">We could not load this service right now.</p>
+          <button type="button" onClick={() => void servicesQuery.refetch()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+        </main>
+      </div>
+    );
+  }
 
   if (!service) return <NotFound />;
 
@@ -1700,9 +1717,9 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
 function Router() {
   return (
     <RoutedErrorBoundary>
-      <InitialLoadGate>
+      <Suspense fallback={<main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] text-[#14213d]"><p className="eyebrow">Loading workspace</p></main>}>
         <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/admin/login" component={AdminLogin} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
-      </InitialLoadGate>
+      </Suspense>
     </RoutedErrorBoundary>
   );
 }
@@ -1710,88 +1727,6 @@ function Router() {
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
-}
-
-function preloadInitialAsset(src: string) {
-  return new Promise<void>((resolve) => {
-    const image = new Image();
-    const settle = () => resolve();
-    image.onload = settle;
-    image.onerror = settle;
-    image.src = src;
-    if (image.complete) settle();
-  });
-}
-
-function PremiumInitialLoader({ exiting }: { exiting: boolean }) {
-  return (
-    <div
-      id="initial-loader"
-      className={exiting ? 'initial-loader--exiting' : ''}
-      role="status"
-      aria-live="polite"
-      aria-label="Loading New National Advertising"
-    >
-      <div className="initial-loader__inner">
-        <img className="initial-loader__logo" src="/new-national-advertising-logo.png" alt="" />
-        <span className="initial-loader__label">New National Advertising</span>
-        <span className="initial-loader__progress" aria-hidden="true" />
-      </div>
-    </div>
-  );
-}
-
-function InitialLoadGate({ children }: { children: ReactNode }) {
-  const [location] = useLocation();
-  const isAdminRoute = location.startsWith('/admin');
-  const publicServices = useGetPublicServices({ query: { enabled: !isAdminRoute, queryKey: getGetPublicServicesQueryKey() } });
-  const publicProjects = useGetPublicProjects({ query: { enabled: !isAdminRoute, queryKey: getGetPublicProjectsQueryKey() } });
-  const publicSettings = useGetPublicSettings({ query: { enabled: !isAdminRoute, queryKey: getGetPublicSettingsQueryKey() } });
-  const publicContacts = useGetPublicContactNumbers({ query: { enabled: !isAdminRoute, queryKey: getGetPublicContactNumbersQueryKey() } });
-  const websiteContent = useGetWebsiteContent({ query: { enabled: !isAdminRoute, queryKey: getGetWebsiteContentQueryKey() } });
-  const [criticalAssetsReady, setCriticalAssetsReady] = useState(isAdminRoute);
-  const [loaderVisible, setLoaderVisible] = useState(true);
-  const [loaderExiting, setLoaderExiting] = useState(false);
-
-  useEffect(() => {
-    if (isAdminRoute) {
-      setCriticalAssetsReady(true);
-      return;
-    }
-
-    let active = true;
-    const logo = publicImageUrl(publicSettings.data?.logoPath) || '/new-national-advertising-logo.png';
-    const hero = publicImageUrl(websiteContent.data?.heroImage) || '/hero-new-national-advertising.png';
-    void Promise.all([preloadInitialAsset(logo), preloadInitialAsset(hero)]).then(() => {
-      if (active) setCriticalAssetsReady(true);
-    });
-    return () => {
-      active = false;
-    };
-  }, [isAdminRoute, publicSettings.data?.logoPath, websiteContent.data?.heroImage]);
-
-  const initialDataReady = isAdminRoute || [
-    publicServices.isFetched && !publicServices.isFetching,
-    publicProjects.isFetched && !publicProjects.isFetching,
-    publicSettings.isFetched && !publicSettings.isFetching,
-    publicContacts.isFetched && !publicContacts.isFetching,
-    websiteContent.isFetched && !websiteContent.isFetching,
-  ].every(Boolean);
-  const appReady = initialDataReady && criticalAssetsReady;
-
-  useEffect(() => {
-    if (!appReady) return;
-    setLoaderExiting(true);
-    const removeLoader = window.setTimeout(() => setLoaderVisible(false), 430);
-    return () => window.clearTimeout(removeLoader);
-  }, [appReady]);
-
-  return (
-    <>
-      {children}
-      {loaderVisible && <PremiumInitialLoader exiting={loaderExiting} />}
-    </>
-  );
 }
 
 function AppShell() {
