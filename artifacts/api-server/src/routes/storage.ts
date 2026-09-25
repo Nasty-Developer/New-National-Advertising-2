@@ -4,9 +4,23 @@ import {
   RequestProductImageUploadUrlResponse,
 } from "@workspace/api-zod";
 import { requireAdmin } from "../lib/firebase-auth";
-import { createFirebaseUploadTarget } from "../lib/firebase-storage";
+import { createFirebaseReadUrl, createFirebaseUploadTarget } from "../lib/firebase-storage";
 
 const router: IRouter = Router();
+
+router.get("/storage/read", async (req, res): Promise<void> => {
+  const path = typeof req.query.path === "string" ? req.query.path : "";
+  if (!path) {
+    res.status(400).json({ error: "Image path is required" });
+    return;
+  }
+  const url = await createFirebaseReadUrl(path);
+  if (!url || url === path) {
+    res.status(404).json({ error: "Image not found" });
+    return;
+  }
+  res.redirect(url);
+});
 
 router.post(
   "/storage/uploads/request-url",

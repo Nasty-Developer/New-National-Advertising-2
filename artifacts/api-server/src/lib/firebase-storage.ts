@@ -3,6 +3,7 @@ import { firebaseBucket, firestore, hasFirebaseConfiguration } from "./firebase"
 
 const allowedContentTypes = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
 const maxBytes = 10 * 1024 * 1024;
+const storageFolders = ["products", "machines", "services", "projects", "requests"] as const;
 
 export function validateUpload(input: { size: number; contentType: string }) {
   if (!Number.isInteger(input.size) || input.size < 1 || input.size > maxBytes) {
@@ -34,11 +35,11 @@ export async function createFirebaseUploadTarget(input: {
 
 export async function createFirebaseReadUrl(objectPath: string | null | undefined) {
   if (!objectPath) return null;
-  if (objectPath.startsWith("http")) return objectPath;
-  if (objectPath.startsWith("/") && !/^\/(products|machines|services|projects|requests)\//.test(objectPath)) return objectPath;
+  const normalizedPath = normalizeFirebaseStoragePath(objectPath);
+  if (!normalizedPath) return objectPath;
   if (!hasFirebaseConfiguration()) return objectPath;
   try {
-    const file = firebaseBucket().file(objectPath.replace(/^\/+/, ""));
+    const file = firebaseBucket().file(normalizedPath.replace(/^\/+/, ""));
     const [url] = await file.getSignedUrl({
       version: "v4",
       action: "read",
@@ -51,6 +52,11 @@ export async function createFirebaseReadUrl(objectPath: string | null | undefine
 }
 
 export function normalizeFirebaseProductImagePath(value: unknown): string | null {
+  const path = normalizeFirebaseStoragePath(value);
+  return path?.startsWith("/products/") ? path : null;
+}
+
+export function normalizeFirebaseStoragePath(value: unknown): string | null {
   if (typeof value !== "string" || !value.trim()) return null;
 
   const trimmed = value.trim();
@@ -82,7 +88,9 @@ export function normalizeFirebaseProductImagePath(value: unknown): string | null
     }
   }
 
-  return objectPath?.startsWith("products/") ? `/${objectPath}` : null;
+  return objectPath && storageFolders.some((folder) => objectPath?.startsWith(`${folder}/`))
+    ? `/${objectPath}`
+    : null;
 }
 
 export async function createFirebaseDownloadUrl(
@@ -90,7 +98,7 @@ export async function createFirebaseDownloadUrl(
 ): Promise<string | null> {
   if (!imagePath) return null;
 
-  const normalizedPath = normalizeFirebaseProductImagePath(imagePath);
+  const normalizedPath = normalizeFirebaseStoragePath(imagePath);
   if (!normalizedPath || !hasFirebaseConfiguration()) return imagePath;
 
   const bucket = firebaseBucket();
@@ -121,7 +129,7 @@ function referencesProductImage(value: unknown, objectPath: string): boolean {
     return (
       value === objectPath ||
       value === `/${objectPath}` ||
-      normalizeFirebaseProductImagePath(value) === `/${objectPath}`
+      normalizeFirebaseStoragePath(value) === `/${objectPath}`
     );
   }
   if (Array.isArray(value)) {
@@ -135,10 +143,10 @@ function referencesProductImage(value: unknown, objectPath: string): boolean {
   return false;
 }
 
-export async function deleteFirebaseProductImageIfUnreferenced(
+export async function deleteFirebaseStorageImageIfUnreferenced(
   imagePath: string | null | undefined,
 ): Promise<void> {
-  const normalizedPath = normalizeFirebaseProductImagePath(imagePath);
+  const normalizedPath = normalizeFirebaseStoragePath(imagePath);
   if (!normalizedPath || !hasFirebaseConfiguration()) return;
 
   const objectPath = normalizedPath.replace(/^\/+/, "");
@@ -164,8 +172,11 @@ export async function deleteFirebaseProductImageIfUnreferenced(
     await firebaseBucket().file(objectPath).delete({ ignoreNotFound: true });
   } catch (error) {
     console.warn(
-      "[firebase-storage] Could not clean up an unreferenced product image",
+      "[firebase-storage] Could not clean up an unreferenced image",
       error instanceof Error ? error.message : "unknown storage error",
     );
   }
 }
+
+export const deleteFirebaseProductImageIfUnreferenced =
+  deleteFirebaseStorageImageIfUnreferenced;

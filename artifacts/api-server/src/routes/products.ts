@@ -24,6 +24,34 @@ import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
 const products = () => firestore().collection("products");
+const productPriority = [
+  ["signage"],
+  ["banner"],
+  ["brochure"],
+  ["acrylic", "clip", "board"],
+  ["calendar"],
+  ["business", "card"],
+  ["letterhead"],
+  ["hoarding", "banner"],
+];
+
+function productPriorityRank(name: string) {
+  const normalized = name.toLowerCase().replace(/[^a-z0-9]+/g, " ");
+  if (normalized.includes("hoarding banner")) return 7;
+  const index = productPriority.findIndex((tokens) => tokens.every((token) => normalized.includes(token)));
+  return index < 0 ? Number.MAX_SAFE_INTEGER : index;
+}
+
+function productOrder(
+  left: { id: string; name: string; displayOrder: number; updatedAt: Date },
+  right: { id: string; name: string; displayOrder: number; updatedAt: Date },
+) {
+  return productPriorityRank(left.name) - productPriorityRank(right.name)
+    || Number(left.displayOrder) - Number(right.displayOrder)
+    || right.updatedAt.getTime() - left.updatedAt.getTime()
+    || left.name.localeCompare(right.name)
+    || left.id.localeCompare(right.id);
+}
 
 function toDate(value: unknown): Date {
   if (value && typeof value === "object" && "toDate" in value && typeof value.toDate === "function") {
@@ -123,7 +151,7 @@ async function productValues(data: {
 router.get("/products", async (_req, res): Promise<void> => {
   const rows = (await allProducts())
     .filter(({ doc }) => doc.data().status === "published")
-    .sort((a, b) => Number(a.value.displayOrder) - Number(b.value.displayOrder) || b.value.updatedAt.getTime() - a.value.updatedAt.getTime());
+    .sort((a, b) => productOrder(a.value, b.value));
   res.json(GetPublicProductsResponse.parse(rows.map(({ value }) => value)));
 });
 
@@ -145,7 +173,7 @@ router.get("/admin/products", requireAdmin, async (req, res): Promise<void> => {
   rows.sort((a, b) => query.sort === "name"
     ? a.value.name.localeCompare(b.value.name)
     : query.sort === "displayOrder"
-      ? Number(a.value.displayOrder) - Number(b.value.displayOrder)
+      ? productOrder(a.value, b.value)
       : b.value.updatedAt.getTime() - a.value.updatedAt.getTime());
   res.json(GetAdminProductsResponse.parse(rows.map(({ value }) => value)));
 });

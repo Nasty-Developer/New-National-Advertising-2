@@ -64,7 +64,7 @@ function joinLines(value: string[] | undefined) {
 function imageUrl(path?: string | null) {
   if (!path) return "";
   if (path.startsWith("http") || path.startsWith("/new-") || path.startsWith("/machine") || path.startsWith("/service") || path.startsWith("/favicon")) return path;
-  return `/api/storage${path.startsWith("/") ? path : `/${path}`}`;
+  return `/api/storage/read?path=${encodeURIComponent(path)}`;
 }
 
 function Button({ children, variant = "primary", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "danger" }) {
@@ -104,7 +104,8 @@ async function uploadFiles(files: File[], folder: "machines" | "services", reque
   for (const file of files) {
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 10 * 1024 * 1024) throw new Error("Use JPG, PNG, or WebP images up to 10 MB.");
     const response = await request.mutateAsync({ data: { name: file.name, size: file.size, contentType: file.type as UploadRequestContentType, folder } });
-    await fetch(response.uploadURL, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+    const result = await fetch(response.uploadURL, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+    if (!result.ok) throw new Error("The image upload failed. Please try again.");
     paths.push(response.objectPath);
   }
   return paths;

@@ -192,7 +192,7 @@ function imageUrl(path?: string | null) {
   if (!path) return "";
   if (path.startsWith("http")) return path;
   if (path.startsWith("/api/")) return path;
-  return `/api/storage${path.startsWith("/") ? path : `/${path}`}`;
+  return `/api/storage/read?path=${encodeURIComponent(path)}`;
 }
 
 function BrandMark({ compact = false }: { compact?: boolean }) {

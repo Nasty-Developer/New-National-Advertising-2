@@ -4,21 +4,16 @@ import { resolve } from "node:path";
 import { z } from "zod";
 import type { DocumentData } from "firebase-admin/firestore";
 import { currentAdmin, requireAdmin } from "../lib/firebase-auth";
-import { createFirebaseReadUrl } from "../lib/firebase-storage";
+import {
+  createFirebaseReadUrl,
+  deleteFirebaseStorageImageIfUnreferenced,
+  normalizeFirebaseStoragePath,
+} from "../lib/firebase-storage";
 import { firebaseBucket, hasFirebaseConfiguration } from "../lib/firebase";
 import { firestore } from "../lib/firebase";
 
 const router: IRouter = Router();
 
-const approvedServiceSlugs = new Set([
-  "sign-boards",
-  "banner-printing",
-  "solvent-flex",
-  "offset-printing",
-  "screen-printing",
-  "graphics-design",
-  "digital-printing",
-]);
 const publicServiceSlugs = new Set([
   "sign-boards",
   "solvent-flex",
@@ -27,51 +22,31 @@ const publicServiceSlugs = new Set([
   "graphics-design",
   "digital-printing",
 ]);
-const removedCatalogNames = new Set(["signage", "solvent flex"]);
 const approvedServiceTitles = new Map([
   ["sign-boards", "Signage Board"],
   ["solvent-flex", "Solvent Flex"],
-  ["offset-printing", "Offset Printing"],
+  ["offset-printing", "Flex Printing"],
   ["screen-printing", "Screen Printing"],
   ["graphics-design", "Graphics Design"],
   ["digital-printing", "Digital Printing"],
 ]);
 
-function isRemovedCatalogName(value: unknown) {
-  return typeof value === "string" && removedCatalogNames.has(value.trim().toLowerCase());
+function normalizeCatalogImage(value: string) {
+  return normalizeFirebaseStoragePath(value) ?? value;
 }
 
-function cleanCatalogList(value: unknown) {
-  if (!Array.isArray(value)) return value;
-  return value.filter((item) => !isRemovedCatalogName(item));
-}
-
-function collectStrings(value: unknown, output: Set<string>) {
-  if (typeof value === "string") {
-    output.add(value);
-    return;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((item) => collectStrings(item, output));
-    return;
-  }
-  if (value && typeof value === "object") {
-    Object.values(value).forEach((item) => collectStrings(item, output));
-  }
-}
-
-async function deleteUnreferencedStorageImage(path: unknown, records: Array<{ data: DocumentData; id: string }>) {
-  if (typeof path !== "string" || !path || path.startsWith("http") || !hasFirebaseConfiguration()) return;
-  const normalizedPath = path.replace(/^\/+/, "");
-  if (!/^(products|machines|services|projects|requests)\//.test(normalizedPath)) return;
-  const references = new Set<string>();
-  records.forEach(({ data }) => collectStrings(data, references));
-  if (references.has(path) || references.has(`/${normalizedPath}`)) return;
-  try {
-    await firebaseBucket().file(normalizedPath).delete({ ignoreNotFound: true });
-  } catch {
-    // Catalog cleanup must not prevent the API from serving the remaining records.
-  }
+async function removeReplacedCatalogImages(
+  previous: DocumentData,
+  nextImages: string[],
+) {
+  const next = new Set(nextImages.map((image) => normalizeFirebaseStoragePath(image) ?? image));
+  const previousImages = [
+    ...(Array.isArray(previous.images) ? previous.images : []),
+    previous.imageUrl,
+  ].filter((image): image is string => typeof image === "string" && image.length > 0);
+  await Promise.all(previousImages
+    .filter((image) => !next.has(normalizeFirebaseStoragePath(image) ?? image))
+    .map((image) => deleteFirebaseStorageImageIfUnreferenced(image)));
 }
 
 const machineBody = z.object({
@@ -190,7 +165,7 @@ const serviceSeed = [
   ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
   ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
   ["solvent-flex", "Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
-  ["offset-printing", "Offset Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
+  ["offset-printing", "Flex Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
   ["screen-printing", "Screen Printing", "Custom print finishes", "Custom screen printing for apparel, promotional products and printed materials.", ["Wedding Cards", "Visiting Cards", "Letterheads", "T-Shirts", "Cup Print", "Envelopes", "Caps", "Umbrellas", "Carry Bags", "ID Ribbons", "School Bags"], ["Apparel printing", "Promotional products", "School and event materials", "Carry bags", "Stationery"], "service-screen-printing.jpg"],
   ["graphics-design", "Graphics Design", "Brand and creative design", "Professional creative design solutions for branding, marketing and communication.", ["Logo Design", "Social Media Posts", "Hoarding Banners", "Menu Cards", "Flyers", "Product Packaging", "Magazine Ads", "Visiting Cards", "Invitations", "Brochures", "Calendars"], ["Brand identity", "Social media communication", "Retail and menu design", "Packaging", "Advertising campaigns"], "service-graphics-design.jpg"],
   ["digital-printing", "Digital Printing", "Fast, detailed printing", "High-quality digital printing for business, promotional and everyday printing requirements.", ["Visiting Cards", "Bill Book", "Wedding Card", "Brochures", "Catalogues", "Pamphlets", "Posters", "Annual Reports", "UV Print", "Hotel Menus", "Hospital Files", "Trophy Stickers"], ["Business cards", "Marketing handouts", "Posters and pamphlets", "Menus and reports", "Specialty printed pieces"], "service-digital-printing.jpg"],
@@ -274,57 +249,12 @@ function collections() {
 let catalogCleanupPromise: Promise<void> | undefined;
 
 async function cleanupCatalog() {
-  const [serviceSnapshot, productSnapshot, machineSnapshot, projectSnapshot, settingsSnapshot, contentSnapshot] = await Promise.all([
+  const [serviceSnapshot] = await Promise.all([
     firestore().collection("services").get(),
-    firestore().collection("products").get(),
-    firestore().collection("machines").get(),
-    firestore().collection("projects").get(),
-    firestore().collection("websiteSettings").get(),
-    firestore().collection("websiteContent").get(),
   ]);
-
-  const servicesToDelete = serviceSnapshot.docs.filter((doc) => {
-    const data = doc.data();
-    const slug = String(data.slug ?? doc.id);
-    return !approvedServiceSlugs.has(slug);
-  });
-  const serviceIdsToDelete = new Set(servicesToDelete.map((doc) => doc.id));
-  const productsToDelete = productSnapshot.docs.filter((doc) => {
-    const data = doc.data();
-    return isRemovedCatalogName(data.name) || serviceIdsToDelete.has(String(data.serviceSlug ?? ""));
-  });
-  const productIdsToDelete = new Set(productsToDelete.map((doc) => doc.id));
-
-  const remainingRecords = [
-    ...serviceSnapshot.docs.filter((doc) => !serviceIdsToDelete.has(doc.id)).map((doc) => ({ id: doc.id, data: doc.data() })),
-    ...productSnapshot.docs.filter((doc) => !productIdsToDelete.has(doc.id)).map((doc) => ({ id: doc.id, data: doc.data() })),
-    ...machineSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
-    ...projectSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
-    ...settingsSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
-    ...contentSnapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
-  ];
-
-  await Promise.all(servicesToDelete.map(async (doc) => {
-    const data = doc.data();
-    for (const image of Array.isArray(data.images) ? data.images : []) {
-      await deleteUnreferencedStorageImage(image, remainingRecords);
-    }
-    await firestore().collection("services").doc(doc.id).delete();
-  }));
-  await Promise.all(productsToDelete.map(async (doc) => {
-    await deleteUnreferencedStorageImage(doc.data().imagePath ?? doc.data().imageUrl, remainingRecords);
-    await firestore().collection("products").doc(doc.id).delete();
-  }));
-
-  await Promise.all(serviceSnapshot.docs
-    .filter((doc) => !serviceIdsToDelete.has(doc.id))
-    .map(async (doc) => {
+  await Promise.all(serviceSnapshot.docs.map(async (doc) => {
       const data = doc.data();
       const updates: DocumentData = {};
-      for (const field of ["features", "offerings", "applications", "materials", "whyChoose", "relatedSlugs"]) {
-        const cleaned = cleanCatalogList(data[field]);
-        if (Array.isArray(data[field]) && JSON.stringify(cleaned) !== JSON.stringify(data[field])) updates[field] = cleaned;
-      }
       const title = approvedServiceTitles.get(String(data.slug ?? doc.id));
       if (title && data.title !== title) updates.title = title;
       if (Object.keys(updates).length > 0) {
@@ -391,7 +321,7 @@ async function publicDocuments(kind: "machines" | "services") {
     .filter((doc) => kind === "machines"
       ? doc.data().published !== false
       : doc.data().status === "published" && publicServiceSlugs.has(String(doc.data().slug ?? doc.id)))
-    .sort((a, b) => Number(a.data().displayOrder ?? 0) - Number(b.data().displayOrder ?? 0))
+    .sort((a, b) => catalogOrder(kind, a.data(), b.data()))
     .map(async (doc) => {
       const data = doc.data();
       const images = Array.isArray(data.images) ? data.images : data.imageUrl ? [data.imageUrl] : [];
@@ -402,6 +332,49 @@ async function publicDocuments(kind: "machines" | "services") {
         images: await Promise.all(images.map((image: string) => createFirebaseReadUrl(image))),
       };
     }));
+}
+
+const machinePriority = [
+  ["laser", "co2"],
+  ["epson"],
+  ["512i", "konica", "flex"],
+  ["excel", "z"],
+  ["konica", "minolta"],
+];
+
+function normalizedName(value: unknown) {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/₂/g, "2")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function priorityFor(name: unknown, priorities: string[][]) {
+  const value = normalizedName(name);
+  return priorities.findIndex((tokens) => tokens.every((token) => value.includes(token)));
+}
+
+const productPriority = [
+  ["signage"],
+  ["banner"],
+  ["brochure"],
+  ["acrylic", "clip", "board"],
+  ["calendar"],
+  ["business", "card"],
+  ["letterhead"],
+  ["hoarding", "banner"],
+];
+
+function catalogOrder(kind: "machines" | "services", left: DocumentData, right: DocumentData) {
+  const priorities = kind === "machines" ? machinePriority : [];
+  const leftRank = priorityFor(left.name, priorities);
+  const rightRank = priorityFor(right.name, priorities);
+  const leftPriority = leftRank < 0 ? Number.MAX_SAFE_INTEGER : leftRank;
+  const rightPriority = rightRank < 0 ? Number.MAX_SAFE_INTEGER : rightRank;
+  return leftPriority - rightPriority
+    || Number(left.displayOrder ?? 0) - Number(right.displayOrder ?? 0)
+    || normalizedName(left.name).localeCompare(normalizedName(right.name));
 }
 
 router.get("/machines", async (_req, res): Promise<void> => {
@@ -429,7 +402,9 @@ router.post("/admin/machines", requireAdmin, async (req, res): Promise<void> => 
   }
   const now = new Date();
   const reference = collections().machines.doc();
-  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, images: parsed.data.images.length ? parsed.data.images : parsed.data.imageUrl ? [parsed.data.imageUrl] : [], createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
+  const imageUrl = parsed.data.imageUrl ? normalizeCatalogImage(parsed.data.imageUrl) : "";
+  const images = parsed.data.images.map(normalizeCatalogImage).filter(Boolean);
+  await reference.set({ ...parsed.data, imageUrl, fullDescription: parsed.data.fullDescription || parsed.data.description, images: images.length ? images : imageUrl ? [imageUrl] : [], createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
   res.status(201).json({ id: reference.id, ...parsed.data, createdAt: now, updatedAt: now });
 });
 
@@ -445,7 +420,12 @@ router.put("/admin/machines/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const now = new Date();
-  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, images: parsed.data.images.length ? parsed.data.images : parsed.data.imageUrl ? [parsed.data.imageUrl] : [], updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  const previous = await reference.get();
+  const imageUrl = parsed.data.imageUrl ? normalizeCatalogImage(parsed.data.imageUrl) : "";
+  const images = parsed.data.images.map(normalizeCatalogImage).filter(Boolean);
+  const nextImages = images.length ? images : imageUrl ? [imageUrl] : [];
+  await reference.set({ ...parsed.data, imageUrl, fullDescription: parsed.data.fullDescription || parsed.data.description, images: nextImages, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  await removeReplacedCatalogImages(previous.data(), nextImages);
   res.json({ id: reference.id, ...parsed.data, updatedAt: now });
 });
 
@@ -476,7 +456,7 @@ router.post("/admin/services", requireAdmin, async (req, res): Promise<void> => 
   }
   const now = new Date();
   const reference = collections().services.doc();
-  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
+  await reference.set({ ...parsed.data, images: parsed.data.images.map(normalizeCatalogImage).filter(Boolean), fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, createdAt: now, updatedAt: now, createdBy: currentAdmin(res).uid, updatedBy: currentAdmin(res).uid });
   res.status(201).json({ id: reference.id, ...parsed.data, createdAt: now, updatedAt: now });
 });
 
@@ -492,7 +472,10 @@ router.put("/admin/services/:id", requireAdmin, async (req, res): Promise<void> 
     return;
   }
   const now = new Date();
-  await reference.set({ ...parsed.data, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  const previous = await reference.get();
+  const nextImages = parsed.data.images.map(normalizeCatalogImage).filter(Boolean);
+  await reference.set({ ...parsed.data, images: nextImages, fullDescription: parsed.data.fullDescription || parsed.data.description, content: parsed.data.content || parsed.data.description, updatedAt: now, updatedBy: currentAdmin(res).uid }, { merge: true });
+  await removeReplacedCatalogImages(previous.data(), nextImages);
   res.json({ id: reference.id, ...parsed.data, updatedAt: now });
 });
 

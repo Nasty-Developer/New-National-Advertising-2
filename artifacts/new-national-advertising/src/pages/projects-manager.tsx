@@ -36,7 +36,7 @@ function friendlyError(error: unknown, fallback = "We could not complete that ac
 function imageUrl(path?: string | null) {
   if (!path) return "";
   if (path.startsWith("http") || path.startsWith("/new-") || path.startsWith("/project")) return path;
-  return `/api/storage${path.startsWith("/") ? path : `/${path}`}`;
+  return `/api/storage/read?path=${encodeURIComponent(path)}`;
 }
 
 async function uploadProjectImages(files: File[], upload: ReturnType<typeof useRequestProductImageUploadUrl>) {
@@ -92,6 +92,19 @@ function ProjectForm({ record, onClose, onSaved }: { record: Project | null; onC
       setUploading(false);
     }
   };
+  const uploadMainImage = async (file: File) => {
+    setUploading(true);
+    setFeedback("");
+    try {
+      const paths = await uploadProjectImages([file], upload);
+      set("imagePath", paths[0] ?? null);
+      setFeedback("Main image uploaded and ready to save.");
+    } catch {
+      setFeedback("The main image upload failed. Nothing was saved.");
+    } finally {
+      setUploading(false);
+    }
+  };
   const save = async (event: FormEvent) => {
     event.preventDefault();
     if (!form.name.trim() || !form.shortDescription.trim()) {
@@ -131,7 +144,7 @@ function ProjectForm({ record, onClose, onSaved }: { record: Project | null; onC
         <label className="block"><span className="admin-label">Short description</span><textarea required maxLength={500} rows={2} value={form.shortDescription} onChange={(event) => set("shortDescription", event.target.value)} className="admin-input min-h-0 resize-y py-3" placeholder="A concise summary for the selected work grid." /></label>
         <label className="block"><span className="admin-label">Full description</span><textarea maxLength={10000} rows={5} value={form.fullDescription} onChange={(event) => set("fullDescription", event.target.value)} className="admin-input min-h-[120px] resize-y py-3" placeholder="What was created and what should visitors know?" /></label>
         <label className="block"><span className="admin-label">Video URL <span className="normal-case tracking-normal text-[#9aa8b0]">optional</span></span><input type="url" maxLength={500} value={form.videoUrl ?? ""} onChange={(event) => set("videoUrl", event.target.value)} className="admin-input" placeholder="https://..." /></label>
-        <div><span className="admin-label">Main image</span><div className="mt-2 grid gap-3 sm:grid-cols-[180px_1fr]"><div className="flex aspect-[1.4/1] items-center justify-center overflow-hidden rounded-xl border border-dashed border-[#bcd1da] bg-[#f5f9fa]">{form.imagePath ? <img src={imageUrl(form.imagePath)} alt={form.name || "Project preview"} className="h-full w-full object-cover" /> : <ImagePlus className="text-[#7db6c2]" size={25} />}</div><div><input type="text" value={form.imagePath ?? ""} onChange={(event) => set("imagePath", event.target.value || null)} className="admin-input" placeholder="Upload a main image or paste an existing path" /><p className="mt-2 text-[10px] leading-4 text-[#84939b]">Additional images can be uploaded below. Existing image paths remain unchanged.</p></div></div></div>
+        <div><span className="admin-label">Main image</span><div className="mt-2 grid gap-3 sm:grid-cols-[180px_1fr]"><div className="flex aspect-[1.4/1] items-center justify-center overflow-hidden rounded-xl border border-dashed border-[#bcd1da] bg-[#f5f9fa]">{form.imagePath ? <img src={imageUrl(form.imagePath)} alt={form.name || "Project preview"} className="h-full w-full object-cover" /> : <ImagePlus className="text-[#7db6c2]" size={25} />}</div><div><label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#b7cdd8] bg-[#fffefa] px-3 py-2.5 text-[11px] font-bold text-[#294861] transition hover:border-[#1769aa] hover:bg-[#f4fafb]"><UploadCloud size={15} /> {uploading ? "Uploading…" : "Choose main image"}<input type="file" accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadMainImage(file); }} className="sr-only" /></label><input type="text" value={form.imagePath ?? ""} onChange={(event) => set("imagePath", event.target.value || null)} className="admin-input mt-2" placeholder="Or paste an existing path" /><p className="mt-2 text-[10px] leading-4 text-[#84939b]">The uploaded path is saved with the project and remains available after refresh.</p></div></div></div>
         <div><span className="admin-label">Additional images <span className="normal-case tracking-normal text-[#9aa8b0]">optional</span></span><div className="mt-2 grid gap-3 sm:grid-cols-3">{images.map((path, index) => <div key={`${path}-${index}`} className="group relative aspect-[1.4/1] overflow-hidden rounded-xl border border-[#d7e4e9] bg-[#f5f9fa]"><img src={imageUrl(path)} alt="" className="h-full w-full object-cover" /><button type="button" onClick={() => set("additionalImages", images.filter((_, item) => item !== index))} className="absolute right-2 top-2 rounded-lg bg-[#14213d]/80 p-1.5 text-white opacity-0 transition group-hover:opacity-100" aria-label="Remove image"><X size={13} /></button></div>)}<label className="flex min-h-[110px] cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-[#bcd1da] bg-[#f8fbfb] text-center text-[#718792]"><UploadCloud size={20} className="text-[#7db6c2]" /><span className="mt-2 text-[11px] font-bold">{uploading ? "Uploading…" : "Choose images"}</span><input type="file" multiple accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={(event) => { if (event.target.files?.length) void addImages(Array.from(event.target.files)); }} className="sr-only" /></label></div></div>
         <div className="grid gap-4 sm:grid-cols-3"><label className="flex items-center gap-2 text-[12px] font-semibold text-[#425d70]"><input type="checkbox" checked={form.published === true} onChange={(event) => set("published", event.target.checked)} /> Published</label><label className="flex items-center gap-2 text-[12px] font-semibold text-[#425d70]"><input type="checkbox" checked={form.featured === true} onChange={(event) => set("featured", event.target.checked)} /> Featured</label><label className="block"><span className="admin-label">Display order</span><input type="number" min="0" step="1" value={String(form.displayOrder ?? 0)} onChange={(event) => set("displayOrder", Number(event.target.value))} className="admin-input" /></label></div>
         <div className="flex flex-col-reverse gap-3 border-t border-[#e4ecef] pt-5 sm:flex-row sm:justify-end"><Button type="button" variant="secondary" onClick={onClose}>Cancel</Button><Button type="submit" disabled={busy}>{busy ? "Saving…" : record ? "Save changes" : "Add project"} <Check size={14} /></Button></div>

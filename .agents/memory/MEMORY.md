@@ -6,3 +6,4 @@
 - [Firebase auth state restoration](firebase-auth-state-restoration.md) — do not use a one-time initial auth promise as the current user after sign-in or sign-out.
 - [Firebase Admin project alignment](firebase-admin-project-alignment.md) — a bearer-token 401 after successful Firebase sign-in points to server project/config alignment, not missing frontend auth state.
 - [Imported local Firestore compatibility](imported-local-firestore.md) — keep local fallback query and write methods aligned with Firebase-backed route behavior.
+- [Imported catalog preservation](imported-catalog-preservation.md) — preserve imported records and apply requested priority through deterministic read-time sorting.
