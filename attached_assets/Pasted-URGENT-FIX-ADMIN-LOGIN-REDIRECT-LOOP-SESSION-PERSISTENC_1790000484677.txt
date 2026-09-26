@@ -1,0 +1,349 @@
+URGENT — FIX ADMIN LOGIN REDIRECT LOOP / SESSION PERSISTENCE
+
+The previous Firebase admin-access checking issue has been fixed.
+
+Now there is a new problem:
+
+When I enter the correct administrator email/password on:
+
+/admin/login
+
+the sign-in appears to process, but the admin dashboard does not remain open.
+
+It redirects/reloads back to the admin login page.
+
+After reloading the page, it is again showing the sign-in page.
+
+This indicates a problem with Firebase Auth session persistence, auth-state initialization, admin authorization timing, or the protected-route redirect logic.
+
+DO NOT redesign anything.
+DO NOT create another authentication system.
+DO NOT create another Firebase project.
+DO NOT change the admin credentials.
+DO NOT start Phase 2.
+DO NOT start Phase 3.
+
+Fix the existing authentication flow.
+
+==================================================
+1. TRACE THE COMPLETE LOGIN FLOW
+==================================================
+
+Inspect the actual code for:
+
+/admin/login
+/admin
+Firebase initialization
+Firebase Auth
+onAuthStateChanged
+protected routes
+admin authorization
+logout
+session restoration
+
+Trace this exact flow:
+
+User submits login
+→ signInWithEmailAndPassword()
+→ Firebase authenticated user
+→ Firebase auth state listener
+→ admin authorization check
+→ admin route
+→ dashboard
+
+Find exactly where the authenticated state is being lost or incorrectly interpreted.
+
+==================================================
+2. DO NOT REDIRECT BEFORE FIREBASE AUTH INITIALIZES
+==================================================
+
+There must be a proper auth loading state.
+
+The application must NOT assume:
+
+currentUser === null
+
+means the user is unauthenticated while Firebase is still restoring the existing session.
+
+Use the Firebase auth state listener correctly.
+
+The application should distinguish:
+
+INITIALIZING
+AUTHENTICATED
+UNAUTHENTICATED
+
+Do NOT immediately redirect to /admin/login while Firebase is still initializing.
+
+Example logical behavior:
+
+authLoading === true
+→ show loading state
+
+authLoading === false AND user === null
+→ redirect to /admin/login
+
+authLoading === false AND user exists
+→ perform admin authorization
+
+admin authorization successful
+→ show /admin
+
+==================================================
+3. FIX SESSION PERSISTENCE
+==================================================
+
+Use Firebase Auth's normal browser persistence.
+
+Verify that the login session persists across:
+
+- route changes
+- /admin navigation
+- page refresh
+- browser reload
+
+Do not store the Firebase password anywhere.
+
+Do not create a custom password/session system.
+
+Use Firebase Authentication as the source of truth.
+
+If the project explicitly configures persistence, verify it is correctly initialized before login.
+
+Do not create multiple Firebase Auth instances.
+
+==================================================
+4. CHECK FOR MULTIPLE FIREBASE INSTANCES
+==================================================
+
+Search the entire frontend codebase for:
+
+initializeApp(
+getAuth(
+initializeAuth(
+
+Make sure the application is not accidentally creating multiple Firebase app/auth instances.
+
+There should be one consistent Firebase application/auth initialization used by the admin login and protected routes.
+
+If multiple implementations exist, consolidate them safely without breaking existing functionality.
+
+==================================================
+5. CHECK ADMIN AUTHORIZATION TIMING
+==================================================
+
+After Firebase successfully authenticates the user:
+
+Wait for the authenticated Firebase user to be available.
+
+Then perform the admin authorization check.
+
+Do NOT do this:
+
+login
+→ immediately navigate to /admin
+→ /admin checks user before Firebase state is ready
+→ assumes no user
+→ redirects to /admin/login
+
+Instead:
+
+login
+→ Firebase confirms user
+→ auth state becomes authenticated
+→ admin authorization completes
+→ navigate/render /admin
+
+==================================================
+6. PREVENT LOGIN → ADMIN → LOGIN REDIRECT LOOP
+==================================================
+
+Inspect all route guards.
+
+Find every place that redirects to:
+
+/admin/login
+
+Make sure the redirect only happens when the user is genuinely unauthenticated or genuinely unauthorized.
+
+Do not redirect because an auth check is temporarily loading.
+
+Do not redirect because the admin Firestore/API request has not completed yet.
+
+Do not redirect because currentUser has not been restored yet.
+
+==================================================
+7. VERIFY SIGN-IN RESULT
+==================================================
+
+After signInWithEmailAndPassword():
+
+log/debug the following in development:
+
+- Firebase sign-in success
+- authenticated UID
+- authenticated email
+- auth state change
+- admin authorization result
+- navigation destination
+
+Do not log passwords or sensitive credentials.
+
+Confirm that the Firebase user returned from signInWithEmailAndPassword() is the same user received by onAuthStateChanged().
+
+==================================================
+8. CHECK ADMIN UID
+==================================================
+
+Use the actual Firebase UID of the configured administrator.
+
+Do NOT identify the admin using the password.
+
+Do NOT rely on a temporary frontend boolean.
+
+If admin authorization uses Firestore:
+
+Firebase Auth UID
+→ corresponding admin/user document
+→ role/admin verification
+
+Make sure the same UID is being used consistently.
+
+==================================================
+9. CHECK FIRESTORE / BACKEND FAILURE BEHAVIOR
+==================================================
+
+If the admin authorization request fails:
+
+Do not silently redirect to /admin/login.
+
+Instead distinguish:
+
+AUTHENTICATION FAILED
+ADMIN AUTHORIZATION FAILED
+NETWORK/API FAILED
+FIRESTORE PERMISSION FAILED
+
+Show an appropriate error.
+
+The login page should not appear again unless Firebase authentication actually indicates that the user is unauthenticated.
+
+==================================================
+10. CHECK RENDER PRODUCTION BUILD
+==================================================
+
+The issue occurs on:
+
+https://newnationaladvertising.com/admin/login
+
+Therefore test the production build.
+
+Do not only test the Replit preview.
+
+Verify:
+
+- Firebase environment variables exist at frontend build time
+- Firebase initializes correctly in production
+- Auth persistence works in production
+- /admin route works after login
+- browser refresh keeps the authenticated session
+
+==================================================
+11. IMPORTANT — SPA ROUTING
+==================================================
+
+The application is a React/Vite SPA hosted on Render.
+
+Preserve the existing Render SPA rewrite:
+
+/* → /index.html
+
+Do not remove it.
+
+Verify that direct navigation to:
+
+/admin
+/admin/login
+
+continues to work correctly.
+
+==================================================
+12. TEST THESE EXACT SCENARIOS
+==================================================
+
+TEST A:
+Open /admin/login
+→ login
+→ should reach /admin
+
+TEST B:
+After reaching /admin
+→ refresh browser
+→ should remain authenticated and remain on /admin
+
+TEST C:
+Open /admin in a new tab while already authenticated
+→ should open dashboard
+
+TEST D:
+Logout
+→ should return to /admin/login
+
+TEST E:
+After logout
+→ open /admin directly
+→ should redirect to /admin/login
+
+TEST F:
+Use an authenticated but unauthorized account
+→ should receive unauthorized state
+→ should NOT get stuck
+→ should NOT incorrectly appear as an admin
+
+TEST G:
+Close browser and reopen the website
+→ Firebase session should restore according to Firebase browser persistence
+→ admin should not be incorrectly logged out
+
+==================================================
+13. DO NOT BREAK CMS
+==================================================
+
+Preserve all existing Phase 1 work:
+
+- Products CRUD
+- Machines CRUD
+- Services CRUD
+- Website Content
+- Settings
+- Persistent image uploads
+- Quote/contact requests
+- Admin authorization
+- Firebase storage
+- Firestore
+- Backend API
+
+Only fix the authentication/session/route protection problem.
+
+==================================================
+14. FINAL VERIFICATION
+
+Run:
+
+- typecheck
+- production build
+- auth flow test
+- admin authorization test
+
+Then report:
+
+1. Exact root cause
+2. Files changed
+3. Firebase Auth initialization changes
+4. Session persistence changes
+5. Protected-route changes
+6. Admin authorization changes
+7. Production Render changes, if any
+
+Do not start Phase 2 or Phase 3.
+Do not generate images.

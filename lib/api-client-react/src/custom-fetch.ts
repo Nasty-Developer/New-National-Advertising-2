@@ -1,5 +1,6 @@
 export type CustomFetchOptions = RequestInit & {
   responseType?: "json" | "text" | "blob" | "auto";
+  timeoutMs?: number;
 };
 
 export type ErrorType<T = unknown> = ApiError<T>;
@@ -327,7 +328,13 @@ export async function customFetch<T = unknown>(
   options: CustomFetchOptions = {},
 ): Promise<T> {
   input = applyBaseUrl(input);
-  const { responseType = "auto", headers: headersInit, ...init } = options;
+  const {
+    responseType = "auto",
+    headers: headersInit,
+    timeoutMs,
+    signal: requestSignal,
+    ...init
+  } = options;
 
   const method = resolveMethod(input, init.method);
 
@@ -360,12 +367,39 @@ export async function customFetch<T = unknown>(
 
   const requestInfo = { method, url: resolveUrl(input) };
 
-  const response = await fetch(input, { ...init, method, headers });
+  const timeoutController =
+    timeoutMs && timeoutMs > 0 ? new AbortController() : null;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  let removeAbortListener: (() => void) | undefined;
 
-  if (!response.ok) {
-    const errorData = await parseErrorBody(response, method);
-    throw new ApiError(response, errorData, requestInfo);
+  if (timeoutController) {
+    const abortFromRequest = () => timeoutController.abort();
+    if (requestSignal?.aborted) {
+      timeoutController.abort();
+    } else {
+      requestSignal?.addEventListener("abort", abortFromRequest, { once: true });
+      removeAbortListener = () =>
+        requestSignal?.removeEventListener("abort", abortFromRequest);
+    }
+    timeoutId = setTimeout(() => timeoutController.abort(), timeoutMs);
   }
 
-  return (await parseSuccessBody(response, responseType, requestInfo)) as T;
+  try {
+    const response = await fetch(input, {
+      ...init,
+      method,
+      headers,
+      signal: timeoutController?.signal ?? requestSignal,
+    });
+
+    if (!response.ok) {
+      const errorData = await parseErrorBody(response, method);
+      throw new ApiError(response, errorData, requestInfo);
+    }
+
+    return (await parseSuccessBody(response, responseType, requestInfo)) as T;
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
+    removeAbortListener?.();
+  }
 }

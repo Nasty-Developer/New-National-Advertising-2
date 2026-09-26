@@ -1,0 +1,78 @@
+IMPORTANT — FINAL IMAGE UPLOAD SYSTEM CHECK
+
+I am now going to manually upload ALL CATEGORY IMAGES and PRODUCT IMAGES from the Admin Panel.
+
+Before I start uploading, make sure the complete image-management system is production-ready and does NOT create bugs.
+
+CATEGORY IMAGE UPLOAD:
+For every category, Admin Panel must allow:
+- Select category
+- Upload image
+- Preview image
+- Save image
+- Replace image
+- Remove image
+- Persist image after refresh
+
+PRODUCT IMAGE UPLOAD:
+For every product, Admin Panel must allow:
+- Select product
+- Upload image
+- Preview image
+- Save image
+- Replace image
+- Remove image
+- Persist image after refresh
+
+IMAGE STORAGE FLOW:
+
+Admin Panel
+→ Firebase Storage
+→ Permanent image URL
+→ Firestore
+→ Public Products Page
+
+IMPORTANT:
+- Do NOT use blob URLs as permanent image URLs.
+- Do NOT use base64.
+- Do NOT use temporary/local file paths.
+- Do NOT silently fail uploads.
+- Do NOT overwrite another product's image.
+- Do NOT assign an image to the wrong category/product.
+- Do NOT break existing products when uploading an image.
+- Do NOT create duplicate products/categories.
+- Do NOT require frontend code changes every time I upload an image.
+
+CATEGORY IMAGE:
+The uploaded category image must appear on the corresponding category card on the public Products page.
+
+PRODUCT IMAGE:
+The uploaded product image must appear on the corresponding product card inside its category.
+
+IMAGE REPLACEMENT:
+If I replace an existing image:
+→ old image should no longer be displayed
+→ new image should appear correctly
+→ Firestore should contain the correct new image URL.
+
+REFRESH TEST:
+After uploading:
+1. Refresh Admin Panel.
+2. Refresh Products page.
+3. Log out and log back in.
+4. Verify the images are still there.
+5. Verify the correct category/product still has the correct image.
+
+IMPORTANT:
+Do NOT modify product names, categories, or the existing 202-product catalog while fixing the image system.
+
+Do not generate AI images.
+I will manually upload the images.
+
+Before reporting this as complete, test BOTH:
+- Category image upload
+- Product image upload
+
+Make sure there are no console errors, API errors, Firebase Storage errors, Firestore errors, broken image URLs, or incorrect product/category mappings.
+
+The Admin Panel must be reliable enough for me to upload all category and product images without manually fixing the database afterward.

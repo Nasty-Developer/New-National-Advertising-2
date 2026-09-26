@@ -1,0 +1,76 @@
+URGENT PRODUCTION FIX — FIREBASE ADMIN LOGIN
+
+The live website at:
+
+https://newnationaladvertising.com/admin/login
+
+is showing:
+
+Firebase: Error (auth/configuration-not-found)
+
+The frontend loads correctly, but Firebase Authentication fails during initialization.
+
+IMPORTANT:
+Do NOT create a new Firebase project.
+Do NOT replace the existing authentication architecture.
+Do NOT remove the existing admin authentication.
+Do NOT hard-code Firebase credentials into source code.
+
+The existing Firebase project is:
+
+projectId: newnationaladv
+
+The Firebase Web configuration already exists and must be used.
+
+FIRST inspect the current implementation and determine exactly how Firebase is initialized.
+
+Check:
+
+- Firebase initialization file
+- Firebase Auth initialization
+- Vite environment variable names
+- frontend environment variables
+- Render environment variables
+- production build configuration
+- admin login authentication flow
+
+The live frontend is hosted on Render, so make sure the required VITE_* Firebase environment variables are configured in the Render Static Site environment.
+
+IMPORTANT:
+Replit Secrets and Render environment variables are separate.
+Do not assume that a value available in Replit is automatically available on Render.
+
+Make sure all required Firebase Web configuration values are available to the production frontend at build time.
+
+Required Firebase configuration fields include:
+
+- apiKey
+- authDomain
+- projectId
+- storageBucket
+- messagingSenderId
+- appId
+- measurementId if the current implementation uses it
+
+Use environment variables rather than hard-coding credentials.
+
+After fixing the environment configuration:
+
+1. Run the frontend build.
+2. Verify Firebase initializes without errors.
+3. Verify Firebase Auth initializes.
+4. Verify /admin/login works in production.
+5. Verify an authorized admin can sign in.
+6. Verify unauthorized users are still blocked.
+7. Verify admin routing still works.
+8. Verify no Firebase configuration values are accidentally exposed through server-only environment variables incorrectly.
+9. Verify the Render deployment uses the corrected environment variables.
+10. Do not change unrelated Phase 1 CMS functionality.
+
+Also inspect whether Firebase Authentication itself is enabled for the existing Firebase project and whether the Email/Password provider required by the current login implementation is enabled.
+
+Do not start Phase 2 or Phase 3.
+
+Do not redesign anything.
+
+Report the exact root cause before making unrelated changes.

@@ -1,0 +1,81 @@
+STOP and diagnose the current Machines issue before making any more changes.
+
+The production Admin Panel at:
+
+https://newnationaladvertising.com/admin
+
+has a Machines section that is stuck showing blank loading skeletons. See the attached screenshot.
+
+Also, the public production website deployed on Render is not showing the machine images.
+
+IMPORTANT:
+Do NOT continue the logo task.
+Do NOT start the Cloudinary migration yet.
+Do NOT change Firebase Storage.
+Do NOT change Firebase Authentication.
+Do NOT change DNS.
+Do NOT change Render environment variables.
+Do NOT delete or modify Firestore data.
+
+First determine whether there are TWO separate problems:
+
+A) Machine DATA is not loading in the Admin Panel
+B) Machine IMAGE URLs are not loading on the website
+
+PRODUCTION DIAGNOSIS:
+
+1. Inspect the Machines admin page implementation.
+2. Identify the exact API/Firestore request used to load machines.
+3. Check the browser Network tab for the Machines request.
+4. Check the browser Console for errors.
+5. Determine the HTTP status of the machine-data request:
+   - 200
+   - 401
+   - 403
+   - 404
+   - 500
+   - timeout
+   - CORS
+   - Firebase/Firestore error
+
+6. Inspect the backend route/service responsible for Machines.
+7. Verify that production is using the correct API URL.
+8. Verify that the authenticated admin token is being accepted.
+9. Verify that the Firestore collection containing Machines is accessible.
+10. Verify that existing machine documents actually exist and contain their expected fields.
+
+For images:
+
+11. Inspect the image field stored on existing machine documents.
+12. Determine whether those image fields currently contain:
+   - Firebase Storage URLs
+   - Firebase Storage object paths
+   - temporary signed URLs
+   - Cloudinary URLs
+   - missing/null values
+
+13. Do NOT change the existing machine image data yet.
+
+IMPORTANT:
+We already confirmed that Firebase Storage is unavailable for this Firebase project while it is on the Spark plan, and the Firebase Storage page asks for the project to be upgraded for Storage.
+
+Therefore, do not attempt to "fix" the missing images by making Firebase Storage public or changing Storage Rules.
+
+The intended next architecture is Cloudinary for image storage, but do not implement that migration during this diagnostic step.
+
+REPORT ONLY FIRST:
+
+A) Why the Machines admin page is stuck loading
+B) Exact API/Firestore request that is failing, if any
+C) HTTP status/error
+D) Whether machine Firestore data exists
+E) What image URLs/paths the machine records currently contain
+F) Whether the data-loading problem and image-loading problem are separate
+
+Do not make unrelated code changes.
+
+If the machine API/data request is failing, fix ONLY that data-loading issue after identifying the exact root cause.
+
+Then run the production build/typecheck.
+
+Do not modify the existing machine image records.

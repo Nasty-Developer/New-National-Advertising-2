@@ -1,0 +1,229 @@
+I HAVE ATTACHED THE ACTUAL NEW NATIONAL ADVERTISING PRODUCT CATALOG PDF TO THIS TASK.
+
+IMPORTANT:
+The PDF attached to THIS CURRENT TASK is the SOURCE OF TRUTH.
+
+Do NOT search for another PDF.
+Do NOT search for another Firebase project.
+Do NOT search for the images in an existing Firebase Storage bucket.
+Do NOT use the old 134-byte Git LFS ZIP pointers.
+Do NOT assume the source images are missing.
+
+The product images and product information must be extracted directly from the ACTUAL PDF I have attached here.
+
+==================================================
+STEP 1 — ANALYZE THE ATTACHED PDF FIRST
+==================================================
+
+Before modifying ANY production data:
+
+1. Open and inspect the ENTIRE attached PDF.
+2. Process every page.
+3. Identify every actual product and its corresponding product image.
+4. Extract the product name from:
+   - visible text inside the image
+   - PDF text
+   - filename/title when available
+5. Analyze the actual visual content of each product image.
+6. Correctly match each image to its product.
+7. Do NOT randomly assign images.
+
+There should be approximately 75 product images/products.
+
+IMPORTANT:
+Do NOT stop after processing only part of the PDF.
+
+Process the COMPLETE PDF.
+
+==================================================
+STEP 2 — VERIFY THE SOURCE
+==================================================
+
+Before changing Firestore or Firebase Storage, report internally:
+
+- Total product images found
+- Total product names identified
+- Total readable images
+- Total unreadable/missing images
+- Exact products whose source image is genuinely missing
+
+Expected source count: approximately 75.
+
+If the PDF contains 75 valid product images, process all 75.
+
+==================================================
+STEP 3 — MATCH WITH EXISTING PRODUCTS
+==================================================
+
+Inspect the EXISTING Products collection.
+
+For every product identified from the PDF:
+
+IF PRODUCT ALREADY EXISTS:
+→ Update the existing product with the correct PDF image.
+→ DO NOT create a duplicate.
+
+IF PRODUCT DOES NOT EXIST:
+→ Create it ONLY if the PDF clearly identifies it as an actual product.
+
+DO NOT create duplicate products because of different spellings or filenames.
+
+Use the existing Products system.
+
+DO NOT create a second Products collection/system.
+
+==================================================
+STEP 4 — PRODUCT IMAGES
+==================================================
+
+For every source image:
+
+PDF
+↓
+Extract actual image
+↓
+Correct product match
+↓
+Upload to EXISTING production Firebase Storage
+↓
+Save production Storage URL/path in EXISTING Firestore product record
+↓
+Public Products page displays the image
+
+Do NOT use:
+
+- local-only paths
+- blob URLs
+- temporary URLs
+- base64-only storage
+- Replit-only storage
+- placeholder images
+
+The actual PDF images must be used.
+
+==================================================
+STEP 5 — ADMIN PANEL
+==================================================
+
+Every imported product image MUST remain editable from the existing Admin Panel.
+
+Admin must be able to:
+
+- Replace product image
+- Upload a new product image
+- Change product name
+- Change category
+- Change product details
+- Save changes
+- Replace/delete the current image where supported
+
+The production flow must work:
+
+Admin Panel
+↓
+Production API
+↓
+Firestore
+↓
+Firebase Storage
+↓
+Public Website
+
+If an administrator replaces a product image, the new image must appear on the public Products page.
+
+DO NOT hard-code the PDF images into the frontend.
+
+==================================================
+STEP 6 — MISSING 3–4 IMAGES
+==================================================
+
+Only if the PDF genuinely does NOT contain a usable image for approximately 3–4 identified products:
+
+1. Identify those exact products.
+2. Generate a professional, realistic AI product image for ONLY those products.
+3. Make the generated image accurately represent that product.
+4. Upload it to the EXISTING production Firebase Storage.
+5. Save it in the existing Firestore product record.
+6. Make it fully replaceable from Admin Panel.
+
+DO NOT generate AI images for products that already have a suitable image in the PDF.
+
+DO NOT use random filler images.
+
+==================================================
+STEP 7 — PUBLIC WEBSITE
+==================================================
+
+Verify that every imported product image actually loads on the public Products page.
+
+Check:
+
+- Correct product
+- Correct image
+- No broken image
+- No incorrect image association
+- No temporary/local URL
+- Responsive display
+- Production URL works
+
+==================================================
+STEP 8 — END-TO-END ADMIN TEST
+==================================================
+
+After importing the products, test at least one real product:
+
+1. Open Admin Panel.
+2. Open an imported product.
+3. Replace its image.
+4. Save.
+5. Refresh Admin Panel.
+6. Confirm the new image remains.
+7. Open the public Products page.
+8. Confirm the new image appears there.
+
+This proves:
+
+Admin Panel
+→ Firestore/Storage
+→ Public Website
+
+actually works.
+
+==================================================
+CRITICAL RULES
+==================================================
+
+DO NOT:
+
+- Create duplicate products
+- Create a second Products system
+- Create a second Firebase project
+- Create a second Firestore database
+- Search for another Firebase bucket containing the source images
+- Use the old Git LFS ZIP pointers
+- Use placeholder images
+- Skip images
+- Process only the first portion of the PDF
+- Modify unrelated website sections
+
+The ATTACHED PDF in THIS TASK is the source.
+
+==================================================
+FINAL VERIFICATION
+==================================================
+
+Before declaring the task complete, verify and report:
+
+- Total product images found in PDF
+- Total products identified
+- Total existing products updated
+- Total new products created
+- Total duplicate products created: MUST BE 0
+- Total source images uploaded to Firebase Storage
+- Total AI-generated images
+- Total products with working production image URLs
+- Total products successfully displaying images on the public website
+
+The expected source count is approximately 75.
+
+DO NOT say "completed" until the entire attached PDF has been processed and the image → product → Firebase → Admin Panel → public website flow has been verified.

@@ -1,0 +1,575 @@
+IMPORTANT DESIGN REFINEMENT:
+
+I have reviewed the current website and the design is clean, but the color usage is TOO LIMITED.
+
+The website currently feels heavily blue, white and grey.
+
+I want you to improve the visual design by introducing MORE COLOR while keeping the website:
+
+- professional
+- minimal
+- soft
+- premium
+- elegant
+- trustworthy
+- modern
+
+DO NOT redesign the website completely.
+
+KEEP the current overall structure and layout.
+
+Instead, significantly improve the COLOR SYSTEM, VISUAL DEPTH and ART DIRECTION.
+
+============================================================
+MAIN COLOR PROBLEM
+============================================================
+
+The current website relies too heavily on:
+
+- white
+- light grey
+- dark navy
+- blue
+
+This makes the website feel somewhat flat and repetitive.
+
+New National Advertising is a PRINTING and ADVERTISING company.
+
+Printing naturally gives us an opportunity to use:
+
+- cyan
+- magenta
+- yellow
+- blue
+- red
+- orange
+- green
+
+But these colors must be used intelligently.
+
+DO NOT turn the website into a rainbow website.
+
+The base should remain elegant and professional.
+
+============================================================
+NEW COLOR STRATEGY
+============================================================
+
+Keep the main foundation:
+
+Warm White:
+#FFFFFF
+
+Soft Background:
+#F7F8FA
+
+Light Grey:
+#EEF1F4
+
+Dark Navy:
+#14213D
+
+Primary Blue:
+#1769AA
+
+Then introduce secondary accent colors:
+
+CYAN:
+#00A8C6
+
+MAGENTA:
+#D9468C
+
+YELLOW:
+#F2C94C
+
+CORAL:
+#F26B5B
+
+GREEN:
+#3BA776
+
+ORANGE:
+#F2994A
+
+IMPORTANT:
+
+Do NOT use all these colors equally.
+
+Use them strategically.
+
+Blue should remain the primary brand accent.
+
+The other colors should appear in:
+
+- service imagery
+- small icons
+- decorative details
+- print samples
+- portfolio images
+- badges
+- category indicators
+- hover states
+- small background shapes
+- CMYK-inspired elements
+
+============================================================
+HERO SECTION
+============================================================
+
+The current hero is too monochromatic.
+
+Keep the same layout.
+
+Improve the hero by introducing subtle printing-inspired colors.
+
+Add a small CMYK-inspired decorative element near the hero visual.
+
+For example:
+
+C
+M
+Y
+K
+
+using four small overlapping circles or print-registration shapes.
+
+Use:
+
+Cyan
+Magenta
+Yellow
+Black/Navy
+
+Keep it subtle and elegant.
+
+The hero image itself should contain more natural colors:
+
+- printed paper
+- colorful brochures
+- color swatches
+- posters
+- signage
+- banners
+- packaging
+
+The image should feel like a REAL printing studio.
+
+Do not make everything blue.
+
+============================================================
+HERO TYPOGRAPHY
+============================================================
+
+Keep:
+
+New National
+Advertising
+
+But allow a subtle color treatment.
+
+For example:
+
+"New National"
+
+Dark Navy
+
+"Advertising"
+
+Primary Blue
+
+Then add a tiny colored accent line or print-registration detail.
+
+Do not use gradients in the main heading.
+
+============================================================
+SERVICE CARDS
+============================================================
+
+This is one of the biggest areas that needs improvement.
+
+Currently the cards feel too white and similar.
+
+Keep the cards white and professional.
+
+But give every service category a subtle visual identity.
+
+Example:
+
+SOLVENT FLEX
+Accent: Cyan
+
+OFFSET PRINTING
+Accent: Blue
+
+SCREEN PRINTING
+Accent: Magenta
+
+DIGITAL PRINTING
+Accent: Orange
+
+SIGN BOARDS
+Accent: Yellow
+
+GRAPHICS DESIGN
+Accent: Green
+
+BANNER PRINTING
+Accent: Coral
+
+Do NOT make the entire cards these colors.
+
+Instead use:
+
+- small colored icon
+- colored category line
+- tiny colored dot
+- subtle colored hover background
+- colored arrow
+- image with natural colors
+
+The result should still feel premium.
+
+============================================================
+SERVICE ICONS
+============================================================
+
+Use clean modern outline icons.
+
+Give each service a subtle accent color.
+
+Example:
+
+Solvent Flex → Cyan
+Offset → Blue
+Screen Print → Magenta
+Digital → Orange
+Sign Boards → Yellow
+Graphics → Green
+
+Keep icons small and elegant.
+
+No giant colorful illustrations.
+
+============================================================
+SERVICE HOVER
+============================================================
+
+When hovering a service card:
+
+- image gently zooms
+- card rises slightly
+- accent color becomes more visible
+- arrow changes to the service accent
+- subtle colored background glow/tint appears
+
+Example:
+
+Digital Printing card:
+very subtle warm orange tint.
+
+Graphics Design:
+very subtle green tint.
+
+Screen Printing:
+very subtle magenta tint.
+
+Keep these effects extremely soft.
+
+============================================================
+SECTION BACKGROUNDS
+============================================================
+
+Do not make every section white.
+
+Create visual rhythm.
+
+Use:
+
+SECTION 1:
+Soft white
+
+SECTION 2:
+Very light cool grey
+
+SECTION 3:
+White
+
+SECTION 4:
+Very subtle blue-tinted background
+
+SECTION 5:
+White
+
+SECTION 6:
+Soft warm grey
+
+SECTION 7:
+White
+
+This will prevent the website from looking like one giant white canvas.
+
+============================================================
+PRINTING COLOR VISUAL
+============================================================
+
+Add a beautiful small section inspired by actual printing.
+
+Title:
+
+COLOR THAT
+BRINGS IDEAS TO LIFE.
+
+Show a professional visual containing:
+
+- CMYK color swatches
+- printed cards
+- paper samples
+- brochures
+- color strips
+- ink/print details
+
+Use cyan, magenta, yellow and black naturally.
+
+This should be one of the most visually colorful sections.
+
+Still keep the surrounding UI minimal.
+
+============================================================
+OUR WORK
+============================================================
+
+This section should contain significantly more natural color.
+
+Do not make every portfolio image blue.
+
+Use visually varied projects:
+
+- colorful banners
+- restaurant menus
+- storefront signage
+- business cards
+- packaging
+- posters
+- apparel
+- brochures
+
+Use realistic print colors.
+
+The UI around the images should remain minimal.
+
+This creates the contrast:
+
+MINIMAL UI
++
+COLORFUL PRINT WORK
+
+That is exactly what we want.
+
+============================================================
+GRAPHICS DESIGN SECTION
+============================================================
+
+Make this section more colorful.
+
+Show floating design samples such as:
+
+- logo
+- business card
+- poster
+- packaging
+- social media design
+- menu
+- brochure
+
+Use different accent colors.
+
+The surrounding background should remain soft white.
+
+The designs themselves provide the color.
+
+============================================================
+SIGNAGE SECTION
+============================================================
+
+Signage naturally allows more color.
+
+Show examples of:
+
+- LED signage
+- acrylic letters
+- illuminated boards
+- storefront branding
+- colorful signs
+
+Use realistic lighting and colors.
+
+Do not make the entire section neon.
+
+Keep the UI professional.
+
+============================================================
+WHY CHOOSE US
+============================================================
+
+Keep the clean cards.
+
+But introduce subtle colored icons:
+
+Quality Printing → Blue
+Wide Range → Cyan
+Custom Solutions → Green
+Reliable Service → Orange
+
+Use only small colored details.
+
+============================================================
+PROCESS SECTION
+============================================================
+
+Use four subtle accent colors.
+
+01 DISCUSS
+Blue
+
+02 DESIGN
+Magenta
+
+03 PRINT
+Yellow
+
+04 DELIVER
+Green
+
+Use small circles/icons in these colors.
+
+The connecting line can remain light grey.
+
+============================================================
+BUTTONS
+============================================================
+
+Keep the primary CTA blue.
+
+Do NOT make every button a different color.
+
+Primary:
+
+Blue
+
+Secondary:
+
+White with blue border
+
+Hover:
+
+slightly darker blue
+
+Small service arrows can use their category accent color.
+
+============================================================
+DECORATIVE ELEMENTS
+============================================================
+
+Introduce very subtle printing-inspired graphics throughout the page:
+
+- crop marks
+- registration marks
+- CMYK dots
+- tiny color strips
+- paper edges
+- subtle circles
+- thin lines
+- small geometric shapes
+
+These should feel like details from a professional printing studio.
+
+They should NOT look like random decoration.
+
+Use them sparingly.
+
+============================================================
+IMPORTANT BALANCE
+============================================================
+
+The goal is NOT:
+
+"MAKE EVERYTHING COLORFUL."
+
+The goal is:
+
+"MAKE THE WEBSITE FEEL MORE ALIVE THROUGH COLOR."
+
+The interface should remain:
+
+70–80% neutral
+20–30% color
+
+approximately.
+
+Color should come mainly from:
+
+- imagery
+- service accents
+- print samples
+- portfolio
+- subtle decorative elements
+
+NOT from huge colored backgrounds.
+
+============================================================
+KEEP THE PREMIUM FEEL
+============================================================
+
+Do NOT change the website into:
+
+- childish
+- playful
+- cartoonish
+- overly colorful
+- rainbow
+- neon
+- gaming style
+- cheap template
+- overly saturated
+
+It should still feel like a serious professional business.
+
+Think:
+
+APPLE-LEVEL SIMPLICITY
++
+MODERN PRINT STUDIO
++
+SUBTLE CMYK COLOR
++
+PREMIUM BUSINESS WEBSITE
+
+============================================================
+FINAL VISUAL TARGET
+============================================================
+
+The current website is:
+
+CLEAN ✓
+PROFESSIONAL ✓
+MINIMAL ✓
+SOFT ✓
+
+But it needs:
+
+MORE VISUAL ENERGY
+MORE COLOR
+MORE DEPTH
+MORE PRINTING CHARACTER
+MORE VISUAL VARIETY
+
+Improve those areas without destroying the existing structure.
+
+After making the changes, inspect the complete website and make sure the color distribution feels balanced.
+
+The result should immediately communicate:
+
+"THIS IS A PRINTING & ADVERTISING COMPANY."
+
+without sacrificing the premium professional aesthetic.

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>New National Advertising | Printing, Signage & Design in Mumbai</title>
+    <meta name="description" content="New National Advertising provides printing, signage, digital printing, flex printing, graphic design and advertising solutions in Mumbai." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0e2742" />
+    <link rel="canonical" href="https://www.newnationaladvertising.com/" />
+    <meta property="og:title" content="New National Advertising | Printing, Signage & Design in Mumbai" />
+    <meta property="og:description" content="Professional printing, signage and graphic design solutions for businesses, brands and individuals in Mumbai." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="New National Advertising | Printing, Signage & Design in Mumbai" />
+    <meta name="twitter:description" content="Printing, signage and graphic design solutions in Mumbai." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #fbfcfd;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 420ms ease, visibility 420ms ease;
+      }
+      #initial-loader.initial-loader--exiting {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .initial-loader__inner {
+        display: flex;
+        width: min(240px, calc(100vw - 48px));
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+      .initial-loader__logo {
+        width: 168px;
+        height: auto;
+        object-fit: contain;
+        animation: initial-loader-breathe 2200ms ease-in-out infinite;
+      }
+      .initial-loader__label {
+        color: #1669aa;
+        font: 700 9px/1.2 Arial, sans-serif;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+      .initial-loader__progress {
+        width: 96px;
+        height: 2px;
+        overflow: hidden;
+        background: #dce9f0;
+      }
+      .initial-loader__progress::after {
+        display: block;
+        width: 42%;
+        height: 100%;
+        background: linear-gradient(90deg, #00a8c6, #1669aa);
+        content: "";
+        animation: initial-loader-progress 1500ms ease-in-out infinite;
+      }
+      @keyframes initial-loader-breathe {
+        0%, 100% { opacity: 0.82; transform: scale(0.97); }
+        50% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes initial-loader-progress {
+        0% { transform: translateX(-120%); }
+        55%, 100% { transform: translateX(310%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #initial-loader { transition-duration: 1ms; }
+        .initial-loader__logo,
+        .initial-loader__progress::after { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="initial-loader" role="status" aria-live="polite" aria-label="Loading New National Advertising">
+        <div class="initial-loader__inner">
+          <img class="initial-loader__logo" src="/new-national-advertising-logo.png" alt="" />
+          <span class="initial-loader__label">New National Advertising</span>
+          <span class="initial-loader__progress" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

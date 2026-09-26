@@ -1,0 +1,50 @@
+2026-09-24T21:11:17.285221227Z 
+2026-09-24T21:11:17.604575685Z 
+2026-09-24T21:11:17.604592627Z > workspace@0.0.0 typecheck:libs /opt/render/project/src
+2026-09-24T21:11:17.604594885Z > tsc --build
+2026-09-24T21:11:17.604596237Z 
+2026-09-24T21:11:32.173083572Z 
+2026-09-24T21:11:32.173094578Z > @workspace/api-server@0.0.0 build /opt/render/project/src/artifacts/api-server
+2026-09-24T21:11:32.173096486Z > node ./build.mjs
+2026-09-24T21:11:32.17309799Z 
+2026-09-24T21:11:32.514774354Z 
+2026-09-24T21:11:32.51479305Z   dist/index.mjs                       1.5mb ⚠️
+2026-09-24T21:11:32.51479745Z   dist/pino-worker.mjs               153.5kb
+2026-09-24T21:11:32.514799833Z   dist/pino-file.mjs                 142.1kb
+2026-09-24T21:11:32.514802217Z   dist/pino-pretty.mjs               115.3kb
+2026-09-24T21:11:32.514804675Z   dist/thread-stream-worker.mjs        7.4kb
+2026-09-24T21:11:32.514806831Z   dist/index.mjs.map                   2.4mb
+2026-09-24T21:11:32.514809503Z   dist/pino-worker.mjs.map           256.9kb
+2026-09-24T21:11:32.514811916Z   dist/pino-file.mjs.map             229.0kb
+2026-09-24T21:11:32.514814303Z   dist/pino-pretty.mjs.map           209.5kb
+2026-09-24T21:11:32.514816237Z   dist/thread-stream-worker.mjs.map   12.0kb
+2026-09-24T21:11:32.514818149Z 
+2026-09-24T21:11:32.514820163Z ⚡ Done in 295ms
+2026-09-24T21:11:32.840431889Z 
+2026-09-24T21:11:32.840460533Z > @workspace/new-national-advertising@0.0.0 build /opt/render/project/src/artifacts/new-national-advertising
+2026-09-24T21:11:32.840462859Z > vite build --config vite.config.ts
+2026-09-24T21:11:32.840464159Z 
+2026-09-24T21:11:33.080298792Z vite v7.3.6 building client environment for production...
+2026-09-24T21:11:33.142250708Z transforming...
+2026-09-24T21:11:33.995706115Z src/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+2026-09-24T21:11:35.809870562Z ✓ 2189 modules transformed.
+2026-09-24T21:11:36.268581431Z rendering chunks...
+2026-09-24T21:11:36.278805704Z computing gzip size...
+2026-09-24T21:11:36.300062043Z dist/public/index.html                   1.97 kB │ gzip:   0.71 kB
+2026-09-24T21:11:36.300088946Z dist/public/assets/index-iuEugoCY.css  139.52 kB │ gzip:  24.31 kB
+2026-09-24T21:11:36.300118901Z dist/public/assets/index-BFeMQac5.js   781.28 kB │ gzip: 227.59 kB
+2026-09-24T21:11:36.300167727Z 
+2026-09-24T21:11:36.300173039Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-09-24T21:11:36.300175348Z - Using dynamic import() to code-split the application
+2026-09-24T21:11:36.30017766Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-09-24T21:11:36.300179192Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2026-09-24T21:11:36.300359161Z ✓ built in 3.20s
+2026-09-24T21:11:37.802147234Z ==> Uploading build...
+2026-09-24T21:11:48.487871411Z ==> Uploaded in 7.4s. Compression took 3.2s
+2026-09-24T21:11:48.49153476Z ==> Build successful 🎉
+2026-09-24T21:11:50.102818453Z ==> Deploying...
+2026-09-24T21:11:50.251342391Z ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+2026-09-24T21:12:16.922632798Z ==> Running 'node artifacts/api-server/dist/index.mjs'
+2026-09-24T21:12:20.931789042Z {"level":30,"time":1790284340930,"pid":70,"hostname":"srv-daqjq7g473hc738e0osg-hibernate-6c6dcb87b9-xcxrb","port":10000,"msg":"Server listening"}
+2026-09-24T21:12:21.542320236Z {"level":30,"time":1790284341541,"pid":70,"hostname":"srv-daqjq7g473hc738e0osg-hibernate-6c6dcb87b9-xcxrb","req":{"id":1,"method":"HEAD","url":"/"},"res":{"statusCode":200},"responseTime":4,"msg":"request completed"}
+2026-09-24T21:12:32.403725973Z ==> Your service is live 🎉
