@@ -201,7 +201,7 @@ const machines = [
     applications: ['Precision Laser Cutting', 'Laser Engraving', 'Custom Lettering & Shapes', 'Signage Components'],
   },
   {
-    name: 'Axon',
+    name: 'Epson SureColor S80670',
     category: 'Large-Format Printing',
     description: 'A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.',
     image: '/machine-epson-surecolor-s80670.png',

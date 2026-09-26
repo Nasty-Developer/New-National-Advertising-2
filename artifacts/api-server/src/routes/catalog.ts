@@ -71,7 +71,7 @@ const serviceBody = z.object({
 const machineSeed = [
   {
     id: "epson-surecolor-s80670",
-    name: "Axon",
+    name: "Epson SureColor S80670",
     slug: "axon",
     category: "Large-Format Printing",
     shortDescription: "Professional large-format printing for detailed, vibrant advertising output.",

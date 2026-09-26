@@ -9,3 +9,4 @@
 - [Imported local Firestore compatibility](imported-local-firestore.md) — keep local fallback query and write methods aligned with Firebase-backed route behavior.
 - [Imported catalog preservation](imported-catalog-preservation.md) — preserve imported records and apply requested priority through deterministic read-time sorting.
 - [Route loading fallbacks](route-loading-fallbacks.md) — removing a global startup gate requires explicit loading or safe fallback states for API-backed detail routes.
+- [Workspace asset imports](workspace-asset-imports.md) — package-scoped pnpm commands run from the package directory, so resolve attached assets from the workspace root.
