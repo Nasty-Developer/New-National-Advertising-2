@@ -85,7 +85,7 @@ const machineSeed = [
   },
   {
     id: "wide-format-roll-laminator",
-    name: "Axel Z",
+    name: "Excel Z (Lamination Machine)",
     slug: "axel-z-wide-format-roll-laminator",
     category: "Wide Format Roll Laminator",
     shortDescription: "Controlled roll laminating for advertising, signage and display graphics.",
@@ -99,7 +99,7 @@ const machineSeed = [
   },
   {
     id: "large-format-printing-machine",
-    name: "512i Konica Flex Machine",
+    name: "514i Konica Flex Machine",
     slug: "512i-konica-flex-machine",
     category: "Wide-Format Production",
     shortDescription: "Roll-to-roll production for banners, signage graphics and advertising materials.",
@@ -260,9 +260,9 @@ async function publicDocuments(kind: "machines" | "services") {
 
 const machinePriority = [
   ["laser", "co2"],
-  ["axon"],
-  ["512i", "konica", "flex"],
-  ["axel", "z"],
+  ["epson", "surecolor", "s80670"],
+  ["514i", "konica", "flex"],
+  ["excel", "z", "lamination", "machine"],
   ["konica", "minolta"],
 ];
 

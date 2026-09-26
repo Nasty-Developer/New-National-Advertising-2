@@ -212,7 +212,7 @@ const machines = [
     ],
   },
   {
-    name: '512i Konica Flex Machine',
+    name: '514i Konica Flex Machine',
     category: 'Wide-Format Production',
     description: 'A professional wide-format printing machine used for producing large printed graphics and advertising materials. The machine shown is actively handling roll media and producing large-format printed output, making it suitable for applications such as banners, signage graphics and other large visual advertising materials.',
     image: '/machine-large-format-printer.png',
@@ -224,7 +224,7 @@ const machines = [
     ],
   },
   {
-    name: 'Axel Z',
+    name: 'Excel Z (Lamination Machine)',
     category: 'Wide Format Roll Laminator',
     description: 'A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.',
     image: '/machine-wide-format-laminator.png',
@@ -234,6 +234,14 @@ const machines = [
       'Advertising Finishing',
       'Signage Finishing',
     ],
+  },
+  {
+    name: 'Konica Minolta Bizhub',
+    category: 'Digital Printing Machine',
+    description: 'The Konica Minolta bizhub C6000 is a professional digital printing machine designed for reliable, high-quality production of business cards, brochures, catalogues, flyers and other commercial print materials.',
+    image: '/machine-konica-minolta-bizhub-c6000.png',
+    imageAlt: 'Konica Minolta bizhub C6000 digital printing machine',
+    applications: ['Digital Printing', 'Business Cards', 'Brochures & Catalogues', 'Flyers & Marketing Materials'],
   },
 ];
 
