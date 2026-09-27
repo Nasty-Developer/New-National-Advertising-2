@@ -1,7 +1,7 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v5";
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v7";
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Bill books": "/product-images/paper-corporate/bill-books.png",
@@ -33,6 +33,37 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Spot-UV cards": "/product-images/paper-corporate/spot-uv-cards.jpg",
   "Thread-bound notebooks": "/product-images/paper-corporate/thread-bound-notebooks.jpg",
   "Visiting cards": "/product-images/paper-corporate/visiting-cards.jpg",
+  "Acrylic wedding cards": "/product-images/events-wedding/acrylic-wedding-cards.jpg",
+  "Baby-shower cards": "/product-images/events-wedding/baby-shower-cards.jpg",
+  "Birth announcement cards": "/product-images/events-wedding/birth-announcement-cards.jpg",
+  "Bridal-shower invitations": "/product-images/events-wedding/bridal-shower-invitations.jpg",
+  "Designer wedding cards": "/product-images/events-wedding/designer-wedding-cards.jpg",
+  "Engagement invitations": "/product-images/events-wedding/engagement-invitations.jpg",
+  "Event badges": "/product-images/events-wedding/event-badges.jpg",
+  "Event ID cards": "/product-images/events-wedding/event-id-cards.jpg",
+  "Pregnancy announcement cards": "/product-images/events-wedding/pregnancy-announcement-cards.jpg",
+  "Save-the-date cards": "/product-images/events-wedding/save-the-date-cards.jpg",
+  "Wedding cards": "/product-images/events-wedding/wedding-cards.jpg",
+  "Acrylic badges": "/product-images/promotional-products/acrylic-badges.jpg",
+  "Acrylic keychains": "/product-images/promotional-products/acrylic-keychains.jpg",
+  "Button badges": "/product-images/promotional-products/button-badges.jpg",
+  "Calendar keychains": "/product-images/promotional-products/calendar-keychains.jpg",
+  "Chrome pens": "/product-images/promotional-products/chrome-pens.jpg",
+  "Corporate gift sets": "/product-images/promotional-products/corporate-gift-sets.jpg",
+  "Fridge magnets": "/product-images/promotional-products/fridge-magnets.jpg",
+  "LED-logo pens": "/product-images/promotional-products/led-logo-pens.jpg",
+  "Magnetic badges": "/product-images/promotional-products/magnetic-badges.jpg",
+  "Metal badges": "/product-images/promotional-products/metal-badges.jpg",
+  "Metal ball pens": "/product-images/promotional-products/metal-ball-pens.jpg",
+  "Metal keychains": "/product-images/promotional-products/metal-keychains.jpg",
+  "Mobile-holder keychains": "/product-images/promotional-products/mobile-holder-keychains.jpg",
+  "Mobile-stand pens": "/product-images/promotional-products/mobile-stand-pens.jpg",
+  Mugs: "/product-images/promotional-products/mugs.jpg",
+  "Multiple-function pens": "/product-images/promotional-products/multiple-function-pens.jpg",
+  "Name badges": "/product-images/promotional-products/name-badges.jpg",
+  "Opener keychains": "/product-images/promotional-products/opener-keychains.jpg",
+  "Photo-frame keychains": "/product-images/promotional-products/photo-frame-keychains.jpg",
+  "Pin badges": "/product-images/promotional-products/pin-badges.jpg",
   "Beer bottle labels": "/product-images/labels-stickers/beer-bottle-labels.jpg",
   "Bottle labels": "/product-images/labels-stickers/bottle-labels.jpg",
   "Brand-logo stickers": "/product-images/labels-stickers/brand-logo-stickers.jpg",
