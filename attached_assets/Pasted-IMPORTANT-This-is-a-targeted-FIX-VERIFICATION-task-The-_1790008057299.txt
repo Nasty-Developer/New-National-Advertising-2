@@ -1,0 +1,358 @@
+IMPORTANT: This is a targeted FIX + VERIFICATION task.
+
+The Admin Panel is now loading correctly in production and authenticated access is working.
+
+DO NOT BREAK THE CURRENT ADMIN AUTHENTICATION OR EXISTING WORKING FEATURES.
+
+I noticed the following issues that must be fixed and verified.
+
+==================================================
+1. FIX FAVICON - REQUIRED
+==================================================
+
+The website currently does not have the proper New National Advertising favicon.
+
+Implement the favicon correctly for production.
+
+Use the existing New National Advertising logo/branding asset where appropriate.
+
+Requirements:
+
+- Add a proper favicon.ico if possible
+- Also support PNG favicon
+- Add the correct <link rel="icon"> tags
+- Add apple-touch-icon if appropriate
+- Ensure paths work in Vite production builds
+- Ensure the favicon works on:
+  https://newnationaladvertising.com
+- Do not use a Replit/development-only URL
+- Do not use an invalid relative path
+- Make sure the asset is included in the production build
+- Update manifest icons if a manifest exists
+- Ensure browser tab shows the New National Advertising branding
+
+Check the final generated HTML to make sure the favicon reference actually exists.
+
+IMPORTANT:
+Do not just add the favicon file.
+Verify that the browser can actually request the favicon successfully in production.
+
+==================================================
+2. ADMIN DASHBOARD COUNTS MUST BE REAL
+==================================================
+
+The current dashboard shows:
+
+Products: 0
+Machines: 4
+Services: 7
+Projects: 0
+Requests: 0
+
+Machines and Services appear to have existing data, while Products and Projects are showing zero.
+
+Investigate why.
+
+Do NOT simply change the displayed numbers.
+
+The dashboard counts must come from the actual backend/database/public APIs.
+
+Verify:
+
+Products count
+Machines count
+Services count
+Projects count
+Requests count
+
+Each number must represent the real current records.
+
+If Products or Projects genuinely have zero records, keep zero.
+
+If records already exist but the dashboard is failing to retrieve them, fix the data/API connection.
+
+Never hardcode dashboard statistics.
+
+==================================================
+3. PRODUCT DATA MUST CONNECT PROPERLY
+==================================================
+
+The Admin Products section must be connected to the same persistent backend data used by the public website.
+
+Test:
+
+Create product
+→ Save
+→ Database
+→ Dashboard count increases
+→ Product appears in Admin list
+→ Product appears on public website if published
+
+Edit product
+→ Save
+→ Public website displays updated data
+
+Unpublish product
+→ Dashboard/public catalogue updates appropriately
+
+Delete/archive product
+→ Counts/lists update correctly
+
+Do not fake the count.
+
+==================================================
+4. PROJECT DATA MUST CONNECT PROPERLY
+==================================================
+
+Do the same for Projects.
+
+Test:
+
+Create project
+→ Save
+→ Database
+→ Dashboard count updates
+→ Project appears in Admin
+
+If published:
+→ Project appears on public website
+
+Edit:
+→ Public website displays updated project
+
+Unpublish:
+→ Project disappears from public published content
+
+Archive/remove:
+→ Admin/public counts update correctly
+
+==================================================
+5. SERVICES + SERVICE PRODUCTS
+==================================================
+
+The Services section currently has existing service records.
+
+Do NOT break those existing services.
+
+Each service must allow management of its individual products/materials.
+
+For example, products/materials such as:
+
+Star Flex
+Star Black Back
+One Way Vision
+Canvas
+Gloss Vinyl
+Matt Vinyl
+Vinyl with Sunboard
+Vinyl with Sunpack
+Sunboard 3mm / 5mm
+Backlight Printing
+
+must be editable from Admin.
+
+For EACH service product, Admin must be able to:
+
+- Change name
+- Change image
+- Upload image
+- Replace image
+- Edit description where applicable
+- Change display order
+- Publish/unpublish
+- Add new service product
+- Archive/remove service product
+
+These must be real database records.
+
+They must NOT remain hardcoded React arrays.
+
+==================================================
+6. SERVICE PAGE VERIFICATION
+==================================================
+
+Open the public service page and verify that service data comes from the backend.
+
+Test:
+
+Admin changes:
+
+Star Flex
+→ Premium Star Flex
+
+Save.
+
+Then open/refresh the public service page.
+
+It MUST show:
+
+Premium Star Flex
+
+with the updated image if the image was also changed.
+
+The old hardcoded value must not override the CMS value.
+
+==================================================
+7. PUBLIC CATALOGUE COUNT
+==================================================
+
+The dashboard currently says:
+
+"0 published pieces"
+
+This must be calculated from the actual public products feed.
+
+Do not hardcode it.
+
+Verify:
+
+Published product
+→ public products feed includes it
+→ dashboard published count increases
+
+Unpublished product
+→ public feed excludes it
+→ dashboard count decreases accordingly
+
+==================================================
+8. WEBSITE CONTENT
+==================================================
+
+Any content shown under:
+
+Website Content
+
+must actually affect the public website.
+
+Test at least one editable field end-to-end:
+
+Admin edit
+→ Save
+→ Backend confirms
+→ Public API returns updated value
+→ Public website displays updated value
+
+Do not show success if the database update failed.
+
+==================================================
+9. IMAGES
+==================================================
+
+All Admin-managed images must use persistent storage.
+
+Verify:
+
+Upload
+→ Firebase Storage/persistent storage
+→ database stores persistent URL/reference
+→ public website loads the image
+
+Do NOT use temporary blob URLs.
+
+Do not delete an old image until the new image has successfully uploaded and the database update succeeds.
+
+==================================================
+10. DO NOT BREAK AUTHENTICATION
+==================================================
+
+VERY IMPORTANT:
+
+Do NOT modify:
+
+- Firebase authentication
+- Firebase token verification
+- Admin authorization
+- admin role checking
+- existing Render Firebase environment variables
+- working /admin/login
+- working /admin session handling
+
+Authentication is currently working.
+
+Leave it alone.
+
+==================================================
+11. CHECK FOR STATIC DATA OVERRIDING CMS
+==================================================
+
+Search the entire frontend for hardcoded:
+
+- Products
+- Services
+- Service products
+- Machines
+- Projects
+- Contact details
+- Homepage content
+
+If a CMS-managed value is still hardcoded and overrides the API/database value, remove the conflicting hardcoded source.
+
+Do not remove legitimate static UI configuration.
+
+==================================================
+12. PRODUCTION VERIFICATION
+==================================================
+
+After making changes:
+
+Run TypeScript check.
+
+Run production build.
+
+Verify favicon asset exists in the production output.
+
+Verify favicon URL/path.
+
+Verify all relevant API calls.
+
+Verify Admin dashboard.
+
+Verify public website.
+
+Verify Products.
+
+Verify Services.
+
+Verify service products.
+
+Verify Machines.
+
+Verify Projects.
+
+Verify Requests.
+
+Verify Website Content.
+
+==================================================
+13. FINAL CHECKLIST
+==================================================
+
+Before reporting completion, confirm:
+
+[ ] Admin login still works
+[ ] Admin dashboard loads
+[ ] Products count is real
+[ ] Machines count is real
+[ ] Services count is real
+[ ] Projects count is real
+[ ] Requests count is real
+[ ] Products CRUD works
+[ ] Machines CRUD works
+[ ] Services CRUD works
+[ ] Service products CRUD works
+[ ] Project CRUD works
+[ ] Website Content works
+[ ] Images persist
+[ ] Public website reflects Admin changes
+[ ] Published/unpublished state works
+[ ] Public catalogue count is real
+[ ] Favicon is installed
+[ ] Favicon asset is included in production
+[ ] Favicon works on the custom domain
+[ ] No hardcoded CMS data overrides backend data
+[ ] TypeScript passes
+[ ] Production build passes
+
+Do NOT claim "fixed" unless these checks have actually been performed.
+
+At the end, report exactly what was fixed and any remaining issue.

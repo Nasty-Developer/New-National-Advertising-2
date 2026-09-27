@@ -1,0 +1,79 @@
+We now have the confirmed production error:
+
+Chrome DevTools reports:
+
+"Access to the resource was blocked by CORS because of invalid or missing response headers of the request or the associated preflight request."
+
+The failing requests are going to:
+
+https://storage.googleapis.com/newnationaladv.firebasestorage.app/...
+
+Production behavior:
+- Admin login works
+- Website loads normally
+- Existing product images fail to load
+- Existing machine images fail to load
+- New image uploads fail
+- Firebase Storage is the failing service
+
+IMPORTANT: Do NOT use no-cors.
+Do NOT make Firebase Storage public.
+Do NOT weaken Firebase Storage security rules.
+Do NOT change DNS.
+Do NOT change Firebase Authentication.
+Do NOT randomly change Render settings.
+
+Diagnose and FIX the Firebase/Google Cloud Storage CORS configuration properly.
+
+CHECK:
+
+1. Inspect the Firebase Storage bucket actually being used:
+   newnationaladv.firebasestorage.app
+
+2. Check the Google Cloud Storage bucket CORS configuration.
+
+3. Determine whether production origin is allowed:
+   https://newnationaladvertising.com
+
+4. Also allow:
+   https://www.newnationaladvertising.com
+   if the website can be accessed through www.
+
+5. Check whether the app is making image requests through fetch/blob/axios or another JavaScript request that requires CORS.
+
+6. Check whether the signed download URL is being fetched from JavaScript instead of simply used as an <img src>.
+
+7. Check upload requests as well as download requests. Determine whether a preflight OPTIONS request is failing.
+
+8. Inspect the actual Network request and response headers and identify exactly which CORS header is missing or invalid.
+
+The production CORS configuration should correctly allow the required methods and headers used by this application, while remaining restrictive to our actual website origins.
+
+Do NOT blindly add "*" if credentials/authenticated requests are involved.
+
+If Google Cloud Storage bucket-level CORS configuration needs to be updated, implement the correct configuration for this project's actual frontend origin and required methods/headers.
+
+IMPORTANT:
+Do not solve this only in frontend JavaScript. If the response from Google Cloud Storage is missing the required Access-Control-Allow-Origin header, fix the actual Storage bucket CORS configuration.
+
+After fixing:
+
+1. Upload JPG
+2. Upload PNG
+3. Upload WebP
+4. Confirm upload succeeds
+5. Confirm newly uploaded image displays
+6. Refresh /admin
+7. Confirm existing product images load
+8. Confirm existing machine images load
+9. Open the public website and confirm images load
+10. Test from a new/incognito browser
+
+Also verify whether the existing signed URLs stored in Firestore are temporary URLs with:
+X-Goog-Expires=900
+
+If temporary signed URLs are being permanently stored in Firestore, report that separately and fix the architecture so permanent image references do not expire after 15 minutes.
+
+First report the exact root cause and files/configuration involved, then make the smallest production-safe fix.
+
+Do not modify unrelated UI, CMS, authentication, DNS, or deployment code.

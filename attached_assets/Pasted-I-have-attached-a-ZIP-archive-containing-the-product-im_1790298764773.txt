@@ -1,0 +1,120 @@
+I have attached a ZIP archive containing the product images for New National Advertising.
+
+Please process this ZIP carefully rather than simply uploading every image blindly.
+
+The archive contains approximately 80 images. Please:
+
+### 1. Extract and inspect the ZIP
+Unzip the complete archive and inspect every image.
+
+For each image, identify the **actual product/service name shown on the image itself**. Many of the images already contain the product name as a large heading, so use that information to determine what the image represents.
+
+### 2. Classify the images
+These images are primarily intended for the **Products section**.
+
+Create a clear mapping:
+
+**Image → Product Name → Product Category**
+
+Examples of product names visible in the images include things such as:
+
+- Star Flex
+- Star Black Back
+- One Way Vision
+- Matt Vinyl
+- Gloss Vinyl
+- Sunboard
+- Backlit Printing
+- Visiting Cards
+- Bill Book
+- Wedding Cards
+- Brochures
+- Flyers
+- Posters
+- Keychains
+- T-Shirts
+- Canvas Printing
+- Menu Cards
+- Letterheads
+- Calendars
+- Hospital Files
+- Stationery
+- etc.
+
+Do NOT assume that every image is a product.
+
+Some images may be:
+- reference images,
+- storefront/website screenshots,
+- general advertising images,
+- service images,
+- project/branch images,
+- or other non-product material.
+
+Those should be identified and kept out of the Products collection unless they clearly represent a product.
+
+### 3. Use the image content, not only filenames
+The filenames are generated/descriptive filenames and may be truncated.
+
+Use the **actual visible text/content inside each image** to determine the correct product name whenever possible.
+
+Do not invent product names when the image does not provide enough information.
+
+### 4. Add the products through the real production system
+For every confirmed product image:
+
+**Product → Image Upload → Production Storage → Firestore/Product Record → Live Website**
+
+The images must be uploaded to the actual production storage system and the correct image URL/reference must be saved with the corresponding product record.
+
+Do NOT use:
+- local file paths,
+- temporary browser URLs,
+- object URLs,
+- localStorage,
+- hardcoded development-only paths,
+- or temporary preview data.
+
+### 5. Avoid duplicates
+Before creating a product, check whether that product already exists in the production database.
+
+If it already exists:
+- do not create a duplicate,
+- attach/update the appropriate image where appropriate,
+- preserve the existing product data unless an update is actually required.
+
+### 6. Product names and categories
+Use sensible existing categories from the website/Admin Panel where they already exist.
+
+Do not create dozens of unnecessary new categories just because the archive contains many products.
+
+Keep the product structure clean and manageable.
+
+### 7. Do NOT add project images
+These attached images are primarily **product images**.
+
+Do not put them into the Projects / Our Work section unless an image is clearly a genuine project image.
+
+The Projects section should remain separate.
+
+### 8. Verify the result
+After importing the products, test the actual production flow.
+
+For at least several newly imported products, verify:
+
+**Admin Panel → Product record → Firebase Storage → Firestore → Production frontend**
+
+Then refresh the Admin Panel and refresh the live website.
+
+The product and its image must still be present after refresh.
+
+### 9. Do not modify unrelated website content
+Do not redesign the website.
+
+Do not change the existing Services, About, Projects, navigation, layout, or styling unless required for displaying the imported products.
+
+This task is specifically about **analyzing the attached image archive and correctly adding the product images/products to the existing production system**.
+
+Before considering this complete, provide a summary showing:
+
+**Total images found → Product images identified → Non-product images identified → Products added → Existing products matched → Images successfully uploaded**

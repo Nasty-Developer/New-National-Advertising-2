@@ -1,0 +1,114 @@
+I have created a Cloudinary account and have the required credentials.
+
+Migrate ONLY the application's image/file storage from Firebase Storage to Cloudinary.
+
+Keep unchanged:
+- Firebase Authentication
+- Firestore
+- Admin authentication/authorization
+- Render configuration
+- DNS
+- Existing CMS UI/design
+- Products
+- Machines
+- Services
+- Projects
+- Website Content
+- Orders
+- All existing Firestore data
+
+Cloudinary credentials will be provided through server-side environment variables:
+
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+
+IMPORTANT SECURITY:
+- Never expose CLOUDINARY_API_SECRET to frontend code.
+- Never use VITE_ prefix for the API secret.
+- Never hardcode credentials.
+- Never commit credentials to Git.
+- Backend/server only should use the Cloudinary API secret.
+
+First inspect the existing image-storage architecture.
+
+Find all Firebase Storage upload/download usage, including:
+- artifacts/api-server/src/lib/firebase-storage.ts
+- artifacts/api-server/src/routes/storage.ts
+- product image uploads
+- machine image uploads
+- service image uploads
+- project/gallery uploads
+- website content/hero image uploads
+
+Replace the Firebase Storage implementation with Cloudinary while preserving the existing API contract wherever possible.
+
+Desired flow:
+
+Admin Panel
+→ Backend authenticated upload endpoint
+→ Cloudinary
+→ Cloudinary secure URL
+→ Firestore stores stable Cloudinary URL/public ID
+→ Admin/public website displays image
+
+Do NOT store temporary signed URLs as permanent Firestore image URLs.
+
+Use Cloudinary's server-side Node SDK/API for authenticated uploads.
+
+Create a clean reusable Cloudinary storage service rather than duplicating upload logic.
+
+Organize uploads into useful folders, for example:
+- new-national-advertising/products
+- new-national-advertising/machines
+- new-national-advertising/services
+- new-national-advertising/projects
+- new-national-advertising/content
+
+Preserve existing filenames/metadata where practical.
+
+IMPORTANT:
+Do not delete existing Firebase Storage files.
+Do not delete existing Firestore image fields.
+Do not migrate/delete old images automatically until we have verified the new system.
+
+For existing Firestore records:
+- Preserve the existing data.
+- Add/update the image URL only when an image is newly uploaded or explicitly replaced.
+- Existing Firebase Storage URLs should not be destroyed automatically.
+
+Update the frontend only where necessary so existing image upload buttons continue to work exactly as they do now.
+
+Test:
+1. Product image upload
+2. Machine image upload
+3. Service image upload
+4. Project image upload
+5. Website content image upload
+6. Image preview
+7. Save changes
+8. Refresh admin
+9. Open public website
+10. Confirm images load in a new/incognito browser
+
+Also verify:
+- JPG
+- PNG
+- WebP
+- reasonable large image
+- upload failure handling
+- authentication/authorization on upload endpoints
+
+Remove Firebase Storage dependency from active upload/read paths only after the Cloudinary flow is verified.
+
+Do not change Firebase Authentication or Firestore.
+
+Before making changes, report:
+A) files responsible for current Firebase Storage usage
+B) proposed Cloudinary implementation
+C) Firestore fields affected
+D) any migration concerns
+
+Then implement the migration and run the production build/typecheck.
+
+Do not commit secrets.

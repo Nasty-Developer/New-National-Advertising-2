@@ -1,0 +1,80 @@
+TASK 1 ONLY: Replace the written "New National Advertising" branding with the EXISTING LOGO IMAGE already present in this project.
+
+IMPORTANT:
+Do NOT work on Cloudinary yet.
+Do NOT work on SEO yet.
+Do NOT work on the About Us page yet.
+Do NOT work on loading screens yet.
+Do NOT modify Firebase, authentication, Firestore, Storage, Render, DNS, backend APIs, or CMS functionality.
+
+GOAL:
+Wherever the website currently uses the words "New National Advertising" as the visual company logo/brand mark, use the actual existing New National Advertising logo image asset that is already present in the project.
+
+FIRST:
+1. Search the entire project for the existing logo image/assets.
+2. Identify the exact logo currently intended for the website.
+3. Do NOT create, redraw, regenerate, or redesign the logo.
+4. Do NOT use a text-based replacement.
+5. Reuse the existing logo asset.
+
+CHECK THE HOME PAGE FIRST:
+- Header/navbar logo
+- Desktop header
+- Mobile header/menu
+- Hero section if the company name is being displayed as the visual logo
+- Footer if the visual logo is currently represented as text
+- Any other Home-page branding element
+
+If the logo is currently displayed as an image somewhere, reuse that exact asset consistently rather than creating another copy.
+
+IMPORTANT:
+Do not blindly replace every occurrence of the words "New National Advertising".
+
+Normal written text such as:
+- headings
+- descriptions
+- SEO content
+- paragraphs
+- page titles
+should remain text unless it is specifically functioning as the visual logo/brand mark.
+
+PRESERVE:
+- Existing design
+- Existing colors
+- Existing layout
+- Existing spacing
+- Existing responsiveness
+- Existing animations
+- Existing navigation
+- Existing functionality
+
+Make the logo responsive:
+- correct aspect ratio
+- no stretching
+- no distortion
+- appropriate sizing on desktop and mobile
+- appropriate alt text
+- should remain sharp and visually clear
+
+Also inspect whether the current header/footer logo has any CSS that assumes it is text. Adjust only what is necessary for the image logo to display correctly.
+
+DO NOT change favicon in this task unless the existing favicon already directly references the same logo asset and only needs a safe reference update. Otherwise leave favicon alone for now.
+
+VERIFICATION:
+1. Run the production build.
+2. Check the Home page on desktop.
+3. Check the Home page on mobile/responsive view.
+4. Check the header.
+5. Check the mobile navigation.
+6. Check the footer.
+7. Confirm there is no broken image.
+8. Confirm the logo is not stretched or blurry.
+9. Confirm no unrelated functionality changed.
+
+Before finishing, report:
+A) Exact logo asset you found and used
+B) Files/components changed
+C) Where the logo was replaced
+D) Build result
+
+Make ONLY this logo task. Do not proceed to the next roadmap item.

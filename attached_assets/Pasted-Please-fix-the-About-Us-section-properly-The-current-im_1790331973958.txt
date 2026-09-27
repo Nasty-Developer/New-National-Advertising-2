@@ -1,0 +1,70 @@
+Please fix the **About Us section properly**. The current implementation looks awkward and unfinished, especially the way the two photos and the `Client / Partner` text are placed. Do not keep the current layout.
+
+### About Us Section
+
+Create a clean, professional and premium **About Us** section for **New National Advertising**.
+
+We are a professional advertising and printing company. The About Us content should clearly communicate that we work in:
+
+- Printing
+- Digital Printing
+- Solvent Flex Printing
+- Offset Printing
+- Sign Boards & Signage
+- Screen Printing
+- Graphics Design
+- Advertising and branding solutions
+
+Use professional wording such as:
+
+> **About New National Advertising**  
+> New National Advertising provides professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals. We specialize in high-quality printing and customized advertising solutions, including digital printing, flex printing, signage, screen printing, offset printing and creative graphic design. Our focus is on delivering reliable, professional and visually impactful solutions for every project.
+
+### People / Photos
+
+I have attached **two photos**. Use those two photos in the About Us section.
+
+The names are:
+
+**Taukeer Ahmed**  
+**Aurangzeb Khan**
+
+Do NOT use:
+- `Client: [CLIENT NAME]`
+- `Partner: XYZ`
+- Any placeholder names
+- Any `Client / Partner` labels
+
+Instead, display the actual names **Taukeer Ahmed** and **Aurangzeb Khan** professionally with their respective photos.
+
+### Layout
+
+Make the two photos look intentional and balanced.
+
+For example:
+
+**About Us content on the left**
+
+**Two professional profile photos on the right**, arranged neatly side-by-side or in another visually balanced composition.
+
+Under each photo, show the person's name:
+
+**Taukeer Ahmed**  
+**Aurangzeb Khan**
+
+The photos should have consistent sizing, alignment and spacing.
+
+### Important Design Requirements
+
+- Keep the existing website's premium, clean and modern visual style.
+- Make the section feel like a genuine **company About Us section**, not a customer information card.
+- Remove the strange large empty area and the awkward floating image arrangement visible currently.
+- Do not put the names inside a huge empty box.
+- Do not use `Client` or `Partner` labels.
+- Keep the typography professional and consistent with the rest of the website.
+- Make the two photos visually integrated into the section.
+- Ensure the layout is responsive on desktop, tablet and mobile.
+- Do not change any other section of the website.
+- Do not modify the header, navigation, services, products, machines, contact section or other functionality.
+
+**Only fix the About Us section and make it look polished, professional and complete.**

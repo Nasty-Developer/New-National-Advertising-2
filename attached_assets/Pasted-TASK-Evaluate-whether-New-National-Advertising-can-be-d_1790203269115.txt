@@ -1,0 +1,76 @@
+TASK: Evaluate whether New National Advertising can be deployed as ONE Render Web Service instead of separate frontend and backend deployments.
+
+IMPORTANT:
+Do NOT change or delete anything yet.
+This is an architecture inspection only.
+
+CURRENT SETUP:
+- React/Vite frontend
+- Express/Node backend
+- Currently frontend and backend are deployed separately on Render
+- Production domain: https://newnationaladvertising.com
+
+DESIRED SETUP:
+One Render Web Service should serve both:
+
+Frontend:
+/
+ /admin
+ /services
+ /products
+ /projects
+ etc.
+
+Backend:
+ /api/*
+
+The Express server should serve the production Vite frontend build as static files and handle API routes from the same server.
+
+GOAL:
+Determine whether the existing project can safely support:
+
+Browser
+→ https://newnationaladvertising.com
+→ Express server
+→ React frontend OR /api/*
+
+INSPECT:
+1. Existing Express server entry point.
+2. Existing Vite build configuration.
+3. Existing frontend build output directory.
+4. Existing backend API routes.
+5. Existing Render build/start configuration.
+6. Existing frontend API URL/environment configuration.
+7. Whether Express can serve the generated frontend dist directory.
+8. Whether React SPA fallback can correctly serve routes such as:
+   /admin
+   /products
+   /projects
+   /services
+9. Whether Firebase/Firestore authentication continues to work.
+10. Whether Cloudinary can be used server-side after the migration.
+11. Whether any current frontend/backend separation is actually required.
+
+IMPORTANT:
+Do NOT implement the merge yet.
+Do NOT modify Render.
+Do NOT delete either existing Render service.
+Do NOT change DNS.
+Do NOT change Firebase Authentication.
+Do NOT change Firestore.
+Do NOT migrate Cloudinary yet.
+
+REPORT:
+A) Can this project safely become one Render Web Service?
+B) Exact Express file that would serve the frontend.
+C) Current frontend build output directory.
+D) Current API route structure.
+E) Required build command.
+F) Required start command.
+G) Required environment variables.
+H) Any code changes required.
+I) Any risks or things that would break.
+
+If it is safe, propose the smallest architecture change needed to create one full-stack Render deployment.
+
+Do not make changes until the inspection report is complete.
