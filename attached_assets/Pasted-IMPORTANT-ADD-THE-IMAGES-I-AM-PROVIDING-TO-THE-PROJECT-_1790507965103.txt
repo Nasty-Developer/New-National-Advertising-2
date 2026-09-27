@@ -1,0 +1,177 @@
+IMPORTANT — ADD THE IMAGES I AM PROVIDING TO THE PROJECT
+
+I am now providing images for the New National Advertising project.
+
+For every image I provide, ADD IT PROPERLY TO THE PROJECT and use it in the correct place.
+
+DO NOT just upload the images and leave them unused.
+
+========================================
+IMAGE HANDLING
+========================================
+
+For every image I provide:
+
+1. Add the image to the project properly.
+2. Store it in the correct project/public/storage location.
+3. Optimize it for web use without noticeably reducing quality.
+4. Create/use the correct image URL/path.
+5. Connect it to the correct product, service, project, or category.
+6. Verify that the image actually loads on the live UI.
+
+========================================
+IMPORTANT — DO NOT BREAK EXISTING IMAGES
+========================================
+
+Do NOT delete or replace existing images that I previously provided.
+
+If I am providing a NEW image:
+
+→ add/update ONLY the relevant item.
+
+If no new image is provided for an existing item:
+
+→ KEEP ITS CURRENT IMAGE.
+
+Never replace an existing image with:
+
+- null
+- empty string
+- placeholder
+- default image
+- broken URL
+
+========================================
+PRODUCT IMAGE MAPPING
+========================================
+
+If the image is for a product:
+
+Map it to the EXACT product.
+
+Use the stable product ID/SKU/database ID where available.
+
+Do NOT rely only on array position or product index.
+
+Example:
+
+Product ID → Correct Image URL
+
+Make sure the correct image appears for the correct product.
+
+========================================
+SERVICE / PROJECT IMAGES
+========================================
+
+If the image belongs to:
+
+- Sign Boards
+- Solvent Flex Printing
+- Digital Printing
+- Offset Printing
+- Screen Printing
+- Graphics Design
+- Machines
+- Our Work / Projects
+- Any other existing website section
+
+Place it in the correct section.
+
+Do NOT put an image into a similar-looking but incorrect category.
+
+========================================
+IMAGE QUALITY
+========================================
+
+Keep the provided image visually high quality.
+
+Optimize file size for fast loading.
+
+Prefer:
+
+WebP / AVIF where appropriate
+
+but do not destroy the original quality.
+
+Use responsive image sizing.
+
+========================================
+NO OLD IMAGE FLASH
+========================================
+
+The newly added images must NOT cause the old images to flash first.
+
+Correct behavior:
+
+Loading/Skeleton
+→ CURRENT IMAGE
+
+Never:
+
+OLD IMAGE
+→ NEW IMAGE
+
+========================================
+NO IMAGE DISAPPEARING
+========================================
+
+Once the image has loaded, it must remain visible.
+
+Do not let API/Firebase state temporarily replace the image with an empty state.
+
+If data is refreshing:
+
+KEEP THE LAST VALID IMAGE VISIBLE.
+
+========================================
+ADMIN + PUBLIC WEBSITE
+========================================
+
+If the image belongs to a product/category managed by the admin panel:
+
+Make sure the image is correctly connected to the existing database/storage system.
+
+The same image must appear correctly in:
+
+- Admin panel
+- Public website
+- Product/category pages
+- Homepage wherever applicable
+
+Do not create duplicate/conflicting image records.
+
+========================================
+VERIFY EVERY IMAGE
+========================================
+
+After adding the images:
+
+✓ Correct image exists
+✓ Correct image path exists
+✓ URL loads successfully
+✓ Correct product/category is mapped
+✓ Image appears on the website
+✓ Existing images remain intact
+✓ No broken images
+✓ No duplicate incorrect mappings
+✓ No old image appears before it
+✓ Mobile image works
+✓ Desktop image works
+
+========================================
+IMPORTANT
+========================================
+
+Do NOT remove existing product/category data.
+
+Do NOT reset the catalog.
+
+Do NOT perform a destructive reseed.
+
+Do NOT replace all images.
+
+Only ADD the images I am providing and correctly map them to their intended items.
+
+Before finishing, verify the actual rendered website, not just the database records.
+
+The image is considered successfully added ONLY when I can see it in the correct location on the website.

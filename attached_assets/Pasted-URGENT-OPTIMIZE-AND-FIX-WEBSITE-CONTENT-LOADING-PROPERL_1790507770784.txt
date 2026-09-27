@@ -1,0 +1,424 @@
+URGENT — OPTIMIZE AND FIX WEBSITE CONTENT LOADING PROPERLY
+
+The website content is still not loading as smoothly and quickly as it should.
+
+I want you to optimize the ENTIRE CONTENT LOADING SYSTEM, not just individual images.
+
+IMPORTANT:
+DO NOT remove any existing content, products, categories, services, images, functionality, admin features, Firebase/API functionality, or routes.
+
+The goal is:
+
+FAST INITIAL LOAD
+→ FAST CONTENT APPEARANCE
+→ NO OLD CONTENT FLASH
+→ NO CONTENT DISAPPEARING
+→ NO EMPTY SECTIONS AFTER LOADING
+→ NO REPEATED API REQUESTS
+→ NO UNNECESSARY WAITING
+
+========================================
+1. FIX INITIAL PAGE LOAD
+========================================
+
+When a visitor opens the website:
+
+Show the lightweight loading state immediately.
+
+Then load the CURRENT website content.
+
+The user must NEVER see:
+
+OLD CONTENT → NEW CONTENT
+
+or:
+
+CONTENT → DISAPPEARS → CONTENT RETURNS
+
+Expected:
+
+LOADING/SKELETON
+→ CURRENT CONTENT
+→ STAYS VISIBLE
+
+========================================
+2. OPTIMIZE API CONTENT LOADING
+========================================
+
+Inspect all API requests.
+
+Find:
+
+- duplicate API requests
+- unnecessary requests
+- sequential requests that could run in parallel
+- requests made repeatedly on re-render
+- requests triggered unnecessarily by useEffect
+- requests caused by unstable dependencies
+
+Use parallel loading where possible.
+
+For example:
+
+Products
+Services
+Categories
+Machines
+Website content
+
+should not unnecessarily wait for one another if they are independent.
+
+========================================
+3. PREVENT CONTENT FROM DISAPPEARING
+========================================
+
+This is extremely important.
+
+If content has already successfully loaded:
+
+DO NOT replace it with an empty array/null while another request is running.
+
+Never do:
+
+loaded data
+→ loading
+→ []
+→ blank section
+→ data again
+
+Instead:
+
+loading
+→ current data
+→ keep current data visible while refreshing
+
+If an API request fails temporarily, preserve the last valid content.
+
+========================================
+4. FIREBASE OPTIMIZATION
+========================================
+
+Inspect Firebase/Firestore queries.
+
+Make sure:
+
+- unnecessary reads are removed
+- the same collection isn't fetched repeatedly
+- queries are properly scoped
+- only required fields/data are loaded where possible
+- listeners are cleaned up
+- duplicate listeners are not created
+- components don't create new subscriptions on every render
+
+If real-time listeners are not required for a section, do not use an unnecessary real-time listener.
+
+========================================
+5. IMAGE LOADING
+========================================
+
+Optimize ALL website images.
+
+Use:
+
+- WebP/AVIF where supported
+- proper width/height attributes
+- responsive image sizes
+- lazy loading for below-the-fold images
+- priority loading only for critical above-the-fold images
+- optimized compression
+- correct caching
+
+Do NOT load every product image immediately when the homepage opens.
+
+Only load what is needed.
+
+========================================
+6. ABOVE-THE-FOLD PRIORITY
+========================================
+
+Prioritize:
+
+1. Header
+2. Logo
+3. Hero section
+4. Critical hero image
+5. Main heading/content
+6. Above-the-fold CTA
+
+Then load:
+
+Products
+Services
+Machines
+Our Work
+Other below-the-fold sections
+
+This should make the website feel immediately responsive.
+
+========================================
+7. PRODUCT CATALOG
+========================================
+
+Do NOT load the entire product catalog unnecessarily on the homepage.
+
+Load category information first where possible.
+
+Load full product data only when required.
+
+When the user opens Products:
+
+Load the required product data efficiently.
+
+When the user selects a category:
+
+Only display/filter the relevant products.
+
+DO NOT break the existing category filtering.
+
+========================================
+8. CACHE CURRENT CONTENT
+========================================
+
+Use a sensible caching strategy for relatively stable content.
+
+Examples:
+
+- product categories
+- services
+- machines
+- website content
+
+Avoid downloading identical data repeatedly during the same session.
+
+However:
+
+Do NOT cache outdated/old service images or old catalog data.
+
+Current content must always remain the source of truth.
+
+========================================
+9. IMAGE + CONTENT SYNCHRONIZATION
+========================================
+
+Make sure text/data and images load together correctly.
+
+Avoid:
+
+Product name appears
+→ wrong/old image appears
+→ image changes
+→ image disappears
+→ correct image appears
+
+Instead:
+
+Loading placeholder
+→ correct product + correct image
+→ stable content
+
+========================================
+10. REMOVE UNNECESSARY BLOCKING
+========================================
+
+Find anything unnecessarily blocking the initial page render.
+
+Check:
+
+- large JavaScript bundles
+- unnecessary dependencies
+- large libraries loaded globally
+- non-critical scripts
+- unnecessary API calls
+- fonts blocking rendering
+- huge images
+- unnecessary preload requests
+
+Do NOT remove functionality.
+
+Use code splitting/lazy loading for non-critical components where appropriate.
+
+========================================
+11. LOADING SKELETONS
+========================================
+
+Use lightweight skeletons for sections that genuinely require async data.
+
+Skeletons should:
+
+- match the final layout
+- prevent layout shifts
+- disappear immediately when content is ready
+- never be replaced by blank space
+
+Do NOT use long artificial delays.
+
+Do NOT use setTimeout just to make loading look smooth.
+
+========================================
+12. PREVENT LAYOUT SHIFT
+========================================
+
+Every major image/content container should have predictable dimensions.
+
+Reserve space for images before they load.
+
+The page should not jump around when images appear.
+
+Especially check:
+
+- hero
+- service cards
+- product cards
+- machines
+- work/gallery
+- product categories
+
+========================================
+13. MOBILE PERFORMANCE
+========================================
+
+Optimize specifically for mobile.
+
+Test on:
+
+- iPhone-sized viewport
+- Android-sized viewport
+- slow 4G/throttled network
+
+The mobile page must not wait for desktop-sized assets.
+
+Use responsive image sizes.
+
+========================================
+14. NO OLD CONTENT FLASH
+========================================
+
+This is mandatory.
+
+Previously we had old signage/service images appearing for 1–2 seconds.
+
+Make sure this cannot happen anymore.
+
+Never render outdated fallback content.
+
+Correct behavior:
+
+CURRENT LOADING STATE
+→ CURRENT CONTENT
+
+NOT:
+
+OLD CONTENT
+→ CURRENT CONTENT
+
+========================================
+15. NO CONTENT VANISHING
+========================================
+
+Previously some content was appearing and then disappearing.
+
+Verify that every section remains visible after loading.
+
+Check:
+
+- Services
+- Products
+- Categories
+- Machines
+- Our Work
+- About Us
+- Owner section
+- Homepage content
+
+No section should disappear because of:
+
+- API state
+- Firebase state
+- loading state
+- animation state
+- responsive state
+- empty fallback state
+
+========================================
+16. PERFORMANCE TARGET
+========================================
+
+Aim for a very fast perceived load.
+
+The visitor should see useful content immediately.
+
+Avoid unnecessary full-page loading screens.
+
+Do not make the user wait for every API request before displaying the entire website.
+
+Load critical content first and progressively load the rest.
+
+========================================
+17. TEST PROPERLY
+========================================
+
+Test:
+
+✓ Fresh browser
+✓ Incognito
+✓ Hard refresh
+✓ First visit
+✓ Repeat visit
+✓ Desktop
+✓ Mobile
+✓ Slow network
+✓ Fast network
+✓ Products page
+✓ Services page
+✓ Machines page
+✓ Category filtering
+✓ Search
+✓ Admin changes reflected on public site
+
+Watch the first 5–10 seconds carefully.
+
+There must be NO:
+
+❌ old content flash
+❌ disappearing content
+❌ blank sections after loading
+❌ repeated loading
+❌ wrong images
+❌ layout jumping
+❌ unnecessary full-page waiting
+
+========================================
+18. BUILD + VERIFY
+========================================
+
+After optimization:
+
+- run typecheck
+- run production build
+- fix all errors caused by the changes
+- verify API requests
+- verify image loading
+- verify console
+- verify mobile responsiveness
+
+Do NOT make unrelated design changes.
+
+FINAL GOAL:
+
+The website should feel like:
+
+OPEN WEBSITE
+↓
+INSTANTLY RESPONSIVE
+↓
+CRITICAL CONTENT APPEARS
+↓
+OTHER CONTENT LOADS SMOOTHLY
+↓
+EVERYTHING STAYS STABLE
+
+No flashing old content.
+No disappearing content.
+No unnecessary waiting.
+No broken images.
+No lost product data.
