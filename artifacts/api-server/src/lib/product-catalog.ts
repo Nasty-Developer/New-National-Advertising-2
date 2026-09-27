@@ -1,7 +1,7 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v13";
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v14";
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Bill books": "/product-images/paper-corporate/bill-books.png",
@@ -140,6 +140,23 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Scratch cards": "/product-images/specialized-products/scratch-cards.jpg",
   "USB drives": "/product-images/specialized-products/usb-drives.jpg",
   "Canvas printing": "/product-images/specialized-products/canvas-printing.jpg",
+  Signage: "/product-images/signage-display/signage.jpg",
+  "Stainless-steel sign boards": "/product-images/signage-display/stainless-steel-sign-boards.avif",
+  "Acrylic sign boards": "/product-images/signage-display/acrylic-sign-boards.jpg",
+  "Acrylic nameplates": "/product-images/signage-display/acrylic-nameplates.jpg",
+  "QR-code stands": "/product-images/signage-display/qr-code-stands.webp",
+  "Display stands": "/product-images/signage-display/display-stands.jpg",
+  "Information signs": "/product-images/signage-display/information-signs.jpg",
+  "Highway/retro-reflective sign boards": "/product-images/signage-display/highway-retro-reflective-sign-boards.jpg",
+  "Braille/tactile signage": "/product-images/signage-display/braille-tactile-signage.jpg",
+  "ACP boards": "/product-images/signage-display/acp-boards.jpg",
+  "Vinyl signage": "/product-images/signage-display/vinyl-signage.jpg",
+  "Sunboard signage": "/product-images/signage-display/sunboard-signage.jpg",
+  "LED-related signage": "/product-images/signage-display/led-related-signage.jpg",
+  "Acrylic cutting": "/product-images/signage-display/acrylic-cutting.jpg",
+  "Laser-cut acrylic": "/product-images/signage-display/laser-cut-acrylic.jpg",
+  "Name plates": "/product-images/signage-display/name-plates.jpg",
+  "Menu/display stands": "/product-images/signage-display/menu-display-stands.jpg",
 };
 
 type ProductCategory = {
