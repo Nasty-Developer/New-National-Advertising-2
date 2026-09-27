@@ -1626,7 +1626,7 @@
       "displayOrder": 0,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1650,7 +1650,7 @@
       "displayOrder": 1,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1674,7 +1674,7 @@
       "displayOrder": 2,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1698,7 +1698,7 @@
       "displayOrder": 3,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1722,7 +1722,7 @@
       "displayOrder": 4,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1746,7 +1746,7 @@
       "displayOrder": 5,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1770,7 +1770,7 @@
       "displayOrder": 6,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1794,7 +1794,7 @@
       "displayOrder": 7,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1818,7 +1818,7 @@
       "displayOrder": 8,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1842,7 +1842,7 @@
       "displayOrder": 9,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1866,7 +1866,7 @@
       "displayOrder": 10,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1890,7 +1890,7 @@
       "displayOrder": 11,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1914,7 +1914,7 @@
       "displayOrder": 12,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1924,8 +1924,8 @@
       "shortDescription": "Screen printing services and products from New National Advertising.",
       "description": "Screen printing services and products from New National Advertising.",
       "fullDescription": "Screen printing services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/screen-printing.jpg",
+      "imageUrl": "/product-images/labels-stickers/screen-printing.jpg",
       "imageAlt": null,
       "category": "Core Printing & Branding",
       "catalogCategories": [
@@ -1938,7 +1938,7 @@
       "displayOrder": 13,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1962,7 +1962,7 @@
       "displayOrder": 14,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -1986,7 +1986,7 @@
       "displayOrder": 15,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2010,7 +2010,7 @@
       "displayOrder": 16,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2034,7 +2034,7 @@
       "displayOrder": 17,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2058,7 +2058,7 @@
       "displayOrder": 18,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2082,7 +2082,7 @@
       "displayOrder": 19,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2106,7 +2106,7 @@
       "displayOrder": 20,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2130,7 +2130,7 @@
       "displayOrder": 21,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2154,7 +2154,7 @@
       "displayOrder": 22,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2178,7 +2178,7 @@
       "displayOrder": 23,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2202,7 +2202,7 @@
       "displayOrder": 24,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2226,7 +2226,7 @@
       "displayOrder": 25,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2250,7 +2250,7 @@
       "displayOrder": 26,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2274,7 +2274,7 @@
       "displayOrder": 1000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2298,7 +2298,7 @@
       "displayOrder": 1001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2322,7 +2322,7 @@
       "displayOrder": 1002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2346,7 +2346,7 @@
       "displayOrder": 1003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2370,7 +2370,7 @@
       "displayOrder": 1004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2394,7 +2394,7 @@
       "displayOrder": 1005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2418,7 +2418,7 @@
       "displayOrder": 1006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2442,7 +2442,7 @@
       "displayOrder": 1007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2466,7 +2466,7 @@
       "displayOrder": 1008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2490,7 +2490,7 @@
       "displayOrder": 1009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2514,7 +2514,7 @@
       "displayOrder": 1010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2538,7 +2538,7 @@
       "displayOrder": 1011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2562,7 +2562,7 @@
       "displayOrder": 1012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2586,7 +2586,7 @@
       "displayOrder": 1013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2610,7 +2610,7 @@
       "displayOrder": 1014,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2634,7 +2634,7 @@
       "displayOrder": 1015,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2658,7 +2658,7 @@
       "displayOrder": 1016,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2682,7 +2682,7 @@
       "displayOrder": 2000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2706,7 +2706,7 @@
       "displayOrder": 2001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2730,7 +2730,7 @@
       "displayOrder": 2002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2754,7 +2754,7 @@
       "displayOrder": 2003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2778,7 +2778,7 @@
       "displayOrder": 2004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2802,7 +2802,7 @@
       "displayOrder": 2005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2826,7 +2826,7 @@
       "displayOrder": 2006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2850,7 +2850,7 @@
       "displayOrder": 2007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2874,7 +2874,7 @@
       "displayOrder": 2008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2898,7 +2898,7 @@
       "displayOrder": 2009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2922,7 +2922,7 @@
       "displayOrder": 2010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2946,7 +2946,7 @@
       "displayOrder": 2011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2970,7 +2970,7 @@
       "displayOrder": 2012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -2994,7 +2994,7 @@
       "displayOrder": 2013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3018,7 +3018,7 @@
       "displayOrder": 2014,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3042,7 +3042,7 @@
       "displayOrder": 2015,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3066,7 +3066,7 @@
       "displayOrder": 2016,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3090,7 +3090,7 @@
       "displayOrder": 2017,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3114,7 +3114,7 @@
       "displayOrder": 2018,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3138,7 +3138,7 @@
       "displayOrder": 2019,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3162,7 +3162,7 @@
       "displayOrder": 2020,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3186,7 +3186,7 @@
       "displayOrder": 2021,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3210,7 +3210,7 @@
       "displayOrder": 2022,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3234,7 +3234,7 @@
       "displayOrder": 2023,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3258,7 +3258,7 @@
       "displayOrder": 2024,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3282,7 +3282,7 @@
       "displayOrder": 2025,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3306,7 +3306,7 @@
       "displayOrder": 2026,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3330,7 +3330,7 @@
       "displayOrder": 2027,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3354,7 +3354,7 @@
       "displayOrder": 2028,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3364,8 +3364,8 @@
       "shortDescription": "Die-cut stickers services and products from New National Advertising.",
       "description": "Die-cut stickers services and products from New National Advertising.",
       "fullDescription": "Die-cut stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/die-cut-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/die-cut-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3378,7 +3378,7 @@
       "displayOrder": 3000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3388,8 +3388,8 @@
       "shortDescription": "Sticker sheets services and products from New National Advertising.",
       "description": "Sticker sheets services and products from New National Advertising.",
       "fullDescription": "Sticker sheets services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/sticker-sheets.jpg",
+      "imageUrl": "/product-images/labels-stickers/sticker-sheets.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3402,7 +3402,7 @@
       "displayOrder": 3001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3412,8 +3412,8 @@
       "shortDescription": "Brand-logo stickers services and products from New National Advertising.",
       "description": "Brand-logo stickers services and products from New National Advertising.",
       "fullDescription": "Brand-logo stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/brand-logo-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/brand-logo-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3426,7 +3426,7 @@
       "displayOrder": 3002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3436,8 +3436,8 @@
       "shortDescription": "Dome labels services and products from New National Advertising.",
       "description": "Dome labels services and products from New National Advertising.",
       "fullDescription": "Dome labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/dome-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/dome-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3450,7 +3450,7 @@
       "displayOrder": 3003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3460,8 +3460,8 @@
       "shortDescription": "Double-sided labels services and products from New National Advertising.",
       "description": "Double-sided labels services and products from New National Advertising.",
       "fullDescription": "Double-sided labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/double-sided-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/double-sided-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3474,7 +3474,7 @@
       "displayOrder": 3004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3484,8 +3484,8 @@
       "shortDescription": "Bottle labels services and products from New National Advertising.",
       "description": "Bottle labels services and products from New National Advertising.",
       "fullDescription": "Bottle labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/bottle-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/bottle-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3498,7 +3498,7 @@
       "displayOrder": 3005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3508,8 +3508,8 @@
       "shortDescription": "Wine bottle labels services and products from New National Advertising.",
       "description": "Wine bottle labels services and products from New National Advertising.",
       "fullDescription": "Wine bottle labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/wine-bottle-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/wine-bottle-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3522,7 +3522,7 @@
       "displayOrder": 3006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3532,8 +3532,8 @@
       "shortDescription": "Beer bottle labels services and products from New National Advertising.",
       "description": "Beer bottle labels services and products from New National Advertising.",
       "fullDescription": "Beer bottle labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/beer-bottle-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/beer-bottle-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3546,7 +3546,7 @@
       "displayOrder": 3007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3556,8 +3556,8 @@
       "shortDescription": "Cosmetic labels services and products from New National Advertising.",
       "description": "Cosmetic labels services and products from New National Advertising.",
       "fullDescription": "Cosmetic labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/cosmetic-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/cosmetic-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3570,7 +3570,7 @@
       "displayOrder": 3008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3580,8 +3580,8 @@
       "shortDescription": "Food-packaging labels services and products from New National Advertising.",
       "description": "Food-packaging labels services and products from New National Advertising.",
       "fullDescription": "Food-packaging labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/food-packaging-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/food-packaging-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3594,7 +3594,7 @@
       "displayOrder": 3009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3604,8 +3604,8 @@
       "shortDescription": "Roll labels services and products from New National Advertising.",
       "description": "Roll labels services and products from New National Advertising.",
       "fullDescription": "Roll labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/roll-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/roll-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3618,7 +3618,7 @@
       "displayOrder": 3010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3628,8 +3628,8 @@
       "shortDescription": "Classic roll labels services and products from New National Advertising.",
       "description": "Classic roll labels services and products from New National Advertising.",
       "fullDescription": "Classic roll labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/classic-roll-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/classic-roll-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3642,7 +3642,7 @@
       "displayOrder": 3011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3652,8 +3652,8 @@
       "shortDescription": "Transparent stickers services and products from New National Advertising.",
       "description": "Transparent stickers services and products from New National Advertising.",
       "fullDescription": "Transparent stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/transparent-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/transparent-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3666,7 +3666,7 @@
       "displayOrder": 3012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3676,8 +3676,8 @@
       "shortDescription": "Laptop stickers services and products from New National Advertising.",
       "description": "Laptop stickers services and products from New National Advertising.",
       "fullDescription": "Laptop stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/laptop-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/laptop-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3690,7 +3690,7 @@
       "displayOrder": 3013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3700,8 +3700,8 @@
       "shortDescription": "Vinyl waterproof stickers services and products from New National Advertising.",
       "description": "Vinyl waterproof stickers services and products from New National Advertising.",
       "fullDescription": "Vinyl waterproof stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/vinyl-waterproof-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/vinyl-waterproof-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3714,7 +3714,7 @@
       "displayOrder": 3014,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3724,8 +3724,8 @@
       "shortDescription": "PVC wall stickers services and products from New National Advertising.",
       "description": "PVC wall stickers services and products from New National Advertising.",
       "fullDescription": "PVC wall stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/pvc-wall-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/pvc-wall-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3738,7 +3738,7 @@
       "displayOrder": 3015,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3748,8 +3748,8 @@
       "shortDescription": "Vinyl flooring stickers services and products from New National Advertising.",
       "description": "Vinyl flooring stickers services and products from New National Advertising.",
       "fullDescription": "Vinyl flooring stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/vinyl-flooring-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/vinyl-flooring-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3762,7 +3762,7 @@
       "displayOrder": 3016,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3772,8 +3772,8 @@
       "shortDescription": "Designer stickers services and products from New National Advertising.",
       "description": "Designer stickers services and products from New National Advertising.",
       "fullDescription": "Designer stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/designer-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/designer-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3786,7 +3786,7 @@
       "displayOrder": 3017,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3796,8 +3796,8 @@
       "shortDescription": "Special-finish labels services and products from New National Advertising.",
       "description": "Special-finish labels services and products from New National Advertising.",
       "fullDescription": "Special-finish labels services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/special-finish-labels.jpg",
+      "imageUrl": "/product-images/labels-stickers/special-finish-labels.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3810,7 +3810,7 @@
       "displayOrder": 3018,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3820,8 +3820,8 @@
       "shortDescription": "Screen printing services and products from New National Advertising.",
       "description": "Screen printing services and products from New National Advertising.",
       "fullDescription": "Screen printing services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/screen-printing.jpg",
+      "imageUrl": "/product-images/labels-stickers/screen-printing.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3834,7 +3834,7 @@
       "displayOrder": 3019,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3844,8 +3844,8 @@
       "shortDescription": "UV DTF stickers services and products from New National Advertising.",
       "description": "UV DTF stickers services and products from New National Advertising.",
       "fullDescription": "UV DTF stickers services and products from New National Advertising.",
-      "imagePath": null,
-      "imageUrl": null,
+      "imagePath": "/product-images/labels-stickers/uv-dtf-stickers.jpg",
+      "imageUrl": "/product-images/labels-stickers/uv-dtf-stickers.jpg",
       "imageAlt": null,
       "category": "Labels & Stickers",
       "catalogCategories": [
@@ -3858,7 +3858,7 @@
       "displayOrder": 3020,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3882,7 +3882,7 @@
       "displayOrder": 4000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3906,7 +3906,7 @@
       "displayOrder": 4001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3930,7 +3930,7 @@
       "displayOrder": 4002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3954,7 +3954,7 @@
       "displayOrder": 4003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -3978,7 +3978,7 @@
       "displayOrder": 4004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4002,7 +4002,7 @@
       "displayOrder": 4005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4026,7 +4026,7 @@
       "displayOrder": 4006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4050,7 +4050,7 @@
       "displayOrder": 4007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4074,7 +4074,7 @@
       "displayOrder": 4008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4098,7 +4098,7 @@
       "displayOrder": 4009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4122,7 +4122,7 @@
       "displayOrder": 4010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4146,7 +4146,7 @@
       "displayOrder": 4011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4170,7 +4170,7 @@
       "displayOrder": 4012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4194,7 +4194,7 @@
       "displayOrder": 4013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4218,7 +4218,7 @@
       "displayOrder": 5000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4242,7 +4242,7 @@
       "displayOrder": 5001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4266,7 +4266,7 @@
       "displayOrder": 5002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4290,7 +4290,7 @@
       "displayOrder": 5003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4314,7 +4314,7 @@
       "displayOrder": 5004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4338,7 +4338,7 @@
       "displayOrder": 5005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4362,7 +4362,7 @@
       "displayOrder": 5006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4386,7 +4386,7 @@
       "displayOrder": 5007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4410,7 +4410,7 @@
       "displayOrder": 5008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4434,7 +4434,7 @@
       "displayOrder": 5009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4458,7 +4458,7 @@
       "displayOrder": 5010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4482,7 +4482,7 @@
       "displayOrder": 5011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4506,7 +4506,7 @@
       "displayOrder": 5012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4530,7 +4530,7 @@
       "displayOrder": 5013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4554,7 +4554,7 @@
       "displayOrder": 5014,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4578,7 +4578,7 @@
       "displayOrder": 5015,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4602,7 +4602,7 @@
       "displayOrder": 5016,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4626,7 +4626,7 @@
       "displayOrder": 5017,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4650,7 +4650,7 @@
       "displayOrder": 5018,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4674,7 +4674,7 @@
       "displayOrder": 5019,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4698,7 +4698,7 @@
       "displayOrder": 5020,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4722,7 +4722,7 @@
       "displayOrder": 5021,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4746,7 +4746,7 @@
       "displayOrder": 5022,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4770,7 +4770,7 @@
       "displayOrder": 5023,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4794,7 +4794,7 @@
       "displayOrder": 5024,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4818,7 +4818,7 @@
       "displayOrder": 6000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4842,7 +4842,7 @@
       "displayOrder": 6001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4866,7 +4866,7 @@
       "displayOrder": 6002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4890,7 +4890,7 @@
       "displayOrder": 6003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4914,7 +4914,7 @@
       "displayOrder": 6004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4938,7 +4938,7 @@
       "displayOrder": 6005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4962,7 +4962,7 @@
       "displayOrder": 6006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -4986,7 +4986,7 @@
       "displayOrder": 6007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5010,7 +5010,7 @@
       "displayOrder": 6008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5034,7 +5034,7 @@
       "displayOrder": 6009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5058,7 +5058,7 @@
       "displayOrder": 7000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5082,7 +5082,7 @@
       "displayOrder": 7001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5106,7 +5106,7 @@
       "displayOrder": 7002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5130,7 +5130,7 @@
       "displayOrder": 7003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5154,7 +5154,7 @@
       "displayOrder": 7004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5178,7 +5178,7 @@
       "displayOrder": 7005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5202,7 +5202,7 @@
       "displayOrder": 7006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5226,7 +5226,7 @@
       "displayOrder": 7007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5250,7 +5250,7 @@
       "displayOrder": 7008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5274,7 +5274,7 @@
       "displayOrder": 7009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5298,7 +5298,7 @@
       "displayOrder": 7010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5322,7 +5322,7 @@
       "displayOrder": 8000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5346,7 +5346,7 @@
       "displayOrder": 8001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5370,7 +5370,7 @@
       "displayOrder": 8002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5394,7 +5394,7 @@
       "displayOrder": 8003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5418,7 +5418,7 @@
       "displayOrder": 8004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5442,7 +5442,7 @@
       "displayOrder": 8005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5466,7 +5466,7 @@
       "displayOrder": 8006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5490,7 +5490,7 @@
       "displayOrder": 8007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5514,7 +5514,7 @@
       "displayOrder": 8008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5538,7 +5538,7 @@
       "displayOrder": 8009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5562,7 +5562,7 @@
       "displayOrder": 8010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5586,7 +5586,7 @@
       "displayOrder": 9000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5610,7 +5610,7 @@
       "displayOrder": 9001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5634,7 +5634,7 @@
       "displayOrder": 9002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5658,7 +5658,7 @@
       "displayOrder": 9003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5682,7 +5682,7 @@
       "displayOrder": 9004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5706,7 +5706,7 @@
       "displayOrder": 9005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5730,7 +5730,7 @@
       "displayOrder": 9006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5754,7 +5754,7 @@
       "displayOrder": 9007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5778,7 +5778,7 @@
       "displayOrder": 10000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5802,7 +5802,7 @@
       "displayOrder": 10001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5826,7 +5826,7 @@
       "displayOrder": 10002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5850,7 +5850,7 @@
       "displayOrder": 10003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5874,7 +5874,7 @@
       "displayOrder": 10004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5898,7 +5898,7 @@
       "displayOrder": 10005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5922,7 +5922,7 @@
       "displayOrder": 10006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5946,7 +5946,7 @@
       "displayOrder": 10007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5970,7 +5970,7 @@
       "displayOrder": 10008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -5994,7 +5994,7 @@
       "displayOrder": 10009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6018,7 +6018,7 @@
       "displayOrder": 10010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6042,7 +6042,7 @@
       "displayOrder": 10011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6066,7 +6066,7 @@
       "displayOrder": 10012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6090,7 +6090,7 @@
       "displayOrder": 10013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6114,7 +6114,7 @@
       "displayOrder": 11000,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6138,7 +6138,7 @@
       "displayOrder": 11001,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6162,7 +6162,7 @@
       "displayOrder": 11002,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6186,7 +6186,7 @@
       "displayOrder": 11003,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6210,7 +6210,7 @@
       "displayOrder": 11004,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6234,7 +6234,7 @@
       "displayOrder": 11005,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6258,7 +6258,7 @@
       "displayOrder": 11006,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6282,7 +6282,7 @@
       "displayOrder": 11007,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6306,7 +6306,7 @@
       "displayOrder": 11008,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6330,7 +6330,7 @@
       "displayOrder": 11009,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6354,7 +6354,7 @@
       "displayOrder": 11010,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6378,7 +6378,7 @@
       "displayOrder": 11011,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6402,7 +6402,7 @@
       "displayOrder": 11012,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6426,7 +6426,7 @@
       "displayOrder": 11013,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     },
@@ -6450,7 +6450,7 @@
       "displayOrder": 11014,
       "featured": false,
       "createdAt": "2026-09-25T17:04:51.631Z",
-      "updatedAt": "2026-09-25T17:04:51.631Z",
+      "updatedAt": "2026-09-27T01:33:46.722Z",
       "createdBy": "exact-product-catalog-import",
       "updatedBy": "exact-product-catalog-import"
     }
@@ -6458,7 +6458,7 @@
   "machines": {
     "epson-surecolor-s80670": {
       "id": "epson-surecolor-s80670",
-      "name": "Axon",
+      "name": "Epson SureColor S80670",
       "slug": "axon",
       "category": "Large-Format Printing",
       "shortDescription": "Professional large-format printing for detailed, vibrant advertising output.",
@@ -6473,7 +6473,7 @@
         "solvent-flex",
         "banner-printing"
       ],
-      "displayOrder": 0,
+      "displayOrder": 1,
       "published": true,
       "fullDescription": "A professional large-format printing system designed for high-quality wide-format production. The Epson SureColor S80670 shown here is built for detailed, vibrant large-format output and is suitable for producing high-impact advertising and display graphics.",
       "specifications": [],
@@ -6489,8 +6489,8 @@
     },
     "wide-format-roll-laminator": {
       "id": "wide-format-roll-laminator",
-      "name": "Excel Z (Wide Format Roll Laminator)",
-      "slug": "excel-z-wide-format-roll-laminator",
+      "name": "Excel Z (Lamination Machine)",
+      "slug": "axel-z-wide-format-roll-laminator",
       "category": "Finishing Equipment",
       "shortDescription": "Controlled roll laminating for advertising, signage and display graphics.",
       "description": "A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.",
@@ -6506,7 +6506,7 @@
         "banner-printing",
         "sign-boards"
       ],
-      "displayOrder": 1,
+      "displayOrder": 3,
       "published": true,
       "fullDescription": "A wide-format roll laminating and finishing machine designed to handle large printed media through a controlled roller-based process. It is suitable for finishing printed materials used in advertising, signage, display graphics and other large-format applications.",
       "specifications": [],
@@ -6523,7 +6523,7 @@
     },
     "large-format-printing-machine": {
       "id": "large-format-printing-machine",
-      "name": "512i Konica Flex Machine",
+      "name": "514i Konica Flex Machine",
       "slug": "512i-konica-flex-machine",
       "category": "Wide-Format Production",
       "shortDescription": "Roll-to-roll production for banners, signage graphics and advertising materials.",
@@ -6577,7 +6577,7 @@
         "sign-boards",
         "graphics-design"
       ],
-      "displayOrder": 3,
+      "displayOrder": 0,
       "published": true,
       "fullDescription": "A professional laser cutting and engraving machine designed for precise cutting, engraving, and custom fabrication work. It is suitable for producing detailed signage elements, lettering, decorative pieces, panels, templates, and other customized advertising and display materials.",
       "specifications": [],
@@ -6635,14 +6635,14 @@
   "projects": {},
   "catalogMetadata": {
     "products-exact-pdf": {
-      "version": "new-national-advertising-exact-pdf-v2",
+      "version": "new-national-advertising-exact-pdf-v3",
       "source": "New National Advertising Exact Products Catalog Import & Replit Implementation Prompt",
       "categoryCount": 12,
       "listedProductCount": 202,
       "uniqueProductCount": 202,
       "duplicateOccurrencesAvoided": 0,
-      "imagesEmpty": true,
-      "migratedAt": "2026-09-25T17:04:51.631Z"
+      "imagesEmpty": false,
+      "migratedAt": "2026-09-27T01:33:46.722Z"
     }
   },
   "productCategories": {
