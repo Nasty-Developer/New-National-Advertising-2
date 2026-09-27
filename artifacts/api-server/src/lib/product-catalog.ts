@@ -24,6 +24,7 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "UV DTF stickers": "/product-images/labels-stickers/uv-dtf-stickers.jpg",
   "Vinyl flooring stickers": "/product-images/labels-stickers/vinyl-flooring-stickers.jpg",
   "Vinyl waterproof stickers": "/product-images/labels-stickers/vinyl-waterproof-stickers.jpg",
+  "Wine bottle labels": "/product-images/labels-stickers/wine-bottle-labels.jpg",
 };
 
 type ProductCategory = {
