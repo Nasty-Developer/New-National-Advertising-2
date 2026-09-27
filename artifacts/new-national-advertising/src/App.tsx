@@ -261,7 +261,7 @@ function publicImageUrl(path?: string | null) {
   if (path.startsWith('/service-images/') || path.startsWith('/services/')) {
     return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
   }
-  if (path.startsWith('/new-') || path.startsWith('/machine') || path.startsWith('/service-') || path.startsWith('/favicon')) return path;
+  if (path.startsWith('/new-') || path.startsWith('/machine') || path.startsWith('/service-') || path.startsWith('/product-images/') || path.startsWith('/favicon')) return path;
   return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
 }
 

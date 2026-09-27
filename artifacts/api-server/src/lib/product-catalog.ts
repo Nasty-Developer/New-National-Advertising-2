@@ -1,7 +1,30 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v2";
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v3";
+
+const providedProductImagePaths: Readonly<Record<string, string>> = {
+  "Beer bottle labels": "/product-images/labels-stickers/beer-bottle-labels.jpg",
+  "Bottle labels": "/product-images/labels-stickers/bottle-labels.jpg",
+  "Brand-logo stickers": "/product-images/labels-stickers/brand-logo-stickers.jpg",
+  "Classic roll labels": "/product-images/labels-stickers/classic-roll-labels.jpg",
+  "Cosmetic labels": "/product-images/labels-stickers/cosmetic-labels.jpg",
+  "Designer stickers": "/product-images/labels-stickers/designer-stickers.jpg",
+  "Die-cut stickers": "/product-images/labels-stickers/die-cut-stickers.jpg",
+  "Dome labels": "/product-images/labels-stickers/dome-labels.jpg",
+  "Double-sided labels": "/product-images/labels-stickers/double-sided-labels.jpg",
+  "Food-packaging labels": "/product-images/labels-stickers/food-packaging-labels.jpg",
+  "Laptop stickers": "/product-images/labels-stickers/laptop-stickers.jpg",
+  "PVC wall stickers": "/product-images/labels-stickers/pvc-wall-stickers.jpg",
+  "Roll labels": "/product-images/labels-stickers/roll-labels.jpg",
+  "Screen printing": "/product-images/labels-stickers/screen-printing.jpg",
+  "Special-finish labels": "/product-images/labels-stickers/special-finish-labels.jpg",
+  "Sticker sheets": "/product-images/labels-stickers/sticker-sheets.jpg",
+  "Transparent stickers": "/product-images/labels-stickers/transparent-stickers.jpg",
+  "UV DTF stickers": "/product-images/labels-stickers/uv-dtf-stickers.jpg",
+  "Vinyl flooring stickers": "/product-images/labels-stickers/vinyl-flooring-stickers.jpg",
+  "Vinyl waterproof stickers": "/product-images/labels-stickers/vinyl-waterproof-stickers.jpg",
+};
 
 type ProductCategory = {
   name: string;
@@ -325,8 +348,8 @@ function productRecord(entry: ProductCatalogEntry, now: Date): DocumentData {
     shortDescription: description,
     description,
     fullDescription: description,
-    imagePath: null,
-    imageUrl: null,
+    imagePath: providedProductImagePaths[entry.name] ?? null,
+    imageUrl: providedProductImagePaths[entry.name] ?? null,
     imageAlt: null,
     category: entry.category,
     catalogCategories: entry.sourceCategories,
@@ -397,8 +420,8 @@ async function migrateExactProductCatalog() {
       const previous = existingRecord?.data;
       await reference.set({
         ...productRecord(entry, now),
-        imagePath: previous?.imagePath ?? null,
-        imageUrl: previous?.imageUrl ?? null,
+        imagePath: providedProductImagePaths[entry.name] ?? previous?.imagePath ?? null,
+        imageUrl: providedProductImagePaths[entry.name] ?? previous?.imageUrl ?? null,
         imageAlt: previous?.imageAlt ?? null,
         serviceSlug: previous?.serviceSlug ?? null,
         price: previous?.price ?? null,
@@ -425,7 +448,7 @@ async function migrateExactProductCatalog() {
     listedProductCount: exactProductCatalogListedCount,
     uniqueProductCount: exactProductCatalog.length,
     duplicateOccurrencesAvoided: exactProductCatalogDuplicateCount,
-    imagesEmpty: true,
+     imagesEmpty: false,
     migratedAt: now,
   });
 }

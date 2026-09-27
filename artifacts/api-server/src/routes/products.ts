@@ -65,11 +65,7 @@ async function productResponse(id: string, data: DocumentData) {
     typeof data.imageUrl === "string" && data.imageUrl
       ? data.imageUrl
       : null;
-  const imageUrl = storedUrlIsStable(storedImageUrl)
-    ? storedImageUrl
-    : typeof imagePath === "string"
-      ? imagePath
-      : null;
+  const imageUrl = storedUrlIsStable(storedImageUrl) ? storedImageUrl : null;
 
   return {
     id,
