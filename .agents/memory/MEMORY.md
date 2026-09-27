@@ -12,6 +12,18 @@
 - [Route loading fallbacks](route-loading-fallbacks.md) — removing a global startup gate requires explicit loading or safe fallback states for API-backed detail routes.
 - [Workspace asset imports](workspace-asset-imports.md) — package-scoped pnpm commands run from the package directory, so resolve attached assets from the workspace root.
 - [Imported public asset routing](imported-public-asset-routing.md) — bundled category and brand assets must stay on frontend static paths; storage URLs are only for CMS-managed files.
+<<<<<<< HEAD
 - [Live category normalization](live-category-normalization.md) — category metadata casing differs from product records; resolve links and counts to exact published product values.
 - [Service image freshness](service-image-freshness.md) — never render cached service records during refresh; CMS service responses must revalidate before visuals appear.
 - [Imported repository cleanup](imported-repo-cleanup.md) — imported snapshots can contain merge markers and stale generated clients; scan and regenerate before preview.
+=======
+<<<<<<< HEAD
+- [Live category normalization](live-category-normalization.md) — category metadata casing differs from product records; resolve links and counts to exact published product values.
+- [Service image freshness](service-image-freshness.md) — never render cached service records during refresh; CMS service responses must revalidate before visuals appear.
+=======
+<<<<<<< HEAD
+- [Live category normalization](live-category-normalization.md) — category metadata casing differs from product records; resolve links and counts to exact published product values.
+=======
+>>>>>>> origin/main
+>>>>>>> origin/main
+>>>>>>> origin/main

@@ -1925,12 +1925,29 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
 function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const [submitted, setSubmitted] = useState(false);
   const [location] = useLocation();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/main
+>>>>>>> origin/main
   const {
     data: publicServices,
     loading: publicServicesLoading,
     error: publicServicesError,
     refetch: refetchPublicServices,
   } = usePublicServices();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+  const publicServices = usePublicServices();
+  const servicesQuery = useGetPublicServices();
+>>>>>>> origin/main
+>>>>>>> origin/main
+>>>>>>> origin/main
   const publicProducts = useGetPublicProducts();
   const requestedSlug = params.slug || location.replace(/^\/services\//, '').split(/[?#/]/)[0];
   const service = publicServices.find((item) => item.slug === requestedSlug);
@@ -1952,7 +1969,19 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
     canonical.href = canonicalUrl;
   }, [service]);
 
+<<<<<<< HEAD
   if (!service && publicServicesLoading) {
+=======
+<<<<<<< HEAD
+  if (!service && publicServicesLoading) {
+=======
+<<<<<<< HEAD
+  if (!service && publicServicesLoading) {
+=======
+  if (!service && servicesQuery.isLoading) {
+>>>>>>> origin/main
+>>>>>>> origin/main
+>>>>>>> origin/main
     return (
       <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
         <SiteHeader quoteHref="#service-enquiry" />
@@ -1963,14 +1992,38 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
     );
   }
 
+<<<<<<< HEAD
   if (!service && publicServicesError) {
+=======
+<<<<<<< HEAD
+  if (!service && publicServicesError) {
+=======
+<<<<<<< HEAD
+  if (!service && publicServicesError) {
+=======
+  if (!service && servicesQuery.isError) {
+>>>>>>> origin/main
+>>>>>>> origin/main
+>>>>>>> origin/main
     return (
       <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
         <SiteHeader quoteHref="#service-enquiry" />
         <main className="container-nna flex min-h-[70dvh] flex-col items-center justify-center gap-4 pt-[70px] text-center">
           <p className="eyebrow !text-[#a3443c]">Service unavailable</p>
           <p className="max-w-[360px] text-[13px] leading-6 text-[#68798a]">We could not load this service right now.</p>
+<<<<<<< HEAD
           <button type="button" onClick={() => void refetchPublicServices()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+=======
+<<<<<<< HEAD
+          <button type="button" onClick={() => void refetchPublicServices()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+=======
+<<<<<<< HEAD
+          <button type="button" onClick={() => void refetchPublicServices()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+=======
+          <button type="button" onClick={() => void servicesQuery.refetch()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+>>>>>>> origin/main
+>>>>>>> origin/main
+>>>>>>> origin/main
         </main>
       </div>
     );
