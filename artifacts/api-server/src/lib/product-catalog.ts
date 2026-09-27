@@ -1,7 +1,7 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v7";
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v8";
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Bill books": "/product-images/paper-corporate/bill-books.png",
@@ -64,6 +64,11 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Opener keychains": "/product-images/promotional-products/opener-keychains.jpg",
   "Photo-frame keychains": "/product-images/promotional-products/photo-frame-keychains.jpg",
   "Pin badges": "/product-images/promotional-products/pin-badges.jpg",
+  "Plastic pens": "/product-images/promotional-products/plastic-pens.jpg",
+  "Screwdriver pens": "/product-images/promotional-products/screwdriver-pens.jpg",
+  Sippers: "/product-images/promotional-products/sippers.jpg",
+  Umbrellas: "/product-images/promotional-products/umbrellas.jpg",
+  "USB pen drives": "/product-images/promotional-products/usb-pen-drives.jpg",
   "Beer bottle labels": "/product-images/labels-stickers/beer-bottle-labels.jpg",
   "Bottle labels": "/product-images/labels-stickers/bottle-labels.jpg",
   "Brand-logo stickers": "/product-images/labels-stickers/brand-logo-stickers.jpg",
