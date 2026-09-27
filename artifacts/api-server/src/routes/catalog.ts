@@ -142,6 +142,7 @@ const machineSeed = [
 ] as const;
 
 const serviceSeed = [
+<<<<<<< HEAD
   ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-images/sign-boards.png"],
   ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
   ["solvent-flex", "Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-images/solvent-flex.png"],
@@ -149,6 +150,15 @@ const serviceSeed = [
   ["screen-printing", "Screen Printing", "Custom print finishes", "Custom screen printing for apparel, promotional products and printed materials.", ["Wedding Cards", "Visiting Cards", "Letterheads", "T-Shirts", "Cup Print", "Envelopes", "Caps", "Umbrellas", "Carry Bags", "ID Ribbons", "School Bags"], ["Apparel printing", "Promotional products", "School and event materials", "Carry bags", "Stationery"], "service-images/screen-printing.png"],
   ["graphics-design", "Graphics Design", "Brand and creative design", "Professional creative design solutions for branding, marketing and communication.", ["Logo Design", "Social Media Posts", "Hoarding Banners", "Menu Cards", "Flyers", "Product Packaging", "Magazine Ads", "Visiting Cards", "Invitations", "Brochures", "Calendars"], ["Brand identity", "Social media communication", "Retail and menu design", "Packaging", "Advertising campaigns"], "service-images/graphics-design.png"],
   ["digital-printing", "Digital Printing", "Fast, detailed printing", "High-quality digital printing for business, promotional and everyday printing requirements.", ["Visiting Cards", "Bill Book", "Wedding Card", "Brochures", "Catalogues", "Pamphlets", "Posters", "Annual Reports", "UV Print", "Hotel Menus", "Hospital Files", "Trophy Stickers"], ["Business cards", "Marketing handouts", "Posters and pamphlets", "Menus and reports", "Specialty printed pieces"], "machine-konica-minolta-bizhub-c6000.png"],
+=======
+  ["sign-boards", "Signage Board", "Signage solutions", "Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.", ["Acrylic Clip-on Boards", "Crystal Letters", "LED Signage", "Steel & Brass Letters", "Pixel LED", "Backlit Signage", "Kitchen", "Badge", "Paper Bed", "Sandwich"], ["Shop Signage", "Office Signage", "Brand Displays", "Promotional Displays", "Indoor Signage", "Outdoor Signage", "Event Displays"], "service-sign-boards.jpg"],
+  ["banner-printing", "Banner Printing", "Advertising materials", "Large-format advertising banners for businesses, promotions, events and outdoor visibility.", ["Banner Printing", "Advertising Materials"], ["Store promotions", "Event backdrops", "Outdoor advertising", "Launch announcements", "Directional displays"], "service-banner-printing.jpg"],
+  ["solvent-flex", "Solvent Flex", "Large-format printing", "Large-format printing solutions for banners, displays, branding and promotional applications.", ["Star Flex", "Star Black Back", "One Way Vision", "Canvas", "Gloss Vinyl", "Matt Vinyl", "Vinyl with Sunboard", "Vinyl with Sunpack", "Sunboard 3mm / 5mm", "Backlight Printing"], ["Advertising Banners", "Shop Branding", "Outdoor Advertising", "Window Graphics", "Promotional Displays", "Backlit Displays"], "service-solvent-flex.jpg"],
+  ["offset-printing", "Flex Printing", "Commercial printing", "Professional printed materials for businesses, events, stationery and marketing requirements.", ["Brochure & Catalogues", "Calendars", "Letterheads", "Business Cards", "Bill Books", "Envelopes", "Wedding Cards", "Flyers & Leaflets", "Pavti Books", "Menu Cards"], ["Business stationery", "Marketing collateral", "Event materials", "Retail menus", "Wedding and invitation suites"], "service-offset-printing.jpg"],
+  ["screen-printing", "Screen Printing", "Custom print finishes", "Custom screen printing for apparel, promotional products and printed materials.", ["Wedding Cards", "Visiting Cards", "Letterheads", "T-Shirts", "Cup Print", "Envelopes", "Caps", "Umbrellas", "Carry Bags", "ID Ribbons", "School Bags"], ["Apparel printing", "Promotional products", "School and event materials", "Carry bags", "Stationery"], "service-screen-printing.jpg"],
+  ["graphics-design", "Graphics Design", "Brand and creative design", "Professional creative design solutions for branding, marketing and communication.", ["Logo Design", "Social Media Posts", "Hoarding Banners", "Menu Cards", "Flyers", "Product Packaging", "Magazine Ads", "Visiting Cards", "Invitations", "Brochures", "Calendars"], ["Brand identity", "Social media communication", "Retail and menu design", "Packaging", "Advertising campaigns"], "service-graphics-design.jpg"],
+  ["digital-printing", "Digital Printing", "Fast, detailed printing", "High-quality digital printing for business, promotional and everyday printing requirements.", ["Visiting Cards", "Bill Book", "Wedding Card", "Brochures", "Catalogues", "Pamphlets", "Posters", "Annual Reports", "UV Print", "Hotel Menus", "Hospital Files", "Trophy Stickers"], ["Business cards", "Marketing handouts", "Posters and pamphlets", "Menus and reports", "Specialty printed pieces"], "service-digital-printing.jpg"],
+>>>>>>> origin/main
 ] as const;
 
 const providedServiceImageSeeds = [
@@ -307,9 +317,13 @@ router.get("/machines", async (_req, res): Promise<void> => {
 });
 
 router.get("/services", async (_req, res): Promise<void> => {
+<<<<<<< HEAD
   // Service images and copy are CMS-managed. Do not let an older response
   // paint first while the current catalogue is being revalidated.
   res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+=======
+  res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+>>>>>>> origin/main
   res.json(await publicDocuments("services"));
 });
 
