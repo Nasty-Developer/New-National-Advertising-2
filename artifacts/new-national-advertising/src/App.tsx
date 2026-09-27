@@ -4,9 +4,9 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Search, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Badge, Bot, BriefcaseBusiness, Check, ChevronDown, CircleCheck, Clock3, FileText, Gift, Grid2X2, Heart, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PanelsTopLeft, PenLine, Phone, Printer, Ruler, Search, Send, ShieldCheck, Shirt, Sparkles, Sticker, Trophy, Utensils, X, type LucideIcon } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { getGetAdminSessionQueryKey, getGetPublicMachinesQueryKey, getGetPublicProductsQueryKey, getGetPublicProjectsQueryKey, getGetPublicServicesQueryKey, useGetAdminSession, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, getGetProductCategoriesQueryKey, getGetPublicMachinesQueryKey, getGetPublicProductsQueryKey, getGetPublicProjectsQueryKey, getGetPublicServicesQueryKey, useGetAdminSession, useGetProductCategories, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import { firebaseAuth } from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
@@ -76,142 +76,6 @@ const approvedServiceSlugs = new Set([
   'digital-printing',
 ]);
 const removedServiceItemNames = new Set(['signage', 'solvent flex']);
-
-const services = [
-  {
-    slug: 'sign-boards',
-    title: 'Signage Board',
-    category: 'Signage solutions',
-    description: 'Professional signage solutions designed to make businesses, brands and storefronts visible and memorable.',
-    whatIs: 'A Signage Board gives your storefront, office or event a clear visual identity. We help turn your brand into a physical display that is easy to notice in daylight and after dark.',
-    items: ['Acrylic Clip-on Boards', 'Crystal Letters', 'LED Signage', 'Steel & Brass Letters', 'Pixel LED', 'Backlit Signage', 'Kitchen', 'Badge', 'Paper Bed', 'Sandwich'],
-    applications: ['Shop Signage', 'Office Signage', 'Brand Displays', 'Promotional Displays', 'Indoor Signage', 'Outdoor Signage', 'Event Displays'],
-    materials: ['Acrylic', 'Crystal letters', 'LED', 'Steel and brass'],
-    whyChoose: ['Clearer brand visibility', 'Options for indoor and outdoor use', 'A choice of illuminated and non-illuminated finishes'],
-    image: '/service-sign-boards.jpg',
-    imageAlt: 'Modern storefront with acrylic and illuminated signage',
-    icon: Ruler,
-    accent: '#D7A918',
-    tint: '#FFFCF0',
-    seoTitle: 'Signage Board Services in Mumbai | New National Advertising',
-    seoDescription: 'Professional signage board, acrylic, LED, backlit and storefront signage solutions from New National Advertising in Mumbai.',
-    related: ['solvent-flex', 'banner-printing', 'graphics-design'],
-  },
-  {
-    slug: 'banner-printing',
-    title: 'Banner Printing',
-    category: 'Advertising materials',
-    description: 'Large-format advertising banners for businesses, promotions, events and outdoor visibility.',
-    whatIs: 'Banner printing helps a message stay visible across storefronts, events, promotions and outdoor advertising placements. We produce banner artwork and printed advertising materials around the use case.',
-    items: ['Banner Printing', 'Advertising Materials'],
-    applications: ['Store promotions', 'Event backdrops', 'Outdoor advertising', 'Launch announcements', 'Directional displays'],
-    materials: ['Printed banner material', 'Large-format graphics', 'Display-ready advertising artwork'],
-    whyChoose: ['Clear communication from a distance', 'Flexible for promotions and events', 'Designed around the placement and viewing context'],
-    image: '/service-banner-printing.jpg',
-    imageAlt: 'Large-format advertising banner being printed in a commercial studio',
-    icon: Printer,
-    accent: '#F26B5B',
-    tint: '#FFF5F2',
-    seoTitle: 'Banner Printing in Mumbai | New National Advertising',
-    seoDescription: 'Large-format advertising banner printing for businesses, promotions, events and outdoor visibility in Mumbai.',
-    related: ['solvent-flex', 'sign-boards', 'digital-printing'],
-  },
-  {
-    slug: 'solvent-flex',
-    title: 'Eco Solvent Flex',
-    category: 'Large-format printing',
-    description: 'Large-format printing solutions for banners, displays, branding and promotional applications.',
-    whatIs: 'Eco solvent flex printing is built for bold, visible graphics across banners, vinyl, window graphics and display materials. It is a practical way to carry a campaign from a storefront to a larger outdoor setting.',
-    items: ['Star Flex', 'Star Black Back', 'One Way Vision', 'Canvas', 'Gloss Vinyl', 'Matt Vinyl', 'Vinyl with Sunboard', 'Vinyl with Sunpack', 'Sunboard 3mm / 5mm', 'Backlight Printing'],
-    applications: ['Advertising Banners', 'Shop Branding', 'Outdoor Advertising', 'Window Graphics', 'Promotional Displays', 'Backlit Displays'],
-    materials: ['Star flex', 'Black back flex', 'One way vision', 'Canvas', 'Gloss vinyl', 'Matt vinyl', 'Sunboard and sunpack'],
-    whyChoose: ['Strong visual impact at larger sizes', 'Flexible options for windows, walls and displays', 'Suitable for colorful promotional artwork'],
-    image: '/service-solvent-flex.jpg',
-    imageAlt: 'Large-format flex banner and rolled vinyl beside a professional printer',
-    icon: Printer,
-    accent: '#00A8C6',
-    tint: '#F1FBFC',
-    seoTitle: 'Eco Solvent Flex & Large Format Printing in Mumbai | New National Advertising',
-    seoDescription: 'Large-format eco solvent flex, vinyl, canvas, sunboard and backlit printing solutions from New National Advertising in Mumbai.',
-    related: ['banner-printing', 'sign-boards', 'digital-printing'],
-  },
-  {
-    slug: 'offset-printing',
-    title: 'Offset Printing',
-    category: 'Commercial printing',
-    description: 'Professional printed materials for businesses, events, stationery and marketing requirements.',
-    whatIs: 'Offset printing is a dependable choice for polished stationery and marketing collateral. It brings consistent color and a considered paper finish to the pieces your business uses every day.',
-    items: ['Brochure & Catalogues', 'Calendars', 'Letterheads', 'Business Cards', 'Bill Books', 'Envelopes', 'Wedding Cards', 'Flyers & Leaflets', 'Pavti Books', 'Menu Cards'],
-    applications: ['Business stationery', 'Marketing collateral', 'Event materials', 'Retail menus', 'Wedding and invitation suites'],
-    materials: ['Paper stocks', 'Brochure paper', 'Card stocks', 'Envelopes', 'Finished and folded pieces'],
-    whyChoose: ['Consistent color across a printed set', 'A professional finish for business materials', 'Suitable for coordinated stationery and collateral'],
-    image: '/service-offset-printing.jpg',
-    imageAlt: 'Stacks of brochures, business cards and letterheads in an offset print studio',
-    icon: FileText,
-    accent: '#1769AA',
-    tint: '#F3F8FC',
-    seoTitle: 'Offset Printing in Mumbai | New National Advertising',
-    seoDescription: 'Offset printing for brochures, catalogues, stationery, business cards, menus and event materials in Mumbai.',
-    related: ['digital-printing', 'graphics-design', 'screen-printing'],
-  },
-  {
-    slug: 'screen-printing',
-    title: 'Screen Printing',
-    category: 'Custom print finishes',
-    description: 'Custom screen printing for apparel, promotional products and printed materials.',
-    whatIs: 'Screen printing places a distinct layer of ink onto a surface, making it a useful option for apparel, bags, stationery and promotional pieces that benefit from a tactile printed finish.',
-    items: ['Wedding Cards', 'Visiting Cards', 'Letterheads', 'T-Shirts', 'Cup Print', 'Envelopes', 'Caps', 'Umbrellas', 'Carry Bags', 'ID Ribbons', 'School Bags'],
-    applications: ['Apparel printing', 'Promotional products', 'School and event materials', 'Carry bags', 'Stationery'],
-    materials: ['T-shirts', 'Caps', 'Carry bags', 'Umbrellas', 'Paper and stationery', 'School bags'],
-    whyChoose: ['Tactile ink texture', 'Works across apparel and promotional materials', 'A practical fit for branded collections'],
-    image: '/service-screen-printing.jpg',
-    imageAlt: 'Screen-printed apparel, carry bags and promotional materials in a print studio',
-    icon: PenLine,
-    accent: '#D9468C',
-    tint: '#FFF5F9',
-    seoTitle: 'Screen Printing in Mumbai | New National Advertising',
-    seoDescription: 'Custom screen printing for t-shirts, caps, bags, stationery, umbrellas and promotional materials in Mumbai.',
-    related: ['graphics-design', 'offset-printing', 'digital-printing'],
-  },
-  {
-    slug: 'graphics-design',
-    title: 'Graphics Design',
-    category: 'Brand and creative design',
-    description: 'Professional creative design solutions for branding, marketing and communication.',
-    whatIs: 'Graphics design shapes how your business looks across print, signage and digital touchpoints. We help organize your message into practical, ready-to-use visual assets.',
-    items: ['Logo Design', 'Social Media Posts', 'Hoarding Banners', 'Menu Cards', 'Flyers', 'Product Packaging', 'Magazine Ads', 'Visiting Cards', 'Invitations', 'Brochures', 'Calendars'],
-    applications: ['Brand identity', 'Social media communication', 'Retail and menu design', 'Packaging', 'Advertising campaigns'],
-    materials: ['Logo systems', 'Print-ready artwork', 'Packaging layouts', 'Digital social formats', 'Marketing collateral'],
-    whyChoose: ['A consistent visual language across materials', 'Design prepared for real print applications', 'Clearer communication for customers and teams'],
-    image: '/service-graphics-design.jpg',
-    imageAlt: 'Creative design desk with branding layouts, packaging and print materials',
-    icon: Grid2X2,
-    accent: '#3BA776',
-    tint: '#F3FBF7',
-    seoTitle: 'Graphics Design Services in Mumbai | New National Advertising',
-    seoDescription: 'Graphics design for logos, packaging, social posts, menus, brochures, flyers and marketing communication in Mumbai.',
-    related: ['offset-printing', 'digital-printing', 'sign-boards'],
-  },
-  {
-    slug: 'digital-printing',
-    title: 'Digital Printing',
-    category: 'Fast, detailed printing',
-    description: 'High-quality digital printing for business, promotional and everyday printing requirements.',
-    whatIs: 'Digital printing is a flexible route for sharp, colorful business and marketing materials. It works well when you need polished printed pieces with a practical turnaround and a range of formats.',
-    items: ['Visiting Cards', 'Bill Book', 'Wedding Card', 'Brochures', 'Catalogues', 'Pamphlets', 'Posters', 'Annual Reports', 'UV Print', 'Hotel Menus', 'Hospital Files', 'Trophy Stickers'],
-    applications: ['Business cards', 'Marketing handouts', 'Posters and pamphlets', 'Menus and reports', 'Specialty printed pieces'],
-    materials: ['Card stocks', 'Brochure paper', 'Poster paper', 'Menu materials', 'UV print surfaces'],
-    whyChoose: ['Crisp detail for colorful artwork', 'Flexible for business and promotional formats', 'A practical option for everyday print requirements'],
-    image: '/service-digital-printing.jpg',
-    imageAlt: 'Digital printer producing colorful brochures, posters and marketing materials',
-    icon: Sparkles,
-    accent: '#F2994A',
-    tint: '#FFF8F1',
-    seoTitle: 'Digital Printing in Mumbai | New National Advertising',
-    seoDescription: 'Digital printing for business cards, brochures, posters, menus, reports and promotional materials in Mumbai.',
-    related: ['offset-printing', 'graphics-design', 'banner-printing'],
-  },
-];
 
 const process = [
   { number: '01', title: 'Discuss', copy: 'Share your requirements.', icon: MessageCircle, accent: '#1769AA' },
@@ -366,6 +230,90 @@ function usePublicMachines() {
   return { data: data as MachineRecord[], loading: query.isLoading };
 }
 
+type ProductCategoryCard = (typeof productCategories)[number] & {
+  categoryId?: string;
+  description?: string;
+  productCount?: number;
+};
+
+const categoryDescriptions: Record<string, string> = {
+  'Signage & Display': 'Bold signs, displays and storefront visibility.',
+  'Acrylic Products': 'Clear, polished pieces made for brands and spaces.',
+  'Labels & Stickers': 'Labels and stickers with useful, memorable finishes.',
+  'Core Printing & Branding': 'The everyday print and brand production work.',
+  'Paper & Corporate Printing': 'Stationery and printed collateral for business.',
+  'Events & Wedding': 'Invitations, cards and details for important moments.',
+  'Promotional Products': 'Branded gifts and useful promotional pieces.',
+  'Apparel': 'Custom apparel, caps and lanyards for your team.',
+  'Food / Hospitality Packaging': 'Packaging that presents food and hospitality well.',
+  'Awards & Recognition': 'Trophies and recognition pieces worth keeping.',
+  'Office / Corporate Utility': 'Practical branded items for the workplace.',
+  'Specialized Products': 'Distinctive printed products for specific needs.',
+};
+
+const categoryVisuals: Record<string, { icon: LucideIcon; accent: string; tint: string }> = {
+  'Signage & Display': { icon: PanelsTopLeft, accent: '#1769AA', tint: '#EAF4FB' },
+  'Acrylic Products': { icon: Grid2X2, accent: '#00A8C6', tint: '#EAFBFC' },
+  'Labels & Stickers': { icon: Sticker, accent: '#D9468C', tint: '#FFF0F7' },
+  'Core Printing & Branding': { icon: Printer, accent: '#F2994A', tint: '#FFF5E9' },
+  'Paper & Corporate Printing': { icon: FileText, accent: '#1769AA', tint: '#EAF4FB' },
+  'Events & Wedding': { icon: Heart, accent: '#D9468C', tint: '#FFF0F7' },
+  'Promotional Products': { icon: Gift, accent: '#F2994A', tint: '#FFF5E9' },
+  Apparel: { icon: Shirt, accent: '#3BA776', tint: '#ECFAF3' },
+  'Food / Hospitality Packaging': { icon: Utensils, accent: '#F26B5B', tint: '#FFF1EE' },
+  'Awards & Recognition': { icon: Trophy, accent: '#D7A918', tint: '#FFF9DF' },
+  'Office / Corporate Utility': { icon: BriefcaseBusiness, accent: '#1769AA', tint: '#EAF4FB' },
+  'Specialized Products': { icon: Badge, accent: '#00A8C6', tint: '#EAFBFC' },
+};
+
+function useProductCategoryCards(enabled = true) {
+  const query = useGetProductCategories({
+    query: {
+      queryKey: getGetProductCategoriesQueryKey(),
+      enabled,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
+
+  const fallback = productCategories.map((category) => ({
+    ...category,
+    description: categoryDescriptions[category.name],
+  }));
+  const data = Array.isArray(query.data) && query.data.length
+    ? query.data
+      .filter((category) => category.active)
+      .sort((left, right) => left.displayOrder - right.displayOrder)
+      .map((category) => {
+        const fallbackCategory = productCategories.find(
+          (item) => item.name.toLowerCase() === category.categoryName.trim().toLowerCase(),
+        );
+        const name = fallbackCategory?.name ?? category.categoryName.trim();
+        return {
+          ...(fallbackCategory ?? {
+            name,
+            image: '',
+            alt: name,
+          }),
+          categoryId: category.categoryId,
+          name,
+          image: optimizedImageUrl(category.categoryImageUrl || category.categoryImagePath) || fallbackCategory?.image || '',
+          alt: category.categoryImageAlt || fallbackCategory?.alt || name,
+          description: categoryDescriptions[name],
+        };
+      })
+    : fallback;
+
+  return {
+    data: data as ProductCategoryCard[],
+    loading: enabled && query.isLoading,
+  };
+}
+
+function resolveLiveCategoryName(categoryName: string, products: Array<{ category: string }>) {
+  return products.find((product) => product.category.toLowerCase() === categoryName.trim().toLowerCase())?.category ?? categoryName;
+}
+
 function useDeferredSection(rootMargin = '640px 0px') {
   const sectionRef = useRef<HTMLElement>(null);
   const [ready, setReady] = useState(false);
@@ -434,7 +382,7 @@ type GlobalSearchResult = {
 };
 
 const searchPlaceholders = [
-  'Search products...',
+  'Search products, materials & services...',
   'Search machines...',
   'Search services...',
   'Search categories...',
@@ -460,6 +408,8 @@ function GlobalSearchBox({
   active,
   setActive,
   onNavigate,
+  autoFocus = false,
+  placeholderText,
   className = '',
 }: {
   query: string;
@@ -469,6 +419,8 @@ function GlobalSearchBox({
   active: boolean;
   setActive: (value: boolean) => void;
   onNavigate?: () => void;
+  autoFocus?: boolean;
+  placeholderText?: string;
   className?: string;
 }) {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -498,7 +450,8 @@ function GlobalSearchBox({
           aria-label="Search New National Advertising"
           aria-expanded={active}
           aria-controls="global-search-results"
-          placeholder={searchPlaceholders[placeholderIndex]}
+          autoFocus={autoFocus}
+          placeholder={placeholderText ?? searchPlaceholders[placeholderIndex]}
           className="min-w-0 flex-1 bg-transparent text-[11px] font-semibold text-[#203950] outline-none placeholder:text-[#7b919f]"
         />
         {query && (
@@ -573,18 +526,22 @@ function useGlobalSearch(query: string, active: boolean) {
       gcTime: 30 * 60 * 1000,
     },
   });
+  const categories = useProductCategoryCards(active);
 
   const term = query.trim().toLowerCase();
   const results = useMemo(() => {
     if (!term) return [];
     const candidates: GlobalSearchResult[] = [
-      ...productCategories.map((category) => ({
-        kind: 'Category' as const,
-        label: category.name,
-        meta: 'Product catalogue',
-        href: `/products?category=${encodeURIComponent(category.name)}`,
-        searchable: `${category.name} product category`,
-      })),
+      ...categories.data.map((category) => {
+        const liveName = resolveLiveCategoryName(category.name, productsQuery.data ?? []);
+        return {
+          kind: 'Category' as const,
+          label: category.name,
+          meta: 'Product catalogue',
+          href: `/products?category=${encodeURIComponent(liveName)}`,
+          searchable: `${category.name} product category`,
+        };
+      }),
       ...(productsQuery.data ?? []).map((product) => ({
         kind: 'Product' as const,
         label: product.name,
@@ -599,7 +556,7 @@ function useGlobalSearch(query: string, active: boolean) {
         href: `/machines#machine-${searchSlug(machine.name)}`,
         searchable: `${machine.name} ${machine.category} ${machine.description}`,
       })),
-      ...(servicesQuery.data ?? services).map((service) => ({
+      ...(servicesQuery.data ?? []).map((service) => ({
         kind: 'Service' as const,
         label: service.title,
         meta: service.category ?? 'Service',
@@ -615,11 +572,11 @@ function useGlobalSearch(query: string, active: boolean) {
       .filter((candidate) => candidate.searchable.toLowerCase().includes(term))
       .sort((a, b) => searchScore(term, a.searchable) - searchScore(term, b.searchable))
       .slice(0, 8);
-  }, [machinesQuery.data, productsQuery.data, servicesQuery.data, term]);
+  }, [categories.data, machinesQuery.data, productsQuery.data, servicesQuery.data, term]);
 
   return {
     results,
-    loading: active && (productsQuery.isLoading || machinesQuery.isLoading || servicesQuery.isLoading),
+    loading: active && (productsQuery.isLoading || machinesQuery.isLoading || servicesQuery.isLoading || categories.loading),
   };
 }
 
@@ -642,6 +599,7 @@ function SecondaryButton({ href = '#services', children = 'View Services' }: { h
 function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   const { settings, contacts } = usePublicSettings();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchActive, setSearchActive] = useState(false);
@@ -655,6 +613,15 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const toggleMobileSearch = () => {
+    setMenuOpen(false);
+    setMobileSearchOpen((open) => {
+      const nextOpen = !open;
+      setSearchActive(nextOpen);
+      if (!nextOpen) setSearchQuery('');
+      return nextOpen;
+    });
+  };
 
   return (
     <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
@@ -688,26 +655,45 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
           <PrimaryButton href={quoteHref} />
         </div>
         </div>
-        <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] lg:hidden">
-          {menuOpen ? <X size={23} /> : <Menu size={23} />}
-        </button>
+         <div className="ml-auto flex items-center gap-1 lg:hidden">
+           <button
+             type="button"
+             onClick={toggleMobileSearch}
+             aria-label={mobileSearchOpen ? 'Close search' : 'Open search'}
+             aria-expanded={mobileSearchOpen}
+             aria-controls="mobile-search-panel"
+             data-testid="button-mobile-search"
+             className={`flex h-11 w-11 items-center justify-center rounded-full text-[#17314d] transition duration-150 hover:scale-[1.04] hover:bg-[#eaf4f8] hover:text-[#1669aa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2 ${mobileSearchOpen ? 'bg-[#eaf4f8] text-[#1669aa]' : ''}`}
+           >
+             <Search size={21} strokeWidth={1.8} />
+           </button>
+           <button type="button" onClick={() => { setMobileSearchOpen(false); setSearchActive(false); setMenuOpen((open) => !open); }} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="flex h-11 w-11 items-center justify-center rounded-full text-[#17314d] transition hover:bg-[#edf4f8] hover:text-[#1669aa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">
+             {menuOpen ? <X size={23} /> : <Menu size={23} />}
+           </button>
+         </div>
       </div>
+       {mobileSearchOpen && (
+         <div id="mobile-search-panel" className="border-t border-[#e4ebf0] bg-white/95 px-5 pb-4 pt-3 shadow-[0_8px_20px_rgba(24,52,82,.08)] lg:hidden">
+           <GlobalSearchBox
+             query={searchQuery}
+             setQuery={setSearchQuery}
+             results={globalSearch.results}
+             loading={globalSearch.loading}
+             active={searchActive}
+             setActive={setSearchActive}
+             autoFocus
+             placeholderText="Search products, materials & services..."
+             onNavigate={() => {
+               setSearchActive(false);
+               setMobileSearchOpen(false);
+             }}
+             className="w-full"
+           />
+         </div>
+       )}
       {menuOpen && (
         <div className="border-t border-[#e4ebf0] bg-white px-5 pb-6 pt-4 shadow-lg lg:hidden">
           <nav className="container-nna flex flex-col gap-1" aria-label="Mobile navigation">
-            <GlobalSearchBox
-              query={searchQuery}
-              setQuery={setSearchQuery}
-              results={globalSearch.results}
-              loading={globalSearch.loading}
-              active={searchActive}
-              setActive={setSearchActive}
-              onNavigate={() => {
-                setSearchActive(false);
-                setMenuOpen(false);
-              }}
-              className="mb-3 w-full"
-            />
             {navigationItems.map((item) => (
               <a
                 key={item.label}
@@ -759,13 +745,9 @@ const emptyQuote: QuoteDraft = { service: '', need: '', quantity: '', name: '', 
 
 function usePublicServices() {
   const query = useGetPublicServices();
-  const fallbackServices = useMemo<ServiceRecord[]>(
-    () => services.map((service) => ({ ...service, id: `fallback-${service.slug}` })),
-    [],
-  );
-  return useMemo<ServiceRecord[]>(() => {
-    if (!Array.isArray(query.data)) return fallbackServices;
-    const remoteServices = (Array.isArray(query.data) ? query.data : [])
+  const data = useMemo<ServiceRecord[]>(() => {
+    if (!Array.isArray(query.data)) return [];
+    const remoteServices = query.data
       .filter((remote: ApiService) => approvedServiceSlugs.has(remote.slug));
     return remoteServices.map((remote: ApiService) => {
       const visual =
@@ -803,7 +785,13 @@ function usePublicServices() {
         related: remote.relatedSlugs ?? [],
       };
     });
-  }, [fallbackServices, query.data]);
+  }, [query.data]);
+  return {
+    data,
+    loading: query.isLoading,
+    error: query.isError,
+    refetch: query.refetch,
+  };
 }
 
 function usePublicSettings() {
@@ -1124,7 +1112,19 @@ function FloatingContactActions({ quoteHref = '#contact', contextService, servic
 
 function Home() {
   const [submitted, setSubmitted] = useState(false);
-  const publicServices = usePublicServices();
+  const {
+    data: publicServices,
+    loading: publicServicesLoading,
+    error: publicServicesError,
+  } = usePublicServices();
+  const categoryCards = useProductCategoryCards();
+  const publicProducts = useGetPublicProducts({
+    query: {
+      queryKey: getGetPublicProductsQueryKey(),
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
   const [projectsSectionRef, projectsReady] = useDeferredSection();
   const publicProjects = useGetPublicProjects({
     query: {
@@ -1139,6 +1139,13 @@ function Home() {
   const primaryPhone = contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677';
   const whatsappPhone = contacts.find((item) => item.useForWhatsApp)?.phone || primaryPhone;
   const publicWhatsappUrl = `https://wa.me/${whatsappPhone.replace(/\D/g, '').replace(/^0/, '91')}?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire.`;
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const product of publicProducts.data ?? []) {
+      counts.set(product.category, (counts.get(product.category) ?? 0) + 1);
+    }
+    return counts;
+  }, [publicProducts.data]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -1230,25 +1237,99 @@ function Home() {
               <div><p className="eyebrow">What we do</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[40px]">Our Services</h2></div>
                <div className="flex items-end gap-5"><p className="max-w-[330px] text-[12px] leading-5 text-[#718092]">From business cards to large-format signage, we provide an all printing solution for practical business and event needs.</p><a href="#contact" data-testid="link-view-all-services" className="arrow-link hidden shrink-0 items-center gap-1 text-[11px] font-bold text-[#1669aa] sm:flex">View All Services <ArrowRight size={14} /></a></div>
             </Reveal>
-             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {publicServices.map((service, index) => { const Icon = service.icon; return (
-                  <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
-                    <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
-                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={optimizedImageUrl(service.image)} alt={service.imageAlt} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" width="640" height="360" className={`h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-3' : 'object-cover'} transition duration-700`} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
-                      <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
-                    </Link>
-                 </Reveal>
-               ); })}
-             </div>
+              {publicServicesLoading ? (
+                <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading services" aria-live="polite">
+                  {[1, 2, 3, 4, 5, 6].map((item) => (
+                    <div key={item} className="overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white">
+                      <div className="h-[150px] animate-pulse bg-[#e8f0f3]" />
+                      <div className="space-y-3 p-5">
+                        <div className="h-5 w-3/5 animate-pulse rounded bg-[#e8f0f3]" />
+                        <div className="h-3 w-full animate-pulse rounded bg-[#eef3f5]" />
+                        <div className="h-3 w-4/5 animate-pulse rounded bg-[#eef3f5]" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : publicServicesError ? (
+                <div className="mt-9 rounded-[10px] border border-dashed border-[#cbdce4] bg-[#f8fbfc] px-6 py-12 text-center" role="status">
+                  <p className="eyebrow">Services loading</p>
+                  <p className="mx-auto mt-3 max-w-[360px] text-[12px] leading-5 text-[#718394]">Our current service details are temporarily unavailable. Please try again shortly.</p>
+                </div>
+              ) : (
+                <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {publicServices.map((service, index) => { const Icon = service.icon; return (
+                    <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
+                      <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
+                        <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={optimizedImageUrl(service.image)} alt={service.imageAlt} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" width="640" height="360" className={`h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-3' : 'object-cover'} transition duration-700`} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                        <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
+                      </Link>
+                    </Reveal>
+                  ); })}
+                </div>
+              )}
           </div>
         </section>
+
+         <section id="product-categories" className="relative overflow-hidden bg-[#f6fbfc] py-20 lg:py-24">
+           <div className="pointer-events-none absolute -right-24 top-10 h-64 w-64 rounded-full bg-[#00a8c6]/[.07] blur-3xl" />
+           <div className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-[#f2994a]/[.06] blur-3xl" />
+           <div className="container-nna relative">
+             <Reveal className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+               <div>
+                 <p className="eyebrow">Explore the catalogue</p>
+                 <h2 className="display mt-2 max-w-[600px] text-3xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[44px]">Find the right format<br /><span className="text-[#1769aa]">for your next idea.</span></h2>
+               </div>
+               <div className="max-w-[330px]">
+                 <p className="text-[12px] leading-5 text-[#6d7e8c]">Browse every product category, from everyday business print to standout branded pieces.</p>
+                 <Link href="/products" className="arrow-link mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-[#1669aa]">View all products <ArrowRight size={14} /></Link>
+               </div>
+             </Reveal>
+             <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+               {categoryCards.data.map((category, index) => {
+                 const liveName = resolveLiveCategoryName(category.name, publicProducts.data ?? []);
+                 const count = categoryCounts.get(liveName) ?? 0;
+                 const visual = categoryVisuals[category.name] ?? { icon: Grid2X2, accent: '#1769AA', tint: '#EAF4FB' };
+                 const Icon = visual.icon;
+                 return (
+                   <Reveal key={category.categoryId ?? category.name} delay={index * 45}>
+                     <Link
+                       href={`/products?category=${encodeURIComponent(liveName)}`}
+                       data-testid={`home-product-category-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                       className="category-showcase-card group block h-full rounded-[22px] border border-[#dce9ed] bg-white p-3 shadow-[0_10px_28px_rgba(24,52,82,.055)] transition duration-300 hover:-translate-y-1 hover:border-[#a9d1dc] hover:shadow-[0_18px_38px_rgba(24,52,82,.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-2 sm:p-4"
+                     >
+                       <div className="relative mx-auto aspect-square w-full max-w-[190px] overflow-hidden rounded-full border-[5px] border-white bg-[#edf5f6] shadow-[0_8px_22px_rgba(24,52,82,.1)] ring-1 ring-[#d8e8ec]">
+                         {category.image ? (
+                           <img src={optimizedImageUrl(category.image)} alt={category.alt} loading="lazy" decoding="async" width="420" height="420" className={`h-full w-full ${category.imageFit === 'contain' ? 'object-contain p-4' : 'object-cover'} transition duration-700 group-hover:scale-105`} />
+                         ) : (
+                           <div className="flex h-full w-full items-center justify-center" style={{ backgroundColor: visual.tint, color: visual.accent }}><Icon size={38} strokeWidth={1.4} /></div>
+                         )}
+                         <div className="absolute inset-0 rounded-full bg-gradient-to-t from-[#102941]/45 via-transparent to-transparent opacity-70" />
+                         <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold text-[#254660] shadow-sm">{count} products</span>
+                       </div>
+                       <div className="flex items-start justify-between gap-2 px-1 pt-4">
+                         <div className="min-w-0">
+                           <div className="flex items-center gap-1.5">
+                             <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: visual.accent }} />
+                             <h3 className="display text-[14px] font-extrabold leading-[1.05] tracking-[-.045em] text-[#203954] sm:text-[16px]">{category.name}</h3>
+                           </div>
+                           <p className="mt-2 line-clamp-2 text-[10px] leading-4 text-[#788b98] sm:text-[11px]">{category.description || 'Explore products made for your next project.'}</p>
+                         </div>
+                         <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white transition group-hover:translate-x-0.5" style={{ backgroundColor: visual.accent }}><ArrowUpRight size={13} /></span>
+                       </div>
+                     </Link>
+                   </Reveal>
+                 );
+               })}
+             </div>
+           </div>
+         </section>
 
         <section className="bg-[#f2f6f8] py-16 lg:py-20">
           <div className="container-nna">
             <Reveal><p className="eyebrow">Why choose us</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">Quality in Every Print</h2></Reveal>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-               {[['Quality Printing', content?.qualityBody || 'Clear & vibrant results', CircleCheck, '#1769AA', '#F1F7FC'], ['Wide Range of Services', content?.trustBody || 'All your printing needs', Grid2X2, '#00A8C6', '#F0FBFC'], ['Custom Solutions', content?.graphicsDesignBody || 'Tailored for your requirements', PenLine, '#3BA776', '#F1FAF5'], ['Reliable Service', content?.processBody || 'Professional service', Clock3, '#F2994A', '#FFF7EF']].map(([title, copy, Icon, accent, tint], index) => (
-                 <Reveal key={title as string} delay={index * 60} className="flex items-start gap-3 rounded-[8px] border border-[#e0e8ed] bg-white px-4 py-4 shadow-[0_5px_16px_rgba(31,61,87,.035)]"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md" style={{ backgroundColor: tint as string, color: accent as string }}><Icon size={16} /></div><div><h3 className="text-[11px] font-bold text-[#243b54]">{title as string}</h3><p className="mt-1 text-[10px] text-[#84919e]">{copy as string}</p></div></Reveal>
+             <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {[['Quality Printing', content?.qualityBody || 'Clear & vibrant results', CircleCheck, '#1769AA', '#F1F7FC'], ['Wide Range of Services', content?.trustBody || 'All your printing needs', Grid2X2, '#00A8C6', '#F0FBFC'], ['Custom Solutions', content?.graphicsDesignBody || 'Tailored for your requirements', PenLine, '#3BA776', '#F1FAF5'], ['Reliable Service', content?.processBody || 'Professional service', Clock3, '#F2994A', '#FFF7EF']].map(([title, copy, Icon, accent, tint], index) => (
+                  <Reveal key={title as string} delay={index * 60} className="group relative overflow-hidden rounded-[14px] border border-[#dce7ec] bg-white px-4 py-5 shadow-[0_8px_22px_rgba(31,61,87,.045)] transition hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(31,61,87,.1)]"><span className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: accent as string }} /><div className="flex items-start gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: tint as string, color: accent as string }}><Icon size={17} /></div><div><h3 className="text-[11px] font-bold text-[#243b54]">{title as string}</h3><p className="mt-1 text-[10px] leading-4 text-[#84919e]">{copy as string}</p></div></div></Reveal>
               ))}
             </div>
           </div>
@@ -1417,6 +1498,7 @@ function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(() => initialSearchParams.get('category'));
   const [search, setSearch] = useState(() => initialSearchParams.get('search') ?? '');
   const allProducts = useGetPublicProducts();
+  const categoryCards = useProductCategoryCards();
   useEffect(() => {
     setSelectedCategory(initialSearchParams.get('category'));
     setSearch(initialSearchParams.get('search') ?? '');
@@ -1472,15 +1554,17 @@ function Products() {
                   <p className="eyebrow">Browse by category</p>
                   <h2 className="display mt-2 text-3xl font-extrabold tracking-[-.06em] text-[#14213d] sm:text-4xl">Choose the work you need.</h2>
                 </div>
-                <span className="hidden text-[11px] font-semibold text-[#728692] sm:block">{allProducts.data?.length ?? 0} products across 12 categories</span>
+                 <span className="hidden text-[11px] font-semibold text-[#728692] sm:block">{allProducts.data?.length ?? 0} products across {categoryCards.data.length} categories</span>
               </div>
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {productCategories.map((category) => (
+                {categoryCards.data.map((category) => {
+                  const liveName = resolveLiveCategoryName(category.name, allProducts.data ?? []);
+                  return (
                   <button
-                    key={category.name}
+                    key={category.categoryId ?? category.name}
                     type="button"
                     onClick={() => {
-                      setSelectedCategory(category.name);
+                      setSelectedCategory(liveName);
                       setSearch("");
                     }}
                     className="group overflow-hidden rounded-[16px] border border-[#dce7ec] bg-white text-left shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(24,52,82,.12)]"
@@ -1489,14 +1573,15 @@ function Products() {
                     <div className="relative aspect-[1.45/1] overflow-hidden bg-[#edf4f6]">
                       <img src={optimizedImageUrl(category.image)} alt={category.alt} loading="lazy" decoding="async" width="768" height="512" className={`h-full w-full ${category.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition duration-700 group-hover:scale-[1.03]`} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#102941]/75 via-[#102941]/10 to-transparent" />
-                      <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold text-[#1c4661]">{categoryCounts.get(category.name) ?? 0} products</span>
+                      <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold text-[#1c4661]">{categoryCounts.get(liveName) ?? 0} products</span>
                     </div>
                     <div className="flex items-center justify-between gap-4 p-5">
                       <h3 className="display text-[21px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{category.name}</h3>
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eaf4f6] text-[#1769aa] transition group-hover:translate-x-1 group-hover:bg-[#1769aa] group-hover:text-white"><ArrowRight size={16} /></span>
                     </div>
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : allProducts.isLoading ? (
@@ -1829,8 +1914,12 @@ function upsertMeta(attribute: 'name' | 'property', key: string, content: string
 function ServiceDetailPage({ params }: { params: { slug?: string } }) {
   const [submitted, setSubmitted] = useState(false);
   const [location] = useLocation();
-  const publicServices = usePublicServices();
-  const servicesQuery = useGetPublicServices();
+  const {
+    data: publicServices,
+    loading: publicServicesLoading,
+    error: publicServicesError,
+    refetch: refetchPublicServices,
+  } = usePublicServices();
   const publicProducts = useGetPublicProducts();
   const requestedSlug = params.slug || location.replace(/^\/services\//, '').split(/[?#/]/)[0];
   const service = publicServices.find((item) => item.slug === requestedSlug);
@@ -1852,7 +1941,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
     canonical.href = canonicalUrl;
   }, [service]);
 
-  if (!service && servicesQuery.isLoading) {
+  if (!service && publicServicesLoading) {
     return (
       <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
         <SiteHeader quoteHref="#service-enquiry" />
@@ -1863,14 +1952,14 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
     );
   }
 
-  if (!service && servicesQuery.isError) {
+  if (!service && publicServicesError) {
     return (
       <div className="site-noise min-h-[100dvh] bg-[#fbfcfd] text-[#122641]">
         <SiteHeader quoteHref="#service-enquiry" />
         <main className="container-nna flex min-h-[70dvh] flex-col items-center justify-center gap-4 pt-[70px] text-center">
           <p className="eyebrow !text-[#a3443c]">Service unavailable</p>
           <p className="max-w-[360px] text-[13px] leading-6 text-[#68798a]">We could not load this service right now.</p>
-          <button type="button" onClick={() => void servicesQuery.refetch()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
+          <button type="button" onClick={() => void refetchPublicServices()} className="rounded-full bg-[#1769aa] px-4 py-2.5 text-[11px] font-bold text-white">Try again</button>
         </main>
       </div>
     );
