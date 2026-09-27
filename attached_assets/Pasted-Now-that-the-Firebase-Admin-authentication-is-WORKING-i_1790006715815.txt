@@ -1,0 +1,440 @@
+Now that the Firebase Admin authentication is WORKING in production, do NOT modify, replace, or break the existing admin authentication/login system.
+
+I want the Admin Panel to function as a REAL production CMS for New National Advertising.
+
+MAIN REQUIREMENT:
+Whenever I create, edit, publish/unpublish, reorder, update, or remove content from the Admin Panel, the corresponding change MUST actually appear on the public website.
+
+There must be NO fake/static/demo data pretending to be dynamic.
+
+==================================================
+1. SINGLE SOURCE OF TRUTH
+==================================================
+
+Make the backend/Firebase data the single source of truth.
+
+Public website content must come from the same persistent backend/Firebase data that the Admin Panel modifies.
+
+Do NOT maintain separate hardcoded copies of:
+- Services
+- Products
+- Machines
+- Projects
+- Website content
+- Contact information
+- Homepage sections
+- Featured projects
+- Any other CMS-managed content
+
+If fallback data currently exists, it must NOT override valid database data.
+
+Static fallback should only be used when the database is genuinely empty and it must never overwrite database content.
+
+==================================================
+2. ADMIN -> WEBSITE DATA FLOW
+==================================================
+
+Every CMS operation must follow this flow:
+
+Admin Panel
+   ↓
+Authenticated API request
+   ↓
+Backend validation
+   ↓
+Firestore/database update
+   ↓
+Public API reads updated database
+   ↓
+Website displays updated content
+
+Do not update only React/local state and pretend the operation succeeded.
+
+After Save/Create/Edit/Delete/Publish:
+- wait for the backend response
+- confirm the database operation succeeded
+- refresh/revalidate the relevant public data
+- show success only after the backend confirms the change
+
+If the backend operation fails:
+- do NOT show success
+- preserve the existing data
+- show a clear error message
+- do not leave the UI in a misleading state
+
+==================================================
+3. PRODUCTS
+==================================================
+
+Admin must be able to:
+- Create product
+- Edit product
+- Update name
+- Update description
+- Update price
+- Update category
+- Update image
+- Update stock/status
+- Publish/unpublish
+- Remove product
+
+Every change must appear on the public website.
+
+After editing a product, verify:
+- product listing updates
+- product detail page updates if applicable
+- image updates
+- price updates
+- category updates
+- availability/status updates
+
+==================================================
+4. MACHINES
+==================================================
+
+Admin must be able to:
+- Add machine
+- Edit machine
+- Change name
+- Change description
+- Change image
+- Change specifications
+- Publish/unpublish
+- Remove/archive machine
+
+The homepage and machines section must read the current backend data.
+
+If I change a machine image or name in Admin, the public website must display the new value.
+
+==================================================
+5. SERVICES
+==================================================
+
+Admin must be able to:
+- Add service
+- Edit service
+- Change title
+- Change description
+- Change image
+- Change pricing/details if supported
+- Publish/unpublish
+- Remove/archive
+
+Public service cards and service detail pages must use the backend data.
+
+No hardcoded service cards should override CMS data.
+
+==================================================
+6. PROJECTS
+==================================================
+
+Admin must be able to:
+- Create project
+- Edit project
+- Upload/change project images
+- Change title
+- Change description
+- Change service/category
+- Change project details
+- Publish/unpublish
+- Feature/unfeature
+- Archive/remove
+
+Public website must immediately use the current published project data.
+
+Homepage featured projects must come from the same project records.
+
+Do not keep old hardcoded project cards.
+
+==================================================
+7. WEBSITE CONTENT / HOMEPAGE
+==================================================
+
+Any editable website content currently exposed in Admin must actually control the public website.
+
+Examples:
+- Hero heading
+- Hero description
+- Hero image
+- Contact numbers
+- WhatsApp number
+- Email
+- Address
+- About content
+- CTA text
+- Homepage section content
+- Featured content
+- Social links
+- Footer information
+
+If Admin changes a value, the public website must read the updated value.
+
+==================================================
+8. IMAGE UPLOADS
+==================================================
+
+Images must use persistent Firebase Storage/backend storage.
+
+Do NOT use temporary browser blob URLs as permanent image URLs.
+
+After upload:
+1. Upload to persistent storage
+2. Obtain permanent URL/reference
+3. Save that URL/reference in the database
+4. Return it from the API
+5. Public website reads it from the database
+
+Handle failed uploads properly.
+
+Do not delete the existing image until the new upload has successfully completed and the database update succeeds.
+
+==================================================
+9. CACHE / STALE DATA
+==================================================
+
+Make sure the public website does not keep showing stale CMS data after an Admin update.
+
+Check:
+- React Query/cache if used
+- browser caching
+- API caching
+- static build-time data
+- localStorage
+- hardcoded constants
+- server-side cached responses
+
+After a successful Admin update, the next public API request must return the updated data.
+
+If the frontend uses caching, invalidate/refetch the affected query after a successful mutation.
+
+Do NOT add unnecessary realtime complexity if normal API refetch/invalidation is sufficient.
+
+==================================================
+10. CRUD CONSISTENCY
+==================================================
+
+Every Admin CRUD module must use the same reliable pattern:
+
+CREATE
+→ POST
+→ backend validates
+→ database writes
+→ response returns created record
+→ Admin UI refreshes
+
+UPDATE
+→ PUT/PATCH
+→ backend validates
+→ database updates
+→ response returns updated record
+→ Admin UI refreshes
+→ public website reads updated record
+
+DELETE/ARCHIVE
+→ backend operation
+→ database confirms
+→ Admin UI refreshes
+→ public website no longer displays removed/unpublished content
+
+Never report success before the backend confirms success.
+
+==================================================
+11. ERROR HANDLING
+==================================================
+
+Add proper handling for:
+- Firebase errors
+- authentication errors
+- authorization errors
+- network errors
+- invalid form data
+- missing required fields
+- image upload failures
+- Firestore failures
+- backend 4xx/5xx responses
+
+Use useful messages such as:
+"Failed to save service. Please try again."
+
+Do NOT silently swallow errors.
+
+Do NOT reset forms after a failed save.
+
+==================================================
+12. DATA VALIDATION
+==================================================
+
+Validate data on BOTH:
+- frontend
+- backend
+
+Never trust frontend validation alone.
+
+Prevent:
+- empty required names
+- invalid prices
+- malformed URLs
+- invalid image references
+- invalid IDs
+- corrupted records
+
+Keep existing valid data safe if an update fails.
+
+==================================================
+13. ADMIN UI STATE
+==================================================
+
+For every Save/Create/Update/Delete button:
+
+Before request:
+- disable duplicate submission
+- show loading state
+
+During request:
+- prevent accidental double-submit
+
+On success:
+- show success state
+- refresh data
+
+On failure:
+- restore button
+- preserve form values
+- show error
+
+No "fake success".
+
+==================================================
+14. PUBLIC WEBSITE VERIFICATION
+==================================================
+
+Audit every CMS-managed public component and identify where data currently comes from.
+
+Search the codebase for:
+- hardcoded services
+- hardcoded products
+- hardcoded machines
+- hardcoded projects
+- hardcoded contact details
+- hardcoded homepage content
+- static arrays
+- mock data
+- demo data
+- localStorage used as the source of truth
+
+Replace those sources with the real backend/API where they are supposed to be CMS-managed.
+
+Do NOT remove legitimate static UI configuration that is not CMS content.
+
+==================================================
+15. DO NOT BREAK EXISTING WORKING FEATURES
+==================================================
+
+VERY IMPORTANT:
+
+Do NOT modify:
+- Firebase Admin login
+- Firebase token verification
+- Admin authorization
+- Render environment variables
+- working authentication flow
+- existing working deployment configuration
+
+Do not introduce another authentication system.
+
+Do not change the existing Firebase project.
+
+Do not change the existing admin role structure.
+
+Preserve all currently working functionality.
+
+==================================================
+16. PRODUCTION SAFETY
+==================================================
+
+Before changing architecture, inspect the existing code and reuse the current:
+- API routes
+- services
+- Firestore collections
+- Firebase Storage setup
+- authentication middleware
+- frontend API client
+- existing types
+
+Do not unnecessarily rewrite working files.
+
+Avoid duplicate API endpoints.
+
+Avoid duplicate Firestore collections.
+
+Use the existing data model wherever possible.
+
+==================================================
+17. TEST EVERYTHING
+==================================================
+
+After implementation, perform a complete end-to-end CMS test.
+
+Test at least:
+
+A. Product
+Create → save → refresh Admin → check public website
+
+Edit → save → refresh Admin → check public website
+
+B. Machine
+Create/edit → save → refresh → check homepage/machines page
+
+C. Service
+Create/edit → save → refresh → check public services
+
+D. Project
+Create/edit → publish → check homepage/projects
+
+E. Image
+Upload → save → refresh Admin → open public website → verify image
+
+F. Publish/unpublish
+Publish → verify public
+
+Unpublish → verify no longer public
+
+G. Error handling
+Force/handle failed request → verify no fake success and existing data remains safe
+
+H. Authentication
+Verify Admin still requires Firebase authentication and admin authorization.
+
+==================================================
+18. FINAL QUALITY CHECK
+==================================================
+
+Run:
+- TypeScript typecheck
+- production build
+- lint if configured
+- API route verification
+- frontend verification
+
+Fix any errors introduced by this work.
+
+Do not leave TODOs for core CMS functionality.
+
+Do not say something works unless you actually verified the data flow.
+
+At the end, provide a concise report containing:
+
+1. Which Admin modules are fully connected to the public website
+2. Which Firestore collections are used
+3. Which API routes handle each module
+4. How image persistence works
+5. What caching/revalidation is used
+6. What tests were performed
+7. Any remaining known issue
+
+MOST IMPORTANT:
+The Admin Panel is not just a UI editor.
+
+It must be the actual control panel for the live website.
+
+If I change something in Admin, the live website must use that changed data after the backend/database update succeeds.

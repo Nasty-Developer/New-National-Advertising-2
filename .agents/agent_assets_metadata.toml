@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "0db5R8OgOt3Bp4Z3X_Jo2"
+uri = "file://attached_assets/New_National_Advertising_Product_Image_Classification.csv"
+type = "table"
+title = "Product image classification"
+description = "A 75-image mapping with visible titles, product/non-product classification, suggested existing categories, local-development candidates, duplicate-image groups, and production upload status."
+logical_id = "980fb6e6-d343-42ea-891f-9f84ca6cb8de"
+content_hash = "sha256:4244c938355d73eed5ac5b55e2a45e88d9746812af1ee527f1d0763b95699f72"
+size = 23852
+mtime_ms = 1790299371994
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:0d21dfb8-f36b-4646-9948-55b06ec05c66/980fb6e6-d343-42ea-891f-9f84ca6cb8de/fad5cfbd-a0f2-4e00-a3ef-5d1e05ed7c3a"
+storage_version_token = "1790299438321263"
+content_type = "text/csv"

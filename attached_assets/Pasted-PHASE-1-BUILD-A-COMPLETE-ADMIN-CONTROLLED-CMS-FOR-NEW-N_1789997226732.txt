@@ -1,0 +1,273 @@
+PHASE 1 — BUILD A COMPLETE ADMIN-CONTROLLED CMS FOR NEW NATIONAL ADVERTISING
+
+We already have the New National Advertising website deployed on Render with a React/Vite frontend and a Node/Express backend.
+
+IMPORTANT:
+Do NOT redesign the project from scratch.
+Do NOT remove any existing website data, services, machines, products, descriptions, images, contact information, routes, or existing functionality.
+Preserve all existing content and migrate/structure it into the new admin-controlled system.
+
+The objective of this phase is to make the Admin Panel the central CMS/control system for the entire website.
+
+==================================================
+1. MACHINES MANAGEMENT
+==================================================
+
+The Admin Panel must allow the administrator to:
+
+- Add new machines
+- Edit existing machines
+- Delete machines only through an intentional admin action
+- Change machine name
+- Change machine short description
+- Change machine full description/about information
+- Change machine specifications
+- Change machine features
+- Change machine category/type
+- Upload machine images
+- Upload multiple images for one machine
+- Replace existing images
+- Delete individual machine images
+- Reorder machine images
+- Set a primary/cover image
+- Publish/unpublish a machine
+- Control display order
+
+IMPORTANT:
+All existing machine information must remain available.
+Do NOT remove or simplify the existing machine data.
+
+The four existing machines must remain available and editable from the Admin Panel.
+
+Machine data currently includes:
+- Epson SureColor S80670
+- Wide-Format Roll Laminator
+- Large-Format Printing Machine
+- CO₂ Laser Cutting & Engraving Machine
+
+Do not invent technical specifications where they are not already available.
+
+==================================================
+2. PRODUCT MANAGEMENT
+==================================================
+
+Admin must be able to:
+
+- Add new products
+- Edit existing products
+- Delete products
+- Upload product images
+- Upload multiple product images
+- Change product name
+- Change description
+- Change category
+- Change specifications
+- Change price if applicable
+- Change stock/status
+- Change display order
+- Publish/unpublish products
+- Set featured products
+- Replace/delete product images
+
+Existing products must NOT be removed.
+
+The public Products page must automatically reflect published products from the Admin Panel.
+
+==================================================
+3. SERVICES MANAGEMENT
+==================================================
+
+Admin must be able to:
+
+- Add a completely new service
+- Edit existing services
+- Delete a service intentionally
+- Change service name
+- Change service short description
+- Change complete About/description
+- Change service features
+- Change service content
+- Upload service images
+- Upload multiple service images
+- Set service display order
+- Publish/unpublish service
+- Set service slug
+- Manage related projects for each service
+
+Existing services and their content MUST remain intact.
+
+Current services include:
+- Signage Board
+- Banner Printing
+- Eco Solvent Flex
+- Offset Printing
+- Screen Printing
+- Graphics Design
+- Digital Printing
+
+Do not remove any existing service information.
+
+==================================================
+4. WEBSITE CONTENT MANAGEMENT
+==================================================
+
+Create a Website Content section inside Admin Panel.
+
+Admin must be able to manage important website content including:
+
+- Homepage hero heading
+- Homepage hero description
+- Homepage hero image
+- Homepage CTA text
+- About section
+- Quality section
+- Trust section
+- Process section
+- Graphics Design section
+- Signage section
+- Contact section
+- Footer content
+- Business information
+- Other editable text/content sections
+
+The goal is that future content changes should not require editing source code.
+
+==================================================
+5. CONTACT NUMBERS
+==================================================
+
+Create proper contact-number management inside Admin Panel.
+
+The administrator must be able to:
+
+- Add new phone numbers
+- Edit phone numbers
+- Delete phone numbers
+- Reorder phone numbers
+- Set a primary phone number
+- Control which numbers appear on the website
+- Control numbers used for Call buttons
+- Control numbers used for WhatsApp buttons
+
+Initially add these existing business numbers:
+
+9555759677
+7506269783
+8898805753
+
+Do not hard-code these numbers in multiple frontend components.
+
+They should come from centralized admin-controlled website settings.
+
+==================================================
+6. GENERAL ADMIN SETTINGS
+==================================================
+
+Create a Settings section where admin can manage:
+
+- Business name
+- Phone numbers
+- Email
+- Address/location
+- WhatsApp numbers
+- Social media links
+- Google Maps link
+- Footer information
+- Website metadata where appropriate
+- Favicon/logo settings where technically appropriate
+
+==================================================
+7. BACKEND REQUIREMENT
+==================================================
+
+Because the project is hosted on Render, properly handle the backend architecture.
+
+Do NOT create fake frontend-only CRUD.
+
+Admin changes must persist through the actual backend/database/storage architecture.
+
+Make sure:
+
+- API endpoints exist for machines
+- API endpoints exist for products
+- API endpoints exist for services
+- API endpoints exist for website content
+- API endpoints exist for contact numbers/settings
+- Image uploads use persistent storage
+- Admin authentication remains protected
+- Admin-only operations are authorized server-side
+- Frontend reads published content from the backend
+
+Do not use temporary in-memory arrays for production data.
+
+Do not create functionality that disappears after a Render restart/redeployment.
+
+==================================================
+8. DATA SAFETY
+==================================================
+
+VERY IMPORTANT:
+
+DO NOT DELETE OR LOSE EXISTING DATA.
+
+Before modifying the data architecture:
+
+- Inspect the current project
+- Inspect current database/storage structures
+- Inspect existing machine/product/service data
+- Preserve existing routes
+- Preserve existing images
+- Preserve existing content
+- Migrate existing data safely if required
+
+Do not replace existing data with placeholders.
+
+==================================================
+9. ADMIN UI
+==================================================
+
+Make the Admin Panel professional and easy to operate.
+
+Use:
+
+- Dashboard
+- Machines
+- Products
+- Services
+- Projects
+- Website Content
+- Contact Information
+- Settings
+
+Each management section should have:
+
+- Search
+- Filters where useful
+- Add button
+- Edit button
+- Delete button
+- Image upload
+- Preview
+- Publish/unpublish
+- Loading states
+- Error states
+- Empty states
+- Confirmation before destructive actions
+
+==================================================
+10. FINAL REQUIREMENT
+==================================================
+
+The Admin Panel should become the central control system for the website.
+
+After this phase, an administrator should be able to change important website information without opening the source code.
+
+Test the entire flow:
+
+Admin Panel → Backend API → Database/Storage → Public Website
+
+Make sure changes actually appear on the live website after saving.
+
+Do not remove any existing website functionality.
+Do not create placeholder content.
+Do not generate images.

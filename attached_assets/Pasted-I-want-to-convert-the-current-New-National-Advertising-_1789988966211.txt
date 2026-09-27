@@ -1,0 +1,623 @@
+I want to convert the current New National Advertising project into a proper production-ready architecture using FIREBASE for persistent data/auth/storage and RENDER for the backend/API hosting.
+
+IMPORTANT:
+Do not destroy or rewrite the existing website.
+Do not remove existing pages, routes, designs, service pages, Machines page, Products page, navbar, footer, or existing functionality.
+
+The current Replit App Storage/database implementation should NOT be treated as the final production data architecture.
+
+FINAL ARCHITECTURE:
+
+Frontend:
+- Existing New National Advertising website
+- Existing public pages and admin UI
+- Keep the current design and routes
+
+Backend:
+- Node.js backend/API
+- Designed to be deployed on Render
+- Use environment variables for all secrets
+- Never expose Firebase Admin credentials to the browser
+
+Firebase:
+1. Firebase Authentication
+2. Cloud Firestore
+3. Firebase Storage
+
+Use Firebase Admin SDK on the backend/server side.
+
+==================================================
+1. FIREBASE AUTHENTICATION
+==================================================
+
+Create secure admin authentication.
+
+Routes:
+- /admin/login
+- /admin
+
+Requirements:
+- Admin login using Firebase Authentication
+- Verify Firebase ID tokens on the backend
+- Protected admin API routes
+- Only authorized admin users can access admin functionality
+- Support an admin role/permission system
+
+Admin users should be identified through Firestore user data or custom claims.
+
+Example:
+users/{uid}
+
+Fields:
+- email
+- displayName
+- role: "admin"
+- active: true
+- createdAt
+- updatedAt
+
+Never trust a client-side "admin" flag without server-side verification.
+
+==================================================
+2. FIRESTORE DATA ARCHITECTURE
+==================================================
+
+Create proper Firestore collections.
+
+PRODUCTS:
+
+products/{productId}
+
+Fields:
+- name
+- slug
+- shortDescription
+- description
+- category
+- imageUrl
+- gallery
+- price (optional)
+- status
+- stockStatus
+- displayOrder
+- featured
+- createdAt
+- updatedAt
+- createdBy
+- updatedBy
+
+Allowed status:
+- published
+- draft
+- archived
+
+Allowed stockStatus:
+- in_stock
+- low_stock
+- out_of_stock
+
+Public /products must show only published products.
+
+Admin must be able to:
+- Add product
+- Edit product
+- Delete/archive product
+- Upload product image
+- Add gallery images
+- Edit descriptions
+- Change category
+- Change price if applicable
+- Change stock status
+- Publish/unpublish
+- Change display order
+- Search
+- Filter
+- Sort
+
+==================================================
+3. SERVICES
+==================================================
+
+Create a Firestore-backed service structure while preserving the existing service names and routes.
+
+Services:
+
+1. Signage Board
+slug: sign-boards
+
+2. Banner Printing
+slug: banner-printing
+
+3. Eco Solvent Flex
+slug: solvent-flex
+
+4. Offset Printing
+slug: offset-printing
+
+5. Screen Printing
+slug: screen-printing
+
+6. Graphics Design
+slug: graphics-design
+
+7. Digital Printing
+slug: digital-printing
+
+Do NOT change the visible name "Signage Board".
+Do NOT change the visible name "Eco Solvent Flex".
+
+The existing routes must continue working.
+
+Admin should eventually be able to manage:
+- Service title
+- Description
+- Images
+- Offerings
+- Applications
+- Display order
+- Published/draft status
+
+Do not remove existing service information while connecting it to Firestore.
+
+==================================================
+4. MACHINES
+==================================================
+
+Create a Firestore-backed Machines collection.
+
+machines/{machineId}
+
+Fields:
+- name
+- slug
+- description
+- imageUrl
+- applications
+- displayOrder
+- published
+- createdAt
+- updatedAt
+
+Current machines:
+
+1. Epson SureColor S80670
+
+2. Wide-Format Roll Laminator
+
+3. Large-Format Printing Machine
+
+4. CO₂ Laser Cutting & Engraving Machine
+
+IMPORTANT:
+Do not invent exact model numbers, wattage, dimensions, speed, or technical specifications unless explicitly provided.
+
+Admin should eventually be able to:
+- Add machine
+- Edit machine
+- Upload/change image
+- Edit description
+- Edit applications
+- Change order
+- Publish/unpublish
+- Delete/archive
+
+The public /machines page should load machine data dynamically from Firestore.
+
+==================================================
+5. CUSTOMER REQUESTS
+==================================================
+
+This is VERY IMPORTANT.
+
+All customer enquiries/request forms on the website must eventually be connected to the backend.
+
+Create:
+
+quoteRequests/{requestId}
+
+Fields:
+
+- name
+- phone
+- email
+- service
+- requirementDetails
+- quantity
+- preferredDate
+- attachmentUrl
+- attachmentName
+- status
+- createdAt
+- updatedAt
+- source
+
+Statuses:
+
+- new
+- contacted
+- quoted
+- approved
+- completed
+- cancelled
+
+When a customer submits a quote/request:
+1. Validate the request
+2. Send it securely to the backend
+3. Backend validates it again
+4. Save it to Firestore
+5. Save uploaded attachment to Firebase Storage if provided
+6. Return a success response
+7. Show a proper success message to the customer
+
+Do NOT fake successful submissions.
+
+==================================================
+6. CONTACT REQUESTS
+==================================================
+
+Create:
+
+contactRequests/{requestId}
+
+Fields:
+- name
+- phone
+- email
+- message
+- status
+- createdAt
+- updatedAt
+
+Admin should be able to see:
+- New enquiries
+- Contact information
+- Message
+- Date/time
+- Status
+
+Admin should be able to change status.
+
+==================================================
+7. ADMIN DASHBOARD
+==================================================
+
+Build the admin panel as a real management dashboard.
+
+Suggested sidebar:
+
+Dashboard
+Products
+Services
+Machines
+Quote Requests
+Contact Requests
+Orders
+Website Content
+Settings
+
+Dashboard should show real Firebase data:
+
+- Total products
+- Published products
+- Draft products
+- Total machines
+- New quote requests
+- New contact requests
+- Recent requests
+- Recent products
+
+Do NOT use fake statistics.
+
+If there is no data, show a proper empty state.
+
+==================================================
+8. FILE UPLOADS
+==================================================
+
+Use Firebase Storage.
+
+Required upload categories:
+
+/products/
+/machines/
+/services/
+/requests/
+
+Uploads must:
+- Validate file type
+- Validate file size
+- Return the stored file URL/path
+- Store metadata in Firestore where required
+
+Do not expose Firebase service-account credentials to frontend code.
+
+==================================================
+9. SECURITY
+==================================================
+
+This must be production-oriented.
+
+Frontend:
+- Never contain Firebase Admin SDK credentials
+- Never contain service account JSON
+- Never expose private API keys/secrets unnecessarily
+
+Backend:
+- Use Firebase Admin SDK
+- Verify Firebase Authentication ID tokens
+- Protect every admin API endpoint
+- Validate all request bodies
+- Validate uploaded files
+- Sanitize user input
+- Handle unauthorized requests with proper HTTP status codes
+
+Firestore:
+- Configure security rules appropriately
+- Do not allow anonymous users to modify products, services, machines, admin data, or requests
+- Public users should only be able to perform the explicitly required public operations
+
+==================================================
+10. RENDER DEPLOYMENT
+==================================================
+
+Prepare the backend specifically for Render.
+
+Requirements:
+
+- Production start command
+- Proper PORT environment variable handling
+- Environment variable configuration
+- CORS configuration
+- Health endpoint:
+
+GET /api/health
+
+Response:
+
+{
+  "status": "ok"
+}
+
+Backend must not depend on the Replit development environment.
+
+Create a clear production configuration.
+
+Environment variables should include the Firebase server configuration required by the Firebase Admin SDK.
+
+NEVER commit credentials, service account JSON, private keys, or secrets into GitHub.
+
+==================================================
+11. FRONTEND API CONFIGURATION
+==================================================
+
+The frontend must not hardcode localhost API URLs.
+
+Use an environment variable such as:
+
+VITE_API_URL
+
+Development:
+http://localhost:5000
+
+Production:
+https://YOUR-RENDER-BACKEND.onrender.com
+
+Make the API base URL configurable.
+
+==================================================
+12. REMOVE REPLIT-ONLY DEPENDENCIES
+==================================================
+
+Identify anything currently dependent specifically on:
+- Replit App Storage
+- Replit-only database
+- Replit-only backend behavior
+- Replit-only environment variables
+
+Do not blindly delete working code.
+
+Instead:
+- identify it
+- replace it with Firebase/Render-compatible implementation
+- keep the public website working
+
+The final application must be deployable outside Replit.
+
+==================================================
+13. MIGRATION
+==================================================
+
+Before removing the current storage/database implementation:
+
+- Inspect the existing product/admin implementation
+- Preserve existing functionality
+- Create Firebase-compatible data models
+- Migrate existing real data if any exists
+- Do not create fake products
+- Do not create fake customer requests
+
+If there is currently no production data, initialize the Firebase collections cleanly.
+
+==================================================
+14. ADMIN REQUEST MANAGEMENT
+==================================================
+
+The admin panel should provide a proper workflow:
+
+Customer submits request
+        ↓
+Firebase/Backend receives request
+        ↓
+Request stored in Firestore
+        ↓
+Admin sees NEW request
+        ↓
+Admin opens request
+        ↓
+Admin changes status
+        ↓
+Admin can view customer details
+        ↓
+Admin can view/download uploaded attachment
+        ↓
+Admin can contact customer
+
+Do not mark requests as completed automatically.
+
+==================================================
+15. ORDERS
+==================================================
+
+Keep the existing Orders architecture if already implemented.
+
+If orders exist:
+- connect them to Firebase/Firestore
+- preserve existing order fields and statuses
+- make them visible inside Admin
+
+Do not break existing checkout functionality.
+
+==================================================
+16. ERROR HANDLING
+==================================================
+
+Every API operation needs:
+- loading state
+- success state
+- error state
+- validation errors
+- unauthorized state
+- empty state
+
+Never silently fail.
+
+Show useful messages such as:
+"Unable to save product. Please try again."
+
+Do not expose server stack traces or secrets to customers.
+
+==================================================
+17. PRODUCTION STRUCTURE
+==================================================
+
+Organize the code cleanly.
+
+Suggested structure:
+
+/frontend
+/backend
+/shared
+
+or adapt the existing project structure if a better architecture already exists.
+
+Keep reusable:
+- API client
+- authentication middleware
+- Firebase configuration
+- Firestore services
+- Storage services
+- validation schemas
+- error handling
+
+Do not duplicate the same Firebase logic across every route.
+
+==================================================
+18. IMPORTANT: DO NOT BREAK EXISTING WEBSITE
+==================================================
+
+Preserve:
+
+- Homepage
+- Navbar
+- Footer
+- Services
+- Service detail pages
+- Products page
+- Machines page
+- About
+- Contact
+- Quote UI
+- Existing logo
+- Existing hero image
+- Existing machine images
+- Existing responsive design
+
+Do not rewrite App.tsx unnecessarily.
+
+Do not replace the current design with a generic dashboard template.
+
+==================================================
+19. TESTING
+==================================================
+
+Before declaring the work complete, test:
+
+Admin:
+- Login
+- Unauthorized access
+- Logout
+- Session persistence
+
+Products:
+- Create
+- Read
+- Update
+- Delete/archive
+- Publish/unpublish
+- Image upload
+- Public Products synchronization
+
+Machines:
+- Read from Firebase
+- Admin create/edit/delete
+- Image upload
+- Public synchronization
+
+Requests:
+- Submit quote request
+- Firestore record created
+- Attachment uploaded
+- Admin can view request
+- Admin can change status
+
+Contact:
+- Submit contact request
+- Admin can view it
+- Admin can change status
+
+API:
+- /api/health
+- Authentication middleware
+- Invalid request handling
+- Unauthorized request handling
+
+Run:
+- TypeScript checks
+- Production build
+- API tests where applicable
+
+==================================================
+FINAL GOAL
+==================================================
+
+The final system should work like a real production website:
+
+PUBLIC WEBSITE
+        ↓
+RENDER BACKEND/API
+        ↓
+FIREBASE
+ ├── Authentication
+ ├── Firestore
+ └── Storage
+        ↓
+ADMIN PANEL
+
+The website should NOT depend on Replit for production data, authentication, storage, or backend functionality.
+
+Make the implementation production-ready, maintainable, secure, and deployable on Render.
+
+Do not invent data.
+Do not invent technical specifications.
+Do not remove existing functionality.
+Do not break existing routes.

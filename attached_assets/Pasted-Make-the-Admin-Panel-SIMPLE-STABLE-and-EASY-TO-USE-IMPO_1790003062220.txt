@@ -1,0 +1,134 @@
+Make the Admin Panel SIMPLE, STABLE, and EASY TO USE.
+
+IMPORTANT:
+Do not redesign the entire backend.
+Do not introduce unnecessary libraries.
+Do not create complicated CMS architecture.
+Do not change Firebase authentication unnecessarily.
+Do not break existing working features.
+Do not remove existing data.
+
+Goal:
+An admin should be able to manage the website without technical knowledge.
+
+ADMIN PANEL STRUCTURE:
+
+1. Dashboard
+- Simple overview cards:
+  - Products
+  - Machines
+  - Services
+  - Projects
+  - Contact/Quote Requests
+- Keep it lightweight.
+
+2. Products
+- Add Product
+- Edit Product
+- Delete Product
+- Product name
+- Category
+- Price (optional)
+- Description
+- Image
+- Published toggle
+
+3. Machines
+- Add Machine
+- Edit Machine
+- Delete Machine
+- Machine name
+- Short description
+- Image
+- Published toggle
+
+4. Services
+- Add Service
+- Edit Service
+- Delete Service
+- Service name
+- Description
+- Image
+- Published toggle
+
+5. Projects
+- Add Project
+- Edit Project
+- Delete Project
+- Project name
+- Short description
+- Full description
+- Main image
+- Additional images optional
+- Video URL optional
+- Published toggle
+- Featured toggle
+
+6. Website Content
+Keep only simple editable fields for important homepage/contact content:
+- Business phone numbers
+- WhatsApp number
+- Email
+- Address
+- Hero heading
+- Hero description
+- About text
+
+7. Requests
+- Show customer quote/contact requests
+- Name
+- Phone
+- Email
+- Message
+- Date
+- Status
+- Mark as read
+- Do not delete automatically
+
+ADMIN UX:
+
+- Use simple forms.
+- Use clear "Add", "Edit", "Save", "Cancel", and "Delete" buttons.
+- Show a confirmation before destructive delete actions.
+- Show a small success/error message after every save.
+- Show loading state while saving.
+- Disable Save button while saving to prevent duplicate submissions.
+- Handle failed Firebase requests gracefully.
+- Never show raw Firebase errors to the admin.
+- Keep the interface mobile responsive.
+- Use the existing visual design and branding.
+
+DATA SAFETY:
+
+- Existing Firestore data must remain untouched.
+- Existing products/machines/services/projects must continue working.
+- Do not recreate collections unnecessarily.
+- Do not migrate data unless absolutely required.
+- Do not change Firebase project configuration.
+- Do not change authentication implementation.
+- Do not expose Firebase credentials.
+- Do not put secrets in frontend code.
+
+IMPORTANT:
+If an optional field is empty, save it as empty/null safely instead of causing an error.
+
+For images:
+- Use the existing Firebase Storage upload system.
+- If image upload fails, show a clear error and do not save a broken record.
+- Do not require an image unless the existing schema requires it.
+
+For Projects:
+- Public website should only display projects where Published = true.
+- Featured projects should only display where Featured = true.
+- If there are no published projects, show a clean empty state instead of fake/static projects.
+
+Before finishing:
+1. Run TypeScript/typecheck.
+2. Run production build.
+3. Check every admin CRUD action.
+4. Verify existing Firebase authentication still works.
+5. Verify existing data is still readable.
+6. Do not make unrelated changes.
+
+Keep the implementation as simple as possible.
+Reliability is more important than adding extra features.

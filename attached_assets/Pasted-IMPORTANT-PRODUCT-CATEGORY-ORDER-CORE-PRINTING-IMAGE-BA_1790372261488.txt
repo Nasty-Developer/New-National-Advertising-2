@@ -1,0 +1,278 @@
+IMPORTANT — PRODUCT CATEGORY ORDER + CORE PRINTING IMAGE BATCH + NAVBAR SEARCH
+
+Make these changes carefully.
+
+============================================================
+1. SORT PRODUCT CATEGORIES — NOT INDIVIDUAL PRODUCTS
+============================================================
+
+IMPORTANT:
+
+I want you to reorder the EXISTING PRODUCT CATEGORIES only.
+
+DO NOT reorder the individual products inside the categories.
+
+DO NOT create, delete, merge, or rename any category.
+
+Keep all existing categories and all existing products exactly intact.
+
+The first categories on the public Products page must appear in this exact order:
+
+1. Signage & Display
+2. Acrylic Products
+3. Labels & Stickers
+4. Core Printing & Branding
+5. Paper & Corporate Printing
+6. Events & Weddings
+
+After these six categories, place all remaining EXISTING categories in a sensible/logical order.
+
+The remaining categories can be ordered as you consider appropriate, but:
+
+- do not delete them
+- do not create new ones
+- do not rename them
+- do not change their product counts
+- do not move individual products between categories
+- do not change product data
+
+This task is ONLY about category ordering.
+
+============================================================
+2. ATTACHED IMAGE BATCH — CORE PRINTING & BRANDING
+============================================================
+
+I am now attaching a batch of images specifically for:
+
+CORE PRINTING & BRANDING
+
+I cannot attach all images at once, so I will provide them in smaller batches, approximately 15 images at a time.
+
+The images have meaningful filenames.
+
+Examples:
+
+- Brochure Printing.jpg
+- Business and Visiting Card Printing.png
+- Letterhead Printing.jpg
+- Flyer Printing.png
+- etc.
+
+The filename identifies the product/service the image belongs to.
+
+For THIS batch:
+
+1. Read the filename.
+2. Identify the matching EXISTING product in the Core Printing & Branding category.
+3. Replace ONLY that product's existing image.
+4. Keep the existing product.
+5. Do not create a duplicate.
+6. Do not delete the product.
+7. Do not rename the product.
+8. Do not change its description.
+9. Do not change its price.
+10. Do not change its category.
+
+These are PRODUCT images for the Core Printing & Branding category.
+
+Do NOT treat them as category images.
+
+Do NOT use one uploaded image for multiple products.
+
+Do NOT assign these images to unrelated products.
+
+============================================================
+3. FILENAME MATCHING
+============================================================
+
+Use the filename as the primary matching signal.
+
+Examples:
+
+"Brochure Printing.jpg"
+→ match the existing Brochure Printing product.
+
+"Business and Visiting Card Printing.png"
+→ match the existing Business/Visiting Card product.
+
+"Letterhead Printing.jpg"
+→ match the existing Letterhead product.
+
+Preserve the existing product names exactly.
+
+If a filename clearly corresponds to an existing product, update that product's image.
+
+If a filename does NOT clearly identify an existing product, DO NOT GUESS.
+
+Leave that image unmatched and report which filename could not be confidently matched.
+
+============================================================
+4. IMAGE FITTING
+============================================================
+
+All product images must display cleanly inside the existing product cards.
+
+Use proper responsive image handling:
+
+- preserve aspect ratio
+- object-fit where appropriate
+- object-position where appropriate
+- avoid stretching
+- avoid distortion
+- avoid excessive cropping
+- keep the important subject visible
+- maintain the existing card dimensions
+- maintain the existing website design
+
+Do not redesign the product cards.
+
+============================================================
+5. PRODUCT CATALOG SAFETY
+============================================================
+
+The catalog contains 202 existing products.
+
+This must remain 202 products.
+
+DO NOT:
+
+- delete products
+- create duplicates
+- merge products
+- rename products
+- change prices
+- change descriptions
+- change categories
+- replace the catalog with mock/demo data
+- reorder individual products as part of this task
+
+Only update the image of the matching existing product.
+
+============================================================
+6. ADD PRODUCT + SERVICE SEARCH TO NAVBAR
+============================================================
+
+Add a proper SEARCH option to the main website navigation/navbar.
+
+The search should allow visitors to search for:
+
+- Products
+- Services
+
+Do NOT search images.
+
+The search should search the actual existing catalog/service data.
+
+For example, a visitor should be able to type:
+
+Brochure
+Business Card
+Letterhead
+Flex Printing
+Digital Printing
+Acrylic
+Signage
+etc.
+
+The search should return matching products and/or services.
+
+Requirements:
+
+- Search field/button should be accessible from the main navbar.
+- Keep the existing navbar design.
+- Do not redesign the entire header.
+- Search should work on desktop.
+- Make it responsive on mobile.
+- Search results should clearly distinguish Products from Services where appropriate.
+- Clicking a product should take the user to the relevant product/category page.
+- Clicking a service should take the user to the relevant service/page.
+- Search should use the real existing data, not hardcoded demo results.
+- Support partial text matching.
+- Ignore case differences.
+- Avoid unnecessary API requests where possible.
+- Do not make the navbar significantly slower to load.
+
+If the existing application already has a search/API mechanism, reuse it instead of creating a duplicate system.
+
+============================================================
+7. PERFORMANCE
+============================================================
+
+Keep the website fast.
+
+Do not load every product image just because the search feature exists.
+
+Use:
+
+- lazy loading for below-the-fold images
+- optimized Cloudinary delivery
+- responsive image sizes
+- WebP/AVIF where supported
+- caching
+- efficient search queries
+- debounced search input where appropriate
+- no unnecessary duplicate API/Firestore requests
+
+Do not make images blurry just to improve speed.
+
+============================================================
+8. IMPORTANT SCOPE
+============================================================
+
+RIGHT NOW:
+
+A. Reorder PRODUCT CATEGORIES according to the specified order.
+
+B. Process the attached images as PRODUCT images for:
+   Core Printing & Branding.
+
+C. Match each image using its filename.
+
+D. Add Product + Service search to the navbar.
+
+Do NOT start processing product images from other categories yet.
+
+I will provide other category image batches separately.
+
+============================================================
+9. FINAL VERIFICATION
+============================================================
+
+Before finishing, verify:
+
+[ ] Categories are ordered:
+    1. Signage & Display
+    2. Acrylic Products
+    3. Labels & Stickers
+    4. Core Printing & Branding
+    5. Paper & Corporate Printing
+    6. Events & Weddings
+    7. Remaining existing categories in logical order
+
+[ ] No category was created/deleted/renamed.
+
+[ ] Individual products were NOT reordered.
+
+[ ] All 202 products remain.
+
+[ ] Core Printing & Branding image filenames were matched to the correct existing products.
+
+[ ] No duplicate products were created.
+
+[ ] No product information other than the image was changed.
+
+[ ] Product images fit properly.
+
+[ ] Product search works.
+
+[ ] Service search works.
+
+[ ] Search is available from the navbar.
+
+[ ] Search uses real product/service data.
+
+[ ] Website remains fast.
+
+[ ] Existing UI and functionality remain intact.
+
+Do not modify unrelated parts of the website.
