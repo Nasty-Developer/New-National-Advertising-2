@@ -4,9 +4,9 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Bot, Check, ChevronDown, CircleCheck, Clock3, FileText, Grid2X2, Lightbulb, Mail, MapPin, Menu, MessageCircle, Package, PenLine, Phone, Printer, Ruler, Search, Send, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { getGetAdminSessionQueryKey, getGetPublicMachinesQueryKey, getGetPublicProjectsQueryKey, useGetAdminSession, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
+import { getGetAdminSessionQueryKey, getGetPublicMachinesQueryKey, getGetPublicProductsQueryKey, getGetPublicProjectsQueryKey, getGetPublicServicesQueryKey, useGetAdminSession, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
 import { firebaseAuth } from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
@@ -392,7 +392,7 @@ function useDeferredSection(rootMargin = '640px 0px') {
   return [sectionRef, ready] as const;
 }
 
-function Reveal({ children, className = '', delay = 0, style }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties }) {
+function Reveal({ children, className = '', delay = 0, style, id }: { children: ReactNode; className?: string; delay?: number; style?: CSSProperties; id?: string }) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -411,7 +411,7 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
     return () => observer.disconnect();
   }, []);
   return (
-    <div ref={elementRef} className={`transition-all duration-700 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
+    <div ref={elementRef} id={id} className={`transition-all duration-700 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -423,6 +423,204 @@ function Logo({ src }: { src?: string | null } = {}) {
       <img src={optimizedImageUrl(src) || '/new-national-advertising-logo.png'} alt="New National Advertising" width="204" height="112" decoding="async" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
     </a>
   );
+}
+
+type GlobalSearchResult = {
+  kind: 'Product' | 'Category' | 'Machine' | 'Service' | 'Page';
+  label: string;
+  meta: string;
+  href: string;
+  searchable: string;
+};
+
+const searchPlaceholders = [
+  'Search products...',
+  'Search machines...',
+  'Search services...',
+  'Search categories...',
+];
+
+function searchSlug(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function searchScore(term: string, searchable: string) {
+  const normalized = searchable.toLowerCase();
+  if (normalized === term) return 0;
+  if (normalized.startsWith(term)) return 1;
+  if (normalized.includes(term)) return 2;
+  return 3;
+}
+
+function GlobalSearchBox({
+  query,
+  setQuery,
+  results,
+  loading,
+  active,
+  setActive,
+  onNavigate,
+  className = '',
+}: {
+  query: string;
+  setQuery: (value: string) => void;
+  results: GlobalSearchResult[];
+  loading: boolean;
+  active: boolean;
+  setActive: (value: boolean) => void;
+  onNavigate?: () => void;
+  className?: string;
+}) {
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  useEffect(() => {
+    if (query.trim()) return;
+    const interval = window.setInterval(() => {
+      setPlaceholderIndex((current) => (current + 1) % searchPlaceholders.length);
+    }, 2600);
+    return () => window.clearInterval(interval);
+  }, [query]);
+
+  return (
+    <div className={`relative ${className}`}>
+      <div className={`flex h-10 items-center gap-2 rounded-full border bg-white/95 px-3 shadow-[0_5px_18px_rgba(24,52,82,.08)] transition-all duration-200 ${active ? 'border-[#1669aa] shadow-[0_7px_22px_rgba(22,105,170,.16)] ring-2 ring-[#1669aa]/10' : 'border-[#cbdde6] hover:border-[#8db4c8]'}`}>
+        <Search size={15} className="shrink-0 text-[#1669aa]" aria-hidden="true" />
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onFocus={() => setActive(true)}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              setActive(false);
+              event.currentTarget.blur();
+            }
+          }}
+          aria-label="Search New National Advertising"
+          aria-expanded={active}
+          aria-controls="global-search-results"
+          placeholder={searchPlaceholders[placeholderIndex]}
+          className="min-w-0 flex-1 bg-transparent text-[11px] font-semibold text-[#203950] outline-none placeholder:text-[#7b919f]"
+        />
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            aria-label="Clear search"
+            className="rounded-full p-1 text-[#8297a4] transition hover:bg-[#edf4f8] hover:text-[#1669aa]"
+          >
+            <X size={13} />
+          </button>
+        )}
+      </div>
+      {active && (
+        <div id="global-search-results" role="listbox" className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-[12px] border border-[#d8e5eb] bg-white shadow-[0_16px_38px_rgba(24,52,82,.16)]">
+          {!query.trim() ? (
+            <p className="px-4 py-4 text-[11px] font-semibold text-[#718394]">Search the product catalogue, machines, services, or website pages.</p>
+          ) : loading ? (
+            <p className="px-4 py-4 text-[11px] font-semibold text-[#718394]" aria-live="polite">Searching the catalogue…</p>
+          ) : results.length ? (
+            <div className="max-h-[min(420px,70vh)] overflow-y-auto py-1">
+              {results.map((result) => (
+                <a
+                  key={`${result.kind}-${result.href}-${result.label}`}
+                  href={result.href}
+                  role="option"
+                  onClick={onNavigate}
+                  className="flex items-start gap-3 px-4 py-3 text-left transition hover:bg-[#f1f7fa] focus:bg-[#f1f7fa] focus:outline-none"
+                >
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e8f3f7] text-[#1669aa]">
+                    <Search size={13} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-[11px] font-bold text-[#203950]">{result.label}</span>
+                    <span className="mt-0.5 block truncate text-[9px] font-semibold uppercase tracking-[.12em] text-[#8193a0]">{result.kind} · {result.meta}</span>
+                  </span>
+                  <ArrowUpRight size={13} className="ml-auto mt-1 shrink-0 text-[#9bb1bd]" />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="px-4 py-4 text-[11px] font-semibold text-[#718394]" role="status">No results found</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function useGlobalSearch(query: string, active: boolean) {
+  const productsQuery = useGetPublicProducts({
+    query: {
+      queryKey: getGetPublicProductsQueryKey(),
+      enabled: active,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
+  const machinesQuery = useGetPublicMachines({
+    query: {
+      queryKey: getGetPublicMachinesQueryKey(),
+      enabled: active,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
+  const servicesQuery = useGetPublicServices({
+    query: {
+      queryKey: getGetPublicServicesQueryKey(),
+      enabled: active,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+    },
+  });
+
+  const term = query.trim().toLowerCase();
+  const results = useMemo(() => {
+    if (!term) return [];
+    const candidates: GlobalSearchResult[] = [
+      ...productCategories.map((category) => ({
+        kind: 'Category' as const,
+        label: category.name,
+        meta: 'Product catalogue',
+        href: `/products?category=${encodeURIComponent(category.name)}`,
+        searchable: `${category.name} product category`,
+      })),
+      ...(productsQuery.data ?? []).map((product) => ({
+        kind: 'Product' as const,
+        label: product.name,
+        meta: product.category,
+        href: `/products?category=${encodeURIComponent(product.category)}&search=${encodeURIComponent(product.name)}`,
+        searchable: `${product.name} ${product.category} ${product.shortDescription}`,
+      })),
+      ...(machinesQuery.data ?? machines).map((machine) => ({
+        kind: 'Machine' as const,
+        label: machine.name,
+        meta: machine.category ?? 'Equipment',
+        href: `/machines#machine-${searchSlug(machine.name)}`,
+        searchable: `${machine.name} ${machine.category} ${machine.description}`,
+      })),
+      ...(servicesQuery.data ?? services).map((service) => ({
+        kind: 'Service' as const,
+        label: service.title,
+        meta: service.category ?? 'Service',
+        href: `/services/${service.slug}`,
+        searchable: `${service.title} ${service.category} ${service.description}`,
+      })),
+      { kind: 'Page', label: 'Our Work', meta: 'Website page', href: '/#work', searchable: 'our work portfolio projects' },
+      { kind: 'Page', label: 'About New National Advertising', meta: 'Website page', href: '/#about', searchable: 'about company studio' },
+      { kind: 'Page', label: 'Contact New National Advertising', meta: 'Website page', href: '/#contact', searchable: 'contact quote enquiry address phone' },
+    ];
+
+    return candidates
+      .filter((candidate) => candidate.searchable.toLowerCase().includes(term))
+      .sort((a, b) => searchScore(term, a.searchable) - searchScore(term, b.searchable))
+      .slice(0, 8);
+  }, [machinesQuery.data, productsQuery.data, servicesQuery.data, term]);
+
+  return {
+    results,
+    loading: active && (productsQuery.isLoading || machinesQuery.isLoading || servicesQuery.isLoading),
+  };
 }
 
 function PrimaryButton({ href = '#contact', children = 'Get a Quote', onClick }: { href?: string; children?: ReactNode; onClick?: () => void }) {
@@ -445,7 +643,10 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
   const { settings, contacts } = usePublicSettings();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchActive, setSearchActive] = useState(false);
   const [location] = useLocation();
+  const globalSearch = useGlobalSearch(searchQuery, searchActive);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -457,9 +658,10 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? 'border-[#dfe8ef] bg-white/95 shadow-[0_3px_18px_rgba(24,52,82,.07)] backdrop-blur-md' : 'border-transparent bg-white/88 backdrop-blur-sm'}`}>
-      <div className="container-nna flex h-[70px] items-center justify-between">
+      <div className="container-nna flex h-[70px] items-center justify-between gap-4">
            <Logo src={settings?.logoPath} />
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
+        <div className="hidden min-w-0 flex-1 items-center justify-end gap-3 lg:flex">
+        <nav className="flex shrink-0 items-center gap-5 xl:gap-6" aria-label="Primary navigation">
           {navigationItems.map((item) => (
             <a
               key={item.label}
@@ -472,22 +674,48 @@ function SiteHeader({ quoteHref = '/#contact' }: { quoteHref?: string }) {
             </a>
           ))}
         </nav>
-        <div className="hidden items-center gap-5 md:flex">
-           <a href={`tel:+${(contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677').replace(/\D/g, '')}`} data-testid="link-header-phone" className="flex items-center gap-2 text-[11px] font-semibold text-[#233952]"><Phone size={13} className="text-[#1669aa]" />{contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677'}</a>
+        <GlobalSearchBox
+          query={searchQuery}
+          setQuery={setSearchQuery}
+          results={globalSearch.results}
+          loading={globalSearch.loading}
+          active={searchActive}
+          setActive={setSearchActive}
+          className="w-[190px] xl:w-[225px]"
+        />
+        <div className="flex items-center gap-3">
+           <a href={`tel:+${(contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677').replace(/\D/g, '')}`} data-testid="link-header-phone" className="hidden items-center gap-2 text-[11px] font-semibold text-[#233952] xl:flex"><Phone size={13} className="text-[#1669aa]" />{contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677'}</a>
           <PrimaryButton href={quoteHref} />
         </div>
-        <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] md:hidden">
+        </div>
+        <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} data-testid="button-mobile-menu" className="rounded-md p-2 text-[#17314d] hover:bg-[#edf4f8] lg:hidden">
           {menuOpen ? <X size={23} /> : <Menu size={23} />}
         </button>
       </div>
       {menuOpen && (
-        <div className="border-t border-[#e4ebf0] bg-white px-5 pb-6 pt-4 shadow-lg md:hidden">
+        <div className="border-t border-[#e4ebf0] bg-white px-5 pb-6 pt-4 shadow-lg lg:hidden">
           <nav className="container-nna flex flex-col gap-1" aria-label="Mobile navigation">
+            <GlobalSearchBox
+              query={searchQuery}
+              setQuery={setSearchQuery}
+              results={globalSearch.results}
+              loading={globalSearch.loading}
+              active={searchActive}
+              setActive={setSearchActive}
+              onNavigate={() => {
+                setSearchActive(false);
+                setMenuOpen(false);
+              }}
+              className="mb-3 w-full"
+            />
             {navigationItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                onClick={closeMenu}
+                onClick={() => {
+                  closeMenu();
+                  setSearchActive(false);
+                }}
                 data-testid={`link-mobile-${item.label.toLowerCase().replace(' ', '-')}`}
                 aria-current={location === item.href ? 'page' : undefined}
                 className={`border-b border-[#edf1f4] py-3 text-sm font-semibold ${((location === '/products' && item.label === 'Products') || (location === '/machines' && item.label === 'Machines')) ? 'text-[#1669aa]' : 'text-[#203954]'}`}
@@ -1184,9 +1412,18 @@ function Home() {
 }
 
 function Products() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
+  const [location] = useLocation();
+  const initialSearchParams = useMemo(() => {
+    const queryString = location.split('?')[1]?.split('#')[0] ?? '';
+    return new URLSearchParams(queryString);
+  }, [location]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(() => initialSearchParams.get('category'));
+  const [search, setSearch] = useState(() => initialSearchParams.get('search') ?? '');
   const allProducts = useGetPublicProducts();
+  useEffect(() => {
+    setSelectedCategory(initialSearchParams.get('category'));
+    setSearch(initialSearchParams.get('search') ?? '');
+  }, [initialSearchParams]);
   const selectedProducts = useMemo(
     () => (allProducts.data ?? []).filter((product) => product.category === selectedCategory),
     [allProducts.data, selectedCategory],
@@ -1384,8 +1621,8 @@ function Machines() {
 
             <div className="mt-10 grid gap-5 lg:grid-cols-3">
               {publicMachines.loading && <div className="rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] p-8 text-[12px] text-[#718394]">Loading equipment…</div>}
-              {!publicMachines.loading && publicMachines.data.map((machine, index) => (
-                <Reveal key={machine.name} delay={index * 90} className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
+                {!publicMachines.loading && publicMachines.data.map((machine, index) => (
+                <Reveal key={machine.name} id={`machine-${searchSlug(machine.name)}`} delay={index * 90} className="scroll-mt-24 group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
                   <div className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-[#e4ecef] bg-[#eef3f3] p-3 sm:p-4">
                     <img src={optimizedImageUrl(machine.imageUrl)} srcSet={responsiveCloudinarySrcSet(machine.imageUrl)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={machine.imageAlt || machine.name} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} decoding="async" width="768" height="576" className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
                   </div>
