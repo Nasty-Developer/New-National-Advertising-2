@@ -1,11 +1,7 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-<<<<<<< HEAD
 export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v14";
-=======
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v9";
->>>>>>> origin/main
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Bill books": "/product-images/paper-corporate/bill-books.png",
@@ -104,7 +100,6 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Vinyl flooring stickers": "/product-images/labels-stickers/vinyl-flooring-stickers.jpg",
   "Vinyl waterproof stickers": "/product-images/labels-stickers/vinyl-waterproof-stickers.jpg",
   "Wine bottle labels": "/product-images/labels-stickers/wine-bottle-labels.jpg",
-<<<<<<< HEAD
   "Paper placemats": "/product-images/food-hospitality/paper-placemats.jpg",
   "Catering trays": "/product-images/food-hospitality/catering-trays.jpg",
   "Food containers": "/product-images/food-hospitality/food-containers.jpg",
@@ -162,8 +157,6 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   "Laser-cut acrylic": "/product-images/signage-display/laser-cut-acrylic.jpg",
   "Name plates": "/product-images/signage-display/name-plates.jpg",
   "Menu/display stands": "/product-images/signage-display/menu-display-stands.jpg",
-=======
->>>>>>> origin/main
 };
 
 type ProductCategory = {
