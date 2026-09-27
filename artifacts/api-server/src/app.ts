@@ -35,6 +35,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API
+app.use("/api", (req, res, next) => {
+  const publicReadPaths = new Set([
+    "/contact-numbers",
+    "/machines",
+    "/products",
+    "/projects",
+    "/services",
+    "/settings",
+    "/website-content",
+  ]);
+  if (req.method === "GET" && publicReadPaths.has(req.path)) {
+    res.setHeader(
+      "Cache-Control",
+      "public, max-age=60, stale-while-revalidate=300",
+    );
+  }
+  next();
+});
 app.use("/api", router);
 
 // Frontend
@@ -54,7 +72,31 @@ const frontendPath = existsSync(localFrontendPath)
 const frontendIndexPath = path.join(frontendPath, "index.html");
 
 if (existsSync(frontendPath)) {
-  app.use(express.static(frontendPath));
+  app.use(
+    express.static(frontendPath, {
+      etag: true,
+      maxAge: process.env.NODE_ENV === "production" ? "7d" : 0,
+      setHeaders(res, filePath) {
+        if (path.basename(filePath) === "index.html") {
+          res.setHeader("Cache-Control", "no-cache");
+          return;
+        }
+        if (filePath.includes(`${path.sep}assets${path.sep}`)) {
+          res.setHeader(
+            "Cache-Control",
+            "public, max-age=31536000, immutable",
+          );
+          return;
+        }
+        if (/\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filePath)) {
+          res.setHeader(
+            "Cache-Control",
+            "public, max-age=2592000, stale-while-revalidate=86400",
+          );
+        }
+      },
+    }),
+  );
 }
 
 // React SPA fallback

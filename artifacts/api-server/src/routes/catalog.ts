@@ -302,12 +302,12 @@ function catalogOrder(kind: "machines" | "services", left: DocumentData, right: 
 }
 
 router.get("/machines", async (_req, res): Promise<void> => {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(await publicDocuments("machines"));
 });
 
 router.get("/services", async (_req, res): Promise<void> => {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(await publicDocuments("services"));
 });
 

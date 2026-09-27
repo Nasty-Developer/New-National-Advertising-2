@@ -10,6 +10,13 @@ import './index.css';
 setBaseUrl(import.meta.env.VITE_API_URL || null);
 setAuthTokenGetter(getFirebaseIdToken);
 
+function dismissInitialLoader() {
+  const loader = document.getElementById('initial-loader');
+  if (!loader || loader.classList.contains('initial-loader--exiting')) return;
+  loader.classList.add('initial-loader--exiting');
+  window.setTimeout(() => loader.remove(), 450);
+}
+
 createRoot(document.getElementById('root')!, {
   // Keeps caught errors off reportError(), which would raise the dev overlay.
   onCaughtError: (error, errorInfo) => {
@@ -20,3 +27,6 @@ createRoot(document.getElementById('root')!, {
     <App />
   </ErrorBoundary>,
 );
+
+requestAnimationFrame(() => requestAnimationFrame(dismissInitialLoader));
+window.setTimeout(dismissInitialLoader, 4000);
