@@ -1,0 +1,248 @@
+PAUSE HERE — FINAL IMAGE ATTACHMENT PLAN + LIMIT CHECK
+
+Do NOT continue making the requested code/data changes yet.
+
+I need to prepare a large batch of product images, and I have 202 products in the catalog. Before I start attaching images, I need you to determine the CURRENT attachment limits for this Replit/Rapid environment.
+
+IMPORTANT: DO NOT GUESS THE LIMIT.
+
+Tell me the actual current limits available to this Replit/Rapid workspace:
+
+1. How many images/files can I attach in ONE message?
+2. What is the maximum size allowed for each image/file?
+3. Is there a maximum total number of attachments/files in one conversation?
+4. Can you process multiple attached product images in one batch?
+5. What is the safest recommended batch size for uploading many product images?
+6. If there is a daily/project attachment limit, tell me that too.
+7. Tell me whether I should upload images category-by-category or in larger batches.
+
+I have 202 products, organized into multiple categories.
+
+My plan is:
+
+Google Images
+→ download appropriate product images
+→ attach them to this Replit/Rapid conversation in batches
+→ you identify/process them
+→ upload them through the Cloudinary flow
+→ associate each image with the correct existing product
+→ preserve all existing product names, categories, descriptions, and data.
+
+IMPORTANT:
+Do NOT replace the existing 202-product catalog with new records.
+
+The existing product names/data are the source of truth.
+
+When I provide product images, match them to the correct existing products based on the product names/category information I provide.
+
+If an image cannot be confidently matched to a product, STOP and ask me rather than assigning it to the wrong product.
+
+Do NOT silently invent product-image mappings.
+
+============================================================
+FINAL IMAGE MAPPING FOR SERVICES
+============================================================
+
+There is NO separate image upload for Flex Printing.
+
+There is NO separate image upload for Make Your Brand Stand.
+
+Use the EXISTING machine image already present in the Machines section for:
+
+512i Konica Flex Machine
+(the existing large-format / wide-format printing machine)
+
+Use that exact existing machine image in BOTH:
+
+1. Flex Printing service
+2. Make Your Brand Stand section
+
+Therefore:
+
+512i Konica Flex / large-format machine image
+→ Flex Printing
+
+512i Konica Flex / large-format machine image
+→ Make Your Brand Stand
+
+Do NOT generate a new image.
+
+Do NOT ask me to upload a Flex Printing image.
+
+Do NOT ask me to upload a Make Your Brand Stand image.
+
+Do NOT delete or modify the original machine image in the Machines section.
+
+Reuse the existing image URL/asset.
+
+============================================================
+DIGITAL PRINTING
+============================================================
+
+Digital Printing must use the EXISTING:
+
+Konica Minolta 6000
+
+machine image from the Machines section.
+
+Therefore:
+
+Konica Minolta 6000 image
+→ Digital Printing
+
+Do NOT use the current incorrect Digital Printing image.
+
+Do NOT generate a new image.
+
+Do NOT modify or delete the original machine image.
+
+============================================================
+FINAL SERVICE IMAGE MAPPING
+============================================================
+
+Digital Printing
+→ Konica Minolta 6000 machine image
+
+Flex Printing
+→ 512i Konica Flex / large-format machine image
+
+Make Your Brand Stand
+→ 512i Konica Flex / large-format machine image
+
+These are the FINAL mappings.
+
+Do not introduce another image unless I explicitly provide one later.
+
+============================================================
+PRODUCT ORDER
+============================================================
+
+The first products on the public Products page must appear in this exact order:
+
+1. Signage
+2. Banner
+3. Brochure
+4. Acrylic Clip-on Board
+5. Calendars
+6. Business Cards
+7. Letterhead
+8. Hoarding Banner
+
+After these 8 products, preserve the existing order of all remaining products.
+
+IMPORTANT:
+
+- Keep all 202 products.
+- Do not delete products.
+- Do not duplicate products.
+- Do not merge products.
+- Do not rename products.
+- Do not replace products with placeholders.
+- Only change display priority/order.
+
+============================================================
+MACHINE ORDER
+============================================================
+
+The Machines section must appear in this exact order:
+
+1. Laser CO2
+2. Axon
+3. 512i Konica Flex Machine
+4. Accent Z (Wide Format Roll Laminator)
+5. Konica Minolta Bizhub
+
+Do not create duplicate machines.
+
+Use the existing machine records.
+
+The large-format/wide-format machine should be named:
+
+512i Konica Flex Machine
+
+Accent Z should display as:
+
+Accent Z (Wide Format Roll Laminator)
+
+Konica Minolta Bizhub must be last.
+
+Preserve the existing machine images and data.
+
+============================================================
+STORAGE
+============================================================
+
+Use Cloudinary for uploaded images.
+
+Do NOT use Firebase Storage.
+
+Do NOT require:
+
+FIREBASE_STORAGE_BUCKET
+
+Keep:
+
+Firebase Authentication
+→ admin authentication
+
+Firestore
+→ product/service/machine/category/content data
+
+Cloudinary
+→ image storage and image delivery
+
+Uploaded images should follow:
+
+Admin/Replit upload
+→ Cloudinary
+→ secure Cloudinary URL
+→ Firestore record
+→ website displays image
+
+Do not expose Cloudinary secrets in frontend code.
+
+============================================================
+RENDER VARIABLES
+============================================================
+
+I am configuring these privately in Render.
+
+Backend:
+
+SESSION_SECRET
+FIREBASE_PROJECT_ID
+FIREBASE_CLIENT_EMAIL
+FIREBASE_PRIVATE_KEY
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+
+Frontend:
+
+VITE_FIREBASE_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID
+VITE_FIREBASE_MESSAGING_SENDER_ID
+VITE_FIREBASE_APP_ID
+
+Do NOT ask me to paste secret values into chat.
+
+Do NOT commit secrets to GitHub.
+
+============================================================
+CURRENT ACTION
+============================================================
+
+STOP before implementing the final changes.
+
+FIRST, tell me the actual current Replit/Rapid attachment limits and the safest batch size for my 202 product images.
+
+Then wait for me to begin uploading the product images.
+
+Do not modify the catalog until I start providing the images.
+
+Do not change unrelated parts of the website.
+
+After I finish uploading the images and confirm that the image batch is complete, continue with the product image assignments and the remaining requested changes.
+
+The goal is to finish this project quickly for client delivery, so process images in organized batches and preserve the existing catalog data exactly.

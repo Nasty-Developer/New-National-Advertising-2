@@ -1,0 +1,96 @@
+URGENT: Diagnose and fix the production Firebase Storage image loading/upload issue.
+
+We have confirmed that the live production website works and admin authentication works, but BOTH:
+1. New image uploads from the production admin panel fail with "Upload failed"
+2. Existing product/machine images stored in Firebase Storage also fail to load on production
+
+IMPORTANT EVIDENCE FROM CHROME NETWORK:
+
+A failing image request is being sent to:
+
+https://storage.googleapis.com/newnationaladv.firebasestorage.app/products/...
+
+The signed URL contains:
+
+X-Goog-Algorithm=GOOG4-RSA-SHA256
+X-Goog-Credential=firebase-adminsdk-...
+X-Goog-SignedHeaders=content-type%3Bhost
+X-Goog-Date=...
+X-Goog-Expires=900
+X-Goog-Signature=...
+
+This strongly suggests that our backend is generating Google Cloud Storage signed download URLs that include "content-type" in the signed headers.
+
+For a normal browser GET request for an image, the browser may not send the exact Content-Type header that was included when the signed URL was generated, which can cause Google Cloud Storage to reject the request with a signed URL/signature mismatch or HTTP 403.
+
+DO NOT GUESS. Inspect the actual implementation first.
+
+CHECK:
+
+1. Find exactly where product/machine/service/project image URLs are generated.
+2. Find all backend code using Firebase Admin Storage / Google Cloud Storage signed URLs.
+3. Find code using:
+   - getSignedUrl()
+   - signedUrl
+   - version: 'v4'
+   - action: 'read'
+   - contentType / content-type
+4. Check whether download/read signed URLs are being generated with:
+   content-type
+   included in the signedHeaders.
+5. Check whether upload signed URLs and download signed URLs are incorrectly sharing the same signing configuration.
+6. Check the actual HTTP status/error returned by Google Storage for the failing image request.
+
+IMPORTANT:
+For DOWNLOAD URLs used by <img src="...">, do NOT require a Content-Type request header unless the browser is guaranteed to send the exact same header.
+
+Prefer the safest existing architecture already used by this project:
+- Firebase Storage getDownloadURL() where appropriate, OR
+- generate a read-only V4 signed URL without unnecessarily signing "content-type".
+
+Do NOT make Firebase Storage public just to fix this.
+Do NOT weaken Firebase Storage security rules.
+Do NOT expose service-account credentials.
+Do NOT change DNS.
+Do NOT change Firebase Authentication.
+Do NOT change Render configuration unless the investigation proves a production environment variable is wrong.
+
+Also inspect whether old image URLs are cached/stored in Firestore. If the database currently stores short-lived signed URLs, that is a separate architectural problem because URLs with X-Goog-Expires=900 expire after 15 minutes.
+
+The production URL should remain stable after refresh/new browser.
+
+IMPORTANT ARCHITECTURE CHECK:
+If Firestore stores something like:
+https://storage.googleapis.com/...?...X-Goog-Date=...&X-Goog-Expires=900&X-Goog-Signature=...
+
+then do NOT persist these temporary signed URLs as the permanent image URL.
+
+Instead store a stable storage object path such as:
+products/<filename>
+or the Firebase Storage download URL, and generate/access the image correctly when needed.
+
+TEST AFTER FIX:
+
+1. Upload JPG
+2. Upload PNG
+3. Upload WebP
+4. Confirm upload succeeds
+5. Confirm image preview works immediately
+6. Refresh admin page
+7. Open a new browser/incognito
+8. Confirm existing product images load
+9. Confirm machine images load
+10. Confirm public website images load
+11. Confirm the image still works after the temporary signed URL expiration period if the chosen architecture is supposed to provide persistent access.
+
+Run build/typecheck before committing.
+
+Do NOT modify unrelated UI, CMS, authentication, DNS, or deployment configuration.
+
+First report:
+A) exact root cause
+B) exact file(s) responsible
+C) exact fix
+D) whether existing Firestore image URLs need migration
+
+Then implement the smallest production-safe fix.

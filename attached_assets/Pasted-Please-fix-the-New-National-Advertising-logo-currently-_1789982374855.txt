@@ -1,0 +1,135 @@
+Please fix the New National Advertising logo currently displayed on the website.
+
+I am re-attaching the ORIGINAL logo image with this message. Use THIS attached image as the exact source/reference.
+
+CURRENT PROBLEM:
+The logo is technically showing, but visible rectangular/background borders/edges are appearing around the logo on the website. It does not look properly integrated into the navbar/website branding.
+
+I want the logo to look clean and properly fitted into the website.
+
+IMPORTANT:
+
+1. Use the attached original New National Advertising logo.
+
+2. Do NOT redesign the logo.
+
+3. Do NOT change:
+   - Logo artwork
+   - Logo symbol
+   - Typography
+   - Text
+   - Colors
+   - Proportions
+   - Shape
+   - Original visual identity
+
+4. Remove the visible rectangular image/background edge around the logo if it is caused by the image asset itself.
+
+5. If the source image has a solid white background, prepare/use an appropriate transparent-background version ONLY if this can be done without changing the actual logo artwork.
+
+6. The logo should blend naturally with the website's existing navbar and footer backgrounds.
+
+7. Do NOT put the logo inside an unnecessary white rectangular box.
+
+8. Do NOT add another border, shadow, frame, card, or background around the logo.
+
+9. Preserve the original blue and orange colors exactly.
+
+10. Keep the logo aspect ratio correct. Never stretch or distort it.
+
+==================================================
+NAVBAR
+==================================================
+
+Fit the logo properly inside the existing navbar.
+
+It should:
+- Have appropriate desktop width
+- Scale naturally on tablet
+- Scale naturally on mobile
+- Stay vertically centered
+- Have enough breathing room
+- Not touch the navbar edges
+- Not overlap navigation items
+- Not become excessively large
+
+The logo should look like an actual business logo placed naturally in a professional website header.
+
+==================================================
+FOOTER
+==================================================
+
+Use the same clean logo asset in the footer if the existing footer currently contains the business logo.
+
+Make sure there is no visible rectangular background around it there either.
+
+==================================================
+IMAGE HANDLING
+==================================================
+
+Do not simply hide the problem with CSS.
+
+Check the actual logo asset.
+
+If necessary:
+- create an optimized transparent PNG/WebP version
+- preserve the exact artwork
+- remove only the unwanted background surrounding the logo
+- keep the original logo edges clean
+
+Do not crop any part of:
+"New National"
+"Advertising"
+or the blue/orange logo mark.
+
+==================================================
+IMPORTANT: DO NOT BREAK EXISTING WEBSITE
+==================================================
+
+This is ONLY a logo integration/fitting fix.
+
+Do NOT modify or remove:
+- Existing routes
+- Service pages
+- More Info links
+- Products page
+- Navbar links
+- WhatsApp
+- Call buttons
+- Quote form
+- AI Assistant
+- Admin Panel foundation
+- Contact section
+- Mobile navigation
+- Existing business information
+
+Do not rewrite App.tsx unnecessarily.
+
+Do not change unrelated UI.
+
+==================================================
+FINAL CHECK
+==================================================
+
+After implementing the fix, visually verify the logo on:
+
+1. Desktop navbar
+2. Mobile navbar
+3. Footer
+4. Homepage
+5. Products page
+6. Service detail pages
+7. Admin area if the logo is reused there
+
+Make sure:
+- No rectangular white/colored border is visible around the logo
+- No clipping occurs
+- No distortion occurs
+- No unwanted padding is baked into the displayed logo
+- Logo remains sharp
+- Logo is responsive
+- Existing links and navigation continue working
+
+Run the TypeScript check/build after the change.
+
+Use the newly attached logo image as the authoritative visual reference.

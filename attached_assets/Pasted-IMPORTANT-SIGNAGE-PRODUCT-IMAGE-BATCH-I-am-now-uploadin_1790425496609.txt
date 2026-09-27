@@ -1,0 +1,189 @@
+IMPORTANT — SIGNAGE PRODUCT IMAGE BATCH
+
+I am now uploading PRODUCT IMAGES for the existing "Signage & Display" category.
+
+I will upload the images in multiple batches, approximately 15–20 images per batch.
+
+This is intentional because I cannot attach all images at once.
+
+============================================================
+1. TREAT THESE AS PRODUCT IMAGES
+============================================================
+
+Every image I attach in this batch belongs to an EXISTING PRODUCT inside:
+
+Signage & Display
+
+These are NOT category images.
+
+Do NOT replace the category image.
+
+Do NOT create new products.
+
+Do NOT delete products.
+
+Do NOT move products between categories.
+
+============================================================
+2. USE THE FILENAME TO MATCH THE PRODUCT
+============================================================
+
+Every uploaded image has a meaningful filename with an extension.
+
+Examples:
+
+Sign Board.jpg
+Acrylic Signage.png
+LED Sign Board.jpg
+Backlit Signage.png
+
+The filename identifies which existing product the image belongs to.
+
+For EVERY uploaded image:
+
+1. Read the filename.
+2. Remove the file extension mentally (.jpg, .jpeg, .png, .webp, etc.).
+3. Match the remaining filename/product name against the existing products in the "Signage & Display" category.
+4. Replace ONLY that existing product's image.
+5. Keep the existing product data unchanged.
+
+Use the filename as the primary matching signal.
+
+Do NOT guess if the filename does not clearly match.
+
+If a filename cannot be confidently matched to an existing Signage & Display product, report that filename instead of assigning it to the wrong product.
+
+============================================================
+3. DO NOT MODIFY PRODUCT DATA
+============================================================
+
+For this image batch, ONLY change the product image.
+
+Do NOT change:
+
+- Product name
+- Description
+- Price
+- Category
+- Product ID
+- Product order
+- Other product fields
+
+Do NOT create duplicates.
+
+Do NOT delete existing products.
+
+The existing 202-product catalog must remain intact.
+
+============================================================
+4. IMAGE FITTING
+============================================================
+
+Fit every uploaded image properly inside the existing product card.
+
+Requirements:
+
+- preserve aspect ratio
+- no stretching
+- no distortion
+- no unnecessary cropping
+- keep the important subject visible
+- use appropriate object-fit
+- use appropriate object-position
+- make the image visually centered
+- use the available card area effectively
+- maintain consistent image presentation across products
+
+Do NOT redesign the product cards.
+
+Do NOT change the existing website design.
+
+============================================================
+5. IMAGE QUALITY + PERFORMANCE
+============================================================
+
+Store/deliver the images through the existing Cloudinary image system.
+
+Optimize delivery without visibly reducing quality.
+
+Use where appropriate:
+
+- Cloudinary automatic format
+- WebP/AVIF
+- responsive image sizes
+- appropriate quality settings
+- lazy loading for below-the-fold product images
+- proper caching
+
+Do not download unnecessarily huge originals when a smaller display size is sufficient.
+
+Do not make the images blurry just for speed.
+
+============================================================
+6. BATCH WORKFLOW
+============================================================
+
+I will send the images in multiple batches.
+
+For EACH batch:
+
+- process only the images attached in that batch
+- match them to existing Signage & Display products
+- update their images
+- do not touch products whose images have not been provided yet
+- do not wait for the next batch before processing the current batch
+
+When I upload the next batch, continue from the existing state.
+
+Do NOT reset or overwrite images already processed in previous batches.
+
+============================================================
+7. IMPORTANT — FAST EXECUTION
+============================================================
+
+Process this batch efficiently.
+
+Do not spend time changing unrelated UI.
+
+Do not modify categories.
+
+Do not modify product information.
+
+Do not modify other product images.
+
+Only:
+
+ATTACHED IMAGE
+→ READ FILENAME
+→ FIND MATCHING SIGNAGE & DISPLAY PRODUCT
+→ REPLACE THAT PRODUCT'S IMAGE
+→ FIT IMAGE PROPERLY
+→ SAVE
+
+============================================================
+8. FINAL CHECK FOR THIS BATCH
+============================================================
+
+After processing this batch, verify:
+
+[ ] Every attached image was checked.
+
+[ ] Every confidently matched image was assigned to the correct existing Signage & Display product.
+
+[ ] No duplicate products were created.
+
+[ ] No products were deleted.
+
+[ ] No product names were changed.
+
+[ ] No prices/descriptions/categories were changed.
+
+[ ] Images fit correctly.
+
+[ ] Images are not stretched or badly cropped.
+
+[ ] Previously processed images remain unchanged.
+
+[ ] The total catalog remains 202 products.
+
+Do not process images from other categories yet.

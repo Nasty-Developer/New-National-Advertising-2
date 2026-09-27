@@ -1,0 +1,1 @@
+- [Imported monorepo apps](imported-monorepo-apps.md) — GitHub repos built from this workspace may already contain a complete artifact; preserve project metadata, register the app, then restore source.
