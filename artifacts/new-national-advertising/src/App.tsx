@@ -14,8 +14,47 @@ import { productCategories } from '@/product-categories';
 
 const AdminPage = lazy(() => import('@/pages/admin'));
 const AdminLogin = lazy(() => import('@/pages/admin-login'));
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
+
+const staticWebpPaths = new Set([
+  '/branch-workplace-flex-printing.png',
+  '/branch-workplace-office.png',
+  '/category-images/category-apparel.png',
+  '/category-images/category-awards-recognition.png',
+  '/category-images/category-core-printing-branding.png',
+  '/category-images/category-events-wedding.png',
+  '/category-images/category-labels-stickers.webp',
+  '/category-images/category-office-corporate-utility.png',
+  '/category-images/category-paper-corporate-printing.webp',
+  '/category-images/category-signage-display.png',
+  '/category-images/category-specialized-products.png',
+  '/hero-new-national-advertising.png',
+  '/machine-co2-laser-cutter.png',
+  '/machine-epson-surecolor-s80670.png',
+  '/machine-konica-minolta-bizhub-c6000.png',
+  '/machine-large-format-printer.png',
+  '/machine-wide-format-laminator.png',
+  '/new-national-advertising-shop.png',
+  '/product-images/core-flatbed-uv-printing.webp',
+  '/product-images/core-glass-printing.webp',
+  '/product-images/core-laser-cutting.jpg',
+  '/service-images/digital-printing.png',
+  '/service-images/graphics-design.png',
+  '/service-images/offset-printing.png',
+  '/service-images/screen-printing.png',
+  '/service-images/sign-boards.png',
+  '/service-images/solvent-flex.png',
+]);
 
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
 const googleMapsUrl = 'https://maps.app.goo.gl/fp4fTcaVwx2bojXz7';
@@ -265,6 +304,15 @@ function publicImageUrl(path?: string | null) {
   return `/api/storage${path.startsWith('/') ? path : `/${path}`}`;
 }
 
+function optimizedImageUrl(path?: string | null) {
+  if (!path) return '';
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  if (staticWebpPaths.has(normalized)) {
+    return normalized.replace(/\.(png|jpe?g|webp)$/i, '.webp');
+  }
+  return publicImageUrl(path);
+}
+
 function responsiveCloudinarySrcSet(path?: string | null) {
   const source = publicImageUrl(path);
   const uploadMarker = "/upload/";
@@ -335,7 +383,7 @@ function Reveal({ children, className = '', delay = 0, style }: { children: Reac
 function Logo({ src }: { src?: string | null } = {}) {
   return (
     <a href="/" aria-label="New National Advertising home" data-testid="link-logo" className="inline-flex items-center">
-      <img src={publicImageUrl(src) || '/new-national-advertising-logo.png'} alt="New National Advertising" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
+      <img src={optimizedImageUrl(src) || '/new-national-advertising-logo.webp'} alt="New National Advertising" width="204" height="112" decoding="async" className="h-[52px] w-[94px] object-contain sm:h-[56px] sm:w-[102px]" />
     </a>
   );
 }
@@ -872,10 +920,13 @@ function Home() {
                <p className="eyebrow mb-5">Print · Design · Signage · Advertising</p>
                 <h1 className="max-w-[530px]">
                   <img
-                    src="/new-national-advertising-logo.png"
+                    src="/new-national-advertising-logo.webp"
                     alt="New National Advertising"
                      loading="eager"
                      fetchPriority="high"
+                    width="500"
+                    height="275"
+                    decoding="async"
                     className="block h-auto w-full max-w-[390px] object-contain object-left sm:max-w-[500px]"
                   />
                 </h1>
@@ -891,7 +942,7 @@ function Home() {
             </Reveal>
              <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto lg:mt-10">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                   <img src={publicImageUrl(content?.heroImage) || '/hero-new-national-advertising.png'} alt="New National Advertising storefront, printing services and signage display" loading="eager" fetchPriority="high" decoding="async" className="h-full w-full object-contain" />
+                   <img src={optimizedImageUrl(content?.heroImage) || '/hero-new-national-advertising.webp'} alt="New National Advertising storefront, printing services and signage display" loading="eager" fetchPriority="high" width="1280" height="512" decoding="async" className="h-full w-full object-contain" />
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
@@ -912,7 +963,7 @@ function Home() {
                 {publicServices.map((service, index) => { const Icon = service.icon; return (
                   <Reveal key={service.title} delay={index * 55} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': service.accent, '--service-tint': service.tint } as CSSProperties}>
                     <Link href={`/services/${service.slug}`} data-testid={`link-service-${service.slug}`} className="block h-full">
-                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={service.image} alt={service.imageAlt} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" className={`h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-3' : 'object-cover'} transition duration-700`} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                      <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={optimizedImageUrl(service.image)} alt={service.imageAlt} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" loading="lazy" decoding="async" width="640" height="360" className={`h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-3' : 'object-cover'} transition duration-700`} /><div className="absolute inset-0 bg-[#102941]/10" /><div className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 service-icon"><Icon size={15} /></div><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
                       <div className="p-5"><div className="flex items-start justify-between gap-3"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{service.title}</h3><span className="service-arrow flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition group-hover:bg-[var(--service-accent)] group-hover:text-white"><ArrowDownRight size={14} /></span></div><p className="mt-2 text-[11px] leading-5 text-[#6d7d8e]">{service.description}</p><p className="mt-4 border-t border-[#edf1f3] pt-3 text-[10px] font-semibold leading-4 text-[#93a0ac]">{service.items.slice(0, 3).join(' · ')}</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[var(--service-accent)]">More Info <ArrowRight size={12} /></span></div>
                     </Link>
                  </Reveal>
@@ -958,7 +1009,7 @@ function Home() {
                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src="/taukeer-ahmed.jpg" alt="Taukeer Ahmed, New National Advertising" loading="lazy" decoding="async" className="block aspect-[4/5] w-full object-cover object-top" />
+                        <img src={optimizedImageUrl('/taukeer-ahmed.jpg')} alt="Taukeer Ahmed, New National Advertising" loading="lazy" decoding="async" width="640" height="800" className="block aspect-[4/5] w-full object-cover object-top" />
                      </div>
                      <div className="mt-3 border-l-2 border-[#1769aa] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
@@ -967,7 +1018,7 @@ function Home() {
                    </div>
                     <div className="flex min-w-0 flex-col">
                      <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src="/aurangzeb-khan.jpg" alt="Aurangzeb Khan, New National Advertising" loading="lazy" decoding="async" className="block aspect-[4/5] w-full object-cover object-top" />
+                        <img src={optimizedImageUrl('/aurangzeb-khan.jpg')} alt="Aurangzeb Khan, New National Advertising" loading="lazy" decoding="async" width="640" height="800" className="block aspect-[4/5] w-full object-cover object-top" />
                      </div>
                      <div className="mt-3 border-l-2 border-[#d9468c] pl-3">
                        <p className="eyebrow !text-[8px]">New National Advertising</p>
@@ -999,14 +1050,14 @@ function Home() {
              </div>
              <div className="mt-10 grid gap-5 lg:grid-cols-[1.22fr_.78fr] lg:items-stretch">
                <Reveal className="group relative min-h-[420px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] sm:min-h-[540px]">
-                  <img src="/branch-workplace-office.png" alt="New National Advertising workplace and office" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <img src={optimizedImageUrl('/branch-workplace-office.png')} alt="New National Advertising workplace and office" loading="lazy" decoding="async" width="960" height="1280" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white sm:p-7 sm:pt-24">
                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our workplace</p>
                    <p className="mt-2 max-w-[360px] text-[12px] leading-5 text-white/85">The creative and production environment behind New National Advertising.</p>
                  </div>
                </Reveal>
                <Reveal delay={100} className="group relative min-h-[340px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] lg:min-h-0">
-                  <img src="/branch-workplace-flex-printing.png" alt="New National Advertising flex printing branch" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <img src={optimizedImageUrl('/branch-workplace-flex-printing.png')} alt="New National Advertising flex printing branch" loading="lazy" decoding="async" width="960" height="1280" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white">
                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our branch</p>
                    <p className="mt-2 text-[12px] leading-5 text-white/85">A real view from New National Advertising.</p>
@@ -1058,7 +1109,7 @@ function Home() {
          <section className="overflow-hidden bg-[#f3f7f8] py-20 lg:py-24">
           <div className="container-nna grid items-center gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <Reveal><p className="eyebrow">Built for your brand</p><h2 className="display mt-3 max-w-[440px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Design that supports your brand.</h2><p className="mt-5 max-w-[390px] text-[13px] leading-6 text-[#68798a]">From a first logo to the final printed piece, every detail has a job to do.</p><a href="#contact" data-testid="link-design-enquiry" className="arrow-link mt-6 inline-flex items-center gap-2 text-[11px] font-bold text-[#1669aa]">Start a design conversation <ArrowRight size={14} /></a></Reveal>
-              <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src="/design-materials.jpg" alt="Graphic design and brand materials" loading="lazy" decoding="async" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
+              <Reveal delay={100} className="relative min-h-[275px]"><div className="absolute left-0 top-7 h-[170px] w-[62%] overflow-hidden rounded-[9px] border-8 border-white bg-white shadow-[0_14px_30px_rgba(35,68,95,.13)] sm:h-[215px]"><img src={optimizedImageUrl('/design-materials.jpg')} alt="Graphic design and brand materials" loading="lazy" decoding="async" width="640" height="430" className="h-full w-full object-cover" /></div><div className="absolute right-0 top-0 w-[42%] rounded-[9px] border border-[#dae7ed] bg-white p-4 shadow-[0_12px_26px_rgba(35,68,95,.09)] sm:p-5"><div className="flex items-center justify-between"><span className="display text-[18px] font-extrabold tracking-[-.07em] text-[#152e49]">N</span><span className="text-[8px] font-bold tracking-[.18em] text-[#3ba776]">BRAND KIT</span></div><div className="mt-8 grid grid-cols-3 gap-1.5"><div className="h-7 rounded bg-[#14213d]" /><div className="h-7 rounded bg-[#d9468c]" /><div className="h-7 rounded bg-[#f2c94c]" /></div><p className="mt-3 text-[10px] font-semibold text-[#30465d]">Logo · Packaging<br />Brochure · Menu</p></div><div className="absolute bottom-1 right-[12%] rounded-[9px] bg-[#1769aa] px-4 py-3 text-white shadow-[0_10px_23px_rgba(22,105,170,.18)]"><p className="text-[9px] font-bold tracking-[.14em]">IDEAS</p><p className="mt-1 text-[16px] font-bold">In print.</p></div><div className="absolute bottom-0 left-[23%] flex gap-1 rounded-full border border-white bg-white/90 p-1 shadow-[0_6px_15px_rgba(20,33,61,.1)]"><span className="h-3 w-3 rounded-full bg-[#00a8c6]" /><span className="h-3 w-3 rounded-full bg-[#d9468c]" /><span className="h-3 w-3 rounded-full bg-[#f2994a]" /><span className="h-3 w-3 rounded-full bg-[#3ba776]" /></div></Reveal>
           </div>
         </section>
 
@@ -1159,7 +1210,7 @@ function Products() {
                     data-testid={`product-category-card-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                   >
                     <div className="relative aspect-[1.45/1] overflow-hidden bg-[#edf4f6]">
-                      <img src={category.image} alt={category.alt} loading="lazy" decoding="async" className={`h-full w-full ${category.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition duration-700 group-hover:scale-[1.03]`} />
+                      <img src={optimizedImageUrl(category.image)} alt={category.alt} loading="lazy" decoding="async" width="768" height="512" className={`h-full w-full ${category.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition duration-700 group-hover:scale-[1.03]`} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#102941]/75 via-[#102941]/10 to-transparent" />
                       <span className="absolute bottom-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-bold text-[#1c4661]">{categoryCounts.get(category.name) ?? 0} products</span>
                     </div>
@@ -1199,7 +1250,7 @@ function Products() {
                   {filteredProducts.map((product) => (
                     <article key={product.id} className="overflow-hidden rounded-[14px] border border-[#e0e8ed] bg-white shadow-[0_10px_28px_rgba(24,52,82,.06)] transition hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(24,52,82,.1)]" data-testid={`public-product-${product.id}`}>
                       <div className="aspect-[1.3/1] overflow-hidden bg-[#edf4f6]">
-                        {product.imageUrl || product.imagePath ? <img src={publicImageUrl(product.imageUrl || product.imagePath)} srcSet={responsiveCloudinarySrcSet(product.imageUrl || product.imagePath)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={product.imageAlt || product.name} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
+                        {product.imageUrl || product.imagePath ? <img src={optimizedImageUrl(product.imageUrl || product.imagePath)} srcSet={responsiveCloudinarySrcSet(product.imageUrl || product.imagePath)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={product.imageAlt || product.name} loading="lazy" decoding="async" width="640" height="492" className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" /> : <div className="flex h-full items-center justify-center text-[#7fa3b0]"><PackageIllustration /></div>}
                       </div>
                       <div className="p-5">
                         <h3 className="display text-[22px] font-extrabold leading-tight tracking-[-.06em] text-[#203954]">{product.name}</h3>
@@ -1293,7 +1344,7 @@ function Machines() {
               {!publicMachines.loading && publicMachines.data.map((machine, index) => (
                 <Reveal key={machine.name} delay={index * 90} className="group flex h-full flex-col overflow-hidden rounded-[16px] border border-[#dce7ec] bg-[#fffdf9] shadow-[0_10px_28px_rgba(31,65,91,.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(31,65,91,.1)]" >
                   <div className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-[#e4ecef] bg-[#eef3f3] p-3 sm:p-4">
-                    <img src={machine.imageUrl} srcSet={responsiveCloudinarySrcSet(machine.imageUrl)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={machine.imageAlt || machine.name} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} decoding="async" className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
+                    <img src={optimizedImageUrl(machine.imageUrl)} srcSet={responsiveCloudinarySrcSet(machine.imageUrl)} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" alt={machine.imageAlt || machine.name} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} decoding="async" width="768" height="576" className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.015]" />
                   </div>
                   <div className="flex flex-1 flex-col p-5 sm:p-6">
                     <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#1b78ad]">{machine.category}</p>
@@ -1599,7 +1650,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
               </motion.div>
               <motion.div initial={{ opacity: 0, scale: .98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .7, delay: .08 }} className="relative">
                 <div className="overflow-hidden rounded-[16px] border border-white bg-[#dbe8ef] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                  <img src={service.image} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 560px, 100vw" alt={service.imageAlt} loading="eager" fetchPriority="high" decoding="async" className={`aspect-[1.35/1] h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-5' : 'object-cover'} transition duration-700 hover:scale-[1.025]`} />
+                  <img src={optimizedImageUrl(service.image)} srcSet={responsiveCloudinarySrcSet(service.image)} sizes="(min-width: 1024px) 560px, 100vw" alt={service.imageAlt} loading="eager" fetchPriority="high" decoding="async" width="960" height="711" className={`aspect-[1.35/1] h-full w-full ${service.image.includes('/machine-') ? 'object-contain p-5' : 'object-cover'} transition duration-700 hover:scale-[1.025]`} />
                 </div>
                 <div className="absolute -bottom-4 left-4 rounded-[9px] border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:left-7">
                   <p className="eyebrow text-[8px]" style={{ color: service.accent }}>Print / design / finish</p>
@@ -1631,7 +1682,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
               <div className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                 {service.items.map((item, index) => <div key={item} className="flex items-start gap-2 text-[12px] font-semibold text-[#354b61]"><Check size={14} className="mt-0.5 shrink-0" style={{ color: [service.accent, '#00A8C6', '#D9468C', '#3BA776'][index % 4] }} />{item}</div>)}
               </div>
-               {serviceProducts.length > 0 && <div className="mt-8 border-t border-[#edf1f3] pt-6"><p className="eyebrow">Published service products</p><div className="mt-4 grid gap-3 sm:grid-cols-2">{serviceProducts.map((product) => <article key={product.id} className="overflow-hidden rounded-[10px] border border-[#e1e8ed] bg-[#fbfcfd]">{product.imagePath && <img src={publicImageUrl(product.imagePath)} alt={product.imageAlt || product.name} className="h-28 w-full object-cover" />}<div className="p-3"><h3 className="text-[12px] font-bold text-[#304a60]">{product.name}</h3>{product.shortDescription && <p className="mt-1 text-[10px] leading-4 text-[#718394]">{product.shortDescription}</p>}</div></article>)}</div></div>}
+               {serviceProducts.length > 0 && <div className="mt-8 border-t border-[#edf1f3] pt-6"><p className="eyebrow">Published service products</p><div className="mt-4 grid gap-3 sm:grid-cols-2">{serviceProducts.map((product) => <article key={product.id} className="overflow-hidden rounded-[10px] border border-[#e1e8ed] bg-[#fbfcfd]">{product.imagePath && <img src={optimizedImageUrl(product.imagePath)} alt={product.imageAlt || product.name} loading="lazy" decoding="async" width="320" height="112" className="h-28 w-full object-cover" />}<div className="p-3"><h3 className="text-[12px] font-bold text-[#304a60]">{product.name}</h3>{product.shortDescription && <p className="mt-1 text-[10px] leading-4 text-[#718394]">{product.shortDescription}</p>}</div></article>)}</div></div>}
             </div>
             <div className="rounded-[12px] border border-[#dfe8ed] bg-white p-6 sm:p-8">
               <p className="eyebrow">Materials and formats</p>
@@ -1696,7 +1747,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {relatedServices.map((related) => (
                 <Link key={related.slug} href={`/services/${related.slug}`} className="service-card group overflow-hidden rounded-[10px] border border-[#e2e9ee] bg-white" style={{ '--service-accent': related.accent, '--service-tint': related.tint } as CSSProperties}>
-                  <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={related.image} alt={related.imageAlt} className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
+                  <div className="relative h-[150px] overflow-hidden bg-[#e4edf1]"><img src={optimizedImageUrl(related.image)} alt={related.imageAlt} loading="lazy" decoding="async" width="640" height="360" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-[#102941]/10" /><span className="absolute bottom-0 left-4 h-1 w-12 rounded-full bg-[var(--service-accent)]" /></div>
                   <div className="flex items-center justify-between gap-3 p-5"><h3 className="display text-[17px] font-extrabold text-[#162d47]">{related.title}</h3><ArrowRight size={15} className="text-[var(--service-accent)] transition group-hover:translate-x-1" /></div>
                 </Link>
               ))}
