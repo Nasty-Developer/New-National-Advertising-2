@@ -1,0 +1,271 @@
+URGENT — ADD VISIBLE PREMIUM ANIMATIONS TO THE SADDAM KHAN OWNER SECTION
+
+The current About Us design is good, but the Saddam Khan owner section looks completely static.
+
+I want the animation to be clearly visible while still looking PREMIUM, PROFESSIONAL and CORPORATE.
+
+DO NOT redesign the whole section.
+DO NOT remove any existing content.
+DO NOT change the layout unnecessarily.
+
+Only improve the animation and visual effects.
+
+========================================
+1. SADDAM KHAN TEXT ANIMATION
+========================================
+
+Make the large "Saddam Khan" text visibly animated.
+
+IMPORTANT:
+The text itself must NOT move around the page.
+
+Instead, create a continuous premium animated light effect INSIDE / ACROSS the letters.
+
+Use:
+- animated gradient shimmer
+- soft blue/cyan highlight travelling slowly from LEFT → RIGHT
+- subtle brightness pulse
+- slight glow increase as the shimmer passes
+
+The shimmer should clearly move across:
+
+Saddam Khan
+
+Animation duration:
+approximately 3–4 seconds
+
+Use an infinite loop.
+
+The text should remain perfectly fixed in position.
+
+Example visual behavior:
+
+Saddam Khan
+████████████████
+      ✨ → → → 
+
+The light should continuously travel across the letters.
+
+========================================
+2. GLOW PULSE
+========================================
+
+Add a subtle animated glow behind the "Saddam Khan" text.
+
+The glow should slowly:
+
+normal → brighter → normal
+
+Duration:
+approximately 2.5–3 seconds
+
+Infinite loop.
+
+Keep it subtle and premium.
+
+Do NOT make it look like neon gaming graphics.
+
+========================================
+3. OWNER LABEL
+========================================
+
+Animate:
+
+OWNER • NEW NATIONAL ADVERTISING
+
+Use a subtle fade/pulse effect.
+
+Very small movement is acceptable, but keep the label in the same location.
+
+Add a soft blue glow that gently appears/disappears.
+
+========================================
+4. COLOR LINE ANIMATION
+========================================
+
+The small multicolor line below Saddam Khan currently has several colors.
+
+Make this line subtly animated.
+
+Create a moving light/shimmer that travels across the line from left to right.
+
+Duration:
+2 seconds
+Infinite loop
+
+Do not change the existing colors.
+
+========================================
+5. PHONE NUMBER
+========================================
+
+Add a subtle entrance animation to:
+
++91 9555759677
+
+When the About Us section enters the viewport:
+
+- fade in
+- slight upward movement
+- settle into its final position
+
+After that, keep it stable.
+
+On hover:
+- subtle blue glow
+- slight scale increase, around 1.02x
+- smooth transition
+
+Keep the phone number clickable.
+
+========================================
+6. OWNER CARD BACKGROUND
+========================================
+
+The large owner card should also have a VERY subtle animated background.
+
+Use a soft radial blue/cyan light that slowly moves within the card.
+
+The light should travel very slowly around the background.
+
+For example:
+
+top-right → center → bottom-left → back
+
+Duration:
+8–12 seconds
+Infinite loop
+
+Keep the movement extremely smooth.
+
+Do NOT move the actual card.
+
+========================================
+7. BORDER ANIMATION
+========================================
+
+Add a subtle animated highlight around the owner card border.
+
+A small soft blue/cyan light should travel around the border.
+
+Duration:
+5–7 seconds
+Infinite loop
+
+Keep the border elegant and thin.
+
+========================================
+8. SECTION ENTRANCE
+========================================
+
+When the About Us section first enters the viewport:
+
+LEFT SIDE:
+- heading fades in and moves upward slightly
+- description fades in
+- service pills appear with a tiny stagger
+- address fades in
+- button fades in
+
+RIGHT SIDE:
+- owner card fades in
+- slight scale from 0.97 → 1
+- Saddam Khan text appears with a smooth reveal
+
+Use a professional staggered animation.
+
+Do not make anything bounce.
+
+========================================
+9. IMPORTANT — NO EXCESSIVE MOVEMENT
+========================================
+
+The following must NOT happen:
+
+❌ Saddam Khan moving left/right
+❌ bouncing text
+❌ rotating text
+❌ shaking
+❌ excessive scaling
+❌ flashing
+❌ fast animations
+❌ neon gaming effect
+❌ distracting animation
+
+The actual content should stay stable.
+
+Only light, glow, shimmer, opacity and very subtle background movement should animate.
+
+========================================
+10. PREMIUM VISUAL STYLE
+========================================
+
+The final result should feel like a premium modern advertising company website.
+
+Use the existing branding:
+
+- Navy
+- Blue
+- Cyan
+- White
+- Existing orange accent
+
+Do NOT introduce purple.
+
+Animation should feel similar to a high-end corporate technology/creative agency website.
+
+========================================
+11. PERFORMANCE
+========================================
+
+Use lightweight CSS animations wherever possible.
+
+Prefer:
+- transform
+- opacity
+- background-position
+- box-shadow
+
+Avoid expensive JavaScript animation loops.
+
+Do not add heavy animation libraries just for these effects.
+
+The website must remain fast.
+
+========================================
+12. ACCESSIBILITY
+========================================
+
+Respect:
+
+prefers-reduced-motion
+
+If the user has reduced motion enabled, disable the continuous animations and keep the content static.
+
+========================================
+FINAL RESULT
+
+The About Us owner section should look approximately like:
+
+OWNER • NEW NATIONAL ADVERTISING
+
+Saddam Khan
+<visible light shimmer moving across the letters>
+
+Owner of New National Advertising
+
++91 9555759677
+
+with:
+
+✓ animated text shimmer
+✓ animated text glow
+✓ animated color-line shimmer
+✓ subtle animated card background
+✓ subtle animated border highlight
+✓ smooth entrance animation
+✓ phone hover effect
+
+The animation must be visibly noticeable when watching the page for 5–10 seconds, while still remaining professional and elegant.
+
+Do not modify anything outside the requested About Us animation improvements.

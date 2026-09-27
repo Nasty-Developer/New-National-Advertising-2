@@ -1,0 +1,76 @@
+UPDATE THE PRODUCTS PAGE CATEGORY UI
+
+Keep the 12 category images/cards, but make the category section more interactive and premium.
+
+LAYOUT:
+
+At the top of the Products page, show the 12 categories as beautiful visual category cards.
+
+Each category card should contain:
+- Category image
+- Exact category name
+- Clean premium styling
+- Subtle hover effect
+- Clear indication that it is clickable
+
+ADD A DROPDOWN / ACCORDION:
+
+Each category must also have a dropdown/expand option.
+
+When the user clicks the dropdown:
+→ Expand that category
+→ Show the products belonging ONLY to that category
+→ Products should appear in a clean grid below the category header.
+
+Example:
+
+[ CATEGORY IMAGE ]
+SIGNAGE & DISPLAY                         ▼
+
+When expanded:
+
+Signage
+Stainless-steel sign boards
+Acrylic sign boards
+Acrylic nameplates
+QR-code stands
+...
+
+Click ▼ again:
+→ Collapse the products.
+
+IMPORTANT:
+- Only one category needs to be expanded at a time if that produces a cleaner UI.
+- The category image/card itself should also open the category.
+- Keep the dropdown arrow clearly visible.
+- Add smooth, subtle expand/collapse animation.
+- Make the layout responsive on desktop, tablet, and mobile.
+- Do NOT make the UI crowded.
+- Keep it premium, clean, modern and professional.
+- Do NOT change any product names.
+- Do NOT remove any of the 202 products.
+- Do NOT create individual product images yet.
+- Use the 12 category images ONLY for the category cards.
+
+DATA:
+Do not hard-code products into the UI.
+
+Use the existing Firestore `category` field to filter products dynamically.
+
+CATEGORY FLOW:
+
+Products Page
+    ↓
+12 visual category cards
+    ↓
+Category selected / dropdown opened
+    ↓
+Products for that category appear
+    ↓
+Product card clicked
+    ↓
+Product details
+
+Make sure the category image, category name, dropdown and product grid all feel like ONE polished component rather than separate unrelated elements.
+
+After implementation, verify all 12 categories and their products work correctly.

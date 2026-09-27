@@ -1,0 +1,51 @@
+The ZIP contains exactly 75 PNG product images.
+
+Proceed with ALL 75 images.
+
+Do NOT stop because there is no PDF.
+
+Use BOTH:
+1. The filename of each PNG
+2. The actual visual content/text visible inside each image
+
+Analyze the 75 images carefully and determine the correct product name/category for each one.
+
+IMPORTANT:
+- 75 images = process all 75 images.
+- Do not skip any image.
+- Do not randomly rename products.
+- Do not use placeholder names such as "Product 1", "Product 2", etc.
+- If the product name is written inside the image, use that name.
+- If the filename clearly contains the product name, use it.
+- If both filename and image text are available, use them together to identify the product.
+- Preserve the correct image → product relationship.
+
+IMPORT THEM INTO THE EXISTING PRODUCTS SECTION ONLY.
+
+Before creating a new product:
+- Check the existing Products collection.
+- If that product already exists, update/repair the existing product instead of creating a duplicate.
+- Do not create duplicate products.
+
+For all 75 images:
+- Upload/use the proper image in production Firebase Storage.
+- Store the production image URL in Firestore.
+- Make the product fully editable from the Admin Panel.
+- Admin must be able to change the product name, category, details, and image later.
+- Replacing an image from Admin Panel must update the live website.
+- Adding/deleting/editing products from Admin Panel must also update the live website.
+
+Do NOT put these products into Projects, Services, Machines, or any other section.
+
+There are approximately 3–4 products where a suitable image may genuinely be missing. ONLY for those specific products, generate an accurate professional AI product image. Do not generate random filler images when a real image already exists.
+
+After processing, verify that:
+- All 75 source images were analyzed.
+- Every image has the correct product association.
+- No duplicate products were created.
+- Images are stored in production Firebase Storage.
+- Products are stored in Firestore.
+- Products are editable from Admin Panel.
+- Changes made from Admin Panel appear on the public website.
+
+Do not say "completed" until you have actually verified the 75-image import and the Admin Panel → Firestore → live website flow.

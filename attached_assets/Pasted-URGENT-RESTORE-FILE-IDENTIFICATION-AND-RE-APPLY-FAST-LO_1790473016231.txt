@@ -1,0 +1,128 @@
+URGENT — RESTORE FILE IDENTIFICATION AND RE-APPLY FAST LOADING OPTIMIZATION
+
+You previously stopped identifying the website files and stopped the fast-loading optimization. Continue the work properly from the CURRENT codebase.
+
+IMPORTANT:
+- DO NOT delete any existing features.
+- DO NOT remove any pages, sections, products, machines, services, admin functionality, Firebase functionality, API functionality, or existing content.
+- DO NOT replace the website with a simplified version.
+- Preserve the current design and functionality.
+- First identify the actual files responsible for the website, images, loading screen, machine images, service images, product images, and other heavy assets.
+- Work directly with the existing project structure.
+
+MAIN GOAL:
+Make the ENTIRE New National Advertising website load significantly faster.
+
+1. FILE IDENTIFICATION
+First inspect the complete project structure and identify:
+- Frontend entry files
+- App.tsx and routing
+- main.tsx
+- index.html
+- Image/asset directories
+- Machine image files
+- Service image files
+- Product image files
+- Hero/banner images
+- Background images
+- Loading screen/component
+- API/server files
+- Any image-loading utility/component
+- Any existing lazy-loading implementation
+- Any Vite/build configuration
+
+Do not guess file locations. Actually inspect the repository and identify the real files currently being used.
+
+2. IMAGE PERFORMANCE
+Optimize image loading without removing any images.
+
+Implement:
+- lazy loading for below-the-fold images
+- eager/preload only for critical above-the-fold images
+- responsive image loading where practical
+- width/height attributes to prevent layout shifts
+- modern formats such as WebP/AVIF where safe
+- appropriately sized image variants instead of downloading unnecessarily huge images
+- avoid loading all machine/product/service images immediately
+- load images only when they are actually needed
+- preload the main hero image if it is critical
+- use proper caching-friendly asset handling
+
+The machine images must also load quickly.
+
+3. LOADING SCREEN
+DO NOT REMOVE THE EXISTING LOADING SCREEN.
+
+Instead:
+- make the loading screen appear instantly
+- make it lightweight
+- do not wait for unnecessary API requests before displaying the page
+- do not wait for every image to load before showing the website
+- remove unnecessary delays/timeouts
+- allow the main page to render immediately
+- progressively load the remaining content/images in the background
+
+The loading screen itself must disappear as soon as the critical application content is ready.
+
+4. JAVASCRIPT / FRONTEND
+Optimize:
+- unnecessary re-renders
+- unnecessary API requests
+- duplicate requests
+- large bundles
+- components that can be lazy-loaded
+- routes/pages that do not need to be loaded initially
+
+Use code splitting where appropriate.
+
+5. SERVER/API
+Inspect the API and make sure the frontend is not waiting unnecessarily for slow API calls.
+
+Do not remove API functionality.
+
+If data can be loaded after the initial page render, make it asynchronous so the page becomes usable immediately.
+
+6. BUILD OPTIMIZATION
+Inspect the existing Vite/build configuration and optimize production output without breaking the project.
+
+Do not blindly change the framework or rebuild the project from scratch.
+
+7. IMPORTANT PERFORMANCE RULE
+The website should become usable as quickly as possible even on a slower mobile connection.
+
+Priority order:
+
+FIRST:
+- initial HTML
+- critical CSS
+- React application
+- main hero/above-the-fold content
+
+THEN:
+- machine images
+- service images
+- product images
+- gallery/images further down the page
+- other non-critical content
+
+8. VERIFY EVERYTHING
+After making the changes:
+- run the project
+- verify the homepage
+- verify navigation
+- verify machines
+- verify services
+- verify products
+- verify images
+- verify admin functionality
+- verify API requests
+- verify the loading screen
+- check browser console for errors
+- check that no existing functionality was removed
+
+Most importantly, DO NOT just tell me that optimization was completed.
+
+Actually inspect the files, make the changes, run the application, and verify that the optimized website still works.
+
+The priority is:
+FAST INITIAL LOAD + FAST IMAGE LOADING + FAST LOADING SCREEN + ZERO FEATURE LOSS.

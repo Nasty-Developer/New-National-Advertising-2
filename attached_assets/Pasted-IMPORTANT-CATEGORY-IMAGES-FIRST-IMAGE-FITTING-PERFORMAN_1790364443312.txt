@@ -1,0 +1,196 @@
+IMPORTANT — CATEGORY IMAGES FIRST + IMAGE FITTING + PERFORMANCE
+
+I have an important change to the image workflow.
+
+DO NOT treat the images I am about to attach as individual product images.
+
+FIRST, I am uploading CATEGORY IMAGES.
+
+Each attached image will have a filename containing the category name and file extension.
+
+For example, if I attach:
+
+Core Printing & Branding.png
+Signage & Display.png
+Paper & Corporate Printing.png
+
+then the filename itself identifies which existing category the image belongs to.
+
+============================================================
+CATEGORY IMAGE WORKFLOW
+============================================================
+
+For every image I attach in this batch:
+
+1. Read the filename.
+2. Identify the matching EXISTING category.
+3. Replace ONLY that category's current image with the attached image.
+4. Do NOT create a new category.
+5. Do NOT delete any category.
+6. Do NOT change the category name.
+7. Do NOT change the number of products in the category.
+8. Do NOT modify individual product data yet.
+
+IMPORTANT:
+
+These are CATEGORY images, NOT product images.
+
+Do NOT assign these images to individual products.
+
+Do NOT use one category image as the image for every product in that category.
+
+I will upload individual product images separately later.
+
+============================================================
+CATEGORY IMAGE FITTING
+============================================================
+
+The attached category images must be displayed cleanly in the existing category cards.
+
+Do NOT simply stretch the images.
+
+Do NOT excessively crop important parts of the image.
+
+Preserve the image's important visual content and aspect ratio.
+
+Use a proper responsive image treatment such as object-fit/appropriate positioning so the image fills the existing card naturally.
+
+If an image needs cropping because of the existing card dimensions, crop intelligently around the important subject.
+
+Do NOT redesign the category cards.
+
+Keep the existing website design.
+
+============================================================
+MACHINE / SERVICE IMAGE FITTING
+============================================================
+
+I also noticed that some of the machine/service images currently look poorly fitted inside their cards.
+
+The screenshots I provided show that some machine images are:
+
+- awkwardly cropped
+- not centered correctly
+- partially cut off
+- not using the available image area effectively
+
+Fix the image presentation.
+
+For machine/service cards:
+
+- preserve the full important machine where possible
+- use a suitable object-fit/object-position strategy
+- do not stretch the machine
+- do not make the machine look unnaturally zoomed
+- keep the existing card dimensions
+- make the machine clearly visible
+- keep the image visually balanced inside the card
+
+Do NOT replace the actual machine images unless I explicitly instruct you to.
+
+This is primarily an IMAGE FITTING / PRESENTATION FIX.
+
+============================================================
+PRODUCT IMAGES — LATER
+============================================================
+
+I have 202 products.
+
+I will later upload individual product images for the products.
+
+DO NOT process those yet.
+
+When I later upload individual product images:
+
+1. Use the filename/product name to identify the correct existing product.
+2. Match the image to the existing product.
+3. Replace that product's image only.
+4. Do not create duplicate products.
+5. Do not delete products.
+6. Do not rename products.
+7. Do not change product descriptions/categories/prices unless explicitly instructed.
+8. Keep all 202 existing products.
+
+If a filename does not clearly identify a product, STOP and ask me instead of guessing.
+
+============================================================
+IMAGE LOADING PERFORMANCE
+============================================================
+
+The current website's images are loading TOO SLOWLY.
+
+Improve image loading performance across the public website.
+
+Since we are using Cloudinary, use Cloudinary's image optimization capabilities where appropriate.
+
+Implement proper responsive image delivery and optimization without reducing visual quality unnecessarily.
+
+Consider:
+
+- optimized Cloudinary delivery URLs
+- automatic image format selection such as WebP/AVIF where supported
+- responsive image sizing
+- appropriate image dimensions
+- lazy loading for images below the fold
+- eager/priority loading only for critical above-the-fold images
+- preventing huge original images from being downloaded when a smaller display size is sufficient
+- avoiding unnecessary duplicate image requests
+- proper caching
+
+IMPORTANT:
+
+Do NOT make the page show blurry or visibly low-quality images just to make it faster.
+
+The goal is:
+
+FAST loading + GOOD IMAGE QUALITY.
+
+The first visible content should load quickly, while images further down the page can lazy-load.
+
+============================================================
+CURRENT PUBLIC PRODUCTS PAGE
+============================================================
+
+The Products page currently shows the category cards and product counts.
+
+Keep the existing category structure.
+
+Do not change the existing product data while processing these category images.
+
+The current catalog contains 202 products and must remain intact.
+
+============================================================
+CURRENT IMAGE MAPPING REMINDER
+============================================================
+
+Digital Printing:
+→ existing Konica Minolta 6000 machine image.
+
+Flex Printing:
+→ existing 512i Konica Flex / large-format machine image.
+
+Make Your Brand Stand:
+→ existing 512i Konica Flex / large-format machine image.
+
+Do not generate replacement images.
+
+============================================================
+IMPORTANT EXECUTION ORDER
+============================================================
+
+RIGHT NOW:
+
+1. Wait for my CATEGORY IMAGE attachments.
+2. Identify each category image from its filename.
+3. Replace the corresponding category image.
+4. Fit each category image properly.
+5. Fix the existing machine/service image fitting.
+6. Improve image loading performance.
+
+DO NOT start assigning individual product images yet.
+
+I will provide the 202 individual product images separately in organized batches after the category-image work is complete.
+
+Do not change unrelated UI.
+
+Do not delete or alter existing catalog data.

@@ -1,0 +1,297 @@
+URGENT — OPTIMIZE THE ENTIRE WEBSITE FOR VERY FAST LOADING
+
+The website is currently loading too slowly in the real deployed/rendered website.
+
+Do NOT optimize only the loading screen.
+
+I need the ENTIRE WEBSITE to load and become usable as fast as possible, especially images.
+
+==================================================
+1. LOADING SCREEN
+==================================================
+
+Keep the existing premium loading-screen design and animation.
+
+But:
+
+- Make it appear/disappear quickly.
+- Do NOT wait for Firebase/API requests.
+- Do NOT wait for product data.
+- Do NOT wait for category data.
+- Do NOT wait for CMS data.
+- Do NOT wait for every image.
+- Do NOT wait for all sections to finish loading.
+
+Render the main website shell immediately.
+
+Target:
+→ approximately 500–1000ms on a normal connection when the app is ready enough to use.
+
+Do NOT create an artificial delay.
+
+Do NOT keep the user stuck on the loader while background data is loading.
+
+==================================================
+2. IMAGE PERFORMANCE — VERY IMPORTANT
+==================================================
+
+Images are currently loading too slowly on the real rendered website.
+
+Optimize ALL website images.
+
+Use:
+
+- Proper image dimensions
+- Responsive image sizes
+- Modern optimized formats such as WebP/AVIF where supported
+- Lazy loading for below-the-fold images
+- Eager/preloaded loading ONLY for critical above-the-fold images
+- Correct width/height attributes to prevent layout shifting
+- Responsive srcset/sizes where appropriate
+- Browser caching
+- Firebase/CDN-friendly image URLs
+- Proper compression without visibly damaging quality
+
+DO NOT load a huge original image when a smaller version is sufficient.
+
+For example:
+
+Hero image on desktop
+→ load an appropriate desktop size
+
+Hero image on mobile
+→ load an appropriate mobile size
+
+Product/category cards
+→ load optimized thumbnail/card-sized versions
+
+Do NOT download the full-resolution original image for every card.
+
+==================================================
+3. IMAGE LOADING STRATEGY
+==================================================
+
+ABOVE THE FOLD:
+
+Prioritize only the images that the user can immediately see.
+
+Load:
+- Logo
+- Hero image
+- Critical first-screen assets
+
+BELOW THE FOLD:
+
+Lazy-load:
+- Services images
+- Product category images
+- Product images
+- Projects images
+- About images
+- Other sections below the viewport
+
+Do not make the entire website wait for below-the-fold images.
+
+==================================================
+4. FIREBASE / API PERFORMANCE
+==================================================
+
+Do not block initial rendering while waiting for:
+
+- Firestore
+- Firebase Storage
+- Products API
+- Services API
+- CMS data
+- Category data
+- Projects data
+- Admin-related requests
+
+Render the UI shell first.
+
+Fetch data independently in the background.
+
+Use caching where appropriate.
+
+Avoid duplicate API requests.
+
+Avoid requesting the same Firestore/API data multiple times from different components.
+
+If data is already loaded, reuse the cached result.
+
+==================================================
+5. PRODUCTS PAGE
+==================================================
+
+The 202-product catalog must NOT make the homepage wait.
+
+Do not download all 202 large product images when the Products page is not open.
+
+When Products page opens:
+
+→ load category UI immediately
+→ load only the required product data
+→ lazy-load product images
+→ load images progressively as products become visible
+
+Category images should load efficiently as well.
+
+==================================================
+6. SERVICES
+==================================================
+
+Do not load every service image at full resolution during initial page load.
+
+Load the service section efficiently.
+
+Use optimized thumbnails/card images.
+
+Only load larger images when actually needed.
+
+==================================================
+7. HERO IMAGE
+==================================================
+
+The hero/first-screen image should be prioritized because it is visible immediately.
+
+Preload only the critical hero image.
+
+Do not preload dozens of other images.
+
+==================================================
+8. PREVENT LAYOUT SHIFT
+==================================================
+
+Every image/card should reserve its required space before the image finishes loading.
+
+Use:
+- aspect-ratio
+- width/height
+- proper image containers
+
+Do not allow the page to jump around while images load.
+
+==================================================
+9. CACHING
+==================================================
+
+Configure browser/CDN caching correctly for static images and assets.
+
+Repeated visitors should NOT have to download the same unchanged images unnecessarily.
+
+Use long-lived caching for immutable/static assets where safe.
+
+==================================================
+10. ERROR / FALLBACK HANDLING
+==================================================
+
+If one image or API request fails:
+
+DO NOT block the entire website.
+
+Show a clean fallback for that specific section/image.
+
+The rest of the website must continue loading normally.
+
+==================================================
+11. REMOVE UNNECESSARY BLOCKING
+==================================================
+
+Audit App.tsx and the entire initial rendering flow.
+
+Find anything that currently prevents the website from rendering until multiple requests finish.
+
+Remove unnecessary dependencies from the initial loading gate.
+
+The website should NOT have:
+
+"Wait for everything → then show website"
+
+Instead use:
+
+"Show website shell immediately
+→ load critical content
+→ load remaining sections independently
+→ lazy-load images as needed"
+
+==================================================
+12. PERFORMANCE TARGET
+==================================================
+
+The website should feel extremely fast.
+
+Target:
+
+Initial UI:
+→ immediate
+
+Critical above-the-fold content:
+→ very fast
+
+Below-the-fold content:
+→ progressively loaded
+
+Images:
+→ optimized and lazy-loaded
+
+Products:
+→ loaded only when needed
+
+Firebase/API:
+→ background/cached where possible
+
+The user should never feel that the entire website is waiting for Firebase or images.
+
+==================================================
+13. TEST THE REAL DEPLOYED WEBSITE
+==================================================
+
+Do NOT test only in Replit preview.
+
+Test the actual rendered/deployed website.
+
+Test:
+
+1. Hard refresh
+2. Normal refresh
+3. Desktop
+4. Mobile
+5. Slow network
+6. First visit
+7. Repeat visit
+8. Products page
+9. Services section
+10. Category images
+11. Product images
+
+Check the browser Network tab and identify the slowest requests.
+
+Fix the actual bottlenecks instead of simply hiding the loading screen.
+
+==================================================
+FINAL REQUIREMENT
+==================================================
+
+The goal is NOT just to make the loading animation disappear faster.
+
+The goal is:
+
+MAKE THE ENTIRE NEW NATIONAL ADVERTISING WEBSITE LOAD VERY FAST.
+
+Prioritize:
+1. Fast initial rendering
+2. Fast critical images
+3. Optimized image sizes
+4. Lazy loading
+5. Caching
+6. No duplicate API/Firebase requests
+7. Background loading
+8. No blocking from below-the-fold content
+9. No unnecessary loading delays
+10. No broken sections
+
+Keep the existing design and functionality.
+
+Do NOT remove features just to make the site faster.
+
+Optimize the implementation properly.
