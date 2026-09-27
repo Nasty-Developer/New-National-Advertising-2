@@ -21,6 +21,17 @@ import { ensureExactProductCatalog, isExactProductCatalogRecord } from "../lib/p
 
 const router: IRouter = Router();
 const products = () => firestore().collection("products");
+const signageDisplayPriority = new Map([
+  ["vinyl signage", 0],
+  ["acp boards", 1],
+  ["stainless-steel sign boards", 2],
+  ["acrylic sign boards", 3],
+  ["acrylic nameplates", 4],
+  ["acrylic cutting", 5],
+  ["laser-cut acrylic", 6],
+  ["name plates", 7],
+  ["menu/display stands", 8],
+]);
 const productPriority = [
   new Set(["signage"]),
   new Set(["banner"]),
@@ -32,17 +43,20 @@ const productPriority = [
   new Set(["hoarding banner"]),
 ];
 
-function productPriorityRank(name: string) {
+function productPriorityRank(name: string, category?: string) {
   const normalized = name.toLowerCase().trim().replace(/\s+/g, " ");
+  if (category?.toLowerCase().trim() === "signage & display") {
+    return signageDisplayPriority.get(normalized) ?? Number.MAX_SAFE_INTEGER;
+  }
   const index = productPriority.findIndex((names) => names.has(normalized));
   return index < 0 ? Number.MAX_SAFE_INTEGER : index;
 }
 
 function productOrder(
-  left: { id: string; name: string; displayOrder: number; updatedAt: Date },
-  right: { id: string; name: string; displayOrder: number; updatedAt: Date },
+  left: { id: string; name: string; category: string; displayOrder: number; updatedAt: Date },
+  right: { id: string; name: string; category: string; displayOrder: number; updatedAt: Date },
 ) {
-  return productPriorityRank(left.name) - productPriorityRank(right.name)
+  return productPriorityRank(left.name, left.category) - productPriorityRank(right.name, right.category)
     || Number(left.displayOrder) - Number(right.displayOrder)
     || right.updatedAt.getTime() - left.updatedAt.getTime()
     || left.name.localeCompare(right.name)

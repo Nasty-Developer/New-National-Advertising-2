@@ -1,0 +1,135 @@
+URGENT — REORDER THE "SIGNAGE & DISPLAY" PRODUCT CATEGORY
+
+I want you to reorganize ONLY the product order inside the existing:
+
+SIGNAGE & DISPLAY
+
+category.
+
+DO NOT delete any products.
+DO NOT rename any products.
+DO NOT change their images.
+DO NOT change their descriptions.
+DO NOT change product IDs.
+DO NOT create duplicates.
+DO NOT modify any other category.
+
+Use the following exact order.
+
+========================================
+FINAL REQUIRED ORDER
+========================================
+
+1. Vinyl Signage
+
+2. ACP Boards
+
+3. Stainless-steel sign boards
+
+4. Acrylic sign boards
+
+5. Acrylic nameplates
+
+6. Acrylic cutting
+
+7. Laser-cut acrylic
+
+8. Name plates
+
+9. Menu/display stands
+
+========================================
+IMPORTANT
+========================================
+
+The first two products MUST be:
+
+1. Vinyl Signage
+2. ACP Boards
+
+Then keep the existing valid signage products in the order specified above.
+
+The acrylic-related products must specifically be ordered:
+
+Acrylic sign boards
+↓
+Acrylic nameplates
+↓
+Acrylic cutting
+↓
+Laser-cut acrylic
+
+Then:
+
+Name plates
+↓
+Menu/display stands
+
+========================================
+EXISTING IMAGES
+========================================
+
+KEEP the existing image mapped to each product.
+
+Do NOT replace images.
+
+Do NOT reset image URLs.
+
+Do NOT use placeholder images.
+
+The existing image mapping must remain:
+
+- Vinyl Signage → its current correct image
+- ACP Boards → its current correct image
+- Stainless-steel sign boards → stainless-steel-sign-boards.avif
+- Acrylic sign boards → acrylic-sign-boards.jpg
+- Acrylic nameplates → acrylic-nameplates.jpg
+- Acrylic cutting → acrylic-cutting.jpg
+- Laser-cut acrylic → laser-cut-acrylic.jpg
+- Name plates → name-plates.jpg
+- Menu/display stands → menu-display-stands.jpg
+
+========================================
+DATA SAFETY
+========================================
+
+IMPORTANT:
+
+Do NOT reorder by destructively recreating the category.
+
+Do NOT delete and recreate the products.
+
+Only change the DISPLAY ORDER / SORT ORDER of the existing products.
+
+If the database has an existing sortOrder/order/index field, update that field.
+
+Example:
+
+Vinyl Signage → sortOrder 1
+ACP Boards → sortOrder 2
+Stainless-steel sign boards → sortOrder 3
+Acrylic sign boards → sortOrder 4
+Acrylic nameplates → sortOrder 5
+Acrylic cutting → sortOrder 6
+Laser-cut acrylic → sortOrder 7
+Name plates → sortOrder 8
+Menu/display stands → sortOrder 9
+
+Use the project's existing ordering mechanism if one already exists.
+
+========================================
+VERIFY
+========================================
+
+After changing the order:
+
+✓ Open the Signage & Display category
+✓ Confirm all 9 products are present
+✓ Confirm the order exactly matches the list above
+✓ Confirm every product still has its correct image
+✓ Confirm no duplicate products
+✓ Confirm no missing products
+✓ Confirm other categories are completely unchanged
+✓ Confirm Admin panel and public Products page show the same order
+
+Do not make any unrelated changes.
