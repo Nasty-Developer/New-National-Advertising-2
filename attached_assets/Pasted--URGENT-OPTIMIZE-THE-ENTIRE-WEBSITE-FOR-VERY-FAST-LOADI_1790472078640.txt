@@ -1,0 +1,307 @@
+## URGENT — OPTIMIZE THE ENTIRE WEBSITE FOR VERY FAST LOADING
+
+My website is currently deployed on **Render**, but the website is loading too slowly, especially the images, loading screen, machines section, products, and other visual content.
+
+I want you to **OPTIMIZE THE ENTIRE WEBSITE FOR SPEED AND PERFORMANCE WITHOUT REMOVING OR BREAKING ANY EXISTING FEATURES.**
+
+### 🚨 VERY IMPORTANT RULES
+
+**DO NOT:**
+- Remove any existing feature
+- Remove any section
+- Remove any machine
+- Remove any product
+- Remove any service
+- Remove any images
+- Remove the loading screen
+- Remove animations that are part of the current design
+- Change the existing website functionality
+- Replace real data with placeholders
+- Delete Firebase/Firestore functionality
+- Break the admin panel
+- Break image uploads
+- Break the existing Render backend
+- Break the existing Vercel/frontend setup if applicable
+
+The goal is **ONLY to make everything significantly faster.**
+
+---
+
+# 1. 🚀 MAKE ALL IMAGES LOAD MUCH FASTER
+
+Audit every image on the website.
+
+Optimize image loading without reducing the visual quality noticeably.
+
+Implement:
+
+- Modern image formats such as **WebP or AVIF** where appropriate
+- Proper image compression
+- Responsive image sizes
+- `srcset` and appropriate image dimensions where useful
+- Lazy loading for images that are below the fold
+- Eager/preloaded loading for critical hero images
+- Proper image caching
+- Prevent unnecessarily large images from being downloaded
+- Avoid loading desktop-sized images on mobile unnecessarily
+- Avoid loading the same image multiple times
+- Use appropriate image dimensions based on where the image is displayed
+
+### IMPORTANT
+
+The website should **not wait for every image on the entire website before becoming usable.**
+
+Critical content should load first.
+
+Images below the visible screen should load progressively as the user scrolls.
+
+---
+
+# 2. ⚡ MAKE THE LOADING SCREEN MUCH FASTER
+
+There is already a loading screen on the website.
+
+**DO NOT REMOVE THE LOADING SCREEN.**
+
+Instead, optimize it.
+
+The loading screen should appear immediately and disappear as soon as the critical website content is ready.
+
+Do NOT make users wait unnecessarily for:
+
+- Every image
+- Every machine image
+- Every product image
+- Every background image
+- Non-critical API requests
+- Non-critical Firebase requests
+- Content below the fold
+
+The website should become interactive as quickly as possible.
+
+### Desired behavior:
+
+1. User opens website
+2. Loading screen appears immediately
+3. Critical assets load
+4. Main website becomes usable
+5. Loading screen disappears quickly
+6. Remaining images/content continue loading in the background
+
+Do NOT keep the loading screen visible just because some non-critical content is still loading.
+
+---
+
+# 3. 🏭 FIX SLOW MACHINE IMAGE LOADING
+
+The **Machines section is currently loading too slowly.**
+
+Optimize the Machines section specifically.
+
+- Optimize machine images
+- Lazy-load machine images when appropriate
+- Load only the images needed initially
+- Use thumbnails/previews where appropriate
+- Load full-resolution images only when necessary
+- Cache machine images
+- Avoid duplicate requests
+- Make sure Firestore/API requests are not blocking the rendering of the Machines section
+
+The Machines section should appear quickly, with images progressively loading if necessary.
+
+---
+
+# 4. 🛍️ OPTIMIZE PRODUCTS AND SERVICES
+
+Apply the same optimization to:
+
+- Products
+- Services
+- Projects
+- Machines
+- Website content
+- Banners
+- Gallery images
+- Background images
+- Admin-managed images
+
+Do not remove any existing content.
+
+---
+
+# 5. 🔥 OPTIMIZE FIREBASE / FIRESTORE
+
+Audit Firebase/Firestore usage.
+
+Make sure unnecessary Firestore requests are not blocking the initial page load.
+
+Where possible:
+
+- Fetch only required data
+- Avoid duplicate queries
+- Avoid repeatedly fetching the same data
+- Cache data when appropriate
+- Load non-critical data after the initial page becomes interactive
+- Avoid unnecessary real-time listeners
+- Do not fetch entire collections when only a small subset is required
+
+**Do not change the existing database structure unless absolutely necessary.**
+
+---
+
+# 6. ⚡ CODE-SPLIT THE WEBSITE
+
+Check the frontend bundle and reduce the amount of JavaScript that needs to load initially.
+
+Use:
+
+- Lazy loading
+- Dynamic imports
+- Route-based code splitting
+- Component-level lazy loading where appropriate
+
+Heavy sections should not block the initial page.
+
+For example, admin-related code should NOT unnecessarily be included in the initial public website bundle.
+
+---
+
+# 7. 🖼️ BACKGROUND IMAGES
+
+Audit all CSS background images.
+
+Do not load huge background images unnecessarily.
+
+For hero/banner backgrounds:
+
+- Preload only the critical hero image
+- Use optimized formats
+- Use properly sized versions
+- Avoid downloading multiple desktop/mobile versions simultaneously unless required
+
+---
+
+# 8. 🌐 RENDER SERVER PERFORMANCE
+
+Since the website/backend is deployed on **Render**, inspect whether slow API responses are contributing to the problem.
+
+Check:
+
+- API response times
+- Firebase requests
+- Server-side processing
+- Unnecessary API calls
+- Duplicate API requests
+- Slow endpoints
+
+Do not remove any API functionality.
+
+If an API request is not required for the initial screen, allow the page to render first and load that data afterward.
+
+---
+
+# 9. 📦 CACHE STATIC ASSETS
+
+Make sure static assets can be cached properly.
+
+Optimize caching for:
+
+- Images
+- Fonts
+- JavaScript
+- CSS
+- Static assets
+
+Use appropriate cache headers where the deployment architecture allows it.
+
+Do not introduce caching that causes users to see stale admin-managed content indefinitely.
+
+---
+
+# 10. 📱 MOBILE PERFORMANCE
+
+The website must also load quickly on mobile devices and slower connections.
+
+Do not optimize only for desktop.
+
+Make sure mobile users are not downloading unnecessarily large desktop assets.
+
+---
+
+# 11. 🎨 PRESERVE THE EXISTING DESIGN
+
+**DO NOT redesign the website.**
+
+Keep:
+
+- Existing UI
+- Existing colors
+- Existing layout
+- Existing animations
+- Existing sections
+- Existing content
+- Existing machines
+- Existing products
+- Existing services
+- Existing admin panel
+- Existing functionality
+
+Only improve performance.
+
+---
+
+# 12. 🧪 TEST EVERYTHING AFTER OPTIMIZATION
+
+After making changes:
+
+1. Run the complete production build.
+2. Make sure there are no TypeScript errors.
+3. Make sure there are no console errors.
+4. Make sure all routes still work.
+5. Make sure the admin panel still works.
+6. Make sure Firebase still works.
+7. Make sure images still load.
+8. Make sure machine images still load.
+9. Make sure products still load.
+10. Make sure services still load.
+11. Make sure image uploads still work.
+12. Make sure Render deployment still works.
+13. Check for broken links or missing assets.
+
+---
+
+# 🎯 PERFORMANCE TARGET
+
+The website should feel **extremely fast**.
+
+Prioritize:
+
+**HTML → critical CSS/JS → critical hero/content → interactive page → remaining images/content**
+
+Do NOT make the user wait for everything before showing the website.
+
+The biggest priority is:
+
+### 🔥 FAST IMAGE LOADING
+### 🔥 FAST INITIAL PAGE LOAD
+### 🔥 FAST LOADING SCREEN
+### 🔥 FAST MACHINES SECTION
+### 🔥 FAST PRODUCTS/SERVICES
+### 🔥 FAST FIREBASE DATA LOADING
+### 🔥 FAST MOBILE EXPERIENCE
+
+Again:
+
+**DO NOT REMOVE ANYTHING.**
+
+**DO NOT REMOVE THE LOADING SCREEN.**
+
+**DO NOT REMOVE ANY IMAGES OR CONTENT.**
+
+**DO NOT REMOVE ANY FEATURES.**
+
+**DO NOT REPLACE REAL DATA WITH PLACEHOLDERS.**
+
+Optimize the existing website so that it loads dramatically faster while preserving the exact functionality and content.
+
+Before finishing, inspect the entire project for other performance bottlenecks and fix them where possible.

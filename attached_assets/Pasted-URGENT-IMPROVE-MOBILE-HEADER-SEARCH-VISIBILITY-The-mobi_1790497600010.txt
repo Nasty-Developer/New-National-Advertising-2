@@ -1,0 +1,165 @@
+URGENT — IMPROVE MOBILE HEADER SEARCH VISIBILITY
+
+The mobile website currently hides the Search functionality inside the hamburger menu.
+
+I DO NOT want that.
+
+On mobile, users should be able to immediately SEE that a search option exists without opening the hamburger menu.
+
+========================================
+MOBILE HEADER CHANGE
+========================================
+
+Add a small, clearly visible SEARCH ICON (magnifying glass 🔍) directly in the mobile header.
+
+Current mobile header:
+
+[LOGO]                         [☰]
+
+Change it to:
+
+[LOGO]                  [🔍] [☰]
+
+The search icon must be visible at all times on mobile.
+
+========================================
+SEARCH ICON DESIGN
+========================================
+
+Use a clean professional magnifying-glass icon.
+
+Style:
+- Simple outline icon
+- Navy / dark blue matching the website
+- Around 20–22px
+- Clearly visible
+- Comfortable tap area around 40–44px
+- Do not make it huge
+- Do not use an emoji
+- Use the existing icon library already used by the project if available
+
+The icon should look like a real website search button.
+
+========================================
+SEARCH INTERACTION
+========================================
+
+When the user taps the magnifying-glass icon:
+
+Open a dedicated mobile search interface.
+
+Preferred behavior:
+
+Option A:
+Expand a search field smoothly directly below the header.
+
+OR
+
+Option B:
+Open a clean full-width search panel/modal.
+
+The search field should contain:
+
+🔍 Search products, materials & services...
+
+The user should immediately understand what they can search.
+
+========================================
+SEARCH FUNCTIONALITY
+========================================
+
+IMPORTANT:
+
+Do NOT create a separate fake search system.
+
+Connect this icon to the EXISTING website search functionality.
+
+Search should continue to work across:
+
+- Products
+- Product categories
+- Materials
+- Services
+
+Existing search behavior must not be broken.
+
+========================================
+DESKTOP
+========================================
+
+DO NOT remove or unnecessarily change the existing desktop search bar.
+
+Desktop should continue showing the current search field.
+
+Only improve the mobile experience.
+
+========================================
+MOBILE HEADER LAYOUT
+========================================
+
+Make sure the header remains clean:
+
+[New National Advertising Logo]    [🔍] [☰]
+
+The search icon should be:
+
+- visible without opening the menu
+- vertically centered
+- properly spaced from the hamburger
+- not overlapping the logo
+- not pushed off-screen
+
+========================================
+RESPONSIVE BREAKPOINT
+========================================
+
+On mobile/small screens:
+
+Show:
+Logo + Search Icon + Hamburger
+
+On desktop:
+
+Keep:
+Logo + navigation + existing search bar + phone + quote button
+
+Do not duplicate the full desktop search field on small mobile screens.
+
+========================================
+ANIMATION
+========================================
+
+Add a very subtle interaction:
+
+On tap/hover:
+- icon slightly scales
+- blue highlight appears
+- search panel/field smoothly expands
+
+Keep animation fast and professional.
+
+No bouncing or excessive movement.
+
+========================================
+IMPORTANT
+========================================
+
+Do NOT:
+
+❌ hide search inside hamburger menu
+❌ remove existing search functionality
+❌ create duplicate search logic
+❌ change desktop navigation unnecessarily
+❌ break mobile navigation
+❌ change existing product/category data
+❌ remove existing features
+
+The final mobile header MUST clearly show:
+
+[LOGO]    [SEARCH 🔍]    [MENU ☰]
+
+so a first-time visitor immediately knows that search is available.
+
+Test on iPhone-sized screens and Android-sized screens.
+
+Also verify that the search icon remains visible while scrolling if the mobile header is sticky.

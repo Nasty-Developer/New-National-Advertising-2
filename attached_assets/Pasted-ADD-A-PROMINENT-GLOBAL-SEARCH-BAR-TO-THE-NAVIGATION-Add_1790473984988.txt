@@ -1,0 +1,86 @@
+ADD A PROMINENT GLOBAL SEARCH BAR TO THE NAVIGATION
+
+Add a professional, bold, highly visible search bar to the main website navigation/header.
+
+PURPOSE:
+Visitors should be able to quickly search for:
+- Products
+- Product categories
+- Machines
+- Services
+- Other relevant website content
+
+SEARCH BEHAVIOR:
+- Search should work across the existing product catalog.
+- Search product names.
+- Search product categories.
+- Search machine names.
+- Search service names.
+- Search should be case-insensitive.
+- Show relevant matching results as the user types.
+- Clicking a result should take the user to the appropriate product, category, machine, or service.
+- If there are no results, show a clean "No results found" message.
+- Do not create fake or placeholder search results.
+- Use the actual data already used by the website.
+
+SEARCH BAR DESIGN:
+Make the search bar visually prominent and premium.
+
+Use:
+- A strong/bold search field
+- Search icon
+- Rounded but professional shape
+- Clear border and subtle shadow
+- Good contrast against the navigation
+- Comfortable height and spacing
+- Smooth hover/focus animation
+- Clear focus state
+- Responsive design
+
+PLACEHOLDER:
+Use a dynamic/rotating placeholder such as:
+
+"Search products, machines, or services..."
+
+You can also rotate between:
+"Search products..."
+"Search machines..."
+"Search services..."
+"Search categories..."
+
+Do not make the placeholder overly long.
+
+DESKTOP:
+Place the search bar prominently inside the main navigation/header without destroying the existing navigation layout.
+
+MOBILE:
+Make the search bar responsive.
+It should remain easy to access without making the mobile navigation overcrowded.
+If necessary, use a search icon that expands into the full search field.
+
+IMPORTANT:
+- DO NOT remove any existing navigation items.
+- DO NOT remove Products, Machines, Services, Categories, Contact, Admin links, or any existing functionality.
+- DO NOT change the existing website structure unnecessarily.
+- DO NOT remove existing products, machines, services, categories, or data.
+- Use the existing data sources/API instead of creating duplicate data.
+- Keep the current New National Advertising branding and premium design.
+- Make the search feel like a real production website feature, not a basic HTML input.
+
+PERFORMANCE:
+The search must be fast.
+Do not make a large API request on every keystroke.
+Use debouncing or search the already-loaded relevant data where appropriate.
+Do not slow down the initial website loading just because the search feature was added.
+
+FINAL CHECK:
+Test the search with:
+1. A product name
+2. A category
+3. A machine name
+4. A service name
+5. A partial search term
+6. A term with different capitalization
+7. A search with no results
+
+Make sure the search works on both desktop and mobile and does not break the existing navigation.

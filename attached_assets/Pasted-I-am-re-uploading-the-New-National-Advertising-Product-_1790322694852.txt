@@ -1,0 +1,155 @@
+I am re-uploading the New National Advertising Product PDF attached to this task.
+
+IMPORTANT: This task was previously started in another Replit account but was stopped/incomplete. Continue the work properly from scratch ONLY where necessary, but DO NOT create duplicate products, duplicate categories, duplicate images, or duplicate database records if anything from this PDF has already been imported.
+
+TASK: COMPLETE THE PRODUCT CATALOG IMPORT FROM THE ATTACHED PDF.
+
+1. PDF PRODUCT EXTRACTION
+- Carefully inspect the ENTIRE attached PDF.
+- Extract every actual product and its corresponding product name/image.
+- Do not skip products.
+- Do not accidentally treat decorative images, banners, machine photos, branch photos, or general website images as products.
+- Products from this PDF must go ONLY into the existing Products section.
+- DO NOT add these products to Projects, Services, Machines, or any other section.
+
+2. DO NOT CREATE DUPLICATES
+Before importing anything:
+- Check the existing Firestore/database Products collection.
+- Check existing product names and existing product image records.
+- Match PDF products against existing products.
+- If a product already exists, UPDATE/REPAIR the existing product instead of creating another one.
+- Do not create duplicate products with slightly different names.
+- Do not create duplicate categories.
+- Preserve existing valid product data.
+
+3. PRODUCT IMAGES MUST BE PROPERLY PLACED
+For EVERY product:
+- The correct image from the PDF must be assigned to the correct product.
+- Do not randomly swap images between products.
+- Do not use the same unrelated image for multiple products.
+- Preserve image quality as much as reasonably possible.
+- Crop/resize images properly without stretching or distortion.
+- Product cards must display the correct image consistently on desktop, tablet, and mobile.
+- Make sure the images actually load on the deployed production website.
+
+4. PRODUCTION STORAGE
+All product images must use the existing production Firebase architecture.
+
+Use:
+- Firebase Storage for product image files.
+- Firestore/database for product records and image URLs/metadata.
+
+DO NOT use:
+- local-only image paths
+- temporary URLs
+- blob URLs
+- base64 stored directly in product records
+- Replit-only storage
+- temporary development assets that will disappear after deployment
+
+The images must continue working after deployment/rebuild.
+
+5. ADMIN PANEL EDITING IS REQUIRED
+This is extremely important.
+
+Every imported product must remain fully editable from the existing Admin Panel.
+
+From Admin Panel, an administrator must be able to:
+- Edit product name
+- Edit category
+- Edit description/details if supported
+- Replace/change the product image
+- Upload a completely new product image
+- Delete/replace an existing image
+- Edit any other existing product fields
+- Delete a product if required
+
+When an admin changes a product image:
+Admin Panel → Firebase Storage → Firestore/database → Live website
+
+The updated image must automatically appear on the live Products section.
+
+Do NOT hard-code the PDF products into the frontend.
+
+6. MISSING PRODUCT IMAGES
+There are approximately 3–4 products in the PDF where suitable product images are missing.
+
+For ONLY those products:
+- Identify exactly which products are missing usable images.
+- Generate professional AI product images for those specific products.
+- The generated images must accurately represent the actual product.
+- Keep them realistic, clean, professional, and suitable for a commercial printing/advertising business.
+- Do NOT generate random filler images.
+- Do NOT generate AI images for products that already have a suitable PDF image.
+- Upload the generated images to Firebase Storage just like the other product images.
+- Save their production URLs in Firestore/database.
+- Make those images editable/replacable from Admin Panel.
+
+7. PRODUCT DATA STRUCTURE
+Use the existing Products data model and Admin Panel architecture wherever possible.
+
+Do NOT create a second competing product system.
+
+If the existing product schema needs a small adjustment to support proper image editing/storage, modify the existing schema rather than creating a duplicate system.
+
+8. EXISTING WEBSITE DESIGN
+Do NOT redesign the website.
+
+Preserve:
+- Existing Products section design
+- Existing cards
+- Existing typography
+- Existing spacing
+- Existing responsive behavior
+- Existing Admin Panel design
+- Existing navigation
+- Existing branding
+
+Only make the changes necessary to correctly import and manage the products.
+
+9. END-TO-END VERIFICATION
+After importing everything, verify:
+
+PDF
+↓
+Product extraction
+↓
+Correct product matching
+↓
+Firebase Storage image upload
+↓
+Firestore product record
+↓
+Admin Panel product appears
+↓
+Product image appears correctly
+↓
+Live website product appears correctly
+
+Then test at least one product manually:
+
+1. Open Admin Panel.
+2. Edit an imported product.
+3. Replace its image.
+4. Save.
+5. Refresh Admin Panel.
+6. Confirm the new image remains.
+7. Open the public website.
+8. Confirm the updated image appears there too.
+
+Also test that deleting/replacing an image does not break the product.
+
+10. FINAL REQUIREMENT
+Before declaring the task complete:
+- Confirm how many products were found in the PDF.
+- Confirm how many were already present and therefore updated instead of duplicated.
+- Confirm how many new products were imported.
+- Confirm how many missing images were AI-generated.
+- Confirm all product images are stored in production Firebase Storage.
+- Confirm all products are editable from Admin Panel.
+- Confirm there are NO duplicate products created by this import.
+- Confirm the public website successfully displays the imported products.
+
+DO NOT simply say "import completed."
+
+Actually verify the database, Storage, Admin Panel, and live Products section.

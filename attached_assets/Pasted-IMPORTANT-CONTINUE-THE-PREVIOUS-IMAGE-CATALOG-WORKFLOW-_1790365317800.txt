@@ -1,0 +1,417 @@
+IMPORTANT — CONTINUE THE PREVIOUS IMAGE/CATALOG WORKFLOW
+
+The CATEGORY IMAGES have ALREADY been uploaded and attached in the previous work.
+
+DO NOT ask me to upload the category images again.
+DO NOT repeat the category-image attachment/upload workflow.
+
+The category images that were provided are already available in the project. Your job now is to COMPLETE EVERYTHING ELSE from the previous requirements that has NOT yet been implemented.
+
+IMPORTANT:
+The previous work only handled the category images.
+The following required work is STILL PENDING and must now be completed.
+
+============================================================
+1. VERIFY CATEGORY IMAGES
+============================================================
+
+The category images have already been added.
+
+Verify that each existing category is using its correct category image.
+
+Do NOT:
+- create new categories
+- delete categories
+- rename categories
+- change category names
+- change product counts
+- modify individual product data
+- assign a category image to individual products
+
+These images are CATEGORY images only.
+
+Keep the existing category structure exactly as it is.
+
+============================================================
+2. CURRENT PUBLIC PRODUCTS PAGE
+============================================================
+
+Fix and verify the public Products page.
+
+The current catalog contains exactly 202 products and ALL 202 products must remain intact.
+
+The public Products page must:
+
+- show the existing category structure
+- show the correct product count for each category
+- preserve all existing products
+- preserve existing product names
+- preserve existing product descriptions
+- preserve existing product prices
+- preserve existing product/category relationships
+- preserve existing product order except where explicitly instructed below
+- not create duplicate products
+- not delete products
+- not merge products
+- not rename products
+
+Do NOT replace the existing catalog with mock/demo data.
+
+Do NOT silently reduce the catalog from 202 products.
+
+If the admin dashboard, API, Firestore, and public Products page show different counts, inspect the actual data flow and fix the mismatch rather than deleting data.
+
+============================================================
+3. REQUIRED PUBLIC PRODUCT ORDER
+============================================================
+
+The first eight products on the public Products page must appear in this exact order:
+
+1. Signage
+2. Banner
+3. Brochure
+4. Acrylic Clip-on Board
+5. Calendars
+6. Business Cards
+7. Letterhead
+8. Hoarding Banner
+
+After these eight, preserve the remaining existing product order.
+
+Do not rename any of these products.
+
+Do not create duplicates if these products already exist.
+
+============================================================
+4. MACHINE ORDER AND NAMES
+============================================================
+
+Fix the Machines section to use exactly this order:
+
+1. Laser CO2
+2. Axon
+3. 512i Konica Flex Machine
+4. Accent Z (Wide Format Roll Laminator)
+5. Konica Minolta Bizhub
+
+There must NOT be duplicate machine entries.
+
+Rename the existing large-format/wide-format machine to:
+
+512i Konica Flex Machine
+
+Rename Accent Z to:
+
+Accent Z (Wide Format Roll Laminator)
+
+Keep:
+
+Konica Minolta Bizhub
+
+as the fifth/last machine.
+
+Do NOT invent a sixth machine.
+
+Do NOT generate replacement machine images.
+
+Use the existing machine images already in the project.
+
+============================================================
+5. SERVICE IMAGE MAPPING
+============================================================
+
+The following service image mappings are REQUIRED:
+
+Digital Printing
+→ existing Konica Minolta 6000 machine image
+
+Flex Printing
+→ existing 512i Konica Flex / large-format machine image
+
+Make Your Brand Stand
+→ existing 512i Konica Flex / large-format machine image
+
+These services must reuse the existing machine images.
+
+Do NOT generate new replacement images.
+
+Do NOT delete or modify the original machine images because they are being reused.
+
+============================================================
+6. MACHINE / SERVICE IMAGE FITTING
+============================================================
+
+The current machine/service images are poorly fitted inside some cards.
+
+Fix the IMAGE PRESENTATION, not the actual images.
+
+For machine and service cards:
+
+- preserve the important machine/object
+- keep the full machine visible where reasonably possible
+- use proper object-fit/object-position
+- preserve aspect ratio
+- do not stretch images
+- do not distort images
+- do not excessively zoom images
+- do not cut off important parts
+- center the subject appropriately
+- use the available image area effectively
+- maintain visual balance
+- keep the existing card dimensions
+- keep the existing overall website design
+
+Do NOT redesign the cards.
+
+Do NOT replace the actual images unless explicitly instructed.
+
+The goal is clean, professional image presentation.
+
+============================================================
+7. CATEGORY IMAGE FITTING
+============================================================
+
+The category images have already been uploaded.
+
+Now make sure they are displayed correctly inside the existing category cards.
+
+Use appropriate responsive image handling such as:
+
+- object-fit
+- object-position
+- responsive sizing
+- correct aspect-ratio handling
+
+Do NOT stretch category images.
+
+Do NOT excessively crop important visual content.
+
+Do NOT redesign the category cards.
+
+Preserve the existing website design.
+
+============================================================
+8. IMAGE LOADING PERFORMANCE
+============================================================
+
+The website images currently load TOO SLOWLY.
+
+Improve image performance across the public website.
+
+We are using Cloudinary for image storage.
+
+Use Cloudinary optimization where appropriate, including:
+
+- optimized Cloudinary delivery URLs
+- automatic format selection such as WebP/AVIF where supported
+- responsive image sizing
+- appropriate image dimensions
+- lazy loading for below-the-fold images
+- eager/priority loading only for critical above-the-fold images
+- prevent unnecessarily large original images from being downloaded
+- avoid duplicate image requests
+- browser/CDN caching where appropriate
+- appropriate width/quality transformations
+- responsive srcset/sizes where appropriate
+
+Do NOT make images visibly blurry just to improve speed.
+
+The target is:
+
+FAST loading + GOOD IMAGE QUALITY.
+
+Above-the-fold content should load quickly.
+
+Images further down the page should lazy-load.
+
+Do not load every large image immediately when the page opens.
+
+============================================================
+9. CLOUDINARY
+============================================================
+
+Firebase Authentication remains responsible for admin authentication.
+
+Firestore remains responsible for application/catalog data.
+
+Cloudinary remains responsible for image/file storage.
+
+DO NOT use Firebase Storage.
+
+Remove any production dependency on:
+
+FIREBASE_STORAGE_BUCKET
+
+Do not require Firebase Storage/Blaze billing for image uploads.
+
+Do not move image storage back to Firebase Storage.
+
+============================================================
+10. PRODUCT IMAGES — DO NOT PROCESS YET
+============================================================
+
+I have 202 products.
+
+I will upload the individual product images separately later.
+
+DO NOT process individual product images during this task.
+
+Do NOT assign category images to products.
+
+Do NOT use one category image for every product in a category.
+
+Do NOT modify individual product images right now.
+
+When product images are provided later, they must be matched using the filename/product name.
+
+If a filename does not clearly identify a product, ask instead of guessing.
+
+============================================================
+11. DATA SAFETY
+============================================================
+
+THIS IS CRITICAL.
+
+Do NOT delete existing catalog data.
+
+Do NOT reset Firestore.
+
+Do NOT replace Firestore collections with mock data.
+
+Do NOT seed demo products.
+
+Do NOT reduce the catalog.
+
+Do NOT create duplicate products.
+
+Do NOT silently rename products.
+
+The existing 202-product catalog must remain intact.
+
+Before making database changes, inspect the existing data and understand the current structure.
+
+============================================================
+12. DO NOT CHANGE UNRELATED UI
+============================================================
+
+Do not redesign the website.
+
+Do not replace the existing visual style.
+
+Do not change unrelated pages.
+
+Do not change unrelated components.
+
+Do not remove existing functionality.
+
+Only make the changes required by this prompt.
+
+============================================================
+13. BUILD AND TYPECHECK
+============================================================
+
+After making the changes, run the complete workspace validation:
+
+pnpm install --frozen-lockfile
+
+pnpm run typecheck
+
+pnpm --filter @workspace/api-server run build
+
+PORT=3000 BASE_PATH=/ pnpm --filter @workspace/new-national-advertising run build
+
+If TypeScript errors occur:
+
+- inspect the actual errors
+- fix the source/type errors properly
+- do NOT disable TypeScript
+- do NOT use @ts-ignore as a shortcut
+- do NOT remove functionality just to make the build pass
+
+If generated OpenAPI/Zod/API client files are involved, keep the source and generated files consistent.
+
+============================================================
+14. FINAL VERIFICATION
+============================================================
+
+Before declaring the task complete, verify all of the following:
+
+[ ] Category images already provided are correctly assigned to their existing categories.
+
+[ ] No new categories were created.
+
+[ ] No categories were deleted.
+
+[ ] Category names were not changed.
+
+[ ] Category product counts were not changed incorrectly.
+
+[ ] Public Products page is using the real existing catalog.
+
+[ ] Exactly 202 existing products remain.
+
+[ ] No products were deleted.
+
+[ ] No duplicate products were created.
+
+[ ] First 8 public products are:
+    1. Signage
+    2. Banner
+    3. Brochure
+    4. Acrylic Clip-on Board
+    5. Calendars
+    6. Business Cards
+    7. Letterhead
+    8. Hoarding Banner
+
+[ ] Remaining product order is preserved.
+
+[ ] Machines are exactly:
+    1. Laser CO2
+    2. Axon
+    3. 512i Konica Flex Machine
+    4. Accent Z (Wide Format Roll Laminator)
+    5. Konica Minolta Bizhub
+
+[ ] No duplicate machines exist.
+
+[ ] Digital Printing uses the existing Konica Minolta 6000 machine image.
+
+[ ] Flex Printing uses the existing 512i Konica Flex / large-format machine image.
+
+[ ] Make Your Brand Stand uses the existing 512i Konica Flex / large-format machine image.
+
+[ ] Machine images are properly fitted.
+
+[ ] Service images are properly fitted.
+
+[ ] Category images are properly fitted.
+
+[ ] Images are not stretched or unnecessarily cropped.
+
+[ ] Cloudinary image optimization is implemented.
+
+[ ] Responsive image loading is implemented where appropriate.
+
+[ ] Below-the-fold images lazy-load.
+
+[ ] Critical above-the-fold images load with appropriate priority.
+
+[ ] Firebase Storage is NOT required.
+
+[ ] No unrelated UI was changed.
+
+[ ] Product data was not modified unnecessarily.
+
+[ ] Typecheck passes.
+
+[ ] API build passes.
+
+[ ] Frontend production build passes.
+
+IMPORTANT:
+Do not stop after checking the category images.
+
+The previous work already handled the category-image attachment.
+
+The remaining requirements above are the work that must now actually be completed.

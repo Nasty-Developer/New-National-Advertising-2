@@ -1,0 +1,108 @@
+FIX AND VERIFY THE PROJECT END-TO-END. THIS IS THE FINAL FIX REQUEST.
+
+Project: New National Advertising
+Goal: Make the repository build successfully and be ready for Render deployment.
+
+IMPORTANT:
+Do NOT ask me for another prompt.
+Do NOT stop after making partial changes.
+Do NOT redesign or refactor unrelated code.
+Do NOT change working functionality.
+Do NOT change Firebase authentication, Firestore, storage behavior, frontend features, API contracts, or deployment architecture unless the build error specifically requires it.
+Do NOT change the upload contract.
+Do NOT modify working code just because an attached note describes a different implementation.
+
+CURRENT STATUS:
+
+1. The original API server TypeScript problem in:
+artifacts/api-server/src/routes/storage.ts
+has already been investigated.
+
+The CURRENT generated API contract uses upload metadata:
+- name
+- size
+- contentType
+- optional folder
+
+Keep that contract intact.
+
+2. The API server TypeScript check currently passes.
+
+3. The workspace typecheck currently passes.
+
+4. The API server build currently passes.
+
+5. The remaining failure is the FULL ROOT BUILD.
+
+The root command is:
+
+pnpm run build
+
+It runs the workspace build and currently reaches:
+
+artifacts/mockup-sandbox
+
+The mockup-sandbox Vite build requires:
+- PORT
+- BASE_PATH
+
+The build currently fails because these environment variables are missing.
+
+YOUR TASK:
+
+A. Inspect the actual repository before changing anything.
+
+Inspect:
+- package.json
+- pnpm-workspace.yaml
+- artifacts/mockup-sandbox/package.json
+- artifacts/mockup-sandbox Vite configuration
+- the root build/typecheck scripts
+- any code in mockup-sandbox that requires PORT or BASE_PATH
+
+B. Determine whether artifacts/mockup-sandbox is required for the production New National Advertising deployment.
+
+If mockup-sandbox is NOT required for production:
+- prevent the production/root build from unnecessarily building it.
+- make the smallest safe change possible.
+- do NOT delete the package.
+- do NOT break the workspace.
+
+If mockup-sandbox IS required:
+- fix its build configuration so the build works with safe build-time defaults for PORT and BASE_PATH.
+- do NOT hardcode secrets.
+- do NOT break runtime configuration.
+
+C. Preserve the working API server and upload implementation.
+
+D. After making the fixes, run ALL of these commands:
+
+pnpm --filter @workspace/api-server exec tsc -p tsconfig.json --noEmit
+
+pnpm run typecheck
+
+pnpm run build
+
+If any command fails:
+- inspect the REAL error
+- fix it
+- rerun the failed command
+- continue until it passes.
+
+Do NOT report success based only on an individual package build.
+
+The final required state is:
+
+API server TypeScript check: PASS
+Workspace typecheck: PASS
+Full pnpm run build: PASS
+
+E. Do not make unnecessary changes.
+
+F. At the end, report:
+1. What files you changed
+2. What the actual root cause was
+3. The final result of each verification command
+4. Whether the repository is ready to push to GitHub and deploy on Render
+
+Do the work now and verify it completely. Do not stop at analysis.

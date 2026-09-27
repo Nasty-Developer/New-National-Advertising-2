@@ -1,0 +1,247 @@
+IMPORTANT — FINAL PREVIEW + LOADING PERFORMANCE FIX
+
+Make the following fixes now. Do not change unrelated functionality or catalog data.
+
+============================================================
+1. FIX THE WEBSITE PREVIEW
+============================================================
+
+The website Preview must load and work correctly.
+
+Inspect the current frontend/Vite/React setup and fix whatever is preventing the Replit Preview from loading reliably.
+
+Requirements:
+
+- Preview must open the actual New National Advertising website.
+- No blank screen.
+- No infinite loading.
+- No broken routing.
+- No console/runtime errors that prevent the app from rendering.
+- Existing public pages must continue working.
+- Existing admin routes must continue working.
+- Do not replace the application with a simplified/demo page.
+- Do not remove existing functionality just to make Preview work.
+
+Check:
+- Vite configuration
+- BASE_PATH
+- frontend start command
+- API URL configuration
+- React mounting
+- routing
+- environment-variable usage
+- runtime errors
+- asset/image paths
+
+Use the existing project architecture.
+
+============================================================
+2. MAKE THE WEBSITE LOAD VERY FAST
+============================================================
+
+The public website currently takes too long to become usable.
+
+Optimize the initial page load aggressively WITHOUT making the website visually poor or blurry.
+
+The first visible content should appear quickly.
+
+Implement where appropriate:
+
+- code splitting
+- lazy loading for non-critical components/routes
+- lazy loading below-the-fold images
+- eager/priority loading ONLY for critical above-the-fold images
+- responsive image sizes
+- Cloudinary optimized delivery URLs
+- automatic image formats such as WebP/AVIF where supported
+- appropriate Cloudinary quality settings
+- prevent huge original images from being downloaded unnecessarily
+- browser/CDN caching
+- avoid duplicate image requests
+- avoid loading all products/images immediately on the homepage
+- avoid loading all heavy admin functionality on the public homepage
+- defer non-critical JavaScript
+- reduce unnecessary API requests
+- avoid duplicate Firestore/API requests
+- show useful content immediately instead of waiting for every image/API request
+
+Do NOT make images blurry.
+
+Do NOT reduce image quality unnecessarily.
+
+The target is:
+
+FAST FIRST CONTENT
++
+FAST INTERACTION
++
+GOOD IMAGE QUALITY
+
+============================================================
+3. FIX THE LOADING SCREEN
+============================================================
+
+The loading screen should be fast and professional.
+
+Do NOT keep users staring at a long loading animation while the entire application initializes.
+
+Requirements:
+
+- Show the site shell quickly.
+- Do not block the entire UI unnecessarily.
+- Use loading states only where data is actually being fetched.
+- Above-the-fold content should appear as early as possible.
+- Avoid artificial delays.
+- Remove unnecessary loading timers/delays.
+- Do not wait for below-the-fold images before rendering the page.
+- Do not wait for unrelated API calls before rendering the homepage.
+
+If a global loading screen currently waits for unnecessary resources, change the architecture so critical content renders first.
+
+============================================================
+4. IMAGE FITTING
+============================================================
+
+Fix existing machine/service/category image presentation.
+
+Do NOT replace the actual images.
+
+Use proper:
+
+- object-fit
+- object-position
+- aspect-ratio
+- responsive sizing
+
+Do not:
+
+- stretch images
+- distort images
+- excessively zoom images
+- cut off important parts unnecessarily
+
+Keep existing card dimensions and website design.
+
+============================================================
+5. MACHINE NAME CORRECTION
+============================================================
+
+IMPORTANT CORRECTION:
+
+The machine is named:
+
+Axel Z
+
+NOT:
+
+Accent Z
+Excel Z
+Axel-Z
+
+Use exactly:
+
+Axel Z
+
+The required machine order is:
+
+1. Laser CO2
+2. Axon
+3. 512i Konica Flex Machine
+4. Axel Z (Wide Format Roll Laminator)
+5. Konica Minolta Bizhub
+
+Update the machine name consistently wherever it appears:
+
+- Admin
+- Public website
+- Firestore-backed machine data if applicable
+- API responses
+- Machine cards
+- Any relevant frontend mapping/configuration
+
+Do NOT create a duplicate machine.
+
+Do NOT create a sixth machine.
+
+============================================================
+6. SERVICE IMAGE MAPPING
+============================================================
+
+Keep these existing mappings:
+
+Digital Printing
+→ existing Konica Minolta 6000 machine image
+
+Flex Printing
+→ existing 512i Konica Flex / large-format machine image
+
+Make Your Brand Stand
+→ existing 512i Konica Flex / large-format machine image
+
+Do not generate replacement images.
+
+============================================================
+7. DO NOT CHANGE CATALOG DATA
+============================================================
+
+The catalog contains 202 existing products.
+
+Do NOT:
+
+- delete products
+- duplicate products
+- rename products
+- merge products
+- change prices
+- change descriptions
+- change categories
+- replace products with mock data
+
+Do not process individual product images yet.
+
+Category images have already been uploaded and processed separately.
+
+============================================================
+8. CLOUDINARY
+============================================================
+
+Continue using:
+
+Firebase Authentication → authentication
+Firestore → catalog/application data
+Cloudinary → images/files
+
+Do NOT use Firebase Storage.
+
+Do not introduce a Firebase Storage dependency.
+
+============================================================
+9. VALIDATION
+============================================================
+
+After changes, run:
+
+pnpm run typecheck
+
+pnpm --filter @workspace/api-server run build
+
+PORT=3000 BASE_PATH=/ pnpm --filter @workspace/new-national-advertising run build
+
+Fix actual errors rather than disabling TypeScript.
+
+Then verify:
+
+- Replit Preview loads
+- homepage renders quickly
+- loading screen does not hang
+- public Products page works
+- Services page works
+- Machines page works
+- Admin still works
+- API calls work
+- images load correctly
+- no major console errors
+- Axel Z is displayed correctly
+- 202-product catalog remains intact
+
+Do not modify unrelated UI or functionality.

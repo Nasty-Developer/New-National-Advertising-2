@@ -1,0 +1,194 @@
+URGENT — UPDATE THE ABOUT US SECTION OF THE NEW NATIONAL ADVERTISING WEBSITE
+
+Make ONLY the requested About Us changes. DO NOT remove, break, redesign, or change any other existing website functionality, sections, routes, products, services, admin panel, Firebase logic, responsive behavior, or content.
+
+CURRENT ISSUE:
+In the About Us section, there are currently two people shown:
+- Taukeer Ahmed
+- Aurangzeb Khan
+
+REMOVE BOTH OF THEM COMPLETELY.
+
+1. REMOVE EXISTING PEOPLE
+- Remove the Taukeer Ahmed image/card completely.
+- Remove the Aurangzeb Khan image/card completely.
+- Remove their names completely.
+- Remove any captions, labels, borders, image containers, or unused empty space associated with those two people.
+- Do NOT leave broken image placeholders.
+- Do NOT replace their images with another person's image.
+
+2. ADD THE OWNER INFORMATION
+Replace that entire people area with ONE premium owner profile section for:
+
+Saddam Khan
+
+Owner of New National Advertising
+
+Phone:
++91 9555759677
+
+The main name "Saddam Khan" should be VERY LARGE and visually prominent.
+
+Use a premium typography treatment similar to a high-end modern advertising/printing company website.
+
+Suggested hierarchy:
+
+SADDAM KHAN
+Owner of New National Advertising
++91 9555759677
+
+3. MAKE "SADDAM KHAN" LOOK PREMIUM AND LARGE
+
+The name should be one of the visual highlights of the About Us section.
+
+Design:
+- Very large desktop typography
+- Bold / extra-bold font weight
+- Clean modern professional font
+- Dark navy/blue base matching the existing website
+- Subtle blue/cyan glow around the letters
+- Premium gradient highlight if it fits the current design
+- Strong contrast against the white background
+- Keep it elegant and professional, NOT flashy or gaming-style
+
+The name should feel like an OWNER / BRAND LEADER, not an ordinary employee card.
+
+4. ANIMATION — IMPORTANT
+
+Add a subtle premium animation to "Saddam Khan".
+
+DO NOT make the name move around the page.
+DO NOT make it bounce.
+DO NOT make it continuously slide left/right.
+DO NOT make it rotate.
+
+Instead, keep the text FIXED IN POSITION and animate only subtle visual effects such as:
+
+- Soft glowing effect
+- Very slow light/shimmer passing through the text
+- Subtle gradient glow
+- Slight brightness variation
+- Gentle fade-in when the section enters the viewport
+
+The actual "Saddam Khan" text must remain stable and readable.
+
+Animation should feel like a premium corporate website, not an exaggerated neon effect.
+
+5. OWNER BADGE
+
+Add a small elegant label above the name:
+
+OWNER
+
+or
+
+OWNER • NEW NATIONAL ADVERTISING
+
+Use small uppercase lettering with letter spacing.
+
+Then:
+
+Saddam Khan
+
+Then below:
+
+Owner of New National Advertising
+
+Then:
+
++91 9555759677
+
+Make the phone number clickable using tel:+919555759677.
+
+6. OPTIONAL PREMIUM VISUAL EFFECT
+
+If appropriate, create a subtle glowing outline/halo behind the owner information.
+
+For example:
+- Very soft radial blue glow
+- Thin elegant border
+- Glassmorphism-style panel
+- Subtle shadow
+
+Keep it consistent with the existing New National Advertising visual identity.
+
+DO NOT use purple.
+
+Keep the existing white / navy / blue / cyan / orange branding.
+
+7. LAYOUT
+
+Remove the old two-person image layout and use the available space intelligently.
+
+The About Us section should NOT have a giant empty area where the two images used to be.
+
+Create a balanced layout such as:
+
+LEFT:
+About Us heading
+Description
+Services/category pills
+Address
+More About Us button
+
+RIGHT:
+OWNER
+Saddam Khan
+Owner of New National Advertising
++91 9555759677
+
+The owner information should be large enough to visually balance the left side.
+
+8. RESPONSIVE DESIGN
+
+Desktop:
+- Saddam Khan should be large and prominent.
+
+Tablet:
+- Scale typography appropriately.
+
+Mobile:
+- Keep the name large but prevent overflow.
+- Make sure the phone number fits cleanly.
+- Everything must remain centered/aligned properly.
+- No horizontal scrolling.
+
+9. IMPORTANT — DO NOT CHANGE OTHER WEBSITE CONTENT
+
+Do NOT modify:
+- Home
+- Services
+- Machines
+- Products
+- Our Work
+- Contact
+- Header
+- Footer
+- Admin panel
+- Firebase
+- Authentication
+- Firestore
+- Storage
+- Existing product data
+- Existing service data
+- Existing routes
+- Existing API/backend functionality
+
+Only modify the About Us people/owner portion requested above.
+
+10. FINAL QUALITY CHECK
+
+After implementing:
+- Confirm Taukeer Ahmed is completely removed.
+- Confirm Aurangzeb Khan is completely removed.
+- Confirm their images are no longer loaded.
+- Confirm there are no broken image containers.
+- Confirm "Saddam Khan" is clearly visible.
+- Confirm "Owner of New National Advertising" is visible.
+- Confirm +91 9555759677 is visible and clickable.
+- Confirm the name has a subtle glow animation but DOES NOT physically move.
+- Confirm the About Us section looks balanced and premium.
+- Confirm mobile responsiveness.
+- Run the project/build and fix any errors caused by this change.
+
+Do not make unrelated changes.

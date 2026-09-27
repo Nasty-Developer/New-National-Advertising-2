@@ -1,0 +1,283 @@
+URGENT — FIX OLD SERVICE IMAGES FLASHING BEFORE NEW CONTENT LOADS
+
+There is a serious visual loading bug on the website.
+
+When the website is opened for the first time, especially on the homepage, OLD/OUTDATED signage board and service images briefly appear for approximately 1–2 seconds.
+
+Then those old images disappear and the CURRENT/REAL website content loads.
+
+I DO NOT WANT THE OLD IMAGES TO APPEAR EVEN FOR 1 SECOND.
+
+The user should see ONLY the current, real service images/content from the moment the page becomes visible.
+
+========================================
+1. REMOVE OLD SERVICE IMAGE FLASH
+========================================
+
+Find the source of the old signage/service images.
+
+They may be coming from:
+
+- old hardcoded image arrays
+- fallback/default image data
+- stale component state
+- old static JSON
+- old local image imports
+- browser/cache behavior
+- initial React state
+- placeholder content
+- hydration mismatch
+- old API response
+- Firebase data loading after initial render
+
+Identify the ACTUAL source and remove the outdated images from the initial render.
+
+Do NOT simply hide them after loading.
+
+They must NOT render at all.
+
+========================================
+2. CURRENT CONTENT MUST BE SOURCE OF TRUTH
+========================================
+
+The existing/current service images and service data are the ONLY content that should appear.
+
+Do not restore, reuse, or display the older signage board images.
+
+Do not use old fallback images.
+
+Do not use temporary placeholder service images that look like the old website.
+
+If the current service data is loaded dynamically, wait for the correct data before rendering that visual section.
+
+========================================
+3. FIX THE INITIAL RENDER
+========================================
+
+The problem appears to be:
+
+Initial render
+↓
+OLD service images appear
+↓
+Current data loads
+↓
+OLD images disappear
+↓
+NEW images appear
+
+Change this behavior to:
+
+Initial render
+↓
+Loading state / lightweight skeleton
+↓
+CURRENT service data loads
+↓
+CURRENT service images appear
+
+There must NEVER be:
+
+OLD IMAGES → NEW IMAGES
+
+The only acceptable transition is:
+
+LOADING → CURRENT IMAGES
+
+========================================
+4. NO FLASH OF OUTDATED CONTENT
+========================================
+
+Check all service-related sections, especially:
+
+- Sign Boards / Signage
+- Solvent Flex Printing
+- Digital Printing
+- Offset Printing
+- Screen Printing
+- Graphics Design
+- Any service image carousel
+- Homepage service sections
+
+Make sure none of them briefly render outdated content.
+
+========================================
+5. CHECK HARD-CODED FALLBACK DATA
+========================================
+
+Search the entire codebase for old service image references.
+
+Look for:
+
+- old image filenames
+- old signage images
+- old service arrays
+- default service objects
+- fallback images
+- placeholder URLs
+- imported legacy images
+- duplicate service datasets
+
+If an old image is no longer used, remove its reference from the active application.
+
+DO NOT delete images blindly from the repository if they may be used elsewhere.
+
+Only remove obsolete references from the active UI.
+
+========================================
+6. CHECK FIREBASE / API LOADING
+========================================
+
+If services are being loaded from Firebase/API:
+
+Do NOT initialize the component with old static service data.
+
+Instead use:
+
+loading = true
+
+Then:
+
+fetch current service data
+
+Then:
+
+loading = false
+
+Then render the current services.
+
+If the request fails, show a clean neutral fallback/skeleton instead of displaying outdated images.
+
+========================================
+7. LOADING STATE
+========================================
+
+If necessary, use a lightweight skeleton while current service data is loading.
+
+Example:
+
+[ service image skeleton ]
+[ service title skeleton ]
+
+The skeleton should match the existing design.
+
+Do NOT show old images as placeholders.
+
+Keep the loading state extremely fast and lightweight.
+
+========================================
+8. IMAGE LOADING
+========================================
+
+For current images:
+
+- preload only critical above-the-fold images when necessary
+- use proper image dimensions
+- avoid layout shifts
+- use lazy loading for below-the-fold images
+- use optimized WebP/AVIF where supported
+- keep image loading fast
+
+But IMPORTANT:
+
+Do not preload or reference the old service images.
+
+========================================
+9. CACHE / SERVICE WORKER CHECK
+========================================
+
+Check whether an old service worker, browser cache strategy, or cached JSON/API response is causing the old images to appear.
+
+If a service worker exists:
+
+- verify it is not serving outdated service data
+- update cache/versioning correctly
+- invalidate obsolete cached assets
+- ensure the latest service images/data are used
+
+Do not disable caching completely just to hide the issue.
+
+Fix the cache strategy properly.
+
+========================================
+10. HYDRATION / SSR CHECK
+========================================
+
+If the project uses SSR/SSG/hydration:
+
+Check for a mismatch between:
+
+server-rendered service content
+
+and
+
+client-rendered service content.
+
+The server and client must render the same current service data.
+
+There should be no old server HTML that gets replaced by new client content.
+
+========================================
+11. IMPORTANT — DO NOT CHANGE CURRENT DESIGN
+========================================
+
+Do NOT redesign the service section.
+
+Do NOT remove the current REAL service images.
+
+Do NOT change service names.
+
+Do NOT change product categories.
+
+Do NOT modify unrelated homepage sections.
+
+Only fix the outdated-image flash/loading bug.
+
+========================================
+12. TEST THE ACTUAL FIRST LOAD
+========================================
+
+This is important.
+
+Do not test only after the website has already loaded once.
+
+Test:
+
+1. Open a fresh/incognito browser.
+2. Clear cache if necessary.
+3. Open the homepage.
+4. Watch the first 3 seconds carefully.
+5. Confirm NO old signage/service image appears.
+6. Confirm only current service content appears.
+7. Hard refresh.
+8. Test on mobile viewport.
+9. Test on desktop viewport.
+10. Test with throttled network.
+
+Expected result:
+
+OLD IMAGE FLASH:
+❌ NEVER
+
+CURRENT CONTENT:
+✅ ONLY
+
+If the current data takes time to load:
+
+LOADING SKELETON:
+✅ ACCEPTABLE
+
+OLD CONTENT:
+❌ NOT ACCEPTABLE
+
+========================================
+FINAL REQUIREMENT
+========================================
+
+The first visual content users see must already belong to the CURRENT version of New National Advertising.
+
+There must be ZERO 1–2 second flash of the old signage board or old service images.
+
+Fix the ROOT CAUSE rather than adding a CSS hack that merely hides the old content after it has already rendered.
+
+After fixing, run the production build and verify there are no errors.
