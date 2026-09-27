@@ -139,6 +139,33 @@ img[src="/services-main-signage.webp"] { content: url("/machine-large-format-pri
 .arrow-link svg, .button-arrow svg { transition: transform .25s ease; }
 .arrow-link:hover svg, .button-arrow:hover svg { transform: translateX(3px); }
 
+.owner-profile::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: 21px;
+  background: radial-gradient(circle at 82% 18%, rgba(0, 168, 198, .12), transparent 33%);
+}
+
+.owner-name {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  color: transparent;
+  background: linear-gradient(112deg, #122641 18%, #1769aa 48%, #00a8c6 63%, #122641 82%);
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 0 8px 28px rgba(0, 168, 198, .12);
+  animation: owner-name-shimmer 11s ease-in-out infinite;
+}
+
+@keyframes owner-name-shimmer {
+  0%, 65%, 100% { background-position: 0% 50%; text-shadow: 0 8px 28px rgba(0, 168, 198, .1); }
+  78% { background-position: 100% 50%; text-shadow: 0 8px 32px rgba(0, 168, 198, .22); }
+}
+
 .admin-scrollbar::-webkit-scrollbar { width: 7px; height: 7px; }
 .admin-label { display: block; margin-bottom: .5rem; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: #667d8b; }
 .admin-scrollbar::-webkit-scrollbar-thumb { background: #c4d2da; border-radius: 999px; }
@@ -150,4 +177,5 @@ img[src="/services-main-signage.webp"] { content: url("/machine-large-format-pri
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .owner-name { animation: none; }
 }

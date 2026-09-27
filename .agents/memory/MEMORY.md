@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 - [Imported monorepo apps](imported-monorepo-apps.md) — GitHub repos built from this workspace may already contain a complete artifact; preserve project metadata, register the app, then restore source.
-=======
 - [Imported workspace typecheck](imported-workspace-typecheck.md) — refresh project-reference declarations before checking imported artifacts.
 - [GitHub import verification](github-import-verification.md) — verify the app artifact exists before configuring preview; template-only workspaces can otherwise appear blank.
 - [Logo background cleanup](logo-background-cleanup.md) — remove only the connected outer background so internal negative space remains intact.
@@ -14,4 +12,3 @@
 - [Route loading fallbacks](route-loading-fallbacks.md) — removing a global startup gate requires explicit loading or safe fallback states for API-backed detail routes.
 - [Workspace asset imports](workspace-asset-imports.md) — package-scoped pnpm commands run from the package directory, so resolve attached assets from the workspace root.
 - [Imported public asset routing](imported-public-asset-routing.md) — bundled category and brand assets must stay on frontend static paths; storage URLs are only for CMS-managed files.
->>>>>>> origin/main

@@ -1276,32 +1276,24 @@ function Home() {
                  <a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a>
                  <a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a>
                </Reveal>
-               <Reveal delay={110}>
-                 <div className="grid grid-cols-2 gap-3 sm:gap-5">
-                    <div className="flex min-w-0 flex-col">
-                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src={optimizedImageUrl('/taukeer-ahmed.jpg')} alt="Taukeer Ahmed, New National Advertising" loading="lazy" decoding="async" width="640" height="800" className="block aspect-[4/5] w-full object-cover object-top" />
-                     </div>
-                     <div className="mt-3 border-l-2 border-[#1769aa] pl-3">
-                       <p className="eyebrow !text-[8px]">New National Advertising</p>
-                       <h3 className="display mt-1 text-[17px] font-extrabold text-[#1d344b]">Taukeer Ahmed</h3>
-                     </div>
-                   </div>
-                    <div className="flex min-w-0 flex-col">
-                     <div className="overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eef4f6] shadow-[0_16px_34px_rgba(31,61,87,.09)]">
-                        <img src={optimizedImageUrl('/aurangzeb-khan.jpg')} alt="Aurangzeb Khan, New National Advertising" loading="lazy" decoding="async" width="640" height="800" className="block aspect-[4/5] w-full object-cover object-top" />
-                     </div>
-                     <div className="mt-3 border-l-2 border-[#d9468c] pl-3">
-                       <p className="eyebrow !text-[8px]">New National Advertising</p>
-                       <h3 className="display mt-1 text-[17px] font-extrabold text-[#1d344b]">Aurangzeb Khan</h3>
-                     </div>
-                   </div>
-                   <div className="col-span-2 mt-1 flex items-center gap-3 rounded-[12px] border border-[#e1eaee] bg-[#f7fafb] px-4 py-3">
-                     <div className="ink-strip w-16 shrink-0"><span /><span /><span /><span /></div>
-                     <p className="text-[11px] leading-5 text-[#68798a]">Professional people, reliable production and creative solutions for every brand we help bring to life.</p>
-                   </div>
-                 </div>
-               </Reveal>
+                <Reveal delay={110}>
+                  <div className="owner-profile relative overflow-hidden rounded-[22px] border border-[#cfe1e8] bg-[#f8fcfd] px-6 py-8 shadow-[0_20px_50px_rgba(31,61,87,.1)] sm:px-9 sm:py-11">
+                    <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-[#00a8c6]/10 blur-3xl" />
+                    <div className="pointer-events-none absolute bottom-0 left-0 h-px w-2/3 bg-gradient-to-r from-[#00a8c6] via-[#1769aa] to-transparent" />
+                    <div className="relative">
+                      <p className="eyebrow text-[9px] tracking-[.3em]">Owner · New National Advertising</p>
+                      <h3 className="owner-name display mt-5 text-[clamp(2.75rem,7vw,5.5rem)] font-extrabold leading-[.9] tracking-[-.075em] text-[#122641]">Saddam Khan</h3>
+                      <div className="mt-6 flex items-center gap-3">
+                        <div className="ink-strip w-20 shrink-0"><span /><span /><span /><span /></div>
+                        <p className="text-[12px] font-bold text-[#31536c] sm:text-[13px]">Owner of New National Advertising</p>
+                      </div>
+                      <a href="tel:+919555759677" className="mt-7 inline-flex items-center gap-2 text-[14px] font-bold tracking-[.01em] text-[#1769aa] transition hover:text-[#0d4e83] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-4" aria-label="Call Saddam Khan at +91 9555759677">
+                        <Phone size={15} strokeWidth={2.2} />
+                        <span>+91 9555759677</span>
+                      </a>
+                    </div>
+                  </div>
+                </Reveal>
              </div>
            </div>
          </section>
