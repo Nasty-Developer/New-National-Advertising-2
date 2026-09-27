@@ -1,9 +1,38 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
-export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v3";
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v5";
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
+  "Bill books": "/product-images/paper-corporate/bill-books.png",
+  Booklets: "/product-images/paper-corporate/booklets.jpg",
+  Bookmarks: "/product-images/paper-corporate/bookmarks.jpg",
+  Books: "/product-images/paper-corporate/books.jpg",
+  Brochures: "/product-images/paper-corporate/brochures.jpg",
+  "Business cards": "/product-images/paper-corporate/business-cards.webp",
+  "Business envelopes": "/product-images/paper-corporate/business-envelopes.jpg",
+  "Business letterheads": "/product-images/paper-corporate/business-letterheads.jpg",
+  Calendars: "/product-images/paper-corporate/calendars.jpg",
+  Certificates: "/product-images/paper-corporate/certificates.jpg",
+  "Conference folders": "/product-images/paper-corporate/conference-folders.jpg",
+  Diaries: "/product-images/paper-corporate/diaries.jpg",
+  Envelopes: "/product-images/paper-corporate/envelopes.jpg",
+  Flyers: "/product-images/paper-corporate/flyers.jpg",
+  "Folded flyers": "/product-images/paper-corporate/folded-flyers.jpg",
+  "Gold-foil cards": "/product-images/paper-corporate/gold-foil-cards.jpg",
+  "Indoor posters": "/product-images/paper-corporate/indoor-posters.jpg",
+  Letterheads: "/product-images/paper-corporate/letterheads.jpg",
+  Magazines: "/product-images/paper-corporate/magazines.jpg",
+  Newsletters: "/product-images/paper-corporate/newsletters.jpg",
+  Notebooks: "/product-images/paper-corporate/notebooks.jpg",
+  Planners: "/product-images/paper-corporate/planners.jpg",
+  "Pocket envelopes": "/product-images/paper-corporate/pocket-envelopes.jpg",
+  "Postage envelopes": "/product-images/paper-corporate/postage-envelopes.jpg",
+  Posters: "/product-images/paper-corporate/posters.jpg",
+  "Spiral notebooks": "/product-images/paper-corporate/spiral-notebooks.jpg",
+  "Spot-UV cards": "/product-images/paper-corporate/spot-uv-cards.jpg",
+  "Thread-bound notebooks": "/product-images/paper-corporate/thread-bound-notebooks.jpg",
+  "Visiting cards": "/product-images/paper-corporate/visiting-cards.jpg",
   "Beer bottle labels": "/product-images/labels-stickers/beer-bottle-labels.jpg",
   "Bottle labels": "/product-images/labels-stickers/bottle-labels.jpg",
   "Brand-logo stickers": "/product-images/labels-stickers/brand-logo-stickers.jpg",
