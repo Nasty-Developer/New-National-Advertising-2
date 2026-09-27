@@ -1266,31 +1266,36 @@ function Home() {
            <div className="pointer-events-none absolute right-[-8rem] top-[-9rem] h-80 w-80 rounded-full border border-[#d9edf1] bg-[#f4fafb]" />
            <div className="container-nna">
              <div className="grid items-center gap-12 lg:grid-cols-[.88fr_1.12fr] lg:gap-16">
-               <Reveal>
-                 <p className="eyebrow">About us</p>
-                 <h2 className="display mt-3 max-w-[520px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">{content?.aboutTitle || 'About New National Advertising'}</h2>
-                 <p className="mt-5 max-w-[500px] text-[13px] leading-6 text-[#68798a]">{content?.aboutBody || 'New National Advertising provides professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals. We specialize in high-quality printing and customized advertising solutions for every project.'}</p>
-                 <div className="mt-6 flex max-w-[520px] flex-wrap gap-2">
-                   {['Printing', 'Digital Printing', 'Solvent Flex Printing', 'Offset Printing', 'Sign Boards & Signage', 'Screen Printing', 'Graphics Design', 'Branding Solutions'].map((item) => <span key={item} className="rounded-full border border-[#d9e7ec] bg-[#f8fbfc] px-3 py-2 text-[10px] font-bold text-[#3c5a70]">{item}</span>)}
+                <Reveal className="owner-about-reveal">
+                  <p className="owner-about-item owner-about-label eyebrow">About us</p>
+                  <h2 className="owner-about-item owner-about-heading display mt-3 max-w-[520px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">{content?.aboutTitle || 'About New National Advertising'}</h2>
+                  <p className="owner-about-item owner-about-body mt-5 max-w-[500px] text-[13px] leading-6 text-[#68798a]">{content?.aboutBody || 'New National Advertising provides professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals. We specialize in high-quality printing and customized advertising solutions for every project.'}</p>
+                  <div className="owner-about-item owner-about-pills mt-6 flex max-w-[520px] flex-wrap gap-2">
+                    {['Printing', 'Digital Printing', 'Solvent Flex Printing', 'Offset Printing', 'Sign Boards & Signage', 'Screen Printing', 'Graphics Design', 'Branding Solutions'].map((item) => <span key={item} className="owner-about-pill rounded-full border border-[#d9e7ec] bg-[#f8fbfc] px-3 py-2 text-[10px] font-bold text-[#3c5a70]">{item}</span>)}
                  </div>
-                 <a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a>
-                 <a href="#contact" data-testid="link-more-about" className="arrow-link mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a>
+                  <a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="owner-about-item owner-about-address mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a>
+                  <a href="#contact" data-testid="link-more-about" className="owner-about-item owner-about-button arrow-link mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a>
                </Reveal>
-                <Reveal delay={110}>
+                 <Reveal delay={110} className="owner-card-reveal">
                   <div className="owner-profile relative overflow-hidden rounded-[22px] border border-[#cfe1e8] bg-[#f8fcfd] px-6 py-8 shadow-[0_20px_50px_rgba(31,61,87,.1)] sm:px-9 sm:py-11">
                     <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-[#00a8c6]/10 blur-3xl" />
                     <div className="pointer-events-none absolute bottom-0 left-0 h-px w-2/3 bg-gradient-to-r from-[#00a8c6] via-[#1769aa] to-transparent" />
                     <div className="relative">
-                      <p className="eyebrow text-[9px] tracking-[.3em]">Owner · New National Advertising</p>
-                      <h3 className="owner-name display mt-5 text-[clamp(2.75rem,7vw,5.5rem)] font-extrabold leading-[.9] tracking-[-.075em] text-[#122641]">Saddam Khan</h3>
+                       <p className="owner-label eyebrow text-[9px] tracking-[.3em]">Owner · New National Advertising</p>
+                       <div className="owner-name-wrap mt-5">
+                         <span className="owner-name-glow" aria-hidden="true" />
+                         <h3 className="owner-name display text-[clamp(2.75rem,7vw,5.5rem)] font-extrabold leading-[.9] tracking-[-.075em] text-[#122641]">Saddam Khan</h3>
+                       </div>
                       <div className="mt-6 flex items-center gap-3">
-                        <div className="ink-strip w-20 shrink-0"><span /><span /><span /><span /></div>
+                         <div className="owner-ink-strip ink-strip w-20 shrink-0"><span /><span /><span /><span /></div>
                         <p className="text-[12px] font-bold text-[#31536c] sm:text-[13px]">Owner of New National Advertising</p>
                       </div>
-                      <a href="tel:+919555759677" className="mt-7 inline-flex items-center gap-2 text-[14px] font-bold tracking-[.01em] text-[#1769aa] transition hover:text-[#0d4e83] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-4" aria-label="Call Saddam Khan at +91 9555759677">
-                        <Phone size={15} strokeWidth={2.2} />
-                        <span>+91 9555759677</span>
-                      </a>
+                       <div className="owner-phone-reveal mt-7">
+                         <a href="tel:+919555759677" className="owner-phone inline-flex items-center gap-2 text-[14px] font-bold tracking-[.01em] text-[#1769aa] transition hover:text-[#0d4e83] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1769aa] focus-visible:ring-offset-4" aria-label="Call Saddam Khan at +91 9555759677">
+                           <Phone size={15} strokeWidth={2.2} />
+                           <span>+91 9555759677</span>
+                         </a>
+                       </div>
                     </div>
                   </div>
                 </Reveal>
