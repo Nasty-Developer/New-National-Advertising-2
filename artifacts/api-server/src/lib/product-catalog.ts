@@ -1,6 +1,7 @@
 import type { DocumentData } from "firebase-admin/firestore";
 import { firestore } from "./firebase";
 
+<<<<<<< HEAD
 export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v8";
 
 const providedProductImagePaths: Readonly<Record<string, string>> = {
@@ -69,6 +70,11 @@ const providedProductImagePaths: Readonly<Record<string, string>> = {
   Sippers: "/product-images/promotional-products/sippers.jpg",
   Umbrellas: "/product-images/promotional-products/umbrellas.jpg",
   "USB pen drives": "/product-images/promotional-products/usb-pen-drives.jpg",
+=======
+export const EXACT_PRODUCT_CATALOG_VERSION = "new-national-advertising-exact-pdf-v3";
+
+const providedProductImagePaths: Readonly<Record<string, string>> = {
+>>>>>>> origin/main
   "Beer bottle labels": "/product-images/labels-stickers/beer-bottle-labels.jpg",
   "Bottle labels": "/product-images/labels-stickers/bottle-labels.jpg",
   "Brand-logo stickers": "/product-images/labels-stickers/brand-logo-stickers.jpg",

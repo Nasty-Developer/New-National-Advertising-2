@@ -1,0 +1,32 @@
+kind = "web"
+previewPath = "/"
+title = "New National Advertising"
+<<<<<<< HEAD
+description = "A responsive business website for New National Advertising, showcasing printing, signage, advertising and graphic design services in Mumbai with quote requests and direct contact actions."
+=======
+description = "The New National Advertising business website and admin tools for printing, signage, design, product management, and quote requests."
+>>>>>>> 7cfb1fa (Update api-server routes and regenerate api-client-react schemas)
+version = "1.0.0"
+id = "artifacts/new-national-advertising"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21213
+
+[services.development]
+run = "pnpm --filter @workspace/new-national-advertising run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/new-national-advertising", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/new-national-advertising/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21213"
+BASE_PATH = "/"
