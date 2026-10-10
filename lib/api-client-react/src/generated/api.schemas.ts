@@ -355,6 +355,10 @@ export interface WebsiteContentInput {
   contactBody?: string;
   /** @maxLength 4000 */
   footerBody?: string;
+  /** @maxLength 16000 */
+  privacyPolicyBody?: string;
+  /** @maxLength 16000 */
+  termsAndConditionsBody?: string;
   /** @maxLength 240 */
   metadataTitle?: string;
   /** @maxLength 320 */
@@ -369,6 +373,72 @@ export type WebsiteSettingsInputSocialLinksItem = {
   label: string;
   url: string;
 };
+
+export type BusinessInformationGstRegistrationStatus = typeof BusinessInformationGstRegistrationStatus[keyof typeof BusinessInformationGstRegistrationStatus];
+
+
+export const BusinessInformationGstRegistrationStatus = {
+  unverified: 'unverified',
+  registered: 'registered',
+  not_registered: 'not_registered',
+  not_applicable: 'not_applicable',
+} as const;
+
+export type BusinessInformationUdyamStatus = typeof BusinessInformationUdyamStatus[keyof typeof BusinessInformationUdyamStatus];
+
+
+export const BusinessInformationUdyamStatus = {
+  unverified: 'unverified',
+  registered: 'registered',
+  not_applicable: 'not_applicable',
+} as const;
+
+export interface BusinessInformation {
+  /** @maxLength 180 */
+  legalName?: string;
+  legalNameVerified?: boolean;
+  /** @maxLength 40 */
+  phoneNumberVerificationCandidate?: string;
+  phoneNumberVerified?: boolean;
+  addressVerified?: boolean;
+  gstRegistrationStatus?: BusinessInformationGstRegistrationStatus;
+  gstStatusVerified?: boolean;
+  /** @maxLength 40 */
+  gstin?: string;
+  gstinVerified?: boolean;
+  /** @maxLength 120 */
+  gstRegistrationType?: string;
+  /** @maxLength 20 */
+  gstEffectiveDate?: string;
+  udyamStatus?: BusinessInformationUdyamStatus;
+  /** @maxLength 80 */
+  udyamNumber?: string;
+  udyamVerified?: boolean;
+  /** @maxLength 120 */
+  enterpriseClassification?: string;
+  /** @maxLength 160 */
+  maharashtraRegistrationType?: string;
+  /** @maxLength 160 */
+  maharashtraIssuingAuthority?: string;
+  /** @maxLength 120 */
+  maharashtraRegistrationIdentifier?: string;
+  /** @maxLength 20 */
+  maharashtraRegistrationDate?: string;
+  /** @maxLength 120 */
+  maharashtraRegistrationStatus?: string;
+  maharashtraRegistrationVerified?: boolean;
+  /** @maxLength 500 */
+  operatingHours?: string;
+  operatingHoursVerified?: boolean;
+  /** @maxLength 1000 */
+  customerEnquiryInstructions?: string;
+  /** @maxLength 180 */
+  privacyContactEmail?: string;
+  /** @maxLength 240 */
+  customerComplaintContact?: string;
+  /** @maxLength 20 */
+  lastVerificationDate?: string;
+}
 
 export interface WebsiteSettingsInput {
   /**
@@ -401,6 +471,7 @@ export interface WebsiteSettingsInput {
   metadataTitle: string;
   /** @maxLength 320 */
   metadataDescription: string;
+  businessInformation?: BusinessInformation;
 }
 
 export type WebsiteSettings = WebsiteSettingsInput & {

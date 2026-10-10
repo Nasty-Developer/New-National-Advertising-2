@@ -36,6 +36,10 @@ export interface WebsiteContentInput {
   contactBody?: string;
   /** @maxLength 4000 */
   footerBody?: string;
+  /** @maxLength 16000 */
+  privacyPolicyBody?: string;
+  /** @maxLength 16000 */
+  termsAndConditionsBody?: string;
   /** @maxLength 240 */
   metadataTitle?: string;
   /** @maxLength 320 */

@@ -8,6 +8,7 @@ import { ArrowDownRight, ArrowRight, ArrowUpRight, Badge, Bot, BriefcaseBusiness
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import { getGetAdminSessionQueryKey, getGetProductCategoriesQueryKey, getGetPublicMachinesQueryKey, getGetPublicProductsQueryKey, getGetPublicProjectsQueryKey, getGetPublicServicesQueryKey, useGetAdminSession, useGetProductCategories, useGetPublicMachines, useGetPublicProducts, useGetPublicProjects, useGetPublicServices, useGetPublicSettings, useGetPublicContactNumbers, useGetWebsiteContent, type Service as ApiService } from '@workspace/api-client-react';
 import NotFound from '@/pages/not-found';
+import { LegalPage } from '@/pages/legal-pages';
 import { firebaseAuth } from '@/lib/firebase-client';
 import { useFirebaseAuth } from '@/lib/use-firebase-auth';
 import { productCategories } from '@/product-categories';
@@ -27,8 +28,6 @@ const queryClient = new QueryClient({
 const ADMIN_SESSION_TIMEOUT_MS = 10_000;
 
 const staticWebpPaths = new Set([
-  '/branch-workplace-flex-printing.png',
-  '/branch-workplace-office.png',
   '/category-images/category-apparel.png',
   '/category-images/category-awards-recognition.png',
   '/category-images/category-core-printing-branding.png',
@@ -38,13 +37,11 @@ const staticWebpPaths = new Set([
   '/category-images/category-paper-corporate-printing.webp',
   '/category-images/category-signage-display.png',
   '/category-images/category-specialized-products.png',
-  '/hero-new-national-advertising.png',
   '/machine-co2-laser-cutter.png',
   '/machine-epson-surecolor-s80670.png',
   '/machine-konica-minolta-bizhub-c6000.png',
   '/machine-large-format-printer.png',
   '/machine-wide-format-laminator.png',
-  '/new-national-advertising-shop.png',
   '/product-images/core-flatbed-uv-printing.webp',
   '/product-images/core-glass-printing.webp',
   '/product-images/core-laser-cutting.jpg',
@@ -57,16 +54,6 @@ const staticWebpPaths = new Set([
 ]);
 
 const whatsappUrl = 'https://wa.me/919555759677?text=Hello%20New%20National%20Advertising%2C%20I%20would%20like%20to%20enquire%20about%20your%20printing%20and%20advertising%20services.';
-const googleMapsUrl = 'https://maps.app.goo.gl/fp4fTcaVwx2bojXz7';
-const businessAddressLines = [
-  'Room No. 3, New National Advertising',
-  'Plot No. 47, Line No. K, Road No. 5',
-  'Opposite Mahesh Jewellers, Nearby Ambedkar Garden',
-  'Govandi (W), Govandi West',
-  'Raman Mama Nagar, Shivaji Nagar',
-  'Mumbai, Maharashtra - 400043, India',
-];
-
 const approvedServiceSlugs = new Set([
   'sign-boards',
   'solvent-flex',
@@ -81,7 +68,7 @@ const process = [
   { number: '01', title: 'Discuss', copy: 'Share your requirements.', icon: MessageCircle, accent: '#1769AA' },
   { number: '02', title: 'Design', copy: 'We create the design.', icon: PenLine, accent: '#D9468C' },
   { number: '03', title: 'Print', copy: 'Professional production.', icon: Printer, accent: '#D7A918' },
-  { number: '04', title: 'Deliver', copy: 'Get your finished work.', icon: Clock3, accent: '#3BA776' },
+  { number: '04', title: 'Discuss', copy: 'Confirm the quotation and next steps.', icon: Clock3, accent: '#3BA776' },
 ];
 
 const navigationItems = [
@@ -811,16 +798,16 @@ function SiteFooter({ compact = false }: { compact?: boolean } = {}) {
   const primaryPhone = contacts.find((item) => item.isPrimary)?.phone || contacts.find((item) => item.useForCalls)?.phone || '9555759677';
   const phoneNumbers = contacts.filter((item) => item.useForCalls).map((item) => item.phone);
   const email = settings?.email || 'newnationaladv2022@gmail.com';
-  const address = settings?.address || businessAddressLines.join(', ');
-  const mapsUrl = settings?.googleMapsUrl || googleMapsUrl;
+  const address = settings?.address || '';
+  const mapsUrl = settings?.googleMapsUrl || '';
   return (
     <footer className={`bg-[#102941] text-white ${compact ? '' : 'pb-24 md:pb-0'}`}>
       <div className={`container-nna grid gap-8 py-10 sm:items-start sm:py-12 ${compact ? 'sm:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1fr_1fr]' : 'md:grid-cols-[1.35fr_1fr_1fr]'}`}>
         <div><Logo src={settings?.logoPath} /><p className="mt-3 max-w-[280px] text-[10px] leading-5 tracking-[.16em] text-[#a8bbca]">{settings?.footerInformation || settings?.businessName || 'PRINT · DESIGN · SIGNAGE · ADVERTISING'}</p></div>
         <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} className="hover:text-white">{item.label}</a>)}</nav></div>
-        <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]">{phoneNumbers.length ? phoneNumbers.map((phone) => <a key={phone} href={`tel:+${phone.replace(/\D/g, '')}`} className="block hover:text-white">{phone}{phone === primaryPhone ? ' · Primary' : ''}</a>) : <a href={`tel:+${primaryPhone.replace(/\D/g, '')}`} className="block hover:text-white">{primaryPhone}</a>}<a href={`mailto:${email}`} className="block break-all hover:text-white">{email}</a><address className="not-italic">{address.split(', ').map((line) => <span key={line} className="block">{line}</span>)}<a href={mapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div></div>
+        <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]">{phoneNumbers.length ? phoneNumbers.map((phone) => <a key={phone} href={`tel:+${phone.replace(/\D/g, '')}`} className="block hover:text-white">{phone}{phone === primaryPhone ? ' · Primary' : ''}</a>) : <a href={`tel:+${primaryPhone.replace(/\D/g, '')}`} className="block hover:text-white">{primaryPhone}</a>}<a href={`mailto:${email}`} className="block break-all hover:text-white">{email}</a>{address && <address className="not-italic">{address.split(', ').map((line) => <span key={line} className="block">{line}</span>)}{mapsUrl && <a href={mapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a>}</address>}<nav aria-label="Legal" className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/10 pt-3"><a href="/privacy-policy" className="hover:text-white">Privacy Policy</a><a href="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</a></nav></div></div>
       </div>
-      <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© {settings?.businessName || 'New National Advertising'}. All rights reserved.</span><span>{settings?.footerInformation || 'Printing, signage & design solutions in Mumbai.'}</span></div></div>
+      <div className="border-t border-white/10"><div className="container-nna flex flex-col gap-2 py-5 text-[10px] text-[#8da5b7] sm:flex-row sm:items-center sm:justify-between"><span>© {settings?.businessName || 'New National Advertising'}. All rights reserved.</span><span>{settings?.footerInformation || 'Printing, signage & design solutions.'}</span></div></div>
     </footer>
   );
 }
@@ -859,7 +846,7 @@ function getAssistantReply(question: string, contextService?: ServiceRecord, ava
     return 'Choose Get a Quote to share your service, requirement, quantity, name and phone number. You can then continue on WhatsApp.';
   }
   if (normalized.includes('contact') || normalized.includes('phone') || normalized.includes('call') || normalized.includes('email')) {
-    return 'Call New National Advertising on +91 9555759677 or email newnationaladv2022@gmail.com. We are based in Mumbai, Maharashtra, India.';
+    return 'Contact New National Advertising by phone or email and share your printing, signage or design requirements.';
   }
   if (normalized.includes('whatsapp')) {
     return 'You can continue a specific enquiry on WhatsApp using the green button below.';
@@ -1183,18 +1170,10 @@ function Home() {
         '@type': 'LocalBusiness',
         name: settings?.businessName || 'New National Advertising',
         description: content?.heroDescription || 'Printing, advertising, signage and graphic design solutions.',
-         address: {
-           '@type': 'PostalAddress',
-           streetAddress: 'Room No. 3, New National Advertising, Plot No. 47, Line No. K, Road No. 5, Opposite Mahesh Jewellers, Nearby Ambedkar Garden, Raman Mama Nagar, Shivaji Nagar',
-           addressLocality: 'Govandi West, Mumbai',
-           addressRegion: 'Maharashtra',
-           postalCode: '400043',
-           addressCountry: 'IN',
-         },
-         hasMap: settings?.googleMapsUrl || googleMapsUrl,
+          ...(settings?.address ? { address: { '@type': 'PostalAddress', streetAddress: settings.address, addressCountry: 'IN' } } : {}),
+          ...(settings?.googleMapsUrl ? { hasMap: settings.googleMapsUrl } : {}),
         telephone: `+91${primaryPhone.replace(/\D/g, '')}`,
         email: settings?.email || 'newnationaladv2022@gmail.com',
-        areaServed: 'Mumbai, Maharashtra, India',
         makesOffer: publicServices.map((service) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: service.title, description: service.description } })),
       }) }} />
 
@@ -1219,7 +1198,7 @@ function Home() {
                     className="block h-auto w-full max-w-[390px] object-contain object-left sm:max-w-[500px]"
                   />
                 </h1>
-               <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#81909d]"><span className="h-px w-9 bg-[#00a8c6]" /><span className="h-px w-5 bg-[#d9468c]" /><span className="h-px w-3 bg-[#f2c94c]" />Mumbai print studio</div>
+               <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.2em] text-[#81909d]"><span className="h-px w-9 bg-[#00a8c6]" /><span className="h-px w-5 bg-[#d9468c]" /><span className="h-px w-3 bg-[#f2c94c]" />Print · design · signage</div>
               <p className="mt-6 text-lg font-semibold tracking-[-.02em] text-[#253b53]">{content?.heroCtaText || 'Printing, Signage & Design Solutions'}</p>
               <p className="mt-3 max-w-[430px] text-[13px] leading-6 text-[#657589]">{content?.heroDescription || 'Professional printing, advertising, signage and graphic design solutions for businesses, brands and individuals.'}</p>
               <div className="mt-7 flex flex-wrap gap-3"><PrimaryButton /><SecondaryButton /></div>
@@ -1231,11 +1210,11 @@ function Home() {
             </Reveal>
              <Reveal delay={120} className="relative mx-auto w-full max-w-[640px] lg:ml-auto lg:mt-10">
                 <div className="relative aspect-[1983/793] overflow-hidden rounded-[18px] shadow-[0_20px_55px_rgba(36,67,94,.17)]">
-                   <img src={optimizedImageUrl(content?.heroImage) || '/hero-new-national-advertising.webp'} alt="New National Advertising storefront, printing services and signage display" loading="eager" fetchPriority="high" width="1280" height="512" decoding="async" className="h-full w-full object-contain" />
+                    {content?.heroImage ? <img src={optimizedImageUrl(content.heroImage)} alt="New National Advertising — printing, signage and design" loading="eager" fetchPriority="high" width="1280" height="512" decoding="async" className="h-full w-full object-contain" /> : <div className="flex h-full flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_78%_18%,rgba(0,168,198,.2),transparent_32%),linear-gradient(145deg,#f5f9fb,#e4edf2)] p-6 sm:p-9"><div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-[#00a8c6]" /><span className="h-2.5 w-2.5 rounded-full bg-[#d9468c]" /><span className="h-2.5 w-2.5 rounded-full bg-[#f2c94c]" /><span className="ml-2 text-[9px] font-bold uppercase tracking-[.2em] text-[#718394]">Print · Design · Signage</span></div><div className="relative"><div className="absolute -right-6 -top-16 h-48 w-48 rounded-full border border-[#b9d2df] sm:-right-1 sm:h-64 sm:w-64" /><div className="absolute -right-1 top-[-38px] h-32 w-32 rounded-full border border-[#d4e4eb] sm:right-12 sm:top-[-56px] sm:h-44 sm:w-44" /><p className="relative display max-w-[400px] text-4xl font-extrabold leading-[.98] tracking-[-.06em] text-[#17344e] sm:text-6xl">Ideas into print.</p><p className="relative mt-4 max-w-[320px] text-[12px] leading-5 text-[#62788a]">Share your requirements and ask for a quotation.</p></div><div className="ink-strip w-24"><span /><span /><span /><span /></div></div>}
               </div>
                <div className="absolute -bottom-5 -left-5 hidden rounded-xl border border-[#dce8ee] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(31,61,87,.1)] sm:block">
                  <span className="crop-corner crop-corner--tl text-[#1769aa]" /><span className="crop-corner crop-corner--br text-[#1769aa]" />
-                <p className="eyebrow text-[8px]">Made in Mumbai</p><p className="mt-1 text-[11px] font-semibold text-[#213951]">From ideas to impact.</p>
+                <p className="eyebrow text-[8px]">Printing and signage</p><p className="mt-1 text-[11px] font-semibold text-[#213951]">From ideas to impact.</p>
                  <div className="ink-strip mt-2 w-16"><span /><span /><span /><span /></div>
               </div>
             </Reveal>
@@ -1365,7 +1344,7 @@ function Home() {
                   <div className="owner-about-item owner-about-pills mt-6 flex max-w-[520px] flex-wrap gap-2">
                     {['Printing', 'Digital Printing', 'Solvent Flex Printing', 'Offset Printing', 'Sign Boards & Signage', 'Screen Printing', 'Graphics Design', 'Branding Solutions'].map((item) => <span key={item} className="owner-about-pill rounded-full border border-[#d9e7ec] bg-[#f8fbfc] px-3 py-2 text-[10px] font-bold text-[#3c5a70]">{item}</span>)}
                  </div>
-                  <a href={settings?.googleMapsUrl || googleMapsUrl} target="_blank" rel="noreferrer" className="owner-about-item owner-about-address mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings?.address || businessAddressLines.join(', ')} <span className="text-[#1669aa]">View on Google Maps</span></span></a>
+                  {settings?.address && <a href={settings.googleMapsUrl || undefined} target="_blank" rel="noreferrer" className="owner-about-item owner-about-address mt-7 inline-flex max-w-[500px] items-start gap-2 text-[11px] font-semibold leading-5 text-[#405268] hover:text-[#1669aa]" data-testid="link-about-address"><MapPin size={14} className="mt-0.5 shrink-0 text-[#1669aa]" /><span>{settings.address}{settings.googleMapsUrl && <span className="text-[#1669aa]"> · View on Google Maps</span>}</span></a>}
                   <a href="#contact" data-testid="link-more-about" className="owner-about-item owner-about-button arrow-link mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#99b8cb] px-4 py-2.5 text-[11px] font-semibold text-[#213c57]">More About Us <ArrowRight size={14} className="text-[#1669aa]" /></a>
                </Reveal>
                  <Reveal delay={110} className="owner-card-reveal">
@@ -1399,28 +1378,28 @@ function Home() {
            <div className="container-nna">
              <div className="grid items-end gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
                <Reveal>
-                 <p className="eyebrow">Our branch & workplace</p>
-                 <h2 className="display mt-3 max-w-[480px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Our Branch &amp; Workplace</h2>
-                 <p className="mt-5 max-w-[400px] text-[13px] leading-6 text-[#68798a]">Real images from New National Advertising, showing the people and spaces behind our printing and advertising work.</p>
+                  <p className="eyebrow">What we work on</p>
+                  <h2 className="display mt-3 max-w-[480px] text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[48px]">Print, design and signage enquiries</h2>
+                  <p className="mt-5 max-w-[400px] text-[13px] leading-6 text-[#68798a]">Tell us about the format, material and quantity you need. We can discuss the requirement and prepare a quotation.</p>
                </Reveal>
                <Reveal delay={90} className="flex items-center gap-3 lg:justify-end">
                  <div className="ink-strip w-24"><span /><span /><span /><span /></div>
-                 <span className="text-[9px] font-bold uppercase tracking-[.18em] text-[#7d8c99]">Real spaces · real work</span>
+                  <span className="text-[9px] font-bold uppercase tracking-[.18em] text-[#7d8c99]">Share your requirement · Request a quote</span>
                </Reveal>
              </div>
              <div className="mt-10 grid gap-5 lg:grid-cols-[1.22fr_.78fr] lg:items-stretch">
                <Reveal className="group relative min-h-[420px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] sm:min-h-[540px]">
-                  <img src={optimizedImageUrl('/branch-workplace-office.png')} alt="New National Advertising workplace and office" loading="lazy" decoding="async" width="960" height="1280" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(0,168,198,.2),transparent_32%),linear-gradient(145deg,#e8f2f5,#cbdde6)]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white sm:p-7 sm:pt-24">
-                   <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our workplace</p>
-                   <p className="mt-2 max-w-[360px] text-[12px] leading-5 text-white/85">The creative and production environment behind New National Advertising.</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Custom print and signage</p>
+                    <p className="mt-2 max-w-[360px] text-[12px] leading-5 text-white/85">Share your artwork, dimensions and requirements to start a quotation.</p>
                  </div>
                </Reveal>
                <Reveal delay={100} className="group relative min-h-[340px] overflow-hidden rounded-[14px] border border-[#dce7ec] bg-[#eaf1f3] shadow-[0_16px_34px_rgba(31,61,87,.09)] lg:min-h-0">
-                  <img src={optimizedImageUrl('/branch-workplace-flex-printing.png')} alt="New National Advertising flex printing branch" loading="lazy" decoding="async" width="960" height="1280" className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]" />
+                  <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(217,70,140,.14),transparent_34%),linear-gradient(145deg,#eff5f7,#dfe8ed)]" />
                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102941]/85 via-[#102941]/35 to-transparent p-5 pt-20 text-white">
-                   <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Our branch</p>
-                   <p className="mt-2 text-[12px] leading-5 text-white/85">A real view from New National Advertising.</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#f2c94c]">Next step</p>
+                    <p className="mt-2 text-[12px] leading-5 text-white/85">Contact the business to discuss specifications and pricing.</p>
                  </div>
                </Reveal>
              </div>
@@ -1458,7 +1437,7 @@ function Home() {
 
         <section className="bg-white py-20 lg:py-24">
           <div className="container-nna">
-            <Reveal className="text-center"><p className="eyebrow">Our process</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">From Idea to Impact</h2><p className="mx-auto mt-4 max-w-[620px] text-[13px] leading-6 text-[#68798a]">{content?.processBody || 'Share your requirement, review the direction, approve production and receive the finished work.'}</p></Reveal>
+            <Reveal className="text-center"><p className="eyebrow">Our process</p><h2 className="display mt-2 text-3xl font-extrabold tracking-[-.045em] text-[#122641] sm:text-[39px]">From Idea to Impact</h2><p className="mx-auto mt-4 max-w-[620px] text-[13px] leading-6 text-[#68798a]">{content?.processBody || 'Share your requirement, discuss the options and request a quotation.'}</p></Reveal>
             <div className="relative mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
               <div className="absolute left-[12%] right-[12%] top-6 hidden h-px bg-[#dce7ed] lg:block" />
                {process.map((step, index) => { const Icon = step.icon; return <Reveal key={step.number} delay={index * 70} className="relative flex gap-4 lg:block lg:text-center"><div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border bg-white lg:mx-auto" style={{ borderColor: `${step.accent}55`, color: step.accent }}><Icon size={18} /></div><div className="lg:mt-4"><p className="text-[10px] font-bold tracking-[.15em]" style={{ color: step.accent }}>{step.number}</p><h3 className="mt-1 text-[13px] font-bold uppercase text-[#223b55]">{step.title}</h3><p className="mt-1 text-[11px] text-[#8a98a4]">{step.copy}</p></div></Reveal>; })}
@@ -1491,7 +1470,7 @@ function Home() {
 
         <section id="contact" className="bg-[#f1f6f8] py-20 lg:py-24">
           <div className="container-nna grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-20">
-             <Reveal><p className="eyebrow">Let's work together</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Get a Quote</h2><p className="mt-5 max-w-[330px] text-[13px] leading-6 text-[#68798a]">Have a printing, signage or design requirement? Get in touch with New National Advertising.</p><div className="mt-8 space-y-4 text-[12px] text-[#405268]"><a href="tel:+919555759677" data-testid="link-contact-primary" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span><strong className="block text-[#223b55]">9555759677</strong><span className="text-[10px] text-[#81909d]">Primary phone</span></span></a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span>7506269783 &nbsp; / &nbsp; 8898805753</span></div><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-contact-email" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Mail size={14} /></span>{'newnationaladv2022@gmail.com'}</a><address className="not-italic"><div className="flex items-start gap-3"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><MapPin size={14} /></span><span className="leading-5">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#1669aa] hover:underline" data-testid="link-contact-map">View on Google Maps</a></span></div></address></div><div className="mt-7 flex flex-wrap gap-2"><a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="button-whatsapp" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Chat on WhatsApp <ArrowRight size={12} /></a><a href="tel:+919555759677" data-testid="button-call-now" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="button-email-us" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Mail size={14} className="text-[#1669aa]" />Email Us</a></div></Reveal>
+            <Reveal><p className="eyebrow">Let's work together</p><h2 className="display mt-3 text-4xl font-extrabold leading-[.98] tracking-[-.055em] text-[#122641] sm:text-[50px]">Get a Quote</h2><p className="mt-5 max-w-[330px] text-[13px] leading-6 text-[#68798a]">Have a printing, signage or design requirement? Get in touch with New National Advertising.</p><div className="mt-8 space-y-4 text-[12px] text-[#405268]"><a href="tel:+919555759677" data-testid="link-contact-primary" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span><strong className="block text-[#223b55]">9555759677</strong><span className="text-[10px] text-[#81909d]">Primary phone</span></span></a><div className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Phone size={14} /></span><span>7506269783 &nbsp; / &nbsp; 8898805753</span></div><a href="mailto:newnationaladv2022@gmail.com" data-testid="link-contact-email" className="flex items-center gap-3 hover:text-[#1669aa]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><Mail size={14} /></span>{'newnationaladv2022@gmail.com'}</a>{settings?.address && <address className="not-italic"><div className="flex items-start gap-3"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d9ebf4] text-[#1669aa]"><MapPin size={14} /></span><span className="leading-5">{settings.address.split(', ').map((line) => <span key={line} className="block">{line}</span>)}{settings.googleMapsUrl && <a href={settings.googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#1669aa] hover:underline" data-testid="link-contact-map">View on Google Maps</a>}</span></div></address>}</div><div className="mt-7 flex flex-wrap gap-2"><a href={whatsappUrl} target="_blank" rel="noreferrer" data-testid="button-whatsapp" className="inline-flex items-center gap-2 rounded-full bg-[#2c9b70] px-4 py-2.5 text-[10px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#23845f]"><MessageCircle size={14} />Chat on WhatsApp <ArrowRight size={12} /></a><a href="tel:+919555759677" data-testid="button-call-now" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Phone size={14} className="text-[#1669aa]" />Call Now</a><a href="mailto:newnationaladv2022@gmail.com" data-testid="button-email-us" className="inline-flex items-center gap-2 rounded-full border border-[#9bb9ca] bg-white px-4 py-2.5 text-[10px] font-bold text-[#25425c] transition hover:-translate-y-0.5 hover:border-[#1669aa]"><Mail size={14} className="text-[#1669aa]" />Email Us</a></div></Reveal>
             <Reveal delay={100}><form onSubmit={handleSubmit} className="rounded-[12px] border border-[#dce6eb] bg-white p-5 shadow-[0_10px_30px_rgba(31,61,87,.06)] sm:p-7" aria-label="Request a quote form"><div className="grid gap-4 sm:grid-cols-2"><label className="text-[10px] font-bold text-[#445a70]">Name<input required name="name" placeholder="Your name" data-testid="input-name" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Phone Number<input required name="phone" type="tel" placeholder="Your phone number" data-testid="input-phone" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Email<input required name="email" type="email" placeholder="Your email" data-testid="input-email" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Service<select required name="service" defaultValue="" data-testid="select-service" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none focus:border-[#1669aa]"><option value="" disabled>Select a service</option>{publicServices.map((service) => <option key={service.title}>{service.title}</option>)}<option>Other Services</option></select></label><label className="text-[10px] font-bold text-[#445a70] sm:col-span-2">Project Details<textarea required name="details" rows={3} placeholder="Tell us about your requirement..." data-testid="textarea-details" className="mt-1.5 w-full resize-none rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Quantity<input name="quantity" placeholder="e.g. 100" data-testid="input-quantity" className="mt-1.5 w-full rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-2.5 text-[12px] font-normal text-[#203950] outline-none transition placeholder:text-[#a7b1b9] focus:border-[#1669aa] focus:ring-2 focus:ring-[#1669aa]/10" /></label><label className="text-[10px] font-bold text-[#445a70]">Upload File (Optional)<span className="mt-1.5 flex w-full cursor-pointer items-center rounded-[5px] border border-[#dbe5ea] bg-[#fcfdfe] px-3 py-[9px] text-[11px] font-normal text-[#8d9aa5]"><input type="file" name="file" data-testid="input-file" className="w-full text-[10px]" /></span></label></div><button type="submit" data-testid="button-submit-quote" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1669aa] py-3 text-[11px] font-bold text-white transition hover:bg-[#125b94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1669aa] focus-visible:ring-offset-2">{submitted ? 'Request received — we will be in touch' : 'Request a Quote'}<ArrowRight size={14} /></button>{submitted && <p role="status" data-testid="status-quote-submitted" className="mt-3 text-center text-[11px] font-semibold text-[#24734d]">Thank you. Please also use WhatsApp for the fastest response.</p>}</form></Reveal>
           </div>
         </section>
@@ -1662,7 +1641,8 @@ function Products() {
           )}
         </section>
       </main>
-      <FloatingContactActions quoteHref="/#contact" />
+       <SiteFooter compact />
+       <FloatingContactActions quoteHref="/#contact" />
     </div>
   );
 }
@@ -1767,7 +1747,7 @@ function Machines() {
                 {[
                   ['01', 'Print', 'Large-format graphics and advertising output.'],
                   ['02', 'Finish', 'Finishing workflows for printed media.'],
-                  ['03', 'Deliver', 'Materials prepared for your application.'],
+                  ['03', 'Review', 'Confirm the artwork and specifications.'],
                 ].map(([number, title, copy]) => (
                   <div key={number} className="rounded-[12px] border border-[#d7e5ea] bg-white/75 p-4">
                     <span className="text-[10px] font-bold tracking-[.18em] text-[#1b78ad]">{number}</span>
@@ -1785,7 +1765,7 @@ function Machines() {
         <div className="container-nna grid gap-8 py-10 sm:grid-cols-[1fr_1fr] sm:items-start sm:py-12 lg:grid-cols-[1fr_1fr_1fr]">
           <div><Logo /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
           <div><p className="eyebrow text-[#7fb5d4]">Explore</p><nav className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[11px] text-[#c1ced8]">{navigationItems.map((item) => <a key={item.label} href={item.href} className="hover:text-white">{item.label}</a>)}</nav></div>
-          <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><address className="not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div></div>
+          <div><p className="eyebrow text-[#7fb5d4]">Contact</p><div className="mt-4 space-y-2 text-[11px] leading-5 text-[#c1ced8]"><a href="tel:+919555759677" className="block hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="block break-all hover:text-white">newnationaladv2022@gmail.com</a><nav aria-label="Legal" className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/10 pt-3"><a href="/privacy-policy" className="hover:text-white">Privacy Policy</a><a href="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</a></nav></div></div>
         </div>
         <div className="border-t border-white/10"><div className="container-nna py-5 text-[10px] text-[#8da5b7]">© New National Advertising. All rights reserved.</div></div>
       </footer>
@@ -2145,7 +2125,7 @@ function ServiceDetailPage({ params }: { params: { slug?: string } }) {
       <footer className="bg-[#102941] text-white">
         <div className="container-nna flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between">
            <div><Logo /><p className="mt-3 text-[10px] tracking-[.16em] text-[#a8bbca]">PRINT · DESIGN · SIGNAGE · ADVERTISING</p></div>
-           <div className="text-[11px] leading-5 text-[#c1ced8]"><div className="flex flex-wrap gap-4"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div><address className="mt-2 not-italic">{businessAddressLines.map((line) => <span key={line} className="block">{line}</span>)}<a href={googleMapsUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block font-semibold text-[#9bc8d8] hover:text-white">View on Google Maps</a></address></div>
+           <div className="text-[11px] leading-5 text-[#c1ced8]"><div className="flex flex-wrap gap-4"><a href="tel:+919555759677" className="hover:text-white">9555759677</a><a href="mailto:newnationaladv2022@gmail.com" className="hover:text-white">newnationaladv2022@gmail.com</a></div><nav aria-label="Legal" className="mt-3 flex flex-wrap gap-x-4 gap-y-2"><a href="/privacy-policy" className="hover:text-white">Privacy Policy</a><a href="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</a><a href="/#contact" className="hover:text-white">Contact Us</a></nav></div>
         </div>
       </footer>
 
@@ -2163,10 +2143,18 @@ function Router() {
   return (
     <RoutedErrorBoundary>
       <Suspense fallback={<main className="flex min-h-[100dvh] items-center justify-center bg-[#f2f6f8] text-[#14213d]"><p className="eyebrow">Loading workspace</p></main>}>
-        <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/admin/login" component={AdminLogin} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
+        <Switch><Route path="/" component={Home} /><Route path="/machines" component={Machines} /><Route path="/products" component={Products} /><Route path="/privacy-policy" component={PrivacyPolicyRoute} /><Route path="/terms-and-conditions" component={TermsRoute} /><Route path="/admin/login" component={AdminLogin} /><Route path="/admin" component={AdminRoute} /><Route path="/services/:slug" component={ServiceDetailPage} /><Route component={NotFound} /></Switch>
       </Suspense>
     </RoutedErrorBoundary>
   );
+}
+
+function PrivacyPolicyRoute() {
+  return <><SiteHeader /><LegalPage kind="privacy" /><SiteFooter /></>;
+}
+
+function TermsRoute() {
+  return <><SiteHeader /><LegalPage kind="terms" /><SiteFooter /></>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
@@ -2174,20 +2162,26 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 
-function AppShell() {
+function AppMetadata() {
   const { settings } = usePublicSettings();
   const content = useGetWebsiteContent();
+  const [location] = useLocation();
   useEffect(() => {
     const favicon = publicImageUrl(settings?.faviconPath) || '/favicon.svg';
     document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]').forEach((node) => {
       (node as HTMLLinkElement).href = favicon;
     });
+    if (location === '/privacy-policy' || location === '/terms-and-conditions') return;
     const title = content.data?.metadataTitle || settings?.metadataTitle;
     const description = content.data?.metadataDescription || settings?.metadataDescription;
     if (title) document.title = title;
     if (description) upsertMeta('name', 'description', description);
-  }, [content.data?.metadataDescription, content.data?.metadataTitle, settings?.faviconPath, settings?.metadataDescription, settings?.metadataTitle]);
-  return <TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider>;
+  }, [content.data?.metadataDescription, content.data?.metadataTitle, location, settings?.faviconPath, settings?.metadataDescription, settings?.metadataTitle]);
+  return null;
+}
+
+function AppShell() {
+  return <TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><AppMetadata /><Router /></WouterRouter><Toaster /></TooltipProvider>;
 }
 
 function App() {

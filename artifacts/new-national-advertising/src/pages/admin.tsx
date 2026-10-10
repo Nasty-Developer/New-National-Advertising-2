@@ -136,7 +136,7 @@ const foundationCopy: Record<
   Orders: {
     eyebrow: "Production workspace",
     title: "A calmer production queue.",
-    copy: "Orders will give the team one place for enquiries, production stages, delivery notes, and the work moving through the studio.",
+    copy: "Orders will give the team one place for enquiries, quote details, specifications, and discussion notes.",
     icon: ClipboardList,
     detail: "Order workflows are not connected yet.",
   },

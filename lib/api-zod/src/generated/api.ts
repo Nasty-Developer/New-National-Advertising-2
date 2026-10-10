@@ -1499,6 +1499,10 @@ export const getWebsiteContentResponseOneContactBodyMax = 4000;
 
 export const getWebsiteContentResponseOneFooterBodyMax = 4000;
 
+export const getWebsiteContentResponseOnePrivacyPolicyBodyMax = 16000;
+
+export const getWebsiteContentResponseOneTermsAndConditionsBodyMax = 16000;
+
 export const getWebsiteContentResponseOneMetadataTitleMax = 240;
 
 export const getWebsiteContentResponseOneMetadataDescriptionMax = 320;
@@ -1519,6 +1523,8 @@ export const GetWebsiteContentResponse = zod.object({
   "signageBody": zod.string().max(getWebsiteContentResponseOneSignageBodyMax).optional(),
   "contactBody": zod.string().max(getWebsiteContentResponseOneContactBodyMax).optional(),
   "footerBody": zod.string().max(getWebsiteContentResponseOneFooterBodyMax).optional(),
+  "privacyPolicyBody": zod.string().max(getWebsiteContentResponseOnePrivacyPolicyBodyMax).optional(),
+  "termsAndConditionsBody": zod.string().max(getWebsiteContentResponseOneTermsAndConditionsBodyMax).optional(),
   "metadataTitle": zod.string().max(getWebsiteContentResponseOneMetadataTitleMax).optional(),
   "metadataDescription": zod.string().max(getWebsiteContentResponseOneMetadataDescriptionMax).optional()
 }).and(zod.object({
@@ -1552,6 +1558,10 @@ export const getAdminWebsiteContentResponseOneContactBodyMax = 4000;
 
 export const getAdminWebsiteContentResponseOneFooterBodyMax = 4000;
 
+export const getAdminWebsiteContentResponseOnePrivacyPolicyBodyMax = 16000;
+
+export const getAdminWebsiteContentResponseOneTermsAndConditionsBodyMax = 16000;
+
 export const getAdminWebsiteContentResponseOneMetadataTitleMax = 240;
 
 export const getAdminWebsiteContentResponseOneMetadataDescriptionMax = 320;
@@ -1572,6 +1582,8 @@ export const GetAdminWebsiteContentResponse = zod.object({
   "signageBody": zod.string().max(getAdminWebsiteContentResponseOneSignageBodyMax).optional(),
   "contactBody": zod.string().max(getAdminWebsiteContentResponseOneContactBodyMax).optional(),
   "footerBody": zod.string().max(getAdminWebsiteContentResponseOneFooterBodyMax).optional(),
+  "privacyPolicyBody": zod.string().max(getAdminWebsiteContentResponseOnePrivacyPolicyBodyMax).optional(),
+  "termsAndConditionsBody": zod.string().max(getAdminWebsiteContentResponseOneTermsAndConditionsBodyMax).optional(),
   "metadataTitle": zod.string().max(getAdminWebsiteContentResponseOneMetadataTitleMax).optional(),
   "metadataDescription": zod.string().max(getAdminWebsiteContentResponseOneMetadataDescriptionMax).optional()
 }).and(zod.object({
@@ -1605,6 +1617,10 @@ export const updateWebsiteContentBodyContactBodyMax = 4000;
 
 export const updateWebsiteContentBodyFooterBodyMax = 4000;
 
+export const updateWebsiteContentBodyPrivacyPolicyBodyMax = 16000;
+
+export const updateWebsiteContentBodyTermsAndConditionsBodyMax = 16000;
+
 export const updateWebsiteContentBodyMetadataTitleMax = 240;
 
 export const updateWebsiteContentBodyMetadataDescriptionMax = 320;
@@ -1625,6 +1641,8 @@ export const UpdateWebsiteContentBody = zod.object({
   "signageBody": zod.string().max(updateWebsiteContentBodySignageBodyMax).optional(),
   "contactBody": zod.string().max(updateWebsiteContentBodyContactBodyMax).optional(),
   "footerBody": zod.string().max(updateWebsiteContentBodyFooterBodyMax).optional(),
+  "privacyPolicyBody": zod.string().max(updateWebsiteContentBodyPrivacyPolicyBodyMax).optional(),
+  "termsAndConditionsBody": zod.string().max(updateWebsiteContentBodyTermsAndConditionsBodyMax).optional(),
   "metadataTitle": zod.string().max(updateWebsiteContentBodyMetadataTitleMax).optional(),
   "metadataDescription": zod.string().max(updateWebsiteContentBodyMetadataDescriptionMax).optional()
 })
@@ -1655,6 +1673,10 @@ export const updateWebsiteContentResponseOneContactBodyMax = 4000;
 
 export const updateWebsiteContentResponseOneFooterBodyMax = 4000;
 
+export const updateWebsiteContentResponseOnePrivacyPolicyBodyMax = 16000;
+
+export const updateWebsiteContentResponseOneTermsAndConditionsBodyMax = 16000;
+
 export const updateWebsiteContentResponseOneMetadataTitleMax = 240;
 
 export const updateWebsiteContentResponseOneMetadataDescriptionMax = 320;
@@ -1675,6 +1697,8 @@ export const UpdateWebsiteContentResponse = zod.object({
   "signageBody": zod.string().max(updateWebsiteContentResponseOneSignageBodyMax).optional(),
   "contactBody": zod.string().max(updateWebsiteContentResponseOneContactBodyMax).optional(),
   "footerBody": zod.string().max(updateWebsiteContentResponseOneFooterBodyMax).optional(),
+  "privacyPolicyBody": zod.string().max(updateWebsiteContentResponseOnePrivacyPolicyBodyMax).optional(),
+  "termsAndConditionsBody": zod.string().max(updateWebsiteContentResponseOneTermsAndConditionsBodyMax).optional(),
   "metadataTitle": zod.string().max(updateWebsiteContentResponseOneMetadataTitleMax).optional(),
   "metadataDescription": zod.string().max(updateWebsiteContentResponseOneMetadataDescriptionMax).optional()
 }).and(zod.object({
@@ -1702,6 +1726,40 @@ export const getPublicSettingsResponseOneMetadataTitleMax = 240;
 
 export const getPublicSettingsResponseOneMetadataDescriptionMax = 320;
 
+export const getPublicSettingsResponseOneBusinessInformationLegalNameMax = 180;
+
+export const getPublicSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax = 40;
+
+export const getPublicSettingsResponseOneBusinessInformationGstinMax = 40;
+
+export const getPublicSettingsResponseOneBusinessInformationGstRegistrationTypeMax = 120;
+
+export const getPublicSettingsResponseOneBusinessInformationGstEffectiveDateMax = 20;
+
+export const getPublicSettingsResponseOneBusinessInformationUdyamNumberMax = 80;
+
+export const getPublicSettingsResponseOneBusinessInformationEnterpriseClassificationMax = 120;
+
+export const getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax = 160;
+
+export const getPublicSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax = 160;
+
+export const getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax = 120;
+
+export const getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax = 20;
+
+export const getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax = 120;
+
+export const getPublicSettingsResponseOneBusinessInformationOperatingHoursMax = 500;
+
+export const getPublicSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax = 1000;
+
+export const getPublicSettingsResponseOneBusinessInformationPrivacyContactEmailMax = 180;
+
+export const getPublicSettingsResponseOneBusinessInformationCustomerComplaintContactMax = 240;
+
+export const getPublicSettingsResponseOneBusinessInformationLastVerificationDateMax = 20;
+
 
 
 export const GetPublicSettingsResponse = zod.object({
@@ -1718,7 +1776,36 @@ export const GetPublicSettingsResponse = zod.object({
   "logoPath": zod.string().max(getPublicSettingsResponseOneLogoPathMax).nullish(),
   "faviconPath": zod.string().max(getPublicSettingsResponseOneFaviconPathMax).nullish(),
   "metadataTitle": zod.string().max(getPublicSettingsResponseOneMetadataTitleMax),
-  "metadataDescription": zod.string().max(getPublicSettingsResponseOneMetadataDescriptionMax)
+  "metadataDescription": zod.string().max(getPublicSettingsResponseOneMetadataDescriptionMax),
+  "businessInformation": zod.object({
+  "legalName": zod.string().max(getPublicSettingsResponseOneBusinessInformationLegalNameMax).optional(),
+  "legalNameVerified": zod.boolean().optional(),
+  "phoneNumberVerificationCandidate": zod.string().max(getPublicSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax).optional(),
+  "phoneNumberVerified": zod.boolean().optional(),
+  "addressVerified": zod.boolean().optional(),
+  "gstRegistrationStatus": zod.enum(['unverified', 'registered', 'not_registered', 'not_applicable']).optional(),
+  "gstStatusVerified": zod.boolean().optional(),
+  "gstin": zod.string().max(getPublicSettingsResponseOneBusinessInformationGstinMax).optional(),
+  "gstinVerified": zod.boolean().optional(),
+  "gstRegistrationType": zod.string().max(getPublicSettingsResponseOneBusinessInformationGstRegistrationTypeMax).optional(),
+  "gstEffectiveDate": zod.string().max(getPublicSettingsResponseOneBusinessInformationGstEffectiveDateMax).optional(),
+  "udyamStatus": zod.enum(['unverified', 'registered', 'not_applicable']).optional(),
+  "udyamNumber": zod.string().max(getPublicSettingsResponseOneBusinessInformationUdyamNumberMax).optional(),
+  "udyamVerified": zod.boolean().optional(),
+  "enterpriseClassification": zod.string().max(getPublicSettingsResponseOneBusinessInformationEnterpriseClassificationMax).optional(),
+  "maharashtraRegistrationType": zod.string().max(getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax).optional(),
+  "maharashtraIssuingAuthority": zod.string().max(getPublicSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax).optional(),
+  "maharashtraRegistrationIdentifier": zod.string().max(getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax).optional(),
+  "maharashtraRegistrationDate": zod.string().max(getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax).optional(),
+  "maharashtraRegistrationStatus": zod.string().max(getPublicSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax).optional(),
+  "maharashtraRegistrationVerified": zod.boolean().optional(),
+  "operatingHours": zod.string().max(getPublicSettingsResponseOneBusinessInformationOperatingHoursMax).optional(),
+  "operatingHoursVerified": zod.boolean().optional(),
+  "customerEnquiryInstructions": zod.string().max(getPublicSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax).optional(),
+  "privacyContactEmail": zod.string().max(getPublicSettingsResponseOneBusinessInformationPrivacyContactEmailMax).optional(),
+  "customerComplaintContact": zod.string().max(getPublicSettingsResponseOneBusinessInformationCustomerComplaintContactMax).optional(),
+  "lastVerificationDate": zod.string().max(getPublicSettingsResponseOneBusinessInformationLastVerificationDateMax).optional()
+}).optional()
 }).and(zod.object({
   "id": zod.string().optional()
 }))
@@ -1744,6 +1831,40 @@ export const getAdminSettingsResponseOneMetadataTitleMax = 240;
 
 export const getAdminSettingsResponseOneMetadataDescriptionMax = 320;
 
+export const getAdminSettingsResponseOneBusinessInformationLegalNameMax = 180;
+
+export const getAdminSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax = 40;
+
+export const getAdminSettingsResponseOneBusinessInformationGstinMax = 40;
+
+export const getAdminSettingsResponseOneBusinessInformationGstRegistrationTypeMax = 120;
+
+export const getAdminSettingsResponseOneBusinessInformationGstEffectiveDateMax = 20;
+
+export const getAdminSettingsResponseOneBusinessInformationUdyamNumberMax = 80;
+
+export const getAdminSettingsResponseOneBusinessInformationEnterpriseClassificationMax = 120;
+
+export const getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax = 160;
+
+export const getAdminSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax = 160;
+
+export const getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax = 120;
+
+export const getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax = 20;
+
+export const getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax = 120;
+
+export const getAdminSettingsResponseOneBusinessInformationOperatingHoursMax = 500;
+
+export const getAdminSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax = 1000;
+
+export const getAdminSettingsResponseOneBusinessInformationPrivacyContactEmailMax = 180;
+
+export const getAdminSettingsResponseOneBusinessInformationCustomerComplaintContactMax = 240;
+
+export const getAdminSettingsResponseOneBusinessInformationLastVerificationDateMax = 20;
+
 
 
 export const GetAdminSettingsResponse = zod.object({
@@ -1760,7 +1881,36 @@ export const GetAdminSettingsResponse = zod.object({
   "logoPath": zod.string().max(getAdminSettingsResponseOneLogoPathMax).nullish(),
   "faviconPath": zod.string().max(getAdminSettingsResponseOneFaviconPathMax).nullish(),
   "metadataTitle": zod.string().max(getAdminSettingsResponseOneMetadataTitleMax),
-  "metadataDescription": zod.string().max(getAdminSettingsResponseOneMetadataDescriptionMax)
+  "metadataDescription": zod.string().max(getAdminSettingsResponseOneMetadataDescriptionMax),
+  "businessInformation": zod.object({
+  "legalName": zod.string().max(getAdminSettingsResponseOneBusinessInformationLegalNameMax).optional(),
+  "legalNameVerified": zod.boolean().optional(),
+  "phoneNumberVerificationCandidate": zod.string().max(getAdminSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax).optional(),
+  "phoneNumberVerified": zod.boolean().optional(),
+  "addressVerified": zod.boolean().optional(),
+  "gstRegistrationStatus": zod.enum(['unverified', 'registered', 'not_registered', 'not_applicable']).optional(),
+  "gstStatusVerified": zod.boolean().optional(),
+  "gstin": zod.string().max(getAdminSettingsResponseOneBusinessInformationGstinMax).optional(),
+  "gstinVerified": zod.boolean().optional(),
+  "gstRegistrationType": zod.string().max(getAdminSettingsResponseOneBusinessInformationGstRegistrationTypeMax).optional(),
+  "gstEffectiveDate": zod.string().max(getAdminSettingsResponseOneBusinessInformationGstEffectiveDateMax).optional(),
+  "udyamStatus": zod.enum(['unverified', 'registered', 'not_applicable']).optional(),
+  "udyamNumber": zod.string().max(getAdminSettingsResponseOneBusinessInformationUdyamNumberMax).optional(),
+  "udyamVerified": zod.boolean().optional(),
+  "enterpriseClassification": zod.string().max(getAdminSettingsResponseOneBusinessInformationEnterpriseClassificationMax).optional(),
+  "maharashtraRegistrationType": zod.string().max(getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax).optional(),
+  "maharashtraIssuingAuthority": zod.string().max(getAdminSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax).optional(),
+  "maharashtraRegistrationIdentifier": zod.string().max(getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax).optional(),
+  "maharashtraRegistrationDate": zod.string().max(getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax).optional(),
+  "maharashtraRegistrationStatus": zod.string().max(getAdminSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax).optional(),
+  "maharashtraRegistrationVerified": zod.boolean().optional(),
+  "operatingHours": zod.string().max(getAdminSettingsResponseOneBusinessInformationOperatingHoursMax).optional(),
+  "operatingHoursVerified": zod.boolean().optional(),
+  "customerEnquiryInstructions": zod.string().max(getAdminSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax).optional(),
+  "privacyContactEmail": zod.string().max(getAdminSettingsResponseOneBusinessInformationPrivacyContactEmailMax).optional(),
+  "customerComplaintContact": zod.string().max(getAdminSettingsResponseOneBusinessInformationCustomerComplaintContactMax).optional(),
+  "lastVerificationDate": zod.string().max(getAdminSettingsResponseOneBusinessInformationLastVerificationDateMax).optional()
+}).optional()
 }).and(zod.object({
   "id": zod.string().optional()
 }))
@@ -1786,6 +1936,40 @@ export const updateSettingsBodyMetadataTitleMax = 240;
 
 export const updateSettingsBodyMetadataDescriptionMax = 320;
 
+export const updateSettingsBodyBusinessInformationLegalNameMax = 180;
+
+export const updateSettingsBodyBusinessInformationPhoneNumberVerificationCandidateMax = 40;
+
+export const updateSettingsBodyBusinessInformationGstinMax = 40;
+
+export const updateSettingsBodyBusinessInformationGstRegistrationTypeMax = 120;
+
+export const updateSettingsBodyBusinessInformationGstEffectiveDateMax = 20;
+
+export const updateSettingsBodyBusinessInformationUdyamNumberMax = 80;
+
+export const updateSettingsBodyBusinessInformationEnterpriseClassificationMax = 120;
+
+export const updateSettingsBodyBusinessInformationMaharashtraRegistrationTypeMax = 160;
+
+export const updateSettingsBodyBusinessInformationMaharashtraIssuingAuthorityMax = 160;
+
+export const updateSettingsBodyBusinessInformationMaharashtraRegistrationIdentifierMax = 120;
+
+export const updateSettingsBodyBusinessInformationMaharashtraRegistrationDateMax = 20;
+
+export const updateSettingsBodyBusinessInformationMaharashtraRegistrationStatusMax = 120;
+
+export const updateSettingsBodyBusinessInformationOperatingHoursMax = 500;
+
+export const updateSettingsBodyBusinessInformationCustomerEnquiryInstructionsMax = 1000;
+
+export const updateSettingsBodyBusinessInformationPrivacyContactEmailMax = 180;
+
+export const updateSettingsBodyBusinessInformationCustomerComplaintContactMax = 240;
+
+export const updateSettingsBodyBusinessInformationLastVerificationDateMax = 20;
+
 
 
 export const UpdateSettingsBody = zod.object({
@@ -1802,7 +1986,36 @@ export const UpdateSettingsBody = zod.object({
   "logoPath": zod.string().max(updateSettingsBodyLogoPathMax).nullish(),
   "faviconPath": zod.string().max(updateSettingsBodyFaviconPathMax).nullish(),
   "metadataTitle": zod.string().max(updateSettingsBodyMetadataTitleMax),
-  "metadataDescription": zod.string().max(updateSettingsBodyMetadataDescriptionMax)
+  "metadataDescription": zod.string().max(updateSettingsBodyMetadataDescriptionMax),
+  "businessInformation": zod.object({
+  "legalName": zod.string().max(updateSettingsBodyBusinessInformationLegalNameMax).optional(),
+  "legalNameVerified": zod.boolean().optional(),
+  "phoneNumberVerificationCandidate": zod.string().max(updateSettingsBodyBusinessInformationPhoneNumberVerificationCandidateMax).optional(),
+  "phoneNumberVerified": zod.boolean().optional(),
+  "addressVerified": zod.boolean().optional(),
+  "gstRegistrationStatus": zod.enum(['unverified', 'registered', 'not_registered', 'not_applicable']).optional(),
+  "gstStatusVerified": zod.boolean().optional(),
+  "gstin": zod.string().max(updateSettingsBodyBusinessInformationGstinMax).optional(),
+  "gstinVerified": zod.boolean().optional(),
+  "gstRegistrationType": zod.string().max(updateSettingsBodyBusinessInformationGstRegistrationTypeMax).optional(),
+  "gstEffectiveDate": zod.string().max(updateSettingsBodyBusinessInformationGstEffectiveDateMax).optional(),
+  "udyamStatus": zod.enum(['unverified', 'registered', 'not_applicable']).optional(),
+  "udyamNumber": zod.string().max(updateSettingsBodyBusinessInformationUdyamNumberMax).optional(),
+  "udyamVerified": zod.boolean().optional(),
+  "enterpriseClassification": zod.string().max(updateSettingsBodyBusinessInformationEnterpriseClassificationMax).optional(),
+  "maharashtraRegistrationType": zod.string().max(updateSettingsBodyBusinessInformationMaharashtraRegistrationTypeMax).optional(),
+  "maharashtraIssuingAuthority": zod.string().max(updateSettingsBodyBusinessInformationMaharashtraIssuingAuthorityMax).optional(),
+  "maharashtraRegistrationIdentifier": zod.string().max(updateSettingsBodyBusinessInformationMaharashtraRegistrationIdentifierMax).optional(),
+  "maharashtraRegistrationDate": zod.string().max(updateSettingsBodyBusinessInformationMaharashtraRegistrationDateMax).optional(),
+  "maharashtraRegistrationStatus": zod.string().max(updateSettingsBodyBusinessInformationMaharashtraRegistrationStatusMax).optional(),
+  "maharashtraRegistrationVerified": zod.boolean().optional(),
+  "operatingHours": zod.string().max(updateSettingsBodyBusinessInformationOperatingHoursMax).optional(),
+  "operatingHoursVerified": zod.boolean().optional(),
+  "customerEnquiryInstructions": zod.string().max(updateSettingsBodyBusinessInformationCustomerEnquiryInstructionsMax).optional(),
+  "privacyContactEmail": zod.string().max(updateSettingsBodyBusinessInformationPrivacyContactEmailMax).optional(),
+  "customerComplaintContact": zod.string().max(updateSettingsBodyBusinessInformationCustomerComplaintContactMax).optional(),
+  "lastVerificationDate": zod.string().max(updateSettingsBodyBusinessInformationLastVerificationDateMax).optional()
+}).optional()
 })
 
 export const updateSettingsResponseOneBusinessNameMax = 180;
@@ -1825,6 +2038,40 @@ export const updateSettingsResponseOneMetadataTitleMax = 240;
 
 export const updateSettingsResponseOneMetadataDescriptionMax = 320;
 
+export const updateSettingsResponseOneBusinessInformationLegalNameMax = 180;
+
+export const updateSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax = 40;
+
+export const updateSettingsResponseOneBusinessInformationGstinMax = 40;
+
+export const updateSettingsResponseOneBusinessInformationGstRegistrationTypeMax = 120;
+
+export const updateSettingsResponseOneBusinessInformationGstEffectiveDateMax = 20;
+
+export const updateSettingsResponseOneBusinessInformationUdyamNumberMax = 80;
+
+export const updateSettingsResponseOneBusinessInformationEnterpriseClassificationMax = 120;
+
+export const updateSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax = 160;
+
+export const updateSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax = 160;
+
+export const updateSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax = 120;
+
+export const updateSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax = 20;
+
+export const updateSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax = 120;
+
+export const updateSettingsResponseOneBusinessInformationOperatingHoursMax = 500;
+
+export const updateSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax = 1000;
+
+export const updateSettingsResponseOneBusinessInformationPrivacyContactEmailMax = 180;
+
+export const updateSettingsResponseOneBusinessInformationCustomerComplaintContactMax = 240;
+
+export const updateSettingsResponseOneBusinessInformationLastVerificationDateMax = 20;
+
 
 
 export const UpdateSettingsResponse = zod.object({
@@ -1841,7 +2088,36 @@ export const UpdateSettingsResponse = zod.object({
   "logoPath": zod.string().max(updateSettingsResponseOneLogoPathMax).nullish(),
   "faviconPath": zod.string().max(updateSettingsResponseOneFaviconPathMax).nullish(),
   "metadataTitle": zod.string().max(updateSettingsResponseOneMetadataTitleMax),
-  "metadataDescription": zod.string().max(updateSettingsResponseOneMetadataDescriptionMax)
+  "metadataDescription": zod.string().max(updateSettingsResponseOneMetadataDescriptionMax),
+  "businessInformation": zod.object({
+  "legalName": zod.string().max(updateSettingsResponseOneBusinessInformationLegalNameMax).optional(),
+  "legalNameVerified": zod.boolean().optional(),
+  "phoneNumberVerificationCandidate": zod.string().max(updateSettingsResponseOneBusinessInformationPhoneNumberVerificationCandidateMax).optional(),
+  "phoneNumberVerified": zod.boolean().optional(),
+  "addressVerified": zod.boolean().optional(),
+  "gstRegistrationStatus": zod.enum(['unverified', 'registered', 'not_registered', 'not_applicable']).optional(),
+  "gstStatusVerified": zod.boolean().optional(),
+  "gstin": zod.string().max(updateSettingsResponseOneBusinessInformationGstinMax).optional(),
+  "gstinVerified": zod.boolean().optional(),
+  "gstRegistrationType": zod.string().max(updateSettingsResponseOneBusinessInformationGstRegistrationTypeMax).optional(),
+  "gstEffectiveDate": zod.string().max(updateSettingsResponseOneBusinessInformationGstEffectiveDateMax).optional(),
+  "udyamStatus": zod.enum(['unverified', 'registered', 'not_applicable']).optional(),
+  "udyamNumber": zod.string().max(updateSettingsResponseOneBusinessInformationUdyamNumberMax).optional(),
+  "udyamVerified": zod.boolean().optional(),
+  "enterpriseClassification": zod.string().max(updateSettingsResponseOneBusinessInformationEnterpriseClassificationMax).optional(),
+  "maharashtraRegistrationType": zod.string().max(updateSettingsResponseOneBusinessInformationMaharashtraRegistrationTypeMax).optional(),
+  "maharashtraIssuingAuthority": zod.string().max(updateSettingsResponseOneBusinessInformationMaharashtraIssuingAuthorityMax).optional(),
+  "maharashtraRegistrationIdentifier": zod.string().max(updateSettingsResponseOneBusinessInformationMaharashtraRegistrationIdentifierMax).optional(),
+  "maharashtraRegistrationDate": zod.string().max(updateSettingsResponseOneBusinessInformationMaharashtraRegistrationDateMax).optional(),
+  "maharashtraRegistrationStatus": zod.string().max(updateSettingsResponseOneBusinessInformationMaharashtraRegistrationStatusMax).optional(),
+  "maharashtraRegistrationVerified": zod.boolean().optional(),
+  "operatingHours": zod.string().max(updateSettingsResponseOneBusinessInformationOperatingHoursMax).optional(),
+  "operatingHoursVerified": zod.boolean().optional(),
+  "customerEnquiryInstructions": zod.string().max(updateSettingsResponseOneBusinessInformationCustomerEnquiryInstructionsMax).optional(),
+  "privacyContactEmail": zod.string().max(updateSettingsResponseOneBusinessInformationPrivacyContactEmailMax).optional(),
+  "customerComplaintContact": zod.string().max(updateSettingsResponseOneBusinessInformationCustomerComplaintContactMax).optional(),
+  "lastVerificationDate": zod.string().max(updateSettingsResponseOneBusinessInformationLastVerificationDateMax).optional()
+}).optional()
 }).and(zod.object({
   "id": zod.string().optional()
 }))

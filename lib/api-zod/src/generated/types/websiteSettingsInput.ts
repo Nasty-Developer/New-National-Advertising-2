@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { BusinessInformation } from './businessInformation';
 import type { WebsiteSettingsInputSocialLinksItem } from './websiteSettingsInputSocialLinksItem';
 
 export interface WebsiteSettingsInput {
@@ -38,4 +39,5 @@ export interface WebsiteSettingsInput {
   metadataTitle: string;
   /** @maxLength 320 */
   metadataDescription: string;
+  businessInformation?: BusinessInformation;
 }

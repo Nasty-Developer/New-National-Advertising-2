@@ -1128,6 +1128,8 @@ components:
         signageBody: { type: string, maxLength: 4000 }
         contactBody: { type: string, maxLength: 4000 }
         footerBody: { type: string, maxLength: 4000 }
+        privacyPolicyBody: { type: string, maxLength: 16000 }
+        termsAndConditionsBody: { type: string, maxLength: 16000 }
         metadataTitle: { type: string, maxLength: 240 }
         metadataDescription: { type: string, maxLength: 320 }
     WebsiteContent:
@@ -1157,7 +1159,40 @@ components:
         faviconPath: { type: [string, "null"], maxLength: 500 }
         metadataTitle: { type: string, maxLength: 240 }
         metadataDescription: { type: string, maxLength: 320 }
+        businessInformation:
+          $ref: "#/components/schemas/BusinessInformation"
       required: [businessName, email, address, whatsappNumbers, socialLinks, googleMapsUrl, footerInformation, metadataTitle, metadataDescription]
+    BusinessInformation:
+      type: object
+      additionalProperties: false
+      properties:
+        legalName: { type: string, maxLength: 180 }
+        legalNameVerified: { type: boolean }
+        phoneNumberVerificationCandidate: { type: string, maxLength: 40 }
+        phoneNumberVerified: { type: boolean }
+        addressVerified: { type: boolean }
+        gstRegistrationStatus: { type: string, enum: [unverified, registered, not_registered, not_applicable] }
+        gstStatusVerified: { type: boolean }
+        gstin: { type: string, maxLength: 40 }
+        gstinVerified: { type: boolean }
+        gstRegistrationType: { type: string, maxLength: 120 }
+        gstEffectiveDate: { type: string, maxLength: 20 }
+        udyamStatus: { type: string, enum: [unverified, registered, not_applicable] }
+        udyamNumber: { type: string, maxLength: 80 }
+        udyamVerified: { type: boolean }
+        enterpriseClassification: { type: string, maxLength: 120 }
+        maharashtraRegistrationType: { type: string, maxLength: 160 }
+        maharashtraIssuingAuthority: { type: string, maxLength: 160 }
+        maharashtraRegistrationIdentifier: { type: string, maxLength: 120 }
+        maharashtraRegistrationDate: { type: string, maxLength: 20 }
+        maharashtraRegistrationStatus: { type: string, maxLength: 120 }
+        maharashtraRegistrationVerified: { type: boolean }
+        operatingHours: { type: string, maxLength: 500 }
+        operatingHoursVerified: { type: boolean }
+        customerEnquiryInstructions: { type: string, maxLength: 1000 }
+        privacyContactEmail: { type: string, maxLength: 180 }
+        customerComplaintContact: { type: string, maxLength: 240 }
+        lastVerificationDate: { type: string, maxLength: 20 }
     WebsiteSettings:
       allOf:
         - $ref: "#/components/schemas/WebsiteSettingsInput"

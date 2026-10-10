@@ -19,8 +19,10 @@ const contentBody = z.object({
   signageBody: z.string().trim().max(4000).default(""),
   contactBody: z.string().trim().max(4000).default(""),
   footerBody: z.string().trim().max(4000).default(""),
+  privacyPolicyBody: z.string().trim().max(16000).default(""),
+  termsAndConditionsBody: z.string().trim().max(16000).default(""),
   metadataTitle: z.string().trim().max(240).default("New National Advertising | Printing, Signage & Design"),
-  metadataDescription: z.string().trim().max(320).default("Printing, signage, advertising and graphic design solutions in Mumbai."),
+  metadataDescription: z.string().trim().max(320).default("Printing, signage, advertising and graphic design solutions."),
 }).partial();
 
 const settingsBody = z.object({
@@ -35,6 +37,35 @@ const settingsBody = z.object({
   faviconPath: z.string().trim().max(500).nullable().optional(),
   metadataTitle: z.string().trim().max(240),
   metadataDescription: z.string().trim().max(320),
+  businessInformation: z.object({
+    legalName: z.string().trim().max(180),
+    legalNameVerified: z.boolean(),
+    phoneNumberVerificationCandidate: z.string().trim().max(40),
+    phoneNumberVerified: z.boolean(),
+    addressVerified: z.boolean(),
+    gstRegistrationStatus: z.enum(["unverified", "registered", "not_registered", "not_applicable"]),
+    gstStatusVerified: z.boolean(),
+    gstin: z.string().trim().max(40),
+    gstinVerified: z.boolean(),
+    gstRegistrationType: z.string().trim().max(120),
+    gstEffectiveDate: z.string().trim().max(20),
+    udyamStatus: z.enum(["unverified", "registered", "not_applicable"]),
+    udyamNumber: z.string().trim().max(80),
+    udyamVerified: z.boolean(),
+    enterpriseClassification: z.string().trim().max(120),
+    maharashtraRegistrationType: z.string().trim().max(160),
+    maharashtraIssuingAuthority: z.string().trim().max(160),
+    maharashtraRegistrationIdentifier: z.string().trim().max(120),
+    maharashtraRegistrationDate: z.string().trim().max(20),
+    maharashtraRegistrationStatus: z.string().trim().max(120),
+    maharashtraRegistrationVerified: z.boolean(),
+    operatingHours: z.string().trim().max(500),
+    operatingHoursVerified: z.boolean(),
+    customerEnquiryInstructions: z.string().trim().max(1000),
+    privacyContactEmail: z.string().trim().email().max(180).or(z.literal("")),
+    customerComplaintContact: z.string().trim().max(240),
+    lastVerificationDate: z.string().trim().max(20),
+  }).partial().optional(),
 });
 
 const contactBody = z.object({
@@ -58,7 +89,36 @@ const defaultSettings = {
   logoPath: "/new-national-advertising-logo.png",
   faviconPath: "/favicon.svg",
   metadataTitle: "New National Advertising | Printing, Signage & Design",
-  metadataDescription: "Printing, signage, advertising and graphic design solutions in Mumbai.",
+  metadataDescription: "Printing, signage, advertising and graphic design solutions.",
+  businessInformation: {
+    legalName: "",
+    legalNameVerified: false,
+    phoneNumberVerificationCandidate: "+919555759677",
+    phoneNumberVerified: false,
+    addressVerified: false,
+    gstRegistrationStatus: "unverified",
+    gstStatusVerified: false,
+    gstin: "",
+    gstinVerified: false,
+    gstRegistrationType: "",
+    gstEffectiveDate: "",
+    udyamStatus: "unverified",
+    udyamNumber: "",
+    udyamVerified: false,
+    enterpriseClassification: "",
+    maharashtraRegistrationType: "",
+    maharashtraIssuingAuthority: "",
+    maharashtraRegistrationIdentifier: "",
+    maharashtraRegistrationDate: "",
+    maharashtraRegistrationStatus: "",
+    maharashtraRegistrationVerified: false,
+    operatingHours: "",
+    operatingHoursVerified: false,
+    customerEnquiryInstructions: "Contact us to discuss your requirements and request a quotation.",
+    privacyContactEmail: "newnationaladv2022@gmail.com",
+    customerComplaintContact: "newnationaladv2022@gmail.com",
+    lastVerificationDate: "",
+  },
 };
 
 const defaultContent = {
@@ -69,13 +129,15 @@ const defaultContent = {
   aboutBody: "New National Advertising provides printing, signage, advertising and graphic design solutions for businesses, brands and individuals.",
   qualityBody: "Clear, vibrant results made for the real-world places your customers see them.",
   trustBody: "A dependable print partner for everyday business needs, campaigns and events.",
-  processBody: "Share your requirement, review the direction, approve production and receive the finished work.",
+  processBody: "Share your requirement, discuss the options and request a quotation.",
   graphicsDesignBody: "Practical design support for branding, packaging, menus, marketing and print-ready artwork.",
   signageBody: "Signage, acrylic, LED, backlit and storefront solutions for indoor and outdoor visibility.",
   contactBody: "Tell us what you need and the team will help you choose the right route.",
   footerBody: "Printing, signage, advertising and graphic design solutions for businesses, brands and individuals.",
+  privacyPolicyBody: "",
+  termsAndConditionsBody: "",
   metadataTitle: "New National Advertising | Printing, Signage & Design",
-  metadataDescription: "Printing, signage, advertising and graphic design solutions in Mumbai.",
+  metadataDescription: "Printing, signage, advertising and graphic design solutions.",
 };
 
 async function seedSingle(collection: string, id: string, value: Record<string, unknown>) {
@@ -106,6 +168,43 @@ router.get("/website-content", async (_req, res): Promise<void> => {
   res.json({ id: snapshot.id, ...snapshot.data() });
 });
 
+function publicBusinessInformation(value: Record<string, unknown> | undefined) {
+  const info = value ?? {};
+  const gstVerified = info.gstStatusVerified === true;
+  const gstRegistered = gstVerified && info.gstRegistrationStatus === "registered";
+  const udyamVerified = info.udyamVerified === true && info.udyamStatus === "registered";
+  const maharashtraVerified = info.maharashtraRegistrationVerified === true;
+  return {
+    legalName: info.legalNameVerified === true ? String(info.legalName ?? "") : "",
+    legalNameVerified: info.legalNameVerified === true,
+    phoneNumberVerificationCandidate: "",
+    phoneNumberVerified: info.phoneNumberVerified === true,
+    addressVerified: info.addressVerified === true,
+    gstRegistrationStatus: gstVerified ? info.gstRegistrationStatus : "unverified",
+    gstStatusVerified: gstVerified,
+    gstin: gstRegistered && info.gstinVerified === true ? String(info.gstin ?? "") : "",
+    gstinVerified: gstRegistered && info.gstinVerified === true,
+    gstRegistrationType: gstRegistered ? String(info.gstRegistrationType ?? "") : "",
+    gstEffectiveDate: gstRegistered ? String(info.gstEffectiveDate ?? "") : "",
+    udyamStatus: udyamVerified ? info.udyamStatus : "unverified",
+    udyamNumber: udyamVerified ? String(info.udyamNumber ?? "") : "",
+    udyamVerified,
+    enterpriseClassification: udyamVerified ? String(info.enterpriseClassification ?? "") : "",
+    maharashtraRegistrationType: maharashtraVerified ? String(info.maharashtraRegistrationType ?? "") : "",
+    maharashtraIssuingAuthority: maharashtraVerified ? String(info.maharashtraIssuingAuthority ?? "") : "",
+    maharashtraRegistrationIdentifier: maharashtraVerified ? String(info.maharashtraRegistrationIdentifier ?? "") : "",
+    maharashtraRegistrationDate: maharashtraVerified ? String(info.maharashtraRegistrationDate ?? "") : "",
+    maharashtraRegistrationStatus: maharashtraVerified ? String(info.maharashtraRegistrationStatus ?? "") : "",
+    maharashtraRegistrationVerified: maharashtraVerified,
+    operatingHours: info.operatingHoursVerified === true ? String(info.operatingHours ?? "") : "",
+    operatingHoursVerified: info.operatingHoursVerified === true,
+    customerEnquiryInstructions: String(info.customerEnquiryInstructions ?? "Contact us to discuss your requirements and request a quotation."),
+    privacyContactEmail: String(info.privacyContactEmail ?? "newnationaladv2022@gmail.com"),
+    customerComplaintContact: String(info.customerComplaintContact ?? "newnationaladv2022@gmail.com"),
+    lastVerificationDate: "",
+  };
+}
+
 router.get("/admin/website-content", requireAdmin, async (_req, res): Promise<void> => {
   await ensureCmsSeeded();
   const snapshot = await firestore().collection("websiteContent").doc("homepage").get();
@@ -129,13 +228,30 @@ router.put("/admin/website-content", requireAdmin, async (req, res): Promise<voi
 router.get("/settings", async (_req, res): Promise<void> => {
   await ensureCmsSeeded();
   const snapshot = await firestore().collection("websiteSettings").doc("general").get();
-  res.json({ id: snapshot.id, ...snapshot.data() });
+  const value = snapshot.data() ?? defaultSettings;
+  const businessInformation = publicBusinessInformation(value.businessInformation as Record<string, unknown> | undefined);
+  const addressVerified = businessInformation.addressVerified;
+  res.json({
+    id: snapshot.id,
+    businessName: value.businessName ?? defaultSettings.businessName,
+    email: value.email ?? defaultSettings.email,
+    address: addressVerified ? value.address : "",
+    whatsappNumbers: value.whatsappNumbers ?? defaultSettings.whatsappNumbers,
+    socialLinks: value.socialLinks ?? defaultSettings.socialLinks,
+    googleMapsUrl: addressVerified ? value.googleMapsUrl : "",
+    footerInformation: value.footerInformation ?? defaultSettings.footerInformation,
+    logoPath: value.logoPath ?? defaultSettings.logoPath,
+    faviconPath: value.faviconPath ?? defaultSettings.faviconPath,
+    metadataTitle: value.metadataTitle ?? defaultSettings.metadataTitle,
+    metadataDescription: value.metadataDescription ?? defaultSettings.metadataDescription,
+    businessInformation,
+  });
 });
 
 router.get("/admin/settings", requireAdmin, async (_req, res): Promise<void> => {
   await ensureCmsSeeded();
   const snapshot = await firestore().collection("websiteSettings").doc("general").get();
-  res.json({ id: snapshot.id, ...snapshot.data() });
+  res.json({ id: snapshot.id, ...defaultSettings, ...snapshot.data() });
 });
 
 router.put("/admin/settings", requireAdmin, async (req, res): Promise<void> => {
@@ -146,7 +262,18 @@ router.put("/admin/settings", requireAdmin, async (req, res): Promise<void> => {
   }
   const reference = firestore().collection("websiteSettings").doc("general");
   const now = new Date();
-  const value = { ...parsed.data, updatedAt: now, updatedBy: currentAdmin(res).uid };
+  const existing = (await reference.get()).data() ?? defaultSettings;
+  const value = {
+    ...existing,
+    ...parsed.data,
+    businessInformation: {
+      ...defaultSettings.businessInformation,
+      ...(existing.businessInformation ?? {}),
+      ...(parsed.data.businessInformation ?? {}),
+    },
+    updatedAt: now,
+    updatedBy: currentAdmin(res).uid,
+  };
   await reference.set(value, { merge: true });
   res.json({ id: reference.id, ...value });
 });

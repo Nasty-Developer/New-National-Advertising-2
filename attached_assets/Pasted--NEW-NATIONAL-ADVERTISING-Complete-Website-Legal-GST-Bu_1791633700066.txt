@@ -1,0 +1,450 @@
+# NEW NATIONAL ADVERTISING
+## Complete Website Legal, GST, Business Registration, Privacy & Content Audit
+
+### PROJECT OBJECTIVE
+
+Update the existing New National Advertising website to improve business-information accuracy, legal transparency, privacy protection, certificate handling, and website content integrity.
+
+This is an enhancement of the existing production project, NOT a request to rebuild the website.
+
+**CRITICAL BUSINESS RULE: NEW NATIONAL ADVERTISING DOES NOT PROVIDE DELIVERY OR PICKUP SERVICES.**
+
+The business operates through customer enquiries and quotations. Do not advertise delivery, shipping, dispatch, home delivery, collection, or customer pickup services. Do not create delivery-related functionality.
+
+---
+
+## 1. PRESERVE THE EXISTING PROJECT
+
+Before changing anything:
+
+1. Inspect the repository, framework, routes, database, backend/API, admin panel, CMS, authentication, existing product catalogue, assets, and deployment configuration.
+2. Understand the existing architecture before editing files.
+3. Preserve existing functionality, design, content, product records, categories, pricing, image mappings, and working routes.
+4. Preserve all 202 existing product records and their current ordering.
+5. Do not replace the website with a generic template or create a simplified duplicate.
+6. Do not remove existing admin functionality or introduce duplicate CMS modules.
+7. Preserve Firebase Authentication, Firestore, Cloudinary, existing backend services, and authorization rules wherever they are already implemented.
+8. Do not introduce unnecessary dependencies or a new storage system.
+9. Do not overwrite production data, delete product records, or bypass authentication.
+10. Inspect and resolve relevant configuration issues without disturbing the existing deployment architecture.
+
+Make targeted, backward-compatible changes.
+
+---
+
+## 2. CONFIRMED BUSINESS INFORMATION
+
+Use the following initial information.
+
+**Business/trade name:** New National Advertising
+
+**Business email:** newnationaladv2022@gmail.com
+
+**Phone number supplied for verification:** +919555759677
+
+Important: An existing business record contains a different telephone number. Do not replace the existing public number with the newly supplied number until the owner confirms which number is correct.
+
+**Business model:** Customer enquiries and quotations for advertising, printing, signage, digital printing, flex printing, and other services or products actually offered.
+
+**Sales and payment flow:** Enquiry-based. Customers contact the business to discuss requirements and obtain quotations.
+
+**Delivery:** Not provided.
+
+**Pickup:** Not provided.
+
+Do not publish delivery, shipping, dispatch, home-delivery, or pickup claims anywhere on the website.
+
+Do not add shipping charges, delivery estimates, pickup instructions, courier integrations, delivery tracking, or related functionality.
+
+**Business registration:** A GST registration certificate and documents apparently relating to Udyam/MSME and Maharashtra Shops and Establishments registration have been supplied as preliminary evidence.
+
+The exact legal name, registration identifiers, full address, registration status, and other unreadable fields must be verified against clear original documents.
+
+Never invent missing information.
+
+---
+
+## 3. BUSINESS INFORMATION CMS
+
+Inspect the existing admin panel and extend it if appropriate.
+
+Manage the following fields centrally:
+
+- Business/trade name
+- Verified legal name, where applicable
+- Business email
+- Verified public telephone number
+- Verified business address
+- GST registration status
+- Verified GSTIN
+- GST registration type and effective date, if verified
+- Udyam/MSME registration status and identifier, if applicable
+- Verified enterprise classification, where relevant
+- Maharashtra registration details, where applicable
+- Operating hours, if confirmed
+- Customer enquiry instructions
+- Privacy contact information
+- Applicable customer complaint contact information
+- Last verification date
+
+Requirements:
+
+- Keep unverified fields private and unpublished.
+- Do not invent registration numbers, addresses, dates, or legal claims.
+- Avoid unnecessary personal information about the proprietor.
+- Use the existing CMS and database architecture.
+- Require authorized admin access to edit business information.
+- Validate and sanitize all inputs.
+- Keep public business information consistent across the website.
+- Do not hardcode identifiers across multiple files.
+
+If equivalent CMS fields already exist, extend them rather than creating duplicates.
+
+---
+
+## 4. GST INFORMATION
+
+Audit the existing website for GST-related claims and information.
+
+- Publish GSTIN only after verification against the original certificate.
+- Verify the registration status using the official GST portal where appropriate.
+- Do not represent an unregistered business as GST-registered.
+- Do not invent GST rates, HSN/SAC codes, tax amounts, exemptions, or invoice details.
+- Do not automatically add GST to every product or service price.
+- Do not introduce invoice-generation functionality unless separately requested.
+- Do not publish the proprietor's PAN or unnecessary personal identifiers.
+- Keep tax-related descriptions accurate and consistent with the actual business.
+
+Official portal: https://www.gst.gov.in/
+
+Website disclosures do not replace applicable statutory obligations relating to display of a registration certificate at the business premises.
+
+---
+
+## 5. UDYAM/MSME AND MAHARASHTRA REGISTRATION
+
+Review the supplied registration documents as preliminary evidence.
+
+For each document, determine where possible:
+
+- Exact document type
+- Issuing authority
+- Legal name
+- Registration identifier
+- Registration date
+- Current status or validity, where applicable
+- Whether public disclosure is appropriate
+- Information requiring further verification
+
+### Udyam/MSME
+
+- Verify registration details before publishing claims.
+- Do not invent a Udyam number or enterprise classification.
+- Do not claim government endorsement, guaranteed quality, or special eligibility without evidence.
+- Do not expose unnecessary personal or financial details.
+
+Official portal: https://udyamregistration.gov.in/
+
+### Maharashtra registration
+
+- Verify the exact document category from the original document.
+- Do not automatically label the document a licence or registration approval.
+- Do not publish an unverified registration identifier.
+- Flag unresolved questions for the owner.
+
+---
+
+## 6. CERTIFICATE SECURITY
+
+The owner prefers verified registration details on the website instead of uploading complete certificate PDFs.
+
+Follow this preference.
+
+- Do not upload original certificate photographs or PDFs to public storage.
+- Do not expose private certificate URLs or documents through public APIs.
+- Do not publish certificate QR codes, PAN, bank details, private identifiers, digital signatures, or unnecessary personal details.
+- Do not copy certificate QR codes into website pages or metadata.
+- Keep original documents in private records.
+- Do not create fake certificate images, badges, seals, or government endorsements.
+- Do not claim independent verification merely because a certificate photograph was inspected.
+- If the owner later requests public certificate downloads, handle that as a separate task requiring explicit approval and a disclosure review.
+
+---
+
+## 7. PRIVACY POLICY
+
+Create a separate, professional, responsive page at:
+
+`/privacy-policy`
+
+Audit the actual website and explain its real data practices.
+
+Cover relevant topics:
+
+1. Business identity and contact information.
+2. Information submitted through enquiry and contact forms.
+3. Customer names, phone numbers, email addresses, and enquiry details where collected.
+4. Design briefs or file uploads, if supported by existing functionality.
+5. Hosting, database, cookies, analytics, and third-party services actually used.
+6. Purposes for collecting and processing information.
+7. Data access and sharing with service providers, where applicable.
+8. Reasonable security practices.
+9. Retention and deletion practices.
+10. Customer privacy requests and contact procedures.
+11. Applicable legal disclosures and rights.
+12. Effective date and last-updated date.
+
+Requirements:
+
+- Inspect existing forms, APIs, databases, analytics, and third-party integrations before drafting.
+- Do not falsely claim that no personal information is collected.
+- Do not promise absolute security or unverified encryption.
+- Do not invent retention periods, officers, or contact details.
+- Mark unresolved operational details for owner confirmation.
+- Use plain language and accessible typography.
+- Do not claim the page alone establishes legal compliance.
+
+---
+
+## 8. TERMS AND CONDITIONS
+
+Create a separate page at:
+
+`/terms-and-conditions`
+
+Write terms appropriate to a quotation-based printing, advertising, signage, and graphic design business.
+
+Cover applicable subjects:
+
+1. Website usage.
+2. Service and product descriptions.
+3. Enquiries and quotation requests.
+4. Quotation validity and acceptance.
+5. Custom design and printing approvals.
+6. Customer-supplied artwork, text, logos, and intellectual property.
+7. Proof approval before production, where applicable.
+8. Material, colour, size, and production tolerances, where relevant.
+9. Pricing and applicable taxes.
+10. Order confirmation and cancellation, where applicable.
+11. Defect resolution, reprints, and refunds, where applicable.
+12. Intellectual property and lawful use of customer materials.
+13. Prohibited or unlawful content submissions.
+14. Website content and third-party links.
+15. Responsibilities and limitations permitted by applicable law.
+16. Customer complaints and contact information.
+17. Applicable Indian law and appropriate dispute-resolution wording.
+
+### Strict commercial rules
+
+- This is an enquiry and quotation business flow.
+- Do not promise online ordering or payment unless the existing website genuinely supports it and the owner separately confirms it.
+- Do not invent refund rules, cancellation fees, warranties, production timelines, or other commercial commitments.
+- Do not promise delivery, shipping, dispatch, home delivery, or pickup.
+- Do not include clauses that improperly remove statutory consumer rights.
+- Flag unresolved commercial terms for owner approval before publication.
+
+---
+
+## 9. REMOVE ALL DELIVERY AND PICKUP REFERENCES
+
+Perform a complete search across the existing project.
+
+Inspect:
+
+- Homepage and hero content
+- Service pages
+- Product pages
+- Product descriptions
+- Footer
+- Contact page
+- FAQs
+- Legal pages
+- CMS content
+- Metadata and structured data
+- Buttons, banners, and promotional text
+- Admin settings
+- Forms and customer-facing messages
+- Existing delivery-related components or integrations
+
+Remove or correct claims and functionality relating to:
+
+- Delivery services
+- Home delivery
+- Shipping
+- Dispatch
+- Courier services
+- Delivery tracking
+- Delivery estimates
+- Pickup or collection services
+- Shipping charges
+- Delivery areas or delivery radius
+- Pickup locations or pickup instructions
+
+Do not replace these with another unsupported promise.
+
+Do not delete unrelated product or service information while performing this audit.
+
+If delivery-related functionality exists in the current application, identify it and remove or disable it safely without breaking unrelated features or existing data.
+
+The website must accurately communicate that customers should contact the business to discuss their requirements and obtain a quotation. Do not invent alternative fulfilment arrangements.
+
+---
+
+## 10. CUSTOMER ENQUIRY FLOW
+
+Keep the website focused on enquiries.
+
+- Preserve existing contact and quotation forms.
+- Preserve the existing WhatsApp enquiry integration if functional.
+- Allow customers to ask about products, printing, signage, designs, and pricing.
+- Do not introduce mandatory checkout or online payment.
+- Do not claim an enquiry constitutes a confirmed order.
+- Do not claim payment has been received.
+- Do not add delivery or pickup options to any form.
+- Ensure customer messages accurately explain the enquiry process.
+- Verify the existing business contact number before changing the public number.
+- Validate form inputs and protect customer information.
+
+---
+
+## 11. AI-GENERATED IMAGES AND MISLEADING CLAIMS
+
+Audit all public content, including:
+
+- Homepage banners
+- Service images
+- Product catalogue
+- Portfolio and project gallery
+- Promotional banners
+- Social sharing previews
+- Image alt text and captions
+- SEO metadata
+- Admin-managed content
+
+Identify AI-generated visuals that falsely suggest:
+
+- Actual business premises
+- Real employees or customers
+- Completed client installations
+- Actual machinery or equipment
+- Real products supposedly available
+- Genuine client projects
+- Certifications or official endorsements
+
+Actions:
+
+1. Do not automatically remove every AI-generated illustration.
+2. Remove or replace visuals that misleadingly represent fictional work, premises, equipment, products, or people as real.
+3. Preserve genuine product images and correctly mapped catalogue assets.
+4. Use real, owner-approved business photographs where available.
+5. Remove fabricated testimonials and unsupported business claims.
+6. Correct misleading captions, filenames, alt text, and metadata.
+7. Do not invent customer names, completed projects, or business history.
+8. Produce an audit report identifying each problematic asset and its recommended correction.
+
+Do not claim to have changed Google Business Profile content unless that action has actually been performed through an authorized workflow.
+
+---
+
+## 12. FOOTER AND NAVIGATION
+
+Add or update appropriate footer links:
+
+- Privacy Policy
+- Terms & Conditions
+- Contact Us
+- Other relevant legal disclosures, if applicable
+- Verified business registration information, where appropriate
+
+Requirements:
+
+- Preserve the existing design and branding.
+- Ensure all links work on desktop and mobile.
+- Do not add unnecessary delivery, shipping, or pickup policy links.
+- Do not create fake registration badges.
+- Avoid misleading use of government emblems or seals.
+- Keep metadata accurate and consistent with visible page content.
+
+---
+
+## 13. ADMIN PANEL AND SECURITY
+
+Use existing authentication and authorization.
+
+- Only authorized administrators may edit legal pages and business information.
+- Preserve Firebase Authentication and existing permission checks.
+- Do not hardcode credentials or bypass access controls.
+- Validate and sanitize CMS content.
+- Keep private certificate data inaccessible to public users.
+- Do not expose environment variables, tokens, passwords, or secrets.
+- Preserve existing database records and product access permissions.
+- Ensure public APIs return only intended public information.
+- Implement backward-compatible schema changes if necessary.
+
+---
+
+## 14. DESIGN
+
+Preserve the existing New National Advertising visual identity.
+
+- Professional, minimal business design.
+- Consistent typography and spacing.
+- Responsive desktop, tablet, and mobile layouts.
+- Accessible legal text and navigation.
+- Existing brand colours and established UI components.
+- No unnecessary redesign or dependencies.
+- No decorative fake certificates, official seals, or misleading badges.
+
+---
+
+## 15. TESTING AND VALIDATION
+
+Before completion:
+
+1. Run the existing build and test commands.
+2. Check TypeScript and other relevant validation errors.
+3. Verify the homepage and all existing routes.
+4. Verify all 202 existing product records and their ordering.
+5. Test enquiry and contact forms.
+6. Test CMS editing and administrator authorization.
+7. Confirm that unverified information remains unpublished.
+8. Confirm private certificate files and identifiers are not publicly exposed.
+9. Verify the new legal pages and footer links.
+10. Search the codebase and CMS content for delivery, shipping, dispatch, home-delivery, and pickup claims.
+11. Verify that no delivery or pickup functionality has been introduced.
+12. Inspect broken images, links, and responsive layouts.
+13. Check the existing production configuration without exposing secrets.
+14. Verify deployment configuration and report whether production was actually tested.
+15. Do not delete or overwrite production data during testing.
+
+---
+
+## 16. FINAL IMPLEMENTATION REPORT
+
+Provide a report containing:
+
+A. Files and routes changed.
+
+B. Privacy Policy and Terms & Conditions implementation status.
+
+C. Business details verified and published.
+
+D. Unverified details requiring owner confirmation.
+
+E. Certificate fields withheld from public display.
+
+F. Misleading images or claims identified and their recommended corrections.
+
+G. Delivery and pickup references removed or corrected.
+
+H. Security and authorization checks performed.
+
+I. Build and test results.
+
+J. Remaining legal or operational decisions.
+
+K. Deployment status and outstanding steps.
+
+Separate completed work from pending tasks. Never fabricate test results or claim a change succeeded without verifying it.
+
+**FINAL ACCEPTANCE CRITERIA:** The existing New National Advertising website remains functional, registration details are handled safely, legal pages reflect the real business, enquiries and quotations remain the primary customer flow, misleading content is addressed, and no delivery or pickup services are advertised or implemented.
